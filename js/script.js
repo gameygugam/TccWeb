@@ -61,9 +61,11 @@ function draw() {
 
     //Desenha personagem, lixo e parede
     fill(0, 255, 0);
+    // image(player.img, player.x, player.y, player.w, player.h);
     rect(player.x, player.y, player.w, player.h);
 
     fill(255, 0, 0);
+    // image(lixo.img, lixo.x, lixo.y, lixo.w, lixo.h);
     rect(lixo.x, lixo.y, lixo.w, lixo.h);
 
     fill(200);
