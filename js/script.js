@@ -3,7 +3,7 @@ let playerImg, lixoImg;
 
 function preload() {
     playerImg = loadImage("imagens/Castor.png");
-    lixoImg = loadImage("imagens/bolinhaDePapelPixel.png");
+    lixoImg = loadImage("imagens/lixos/bolinhaDePapelPixel.png");
 }
 
 function setup() {
