@@ -1,15 +1,17 @@
 let player, walls, lixos;
 let playerImg, lixoImg;
+let pegouLixo, lastLixoPego;
 
 function preload() {
     playerImg = loadImage("imagens/Castor.png");
-    lixoImg = loadImage("imagens/lixos/bolinhaDePapelPixel.png");
+    lixoImg = loadImage(sortearLixo());
 }
 
 function setup() {
     createCanvas(1900, 970);
     noSmooth();
 
+    pegouLixo = false;
     player = { x: 50, y: 50, w: 100, h: 100, oldX: 50, oldY: 50 };
     walls = [
         wall1 = { x: 0, y: -2, w: 1900, h: 10 }, // Parede superior
@@ -17,9 +19,7 @@ function setup() {
         wall3 = { x: 1890, y: 0, w: 10, h: 1000 }, //Parede direita
         wall4 = { x: 0, y: 962, w: 1900, h: 10 } //Parede baixo
     ];
-    lixos = [
-        { x: 0, y: 0, w: 25, h: 25, oldX: 0, oldY: 0 }
-    ];
+    lixos = [];
 }
 
 function draw() {
@@ -27,11 +27,9 @@ function draw() {
 
     ////repõe a quantidade de lixo no mapa
     if(lixos.length < 10) {
-        lixos.push({ x: 0, y: 0, w: 25, h: 25, oldX: 0, oldY: 0 }); 
-        lixos.forEach(lixo => {
-        lixo.x = random(100, 1800);
-        lixo.y = random(100, 800);
-    });
+        lixos.push({ x: 0, y: 0, w: 25, h: 25, oldX: 0, oldY: 0, img: "" }); 
+        lixos[lixos.length - 1].x = random(100, 1800);
+        lixos[lixos.length - 1].y = random(100, 800);
     }
     
 
@@ -79,13 +77,11 @@ function draw() {
     // }
 
     // Checa se o botao de espaco foi pressionado
-    lixos.forEach(lixo => {
-        if (keyIsDown(32) && colidiu(player, lixo)) {
-            lixo.x = player.x + player.w - 10;
-            lixo.y = player.y + player.h / 2;
-        }
-    })
+    pegarLixo(player, lixos)
 
+    if (pegouLixo) {
+        
+    }
     ////Desenha circulo de colisao
     // fill(0, 0, 255);
     // circle (player.x + player.w / 2, player.y + player.h / 2, 100);
@@ -100,6 +96,7 @@ function draw() {
 
     lixos.forEach(lixo => {
         // fill(255, 0, 0);
+        
         image(lixoImg, lixo.x, lixo.y, lixo.w, lixo.h);
         // rect(lixo.x, lixo.y, lixo.w, lixo.h);
     })
@@ -118,6 +115,27 @@ function colidiu(a, b) {
         a.y < b.y + b.h &&
         a.y + a.h > b.y
     );
+}
+
+function pegarLixo(a, b) {
+    return (
+        b.forEach(lixo => {
+            if (keyIsDown(32) && colidiu(a, lixo)) {
+                lixo.x = a.x + a.w - 10;
+                lixo.y = a.y + a.h / 2;
+                pegouLixo = true;
+                lastLixoPego = lixo;
+            }
+        })
+    )
+}
+
+function sortearLixo() {
+    let rand = random(4);
+    if (rand === 0) return "imagens/lixos/bolinhaDePapelPixel.png";
+    else if (rand === 1) return "imagens/lixos/garrafaVidroPixel.png";
+    else if (rand === 2) return "imagens/lixos/bananaPixel.png";
+    else return "imagens/lixos/bananaPodrePixel.png";
 }
 
 // function dragDrop(a) {
