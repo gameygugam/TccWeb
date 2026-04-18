@@ -7,7 +7,19 @@ let canvas_x, canvas_y;
 
 function preload() {
     playerImg = loadImage("imagens/Castor.png");
-    lixoImg = loadImage(sortearLixo());
+    lixosImg = [
+        lixo1 = loadImage(sortearLixo()),
+        lixo2 = loadImage(sortearLixo()),
+        lixo3 = loadImage(sortearLixo()),
+        lixo4 = loadImage(sortearLixo()),
+        lixo5 = loadImage(sortearLixo()),
+        lixo6 = loadImage(sortearLixo()),
+        lixo7 = loadImage(sortearLixo()),
+        lixo8 = loadImage(sortearLixo()),
+        lixo9 = loadImage(sortearLixo()),
+        lixo10 = loadImage(sortearLixo())
+    ];
+
 }
 
 function setup() {
@@ -15,14 +27,11 @@ function setup() {
     canvas = createCanvas(windowWidth, windowHeight); //1900, 970 [Gustavo/Antigo]
     noSmooth();
 
-<<<<<<< HEAD
     pegouLixo = false;
-=======
     canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
     canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
     canvas.position(canvas_x, canvas_y);
 
->>>>>>> eeb57e229ee296bb9e5faf24198f77db361b2ae8
     player = { x: 50, y: 50, w: 100, h: 100, oldX: 50, oldY: 50 };
     walls = [
         wall1 = { x: 0, y: 0, w: windowWidth, h: 10 }, // Parede superior
@@ -45,31 +54,11 @@ function draw() {
     background(0, 100, 0);
 
     ////repõe a quantidade de lixo no mapa
-    if(lixos.length < 10) {
-<<<<<<< HEAD
-        lixos.push({ x: 0, y: 0, w: 25, h: 25, oldX: 0, oldY: 0, img: "" }); 
-        lixos[lixos.length - 1].x = random(100, 1800);
-        lixos[lixos.length - 1].y = random(100, 800);
-=======
-        lixos.push({ x: 0, y: 0, w: 25, h: 25, oldX: 0, oldY: 0 }); 
-        lixos.forEach(lixo => {
-        let lixo_x = ((windowWidth - width) / 2)
-        let lixo_y = ((windowHeight - height) / 2)
-        lixo.x = random(lixo_x + 50, (lixo_x + width) - 50);
-        lixo.y = random(lixo_y + 50, (lixo_y + height) - 50);
-    });
->>>>>>> eeb57e229ee296bb9e5faf24198f77db361b2ae8
-    }
-    
+    if(lixos.length < 10) CriarLixo()
 
     //// Armazena posição antiga
     player.oldX = player.x;
     player.oldY = player.y;
-
-    lixos.forEach(lixo => {
-        lixo.oldX = lixo.x;
-        lixo.oldY = lixo.y;
-    });
 
     //// Movimento
     if (keyIsDown(87)) player.y -= 3; // 87 ASCII -> W
@@ -123,12 +112,7 @@ function draw() {
     image(playerImg, player.x, player.y, player.w, player.h);
     // rect(player.x, player.y, player.w, player.h);
 
-    lixos.forEach(lixo => {
-        // fill(255, 0, 0);
-        
-        image(lixoImg, lixo.x, lixo.y, lixo.w, lixo.h);
-        // rect(lixo.x, lixo.y, lixo.w, lixo.h);
-    })
+    lixos.forEach((lixo, i) => {image(lixosImg[i], lixo.x, lixo.y, lixo.w, lixo.h)});
 
     walls.forEach(wall => {
         fill(0, 255, 0);
@@ -159,8 +143,18 @@ function pegarLixo(a, b) {
     )
 }
 
+function CriarLixo(){
+    lixos.push({ x: 0, y: 0, w: 25, h: 25, img: sortearLixo() }); 
+        
+    let lixo_x = ((windowWidth - width) / 2)
+    let lixo_y = ((windowHeight - height) / 2)
+
+    lixos[lixos.length - 1].x = random(lixo_x + 50, (lixo_x + width) - 50);
+    lixos[lixos.length - 1].y = random(lixo_y + 50, (lixo_y + height) - 50);
+}
+
 function sortearLixo() {
-    let rand = random(4);
+    let rand = floor(random(4));
     if (rand === 0) return "imagens/lixos/bolinhaDePapelPixel.png";
     else if (rand === 1) return "imagens/lixos/garrafaVidroPixel.png";
     else if (rand === 2) return "imagens/lixos/bananaPixel.png";
