@@ -1,54 +1,46 @@
 let player, walls, lixos;
 let playerImg, lixoImg;
 let pegouLixo, lastLixoPego;
+let banana, bananaPodre, garrafaVidro, bolinhaPapel;
 
 let canvas; //Cria a tela do Jogo [Gustavo bot esqueceu de atribuir a tela em uma variável]
 let canvas_x, canvas_y;
 
 function preload() {
+    // Carrega a imagem do player
     playerImg = loadImage("imagens/Castor.png");
+
+    // Carrega em uma lista as imagens dos lixos pixel art
     lixosPixelImg = [
-        lixo1 = loadImage(sortearLixoPixel()),
-        lixo2 = loadImage(sortearLixoPixel()),
-        lixo3 = loadImage(sortearLixoPixel()),
-        lixo4 = loadImage(sortearLixoPixel()),
-        lixo5 = loadImage(sortearLixoPixel()),
-        lixo6 = loadImage(sortearLixoPixel()),
-        lixo7 = loadImage(sortearLixoPixel()),
-        lixo8 = loadImage(sortearLixoPixel()),
-        lixo9 = loadImage(sortearLixoPixel()),
-        lixo10 = loadImage(sortearLixoPixel())
+        lixo1 = sortearLixoPixel(),
+        lixo2 = sortearLixoPixel(),
+        lixo3 = sortearLixoPixel(),
+        lixo4 = sortearLixoPixel(),
+        lixo5 = sortearLixoPixel(),
+        lixo6 = sortearLixoPixel(),
+        lixo7 = sortearLixoPixel(),
+        lixo8 = sortearLixoPixel(),
+        lixo9 = sortearLixoPixel(),
+        lixo10 = sortearLixoPixel()
     ];
-    // lixosPixelImg = [
-    //     lixo1 = sortearLixoPixel(),
-    //     lixo2 = sortearLixoPixel(),
-    //     lixo3 = sortearLixoPixel(),
-    //     lixo4 = ortearLixoPixel(),
-    //     lixo5 = sortearLixoPixel(),
-    //     lixo6 = sortearLixoPixel(),
-    //     lixo7 = sortearLixoPixel(),
-    //     lixo8 = sortearLixoPixel(),
-    //     lixo9 = sortearLixoPixel(),
-    //     lixo10 = sortearLixoPixel()
-    // ];
-    // lixosPixelCarregados = [
-    //     lixo1 = loadImage(lixosPixelImg[0]),
-    //     lixo2 = loadImage(lixosPixelImg[1]),
-    //     lixo3 = loadImage(lixosPixelImg[2]),
-    //     lixo4 = loadImage(lixosPixelImg[3]),
-    //     lixo5 = loadImage(lixosPixelImg[4]),
-    //     lixo6 = loadImage(lixosPixelImg[5]),
-    //     lixo7 = loadImage(lixosPixelImg[6]),
-    //     lixo8 = loadImage(lixosPixelImg[7]),
-    //     lixo9 = loadImage(lixosPixelImg[8]),
-    //     lixo10 = loadImage(lixosPixelImg[9]),
-    // ]
-    lixosReaisImg = [
-        bolinha = loadImage("imagens/lixos/bolinhaDePapel.png"),
-        garrafa = loadImage("imagens/lixos/garrafaVidro.png"),
-        banana = loadImage("imagens/lixos/banana.png"),
-        bananaPodre = loadImage("imagens/lixos/bananaPodre.png"),
+    lixosPixelImgCarregados = [
+        lixo1 = loadImage(lixosPixelImg[0]),
+        lixo2 = loadImage(lixosPixelImg[1]),
+        lixo3 = loadImage(lixosPixelImg[2]),
+        lixo4 = loadImage(lixosPixelImg[3]),
+        lixo5 = loadImage(lixosPixelImg[4]),
+        lixo6 = loadImage(lixosPixelImg[5]),
+        lixo7 = loadImage(lixosPixelImg[6]),
+        lixo8 = loadImage(lixosPixelImg[7]),
+        lixo9 = loadImage(lixosPixelImg[8]),
+        lixo10 = loadImage(lixosPixelImg[9]),
     ];
+
+    // Carrega as imagens dos lixos reais
+    bolinhaPapel = loadImage("imagens/lixos/bolinhaDePapel.png");
+    garrafaVidro = loadImage("imagens/lixos/garrafaVidro.png");
+    banana = loadImage("imagens/lixos/banana.png");
+    bananaPodre = loadImage("imagens/lixos/bananaPodre.png");
 }
 
 function setup() {
@@ -61,12 +53,12 @@ function setup() {
     canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
     canvas.position(canvas_x, canvas_y);
 
-    player = { x: 50, y: 50, w: 100, h: 100, oldX: 50, oldY: 50 };
+    player = { x: 50, y: 50, w: 100, h: 100, oldX: 50, oldY: 50, type: "player" };
     walls = [
-        wall1 = { x: 0, y: 0, w: windowWidth, h: 10 }, // Parede superior
-        wall2 = { x: 0, y: 0, w: 10, h: windowHeight }, // Parede esquerda
-        wall3 = { x: windowWidth - 10, y: 0, w: 10, h: windowHeight}, //Parede direita
-        wall4 = { x: 0, y: windowHeight - 10, w: windowWidth , h: 10 } //Parede baixo
+        wall1 = { x: 0, y: 0, w: windowWidth, h: 10, type: "wall" }, // Parede superior
+        wall2 = { x: 0, y: 0, w: 10, h: windowHeight, type: "wall" }, // Parede esquerda
+        wall3 = { x: windowWidth - 10, y: 0, w: 10, h: windowHeight, type: "wall" }, //Parede direita
+        wall4 = { x: 0, y: windowHeight - 10, w: windowWidth , h: 10, type: "wall" } //Parede baixo
     ];
     lixos = [];
 }
@@ -126,23 +118,21 @@ function draw() {
     // Checa se o botao de espaco foi pressionado
     pegarLixo(player, lixos);
 
-    if (pegouLixo) {
-        lixosPixelImg.forEach(lixoPx => {
-            if(lixoPx === "imagens/lixos/bolinhaDePapelPixel.png")
-                image(lixosReaisImg.bolinha, lastLixoPego.x, lastLixoPego.y, 100, 100);
-            else if(lixoPx === "imagens/lixos/garrafaVidro.png")
-                image(lixosReaisImg.garrafa, lastLixoPego.x, lastLixoPego.y, 100, 100);
-            else if(lixoPx === "imagens/lixos/banana.png")
-                image(lixosReaisImg.banana, lastLixoPego.x, lastLixoPego.y, 100, 100);
-            else if(lixoPx === "imagens/lixos/bananaPodre.png")
-                image(lixosReaisImg.bananaPodre, lastLixoPego.x, lastLixoPego.y, 100, 100);
-            });
+    if (keyIsDown(32) && colidiu(player, lastLixoPego)) {
+        if(lastLixoPego.img === "imagens/lixos/bolinhaDePapelPixel.png")
+            image(bolinhaPapel, lastLixoPego.x, lastLixoPego.y, 200, 200);
+        else if(lastLixoPego.img === "imagens/lixos/garrafaVidroPixel.png")
+            image(garrafaVidro, lastLixoPego.x, lastLixoPego.y, 200, 100);
+        else if(lastLixoPego.img === "imagens/lixos/bananaPixel.png")
+            image(banana, lastLixoPego.x, lastLixoPego.y, 100, 100);
+        else if (lastLixoPego.img === "imagens/lixos/bananaPodrePixel.png")
+                image(bananaPodre, lastLixoPego.x, lastLixoPego.y, 100, 100);
     }
 
     ////Desenha personagem, lixo e parede
     image(playerImg, player.x, player.y, player.w, player.h);
 
-    lixos.forEach((lixo, i) => { image(lixosPixelImg[i], lixo.x, lixo.y, lixo.w, lixo.h) });
+    lixos.forEach((lixo, i) => { image(lixosPixelImgCarregados[i], lixo.x, lixo.y, lixo.w, lixo.h) });
 
     walls.forEach(wall => {
         fill(0, 255, 0);
@@ -174,12 +164,12 @@ function pegarLixo(a, b) {
 }
 
 function CriarLixo(){
-    lixos.push({ x: 0, y: 0, w: 25, h: 25, img: "" }); 
+    lixos.push({ x: 0, y: 0, w: 25, h: 25, img: "", type: "lixo" }); 
         
     let lixo_x = ((windowWidth - width) / 2);
     let lixo_y = ((windowHeight - height) / 2);
 
-    // lixos[lixos.length - 1].img = lixosPixelImg[1]; //tentativa de adicionar o img no objeto
+    lixos[lixos.length - 1].img = lixosPixelImg[lixos.length - 1]; //tentativa de adicionar o img no objeto
     lixos[lixos.length - 1].x = random(lixo_x + 50, (lixo_x + width) - 50);
     lixos[lixos.length - 1].y = random(lixo_y + 50, (lixo_y + height) - 50);
 }
