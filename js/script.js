@@ -7,19 +7,48 @@ let canvas_x, canvas_y;
 
 function preload() {
     playerImg = loadImage("imagens/Castor.png");
-    lixosImg = [
-        lixo1 = loadImage(sortearLixo()),
-        lixo2 = loadImage(sortearLixo()),
-        lixo3 = loadImage(sortearLixo()),
-        lixo4 = loadImage(sortearLixo()),
-        lixo5 = loadImage(sortearLixo()),
-        lixo6 = loadImage(sortearLixo()),
-        lixo7 = loadImage(sortearLixo()),
-        lixo8 = loadImage(sortearLixo()),
-        lixo9 = loadImage(sortearLixo()),
-        lixo10 = loadImage(sortearLixo())
+    lixosPixelImg = [
+        lixo1 = loadImage(sortearLixoPixel()),
+        lixo2 = loadImage(sortearLixoPixel()),
+        lixo3 = loadImage(sortearLixoPixel()),
+        lixo4 = loadImage(sortearLixoPixel()),
+        lixo5 = loadImage(sortearLixoPixel()),
+        lixo6 = loadImage(sortearLixoPixel()),
+        lixo7 = loadImage(sortearLixoPixel()),
+        lixo8 = loadImage(sortearLixoPixel()),
+        lixo9 = loadImage(sortearLixoPixel()),
+        lixo10 = loadImage(sortearLixoPixel())
     ];
-
+    // lixosPixelImg = [
+    //     lixo1 = sortearLixoPixel(),
+    //     lixo2 = sortearLixoPixel(),
+    //     lixo3 = sortearLixoPixel(),
+    //     lixo4 = ortearLixoPixel(),
+    //     lixo5 = sortearLixoPixel(),
+    //     lixo6 = sortearLixoPixel(),
+    //     lixo7 = sortearLixoPixel(),
+    //     lixo8 = sortearLixoPixel(),
+    //     lixo9 = sortearLixoPixel(),
+    //     lixo10 = sortearLixoPixel()
+    // ];
+    // lixosPixelCarregados = [
+    //     lixo1 = loadImage(lixosPixelImg[0]),
+    //     lixo2 = loadImage(lixosPixelImg[1]),
+    //     lixo3 = loadImage(lixosPixelImg[2]),
+    //     lixo4 = loadImage(lixosPixelImg[3]),
+    //     lixo5 = loadImage(lixosPixelImg[4]),
+    //     lixo6 = loadImage(lixosPixelImg[5]),
+    //     lixo7 = loadImage(lixosPixelImg[6]),
+    //     lixo8 = loadImage(lixosPixelImg[7]),
+    //     lixo9 = loadImage(lixosPixelImg[8]),
+    //     lixo10 = loadImage(lixosPixelImg[9]),
+    // ]
+    lixosReaisImg = [
+        bolinha = loadImage("imagens/lixos/bolinhaDePapel.png"),
+        garrafa = loadImage("imagens/lixos/garrafaVidro.png"),
+        banana = loadImage("imagens/lixos/banana.png"),
+        bananaPodre = loadImage("imagens/lixos/bananaPodre.png"),
+    ];
 }
 
 function setup() {
@@ -61,10 +90,10 @@ function draw() {
     player.oldY = player.y;
 
     //// Movimento
-    if (keyIsDown(87)) player.y -= 3; // 87 ASCII -> W
-    if (keyIsDown(83)) player.y += 3; // 83 ASCII -> S
-    if (keyIsDown(65)) player.x -= 3; // 65 ASCII -> A
-    if (keyIsDown(68)) player.x += 3; // 68 ASCII -> D
+    if (keyIsDown(87) || keyIsDown(UP_ARROW)) player.y -= 3; // 87 ASCII -> W
+    if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) player.y += 3; // 83 ASCII -> S
+    if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) player.x -= 3; // 65 ASCII -> A
+    if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) player.x += 3; // 68 ASCII -> D
 
     ////Drag-Drop lixo
     // if (dragDrop(lixo)) {
@@ -95,30 +124,30 @@ function draw() {
     // }
 
     // Checa se o botao de espaco foi pressionado
-    pegarLixo(player, lixos)
+    pegarLixo(player, lixos);
 
     if (pegouLixo) {
-        
+        lixosPixelImg.forEach(lixoPx => {
+            if(lixoPx === "imagens/lixos/bolinhaDePapelPixel.png")
+                image(lixosReaisImg.bolinha, lastLixoPego.x, lastLixoPego.y, 100, 100);
+            else if(lixoPx === "imagens/lixos/garrafaVidro.png")
+                image(lixosReaisImg.garrafa, lastLixoPego.x, lastLixoPego.y, 100, 100);
+            else if(lixoPx === "imagens/lixos/banana.png")
+                image(lixosReaisImg.banana, lastLixoPego.x, lastLixoPego.y, 100, 100);
+            else if(lixoPx === "imagens/lixos/bananaPodre.png")
+                image(lixosReaisImg.bananaPodre, lastLixoPego.x, lastLixoPego.y, 100, 100);
+            });
     }
-    ////Desenha circulo de colisao
-    // fill(0, 0, 255);
-    // circle (player.x + player.w / 2, player.y + player.h / 2, 100);
-
-    // fill(0, 0, 255);
-    // circle (lixo.x + lixo.w / 2, lixo.y + lixo.h / 2, 100);
 
     ////Desenha personagem, lixo e parede
-    // fill(0, 255, 0);
     image(playerImg, player.x, player.y, player.w, player.h);
-    // rect(player.x, player.y, player.w, player.h);
 
-    lixos.forEach((lixo, i) => {image(lixosImg[i], lixo.x, lixo.y, lixo.w, lixo.h)});
+    lixos.forEach((lixo, i) => { image(lixosPixelImg[i], lixo.x, lixo.y, lixo.w, lixo.h) });
 
     walls.forEach(wall => {
         fill(0, 255, 0);
         rect(wall.x, wall.y, wall.w, wall.h);
     });
-
 }
 
 function colidiu(a, b) {
@@ -138,22 +167,24 @@ function pegarLixo(a, b) {
                 lixo.y = a.y + a.h / 2;
                 pegouLixo = true;
                 lastLixoPego = lixo;
+                // window.alert(lastLixoPego.img);
             }
         })
     )
 }
 
 function CriarLixo(){
-    lixos.push({ x: 0, y: 0, w: 25, h: 25, img: sortearLixo() }); 
+    lixos.push({ x: 0, y: 0, w: 25, h: 25, img: "" }); 
         
-    let lixo_x = ((windowWidth - width) / 2)
-    let lixo_y = ((windowHeight - height) / 2)
+    let lixo_x = ((windowWidth - width) / 2);
+    let lixo_y = ((windowHeight - height) / 2);
 
+    // lixos[lixos.length - 1].img = lixosPixelImg[1]; //tentativa de adicionar o img no objeto
     lixos[lixos.length - 1].x = random(lixo_x + 50, (lixo_x + width) - 50);
     lixos[lixos.length - 1].y = random(lixo_y + 50, (lixo_y + height) - 50);
 }
 
-function sortearLixo() {
+function sortearLixoPixel() {
     let rand = floor(random(4));
     if (rand === 0) return "imagens/lixos/bolinhaDePapelPixel.png";
     else if (rand === 1) return "imagens/lixos/garrafaVidroPixel.png";
