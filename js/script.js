@@ -1,4 +1,4 @@
-let player, walls, lixos;
+let player, walls, lixos, lixeiras;
 let playerImg, lixoImg;
 let pegouLixo, lastLixoPego;
 let banana, bananaPodre, garrafaVidro, bolinhaPapel;
@@ -10,6 +10,14 @@ let canvas_x, canvas_y;
 function preload() {
     // Carrega a imagem do player
     playerImg = loadImage("imagens/Castor.png");
+
+    // Carrega as imagens das lixeiras
+    lixeiras_img = [
+        lixeira_vermelha = loadImage("imagens/lixeiras/lixeiraVermelha.png"),
+        lixeira_azul = loadImage("imagens/lixeiras/lixeiraAzul.png"),
+        lixeira_amarela = loadImage("imagens/lixeiras/lixeiraAmarela.png"),
+        lixeira_verde = loadImage("imagens/lixeiras/lixeiraVerde.png"),
+    ];
 
     // Sorteia em uma lista os diretórios das imagens dos lixos pixel art
     lixosPixelImg = [
@@ -64,6 +72,12 @@ function setup() {
         wall2 = { x: 0, y: 0, w: 10, h: windowHeight, type: "wall" }, // Parede esquerda
         wall3 = { x: windowWidth - 10, y: 0, w: 10, h: windowHeight, type: "wall" }, //Parede direita
         wall4 = { x: 0, y: windowHeight - 10, w: windowWidth , h: 10, type: "wall" } //Parede baixo
+    ];
+    lixeiras = [
+        lixeira_vermelha = { x: windowWidth - 100, y: windowHeight / 2 + 100, w: 100, h: 100, img: lixeiras_img[0], descarte: "plastico", type: "lixeira" }, // Parede superior
+        lixeira_azul = { x:  windowWidth - 100, y: windowHeight / 2 + 200, w: 100, h: 100, img: lixeiras_img[1], descarte: "papel", type: "lixeira" }, // Parede esquerda
+        lixeira_amarela = { x:  windowWidth - 100, y: windowHeight / 2 - 100, w: 100, h: 100, img: lixeiras_img[2], descarte: "metal", type: "lixeira" }, //Parede direita
+        lixeira_verde = { x:  windowWidth - 100, y: windowHeight / 2 - 200, w: 100, h: 100, img: lixeiras_img[3], descarte: "vidro", type: "lixeira" } //Parede baixo
     ];
     lixos = [];
 }
@@ -127,6 +141,8 @@ function draw() {
     ////Desenha personagem, lixo e parede
     image(playerImg, player.x, player.y, player.w, player.h);
 
+    lixeiras.forEach((lixeira, i) => { image(lixeiras_img[i], lixeira.x, lixeira.y, lixeira.w, lixeira.h) });
+    
     lixos.forEach((lixo, i) => { image(lixosPixelImgCarregados[i], lixo.x, lixo.y, lixo.w, lixo.h) });
 
     walls.forEach(wall => {
@@ -187,10 +203,11 @@ function CriarLixo() {
 }
 
 function SortearLixoPixel() {
-    let rand = floor(random(4));
+    let rand = floor(random(5));
     if (rand === 0) return "imagens/lixos/bolinhaDePapelPixel.png";
     else if (rand === 1) return "imagens/lixos/garrafaVidroPixel.png";
     else if (rand === 2) return "imagens/lixos/bananaPixel.png";
+    else if (rand === 3) return "imagens/lixos/garrafaDePlasticoPixel.png";
     else return "imagens/lixos/bananaPodrePixel.png";
 }
 
