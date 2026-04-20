@@ -7,8 +7,40 @@ let pontos;
 
 let canvas; //Cria a tela do Jogo [Gustavo bot esqueceu de atribuir a tela em uma variável]
 let canvas_x, canvas_y;
+let fase;
 
-function preload() {
+// FASE 1 || Primeiro minigame
+function SetupFase1()
+{
+    lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: loadImage(""), type: "null", class: "lixo" };
+
+    canvas = createCanvas(windowWidth, windowHeight);
+    noSmooth();
+
+    pontos = 0;
+    pegouLixo = false;
+    canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
+    canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
+    canvas.position(canvas_x, canvas_y);
+
+    player = { x: 50, y: 50, w: 100, h: 100, oldX: 50, oldY: 50, class: "player" };
+    walls = [
+        wall1 = { x: 0, y: 0, w: windowWidth, h: 10, class: "wall" }, // Parede superior
+        wall2 = { x: 0, y: 0, w: 10, h: windowHeight, class: "wall" }, // Parede esquerda
+        wall3 = { x: windowWidth - 10, y: 0, w: 10, h: windowHeight, class: "wall" }, //Parede direita
+        wall4 = { x: 0, y: windowHeight - 10, w: windowWidth , h: 10, class: "wall" } //Parede baixo
+    ];
+    lixeiras = [
+        lixeira_vermelha = { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
+        lixeira_azul = { x:  windowWidth - 100, y: windowHeight / 2 + 275, w: 100, h: 100, img: "imagens/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
+        lixeira_amarela = { x:  windowWidth - 100, y: windowHeight / 2 - 125, w: 100, h: 100, img: "imagens/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
+        lixeira_verde = { x:  windowWidth - 100, y: windowHeight / 2 - 275, w: 100, h: 100, img: "imagens/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
+        lixeira_marrom = { x: windowWidth - 100, y: windowHeight / 2, w: 100, h: 100, img: "imagens/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" }
+    ];
+    lixos = [];
+}
+function PreloadFase1()
+{
     // Carrega a imagem do player
     playerImg = loadImage("imagens/Castor.png");
     // Carrega as imagens das lixeiras
@@ -53,46 +85,8 @@ function preload() {
     // Carrega a imagem do cartaz de procurado
     cartazProcuradoLixo = loadImage("imagens/cartazProcuradoLixo.png");
 }
-
-function setup() {
-
-    lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: loadImage(""), type: "null", class: "lixo" };
-
-    canvas = createCanvas(windowWidth, windowHeight);
-    noSmooth();
-
-    pontos = 0;
-    pegouLixo = false;
-    canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
-    canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
-    canvas.position(canvas_x, canvas_y);
-
-    player = { x: 50, y: 50, w: 100, h: 100, oldX: 50, oldY: 50, class: "player" };
-    walls = [
-        wall1 = { x: 0, y: 0, w: windowWidth, h: 10, class: "wall" }, // Parede superior
-        wall2 = { x: 0, y: 0, w: 10, h: windowHeight, class: "wall" }, // Parede esquerda
-        wall3 = { x: windowWidth - 10, y: 0, w: 10, h: windowHeight, class: "wall" }, //Parede direita
-        wall4 = { x: 0, y: windowHeight - 10, w: windowWidth , h: 10, class: "wall" } //Parede baixo
-    ];
-    lixeiras = [
-        lixeira_vermelha = { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
-        lixeira_azul = { x:  windowWidth - 100, y: windowHeight / 2 + 275, w: 100, h: 100, img: "imagens/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
-        lixeira_amarela = { x:  windowWidth - 100, y: windowHeight / 2 - 125, w: 100, h: 100, img: "imagens/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
-        lixeira_verde = { x:  windowWidth - 100, y: windowHeight / 2 - 275, w: 100, h: 100, img: "imagens/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
-        lixeira_marrom = { x: windowWidth - 100, y: windowHeight / 2, w: 100, h: 100, img: "imagens/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" }
-    ];
-    lixos = [];
-}
-
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
-
-    canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
-    canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
-    canvas.position(canvas_x, canvas_y);
-}
-
-function draw() {
+function DrawFase1()
+{
     background(0, 100, 0);
 
     ////repõe a quantidade de lixo no mapa
@@ -142,17 +136,17 @@ function draw() {
     // Verifica se o lixo está na lixeira certa
     if (lastLixoPego && Colidiu(player, lastLixoPego)) // o lastLixoPego no 'if' verifica se o objeto está vazio ou não
     {
-    lixeiras.forEach(lixeira => {
-        if (lastLixoPego && Colidiu(lastLixoPego, lixeira)) {
-            if (lastLixoPego.type === lixeira.descarte)
-                pontos += 10;
-            else
-                pontos -= 5;
-            lixos = lixos.filter(obj => obj !== lastLixoPego);
-            lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: loadImage(""), type: "null", class: "lixo" };
-        }
-    })
-}
+        lixeiras.forEach(lixeira => {
+            if (lastLixoPego && Colidiu(lastLixoPego, lixeira)) {
+                if (lastLixoPego.type === lixeira.descarte)
+                    pontos += 10;
+                else
+                    pontos -= 5;
+                lixos = lixos.filter(obj => obj !== lastLixoPego);
+                lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: loadImage(""), type: "null", class: "lixo" };
+            }
+        })
+    }
 
     ////Mostra a imagem do lixo
     // if (Colidiu(player, lixo)) {
@@ -181,6 +175,28 @@ function draw() {
     text(pontos, windowWidth - 100, 100);
 }
 
+function preload() {
+    PreloadFase1(); // Pré carrega as imagens do minigame 1
+}
+
+function setup() {
+    fase = "menu";
+    SetupFase1();
+}
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+
+    canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
+    canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
+    canvas.position(canvas_x, canvas_y);
+}
+
+function draw() {
+    DrawFase1(); // Desenha o minigame 1
+}
+
+// Funções Fase 1
 function PegarLixo(player_funcao, lixos_funcao) {
     return (
         lixos_funcao.forEach(lixo => {
@@ -253,6 +269,7 @@ function CriarLixo() {
     /*lixos[lixos.length - 1].x = random(lixo_x + 50, (lixo_x + width) - 200);
     lixos[lixos.length - 1].y = random(lixo_y + 50, (lixo_y + height) - 50);*/
 }
+//
 
 function Colidiu(a, b) {
     return (
