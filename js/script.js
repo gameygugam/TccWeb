@@ -9,6 +9,44 @@ let canvas; //Cria a tela do Jogo [Gustavo bot esqueceu de atribuir a tela em um
 let canvas_x, canvas_y;
 let fase;
 
+function keyPressed()
+{
+    if(fase === "menu" && keyCode === ENTER)
+        fase = "fase1";
+    if(fase === "fase1" && keyCode === ESCAPE)
+        fase = "pause";
+    if (fase === "pause" && keyCode === ESCAPE)
+        fase = "fase1";
+}
+
+// MENU
+function SetupMenu()
+{
+
+}
+function PreloadMenu()
+{
+
+}
+function DrawMenu()
+{
+    background(30);
+}
+
+//PAUSE
+function SetupPause()
+{
+
+}
+function PreloadPause()
+{
+
+}
+function DrawPause()
+{
+
+}
+
 // FASE 1 || Primeiro minigame
 function SetupFase1()
 {
@@ -143,7 +181,7 @@ function DrawFase1()
                 else
                     pontos -= 5;
                 lixos = lixos.filter(obj => obj !== lastLixoPego);
-                lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: loadImage(""), type: "null", class: "lixo" };
+                lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
             }
         })
     }
@@ -176,11 +214,13 @@ function DrawFase1()
 }
 
 function preload() {
-    PreloadFase1(); // Pré carrega as imagens do minigame 1
+    PreloadMenu(); // Pré carrega as imagens do Menu
+    PreloadFase1(); // Pré carrega as imagens do Minigame 1
 }
 
 function setup() {
     fase = "menu";
+    SetupMenu();
     SetupFase1();
 }
 
@@ -193,7 +233,10 @@ function windowResized() {
 }
 
 function draw() {
-    DrawFase1(); // Desenha o minigame 1
+    if(fase === "menu")
+        DrawMenu(); // Desenha o Menu
+    else if(fase === "fase1")
+        DrawFase1(); // Desenha o Minigame 1
 }
 
 // Funções Fase 1
@@ -207,7 +250,7 @@ function PegarLixo(player_funcao, lixos_funcao) {
                 lastLixoPego = lixo;
                 // window.alert(lastLixoPego.type);
             }
-            else if (!keyIsDown(32)) lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: loadImage(""), type: "null", class: "lixo" };
+            else if (!keyIsDown(32)) lastLixoPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
         })
     )
 }
