@@ -237,6 +237,8 @@ function draw() {
         DrawMenu(); // Desenha o Menu
     else if(fase === "fase1")
         DrawFase1(); // Desenha o Minigame 1
+    else if(fase === "pause")
+        DrawPause(); // Desenha o menu de Pause
 }
 
 // Funções Fase 1
