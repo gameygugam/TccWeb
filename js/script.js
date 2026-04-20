@@ -1,4 +1,5 @@
 let player, walls, lixos, lixeiras;
+let botoes;
 let playerImg, lixoImg;
 let pegouLixo, lastLixoPego;
 let banana, bananaPodre, garrafaVidro, bolinhaPapel;
@@ -22,7 +23,9 @@ function keyPressed()
 // MENU
 function SetupMenu()
 {
-
+    botoes = [];
+    botoes.push(botaoMenuIniciar = { x: (windowWidth / 2) - 200, y: 500, w: 400, h: 100, class: "botao" });
+    botaoIniciar = botoes[0];
 }
 function PreloadMenu()
 {
@@ -31,6 +34,27 @@ function PreloadMenu()
 function DrawMenu()
 {
     background(30);
+
+    // Cria o botão para iniciar o jogo
+    fill(255, 255, 255);
+    rect(botaoIniciar.x, botaoIniciar.y, botaoIniciar.w, botaoIniciar.h);
+
+    // Cria o texto do Menu
+    fill(255, 255, 255);
+    textSize(200);
+    text("Menu", windowWidth / 2 - 250, 300);
+    // Cria o texto e centraliza no botão
+    fill(0, 0, 0);
+    textSize(100);
+    text("Iniciar", botaoIniciar.x + 63, botaoIniciar.y + 85);
+
+    // Verifica se o mouse clicou no botão
+    if (mouseIsPressed &&
+        mouseX <= botaoIniciar.x + botaoIniciar.w
+        && mouseX >= botaoIniciar.x
+        && mouseY <= botaoIniciar.y + botaoIniciar.h
+        && mouseY >= botaoIniciar.y)
+        fase = "fase1";
 }
 
 //PAUSE
@@ -62,6 +86,7 @@ function SetupFase1()
     canvas.position(canvas_x, canvas_y);
 
     player = { x: 50, y: 50, w: 100, h: 100, oldX: 50, oldY: 50, class: "player" };
+    walls = null;
     walls = [
         wall1 = { x: 0, y: 0, w: windowWidth, h: 10, class: "wall" }, // Parede superior
         wall2 = { x: 0, y: 0, w: 10, h: windowHeight, class: "wall" }, // Parede esquerda
@@ -216,12 +241,14 @@ function DrawFase1()
 function preload() {
     PreloadMenu(); // Pré carrega as imagens do Menu
     PreloadFase1(); // Pré carrega as imagens do Minigame 1
+    PreloadPause(); // Pré carrega as imagens do menu de Pause
 }
 
 function setup() {
     fase = "menu";
     SetupMenu();
     SetupFase1();
+    SetupPause();
 }
 
 function windowResized() {
@@ -334,12 +361,12 @@ function Colidiu(a, b) {
     else return "imagens/lixos/garrafaDePlasticoPixel.png";
 }*/
 
-// function dragDrop(a) {
-//     return (
-//         mouseIsPressed &&
-//         mouseX <= a.x + a.w
-//         && mouseX >= a.x
-//         && mouseY <= a.y + a.h
-//         && mouseY >= a.y
-//     );
-// }
+    // function DragDrop(a) {
+    //     return (
+    //         mouseIsPressed &&
+    //         mouseX <= a.x + a.w
+    //         && mouseX >= a.x
+    //         && mouseY <= a.y + a.h
+    //         && mouseY >= a.y
+    //     );
+    // }
