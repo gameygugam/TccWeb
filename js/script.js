@@ -19,6 +19,7 @@ function preload() {
         lixeira_verde = loadImage("imagens/lixeiras/lixeiraVerde.png"),
         lixeira_marrom = loadImage("imagens/lixeiras/lixeiraMarrom.png")
     ];
+    /*
     // Sorteia em uma lista os diretórios das imagens dos lixos pixel art
     lixosPixelImg = [
         lixo1 = SortearLixoPixel(),
@@ -31,22 +32,9 @@ function preload() {
         lixo8 = SortearLixoPixel(),
         lixo9 = SortearLixoPixel(),
         lixo10 = SortearLixoPixel()
-    ];
-    // Carrega as imagens sorteadas atrás
-    lixosPixelImgCarregados = [
-        lixo1 = loadImage(lixosPixelImg[0]),
-        lixo2 = loadImage(lixosPixelImg[1]),
-        lixo3 = loadImage(lixosPixelImg[2]),
-        lixo4 = loadImage(lixosPixelImg[3]),
-        lixo5 = loadImage(lixosPixelImg[4]),
-        lixo6 = loadImage(lixosPixelImg[5]),
-        lixo7 = loadImage(lixosPixelImg[6]),
-        lixo8 = loadImage(lixosPixelImg[7]),
-        lixo9 = loadImage(lixosPixelImg[8]),
-        lixo10 = loadImage(lixosPixelImg[9]),
-    ];
+    ];*/
 
-    lixosPixelImgCarregados_2 = [
+    lixosPixelImgCarregados = [
         bolinhaPapel = loadImage("imagens/lixos/bolinhaDePapelPixel.png"),
         garrafaVidro = loadImage("imagens/lixos/garrafaVidroPixel.png"),
         banana = loadImage("imagens/lixos/bananaPixel.png"),
@@ -68,7 +56,7 @@ function preload() {
 
 function setup() {
 
-    lastLixoPego = [0, 0, 0, 0 , "", loadImage(""), "null", "lixo"];
+    lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: loadImage(""), type: "null", class: "lixo" };
 
     canvas = createCanvas(windowWidth, windowHeight);
     noSmooth();
@@ -161,7 +149,7 @@ function draw() {
             else
                 pontos -= 5;
             lixos = lixos.filter(obj => obj !== lastLixoPego);
-            lastLixoPego = [0, 0, 0, 0 , "", loadImage(""), "null", "lixo"];
+            lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: loadImage(""), type: "null", class: "lixo" };
         }
     })
 }
@@ -193,26 +181,17 @@ function draw() {
     text(pontos, windowWidth - 100, 100);
 }
 
-function Colidiu(a, b) {
-    return (
-        a.x < b.x + b.w &&
-        a.x + a.w > b.x &&
-        a.y < b.y + b.h &&
-        a.y + a.h > b.y
-    );
-}
-
 function PegarLixo(player_funcao, lixos_funcao) {
     return (
         lixos_funcao.forEach(lixo => {
-            if (keyIsDown(32) && Colidiu(player_funcao, lixo) && (lastLixoPego == lixo || lastLixoPego[6] == "null")) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
+            if (keyIsDown(32) && Colidiu(player_funcao, lixo) && (lastLixoPego == lixo || lastLixoPego.type == "null")) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
                 lixo.x = player_funcao.x + player_funcao.w - 10;
                 lixo.y = player_funcao.y + player_funcao.h / 2;
                 pegouLixo = true;
                 lastLixoPego = lixo;
                 // window.alert(lastLixoPego.type);
             }
-            else if (!keyIsDown(32)) lastLixoPego = [0, 0, 0, 0 , "", loadImage(""), "null", "lixo"];
+            else if (!keyIsDown(32)) lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: loadImage(""), type: "null", class: "lixo" };
         })
     )
 }
@@ -247,8 +226,8 @@ function CriarLixo() {
         
     let rnd = floor(random(5));
 
-    lixo_img_carregada = lixosPixelImgCarregados_2[rnd]
-    //lixo_img = lixosPixelImgCarregados_2[rnd]
+    lixo_img_carregada = lixosPixelImgCarregados[rnd]
+    //lixo_img = lixosPixelImgCarregados[rnd]
 
     if (rnd == 0) lixo_type = "papel" //0 -> BolinhaDePapel
     else if (rnd == 1) lixo_type = "vidro" //0 -> Banana
@@ -275,14 +254,23 @@ function CriarLixo() {
     lixos[lixos.length - 1].y = random(lixo_y + 50, (lixo_y + height) - 50);*/
 }
 
-function SortearLixoPixel() {
+function Colidiu(a, b) {
+    return (
+        a.x < b.x + b.w &&
+        a.x + a.w > b.x &&
+        a.y < b.y + b.h &&
+        a.y + a.h > b.y
+    );
+}
+
+/*function SortearLixoPixel() {
     let rand = floor(random(5));
     if (rand === 0) return "imagens/lixos/bolinhaDePapelPixel.png";
     else if (rand === 1) return "imagens/lixos/garrafaVidroPixel.png";
     else if (rand === 2) return "imagens/lixos/bananaPixel.png";
     else if (rand === 3) return "imagens/lixos/bananaPodrePixel.png";
     else return "imagens/lixos/garrafaDePlasticoPixel.png";
-}
+}*/
 
 // function dragDrop(a) {
 //     return (
