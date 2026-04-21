@@ -5,6 +5,7 @@ let pegouLixo, lastLixoPego;
 let banana, bananaPodre, garrafaVidro, bolinhaPapel;
 let cartazProcuradoLixo;
 let pontos;
+let mapasImg;
 
 let canvas; //Cria a tela do Jogo [Gustavo bot esqueceu de atribuir a tela em uma variável]
 let canvas_x, canvas_y;
@@ -135,6 +136,8 @@ function DrawPause()
 // FASE 1--------------------------------------------------------------------------------------------------------------
 function PreloadFase1()
 {
+    // Carrega a imagem do mapa1
+    mapasImg = [ mapa1 = loadImage("imagens/mapas/mapaPrototipo.png") ];
     // Carrega a imagem do player
     playerImg = loadImage("imagens/Castor.png");
     // Carrega as imagens das lixeiras
@@ -185,6 +188,7 @@ function SetupFase1()
     lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: loadImage(""), type: "null", class: "lixo" };
 
     canvas = createCanvas(windowWidth, windowHeight);
+    
     noSmooth();
 
     pontos = 0;
@@ -213,8 +217,8 @@ function SetupFase1()
 
 function DrawFase1()
 {
-    background(0, 100, 0);
-
+    // background(0, 100, 0);
+    image(mapasImg[0], 0, 0, windowWidth, windowHeight);
     ////repõe a quantidade de lixo no mapa
     if(lixos.length < 10) CriarLixo()
 
