@@ -227,10 +227,18 @@ function DrawFase1()
     player.oldY = player.y;
 
     //// Movimento
-    if (keyIsDown(87) || keyIsDown(UP_ARROW)) player.y -= 3; // 87 ASCII -> W
-    if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) player.y += 3; // 83 ASCII -> S
-    if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) player.x -= 3; // 65 ASCII -> A
-    if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) player.x += 3; // 68 ASCII -> D
+    let dir = createVector(0, 0);
+    if (keyIsDown(87) || keyIsDown(UP_ARROW)) dir.y -= 1;
+    if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) dir.y += 1;
+    if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) dir.x -= 1;
+    if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) dir.x += 1;
+    // Normaliza o vetor para não alterar a velocidade do personagem. EX: W = 4, S = 4; W + S != 8; W + S = 4
+    if (dir.mag() > 0) {
+        dir.normalize();
+        dir.mult(3);
+    }
+    player.x += dir.x;
+    player.y += dir.y;
 
     ////Drag-Drop lixo
     // if (dragDrop(lixo)) {
@@ -244,7 +252,7 @@ function DrawFase1()
             player.x = player.oldX;
             player.y = player.oldY;
         }
-    });
+    })
 
     // Verifica a colisão com lixeira
     lixeiras.forEach(lixeira => {
@@ -417,10 +425,15 @@ function DrawFase2()
     player.oldY = player.y;
 
     //// Movimento
-    if (keyIsDown(87) || keyIsDown(UP_ARROW)) player.y -= 3; // 87 ASCII -> W
-    if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) player.y += 3; // 83 ASCII -> S
-    if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) player.x -= 3; // 65 ASCII -> A
-    if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) player.x += 3; // 68 ASCII -> D
+    if (keyIsDown(87) || keyIsDown(UP_ARROW)) player.y -= 4; // 87 ASCII -> W
+    if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) player.y += 4; // 83 ASCII -> S
+    if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) player.x -= 4; // 65 ASCII -> A
+    if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) player.x += 4; // 68 ASCII -> D
+
+    if ((keyIsDown(87) || keyIsDown(UP_ARROW)) && keyIsDown(65) || keyIsDown(LEFT_ARROW)) player.y -= 2; // W + A -> Cima esquerda
+    if ((keyIsDown(87) || keyIsDown(UP_ARROW)) && keyIsDown(68) || keyIsDown(RIGHT_ARROW)) player.y -= 2; // W + D -> Cima direita
+    if ((keyIsDown(83) || keyIsDown(DOWN_ARROW)) && keyIsDown(65) || keyIsDown(LEFT_ARROW)) player.y += 2; // S + A -> Baixo esquerda
+    if ((keyIsDown(83) || keyIsDown(DOWN_ARROW)) && keyIsDown(68) || keyIsDown(RIGHT_ARROW)) player.y += 2; // S + D -> Baixo direita
 
     ////Drag-Drop lixo
     // if (dragDrop(lixo)) {
