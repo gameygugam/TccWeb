@@ -12,6 +12,10 @@ let canvas_x, canvas_y;
 let fase;
 
 function preload() {
+    // Carrega a imagem do player
+    playerImg = loadImage("imagens/Castor.png");
+    mapasImg = [];
+
     PreloadMenu(); // Pré carrega as imagens do Menu
     PreloadFase1(); // Pré carrega as imagens do Minigame 1
     PreloadFase2(); // Pré carrega as imagens do Minigame 1
@@ -20,6 +24,22 @@ function preload() {
 
 function setup() {
     fase = "menu";
+
+    player = { x: windowWidth / 2 - 50, y: windowHeight - 120, w: 100, h: 100, oldX: windowWidth / 2, oldY: windowHeight - 120, class: "player" };
+
+    walls = [
+        wall1 = { x: 0, y: 0, w: windowWidth, h: 10, class: "wall" }, // Parede superior
+        wall2 = { x: 0, y: 0, w: 10, h: windowHeight, class: "wall" }, // Parede esquerda
+        wall3 = { x: windowWidth - 10, y: 0, w: 10, h: windowHeight, class: "wall" }, //Parede direita
+        wall4 = { x: 0, y: windowHeight - 10, w: windowWidth , h: 10, class: "wall" } //Parede baixo
+    ];
+
+    canvas = createCanvas(windowWidth, windowHeight);
+    noSmooth();
+    canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
+    canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
+    canvas.position(canvas_x, canvas_y);
+
     SetupMenu();
     SetupFase1();
     SetupFase2();
@@ -50,69 +70,122 @@ function keyPressed()
 //MENU-----------------------------------------------------------------------------------------------------------------
 function PreloadMenu()
 {
-
+    mapasImg.push(mapa1 = loadImage("imagens/mapas/mapaPrototipo.png"));
 }
 
 function SetupMenu()
 {
-    botoes = [];
-
-    botoes.push(botaoMenuIniciar = { x: (windowWidth / 2) - 200, y: 500, w: 400, h: 100, class: "botao" });
-    botaoIniciar = botoes[0];
-
-    botoes.push(botao_menu_fase_1 = { x: (windowWidth / 2) - 200, y: 650, w: 200, h: 50, class: "botao" });
-    botao_menu_fase_1 = botoes[1];
-
-    botoes.push(botao_menu_fase_2 = { x: (windowWidth / 2), y: 650, w: 200, h: 50, class: "botao" });
-    botao_menu_fase_2 = botoes[2];
+    // botoes = [];
+    // botoes.push(botaoMenuIniciar = { x: (windowWidth / 2) - 200, y: 500, w: 400, h: 100, class: "botao" });
+    // botaoIniciar = botoes[0];
+    // botoes.push(botao_menu_fase_1 = { x: (windowWidth / 2) - 200, y: 650, w: 200, h: 50, class: "botao" });
+    // botao_menu_fase_1 = botoes[1];
+    // botoes.push(botao_menu_fase_2 = { x: (windowWidth / 2), y: 650, w: 200, h: 50, class: "botao" });
+    // botao_menu_fase_2 = botoes[2];
 }
 
 function DrawMenu()
 {
-    background(30);
+    //// Cria o mapa
+    image(mapasImg[0], 0, 0, windowWidth, windowHeight);
 
-    // Cria o texto do Menu
-    fill(255, 255, 255);
-    textSize(200);
-    text("Menu", windowWidth / 2 - 250, 300);
+    //// Armazena posição antiga
+    player.oldX = player.x;
+    player.oldY = player.y;
 
+    //// Movimento
+    Movimentar();
 
-    // Cria o botão para iniciar o jogo
-    fill(255, 255, 255);
-    rect(botaoIniciar.x, botaoIniciar.y, botaoIniciar.w, botaoIniciar.h);
+    //// Desenha o player
+    image(playerImg, player.x, player.y, 100, 100);
+
+    //// Verifica colisão com parede
+    walls.forEach(wall => {
+        if (Colidiu(player, wall)) {
+            player.x = player.oldX;
+            player.y = player.oldY;
+        }
+    })
+    
+    // // Visualizar paredes
+    // walls.forEach(wall => {
+    //     fill(0, 255, 0);
+    //     rect(wall.x, wall.y, wall.w, wall.h);
+    // });
+
     fill(0, 0, 0);
-    textSize(100);
-    text("Iniciar", botaoIniciar.x + 63, botaoIniciar.y + 85); // Cria o texto e centraliza no botão
+    rect(0, windowHeight/2 - 100, 35, 200);
+    let portaEsquerda = {x: 0, y: windowHeight/2 - 100, w: 35, h: 200};
 
-    // Cria o botão para fase 1 do jogo
-    fill(255, 255, 255);
-    rect(botao_menu_fase_1.x, botao_menu_fase_1.y, botao_menu_fase_1.w, botao_menu_fase_1.h);
     fill(0, 0, 0);
-    textSize(50);
-    text("Fase 1", botao_menu_fase_1.x + 23, botao_menu_fase_1.y + 42); // Cria o texto e centraliza no botão
+    rect(windowWidth/2 - 100, 0, 200, 35);
+    let portaMeio = {x: windowWidth/2 - 100, y: 0, w: 200, h: 35};
 
-    // Cria o botão para fase 2 do jogo
-    fill(255, 255, 255);
-    rect(botao_menu_fase_2.x, botao_menu_fase_2.y, botao_menu_fase_2.w, botao_menu_fase_2.h);
     fill(0, 0, 0);
-    textSize(50);
-    text("Fase 2", botao_menu_fase_2.x + 23, botao_menu_fase_2.y + 42); // Cria o texto e centraliza no botão
+    rect(windowWidth - 50, windowHeight/2 - 100, 35, 200);
+    let portaDireita = {x: windowWidth - 50, y: windowHeight/2 - 100, w: 35, h: 200};
+
+    // Verifica a colisão com as portas para mudar fase
+    if (Colidiu(player, portaEsquerda))
+    {
+        fase = "fase1";
+        player.x = windowWidth / 2 - 50;
+        player.y = windowHeight - 120;
+    }
+    else if (Colidiu(player, portaMeio))
+    {
+        fase = "fase2";
+        player.x = windowWidth / 2 - 50;
+        player.y = windowHeight - 120;
+    }
+    else if (Colidiu(player, portaDireita)) 
+    {
+        fase = "fase1";
+        player.x = 20;
+        player.y = windowHeight / 2 - 50;
+    }
     
 
-    // Verifica se o mouse clicou no botão
-    if (mouseIsPressed &&
-        mouseX <= botao_menu_fase_1.x + botao_menu_fase_1.w
-        && mouseX >= botao_menu_fase_1.x
-        && mouseY <= botao_menu_fase_1.y + botao_menu_fase_1.h
-        && mouseY >= botao_menu_fase_1.y)
-        fase = "fase1";
+    // // Cria o texto do Menu
+    // fill(255, 255, 255);
+    // textSize(200);
+    // text("Menu", windowWidth / 2 - 250, 300);
 
-    else if (mouseIsPressed &&
-        mouseX <= botao_menu_fase_2.x + botao_menu_fase_2.w
-        && mouseX >= botao_menu_fase_2.x
-        && mouseY <= botao_menu_fase_2.y + botao_menu_fase_2.h
-        && mouseY >= botao_menu_fase_2.y)
-        fase = "fase2";
+    // // Cria o botão para iniciar o jogo
+    // fill(255, 255, 255);
+    // rect(botaoIniciar.x, botaoIniciar.y, botaoIniciar.w, botaoIniciar.h);
+    // fill(0, 0, 0);
+    // textSize(100);
+    // text("Iniciar", botaoIniciar.x + 63, botaoIniciar.y + 85); // Cria o texto e centraliza no botão
+
+    // // Cria o botão para fase 1 do jogo
+    // fill(255, 255, 255);
+    // rect(botao_menu_fase_1.x, botao_menu_fase_1.y, botao_menu_fase_1.w, botao_menu_fase_1.h);
+    // fill(0, 0, 0);
+    // textSize(50);
+    // text("Fase 1", botao_menu_fase_1.x + 23, botao_menu_fase_1.y + 42); // Cria o texto e centraliza no botão
+
+    // // Cria o botão para fase 2 do jogo
+    // fill(255, 255, 255);
+    // rect(botao_menu_fase_2.x, botao_menu_fase_2.y, botao_menu_fase_2.w, botao_menu_fase_2.h);
+    // fill(0, 0, 0);
+    // textSize(50);
+    // text("Fase 2", botao_menu_fase_2.x + 23, botao_menu_fase_2.y + 42); // Cria o texto e centraliza no botão
+
+    // // Verifica se o mouse clicou no botão
+    // if (mouseIsPressed &&
+    //     mouseX <= botao_menu_fase_1.x + botao_menu_fase_1.w
+    //     && mouseX >= botao_menu_fase_1.x
+    //     && mouseY <= botao_menu_fase_1.y + botao_menu_fase_1.h
+    //     && mouseY >= botao_menu_fase_1.y)
+    //     fase = "fase1";
+
+    // else if (mouseIsPressed &&
+    //     mouseX <= botao_menu_fase_2.x + botao_menu_fase_2.w
+    //     && mouseX >= botao_menu_fase_2.x
+    //     && mouseY <= botao_menu_fase_2.y + botao_menu_fase_2.h
+    //     && mouseY >= botao_menu_fase_2.y)
+    //     fase = "fase2";
 }
 //MENU-----------------------------------------------------------------------------------------------------------------
 
@@ -137,9 +210,7 @@ function DrawPause()
 function PreloadFase1()
 {
     // Carrega a imagem do mapa1
-    mapasImg = [ mapa1 = loadImage("imagens/mapas/mapaPrototipo.png") ];
-    // Carrega a imagem do player
-    playerImg = loadImage("imagens/Castor.png");
+    mapasImg.push(mapa2 = loadImage("imagens/mapas/mapaPrototipo.png"));
     // Carrega as imagens das lixeiras
     lixeiras_img = [
         lixeira_vermelha = loadImage("imagens/lixeiras/lixeiraVermelha.png"),
@@ -187,24 +258,6 @@ function SetupFase1()
 {
     lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: loadImage(""), type: "null", class: "lixo" };
 
-    canvas = createCanvas(windowWidth, windowHeight);
-    
-    noSmooth();
-
-    pontos = 0;
-    pegouLixo = false;
-    canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
-    canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
-    canvas.position(canvas_x, canvas_y);
-
-    player = { x: 50, y: 50, w: 100, h: 100, oldX: 50, oldY: 50, class: "player" };
-    walls = null;
-    walls = [
-        wall1 = { x: 0, y: 0, w: windowWidth, h: 10, class: "wall" }, // Parede superior
-        wall2 = { x: 0, y: 0, w: 10, h: windowHeight, class: "wall" }, // Parede esquerda
-        wall3 = { x: windowWidth - 10, y: 0, w: 10, h: windowHeight, class: "wall" }, //Parede direita
-        wall4 = { x: 0, y: windowHeight - 10, w: windowWidth , h: 10, class: "wall" } //Parede baixo
-    ];
     lixeiras = [
         lixeira_vermelha = { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
         lixeira_azul = { x:  windowWidth - 100, y: windowHeight / 2 + 275, w: 100, h: 100, img: "imagens/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
@@ -213,12 +266,14 @@ function SetupFase1()
         lixeira_marrom = { x: windowWidth - 100, y: windowHeight / 2, w: 100, h: 100, img: "imagens/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" }
     ];
     lixos = [];
+    pontos = 0;
 }
 
 function DrawFase1()
 {
     // background(0, 100, 0);
     image(mapasImg[0], 0, 0, windowWidth, windowHeight);
+    
     ////repõe a quantidade de lixo no mapa
     if(lixos.length < 10) CriarLixo()
 
@@ -227,18 +282,7 @@ function DrawFase1()
     player.oldY = player.y;
 
     //// Movimento
-    let dir = createVector(0, 0);
-    if (keyIsDown(87) || keyIsDown(UP_ARROW)) dir.y -= 1;
-    if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) dir.y += 1;
-    if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) dir.x -= 1;
-    if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) dir.x += 1;
-    // Normaliza o vetor para não alterar a velocidade do personagem. EX: W = 4, S = 4; W + S != 8; W + S = 4
-    if (dir.mag() > 0) {
-        dir.normalize();
-        dir.mult(3);
-    }
-    player.x += dir.x;
-    player.y += dir.y;
+    Movimentar();
 
     ////Drag-Drop lixo
     // if (dragDrop(lixo)) {
@@ -286,11 +330,6 @@ function DrawFase1()
         })
     }
 
-    ////Mostra a imagem do lixo
-    // if (Colidiu(player, lixo)) {
-    //     image(lixo.img, lixo.x, lixo.y, lixo.w, lixo.h);
-    // }
-
     // Checa se o botao de espaco foi pressionado
     PegarLixo(player, lixos);
     MostrarLixoReal();
@@ -302,10 +341,10 @@ function DrawFase1()
     
     lixos.forEach(lixo => { image(lixo.imgCarregada, lixo.x, lixo.y, lixo.w, lixo.h) });
 
-    walls.forEach(wall => {
-        fill(0, 255, 0);
-        rect(wall.x, wall.y, wall.w, wall.h);
-    });
+    // walls.forEach(wall => {
+    //     fill(0, 255, 0);
+    //     rect(wall.x, wall.y, wall.w, wall.h);
+    // });
 
     // Mostra a pontuação na tela
     fill(0, 0, 0);
@@ -386,34 +425,16 @@ function CriarLixo() {
     /*lixos[lixos.length - 1].x = random(lixo_x + 50, (lixo_x + width) - 200);
     lixos[lixos.length - 1].y = random(lixo_y + 50, (lixo_y + height) - 50);*/
 }
-// FASE 1--------------------------------------------------------------------------------------------------------------
+// FASE 1---------------------------------------------------------------------------------------------------------------
 
 // FASE 2--------------------------------------------------------------------------------------------------------------
 function PreloadFase2()
 {
-    // Carrega a imagem do player
-    playerImg = loadImage("imagens/Castor.png");
+
 }
 
 function SetupFase2()
 {
-    canvas = createCanvas(windowWidth, windowHeight);
-    noSmooth();
-
-    pontos = 0;
-    canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
-    canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
-    canvas.position(canvas_x, canvas_y);
-
-    player = { x: 50, y: 50, w: 100, h: 100, oldX: 50, oldY: 50, class: "player" };
-
-    walls = null;
-    walls = [
-        wall1 = { x: 0, y: 0, w: windowWidth, h: 10, class: "wall" }, // Parede superior
-        wall2 = { x: 0, y: 0, w: 10, h: windowHeight, class: "wall" }, // Parede esquerda
-        wall3 = { x: windowWidth - 10, y: 0, w: 10, h: windowHeight, class: "wall" }, //Parede direita
-        wall4 = { x: 0, y: windowHeight - 10, w: windowWidth , h: 10, class: "wall" } //Parede baixo
-    ];
 }
 
 function DrawFase2()
@@ -425,15 +446,7 @@ function DrawFase2()
     player.oldY = player.y;
 
     //// Movimento
-    if (keyIsDown(87) || keyIsDown(UP_ARROW)) player.y -= 4; // 87 ASCII -> W
-    if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) player.y += 4; // 83 ASCII -> S
-    if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) player.x -= 4; // 65 ASCII -> A
-    if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) player.x += 4; // 68 ASCII -> D
-
-    if ((keyIsDown(87) || keyIsDown(UP_ARROW)) && keyIsDown(65) || keyIsDown(LEFT_ARROW)) player.y -= 2; // W + A -> Cima esquerda
-    if ((keyIsDown(87) || keyIsDown(UP_ARROW)) && keyIsDown(68) || keyIsDown(RIGHT_ARROW)) player.y -= 2; // W + D -> Cima direita
-    if ((keyIsDown(83) || keyIsDown(DOWN_ARROW)) && keyIsDown(65) || keyIsDown(LEFT_ARROW)) player.y += 2; // S + A -> Baixo esquerda
-    if ((keyIsDown(83) || keyIsDown(DOWN_ARROW)) && keyIsDown(68) || keyIsDown(RIGHT_ARROW)) player.y += 2; // S + D -> Baixo direita
+    Movimentar();
 
     ////Drag-Drop lixo
     // if (dragDrop(lixo)) {
@@ -464,7 +477,23 @@ function DrawFase2()
 }
 // FASE 2--------------------------------------------------------------------------------------------------------------
 
-function windowResized() {
+function Movimentar() 
+{
+    let dir = createVector(0, 0);
+    if (keyIsDown(87) || keyIsDown(UP_ARROW)) dir.y -= 1;
+    if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) dir.y += 1;
+    if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) dir.x -= 1;
+    if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) dir.x += 1;
+    // Normaliza o vetor para não alterar a velocidade do personagem. EX: W = 4, S = 4; W + S != 8; W + S = 4
+    if (dir.mag() > 0) {
+        dir.normalize();
+        dir.mult(3);
+    }
+    player.x += dir.x;
+    player.y += dir.y;    
+}
+function windowResized() 
+{
     resizeCanvas(windowWidth, windowHeight);
 
     canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
@@ -472,7 +501,8 @@ function windowResized() {
     canvas.position(canvas_x, canvas_y);
 }
 
-function Colidiu(a, b) {
+function Colidiu(a, b) 
+{
     return (
         a.x < b.x + b.w &&
         a.x + a.w > b.x &&
