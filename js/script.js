@@ -13,7 +13,7 @@ let fase;
 
 function preload() {
     // Carrega a imagem do player
-    playerImg = loadImage("imagens/Castor.png");
+    playerImg = loadImage("imagens/castor.png");
     mapasImg = [];
 
     PreloadMenu(); // Pré carrega as imagens do Menu
@@ -70,7 +70,7 @@ function keyPressed()
 //MENU-----------------------------------------------------------------------------------------------------------------
 function PreloadMenu()
 {
-    mapasImg.push(mapa1 = loadImage("imagens/mapas/mapaPrototipo.png"));
+    mapasImg[0] = mapa1 = loadImage("imagens/mapas/mapaPrototipo.png");
 }
 
 function SetupMenu()
@@ -210,7 +210,7 @@ function DrawPause()
 function PreloadFase1()
 {
     // Carrega a imagem do mapa1
-    mapasImg.push(mapa2 = loadImage("imagens/mapas/mapaPrototipo.png"));
+    mapasImg[1] = mapa2 = loadImage("imagens/mapas/mapaPrototipo.png");
     // Carrega as imagens das lixeiras
     lixeiras_img = [
         lixeira_vermelha = loadImage("imagens/lixeiras/lixeiraVermelha.png"),
@@ -256,7 +256,7 @@ function PreloadFase1()
 
 function SetupFase1()
 {
-    lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: loadImage(""), type: "null", class: "lixo" };
+    lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
 
     lixeiras = [
         lixeira_vermelha = { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
@@ -272,7 +272,7 @@ function SetupFase1()
 function DrawFase1()
 {
     // background(0, 100, 0);
-    image(mapasImg[0], 0, 0, windowWidth, windowHeight);
+    image(mapasImg[1], 0, 0, windowWidth, windowHeight);
     
     ////repõe a quantidade de lixo no mapa
     if(lixos.length < 10) CriarLixo()
@@ -393,7 +393,7 @@ function CriarLixo() {
 
     //let lixo = [0, 0, 25, 25, "", "", ""] //x, y, w, h, img, type, class
     let lixo_img = "";
-    let lixo_img_carregada = loadImage("");
+    let lixo_img_carregada = null;
     let lixo_type = "";
         
     let rnd = floor(random(5));

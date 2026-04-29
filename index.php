@@ -6,7 +6,6 @@
     <!-- Escolhe o script usado -->
     <link rel="stylesheet" href="css/style.css">
     <script src="js/p5.js"></script>
-    <script src="js/p5.min.js"></script>
     <script src="js/script.js"></script>
 
     <title>TccWeb</title>
