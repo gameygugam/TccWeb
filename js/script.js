@@ -25,7 +25,7 @@ function preload() {
 }
 
 function setup() {
-    fase = "fase2";
+    fase = "menu";
 
     player = { x: windowWidth / 2 - 50, y: windowHeight - 120, w: 100, h: 100, oldX: windowWidth / 2, oldY: windowHeight - 120, class: "player" };
 
@@ -67,6 +67,8 @@ function keyPressed()
         fase = "pause";
     if (fase === "pause" && keyCode === ESCAPE)
         fase = "fase1";
+
+    if (fase === "fase2") keyPressed2();
 }
 
 //MENU-----------------------------------------------------------------------------------------------------------------
@@ -335,13 +337,24 @@ function DrawFase1()
     // Checa se o botao de espaco foi pressionado
     PegarLixo(player, lixos);
     MostrarLixoReal();
+    RotacionarLixo();
 
     ////Desenha personagem, lixo e parede
     image(playerImg, player.x, player.y, player.w, player.h);
 
     lixeiras.forEach((lixeira, i) => { image(lixeiras_img[i], lixeira.x, lixeira.y, lixeira.w, lixeira.h) });
     
-    lixos.forEach(lixo => { image(lixo.imgCarregada, lixo.x, lixo.y, lixo.w, lixo.h) });
+    lixos.forEach(lixo =>{
+        push();
+
+        translate(lixo.x + lixo.w / 2, lixo.y + lixo.h / 2);
+        rotate(lixo.angulo);
+        imageMode(CENTER);
+
+        image(lixo.imgCarregada, 0, 0, lixo.w, lixo.h);
+
+        pop();
+    })
 
     // walls.forEach(wall => {
     //     fill(0, 255, 0);
@@ -365,7 +378,7 @@ function PegarLixo(player_funcao, lixos_funcao) {
                 LastItemPego = lixo;
                 // window.alert(lastLixoPego.type);
             }
-            else if (!keyIsDown(32)) LastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
+            else if (!keyIsDown(32)) LastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
         })
     )
 }
@@ -408,7 +421,9 @@ function CriarLixo() {
     else if (rnd == 2 || rnd == 3) lixo_type = "organico" //0 -> BananaPodre
     else if (rnd == 4) lixo_type = "plastico" //0 -> GarrafaDePlastico
 
-    lixos.push({ x: lixo_x, y: lixo_y, w: 25, h: 25, img: lixo_img, imgCarregada: lixo_img_carregada, type: lixo_type, class: "lixo" }); 
+    let lixo_angulo = random(TWO_PI)
+
+    lixos.push({ x: lixo_x, y: lixo_y, w: 25, h: 25, img: lixo_img, imgCarregada: lixo_img_carregada, type: lixo_type, class: "lixo", angulo: lixo_angulo }); 
 
     /*lixos[lixos.length - 1].img = lixosPixelImg[lixos.length - 1]; // Adiciona imagem pixel no parametro
     lixos[lixos.length - 1].imgCarregada = lixosPixelImgCarregados[lixos.length - 1]; // Adiciona imagem pixel carregada no parametro
@@ -427,6 +442,13 @@ function CriarLixo() {
     /*lixos[lixos.length - 1].x = random(lixo_x + 50, (lixo_x + width) - 200);
     lixos[lixos.length - 1].y = random(lixo_y + 50, (lixo_y + height) - 50);*/
 }
+
+function RotacionarLixo() {
+    if (keyIsDown(82) && LastItemPego.type != "null") { // 82 = tecla 'R'
+        LastItemPego.angulo += 0.1; // gira aos poucos
+    }
+}
+
 // FASE 1---------------------------------------------------------------------------------------------------------------
 
 // FASE 2--------------------------------------------------------------------------------------------------------------
@@ -509,7 +531,7 @@ function DrawFase2()
     text(pontos, windowWidth - 100, 100);
 }
 
-function keyPressed() {
+function keyPressed2() {
     if (key === 'r' || key === 'R') {
         if (LastItemPego.type != "null") {
             LastItemPego.angulo += HALF_PI; // 90 graus
