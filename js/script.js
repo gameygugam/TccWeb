@@ -1,7 +1,9 @@
-let player, walls, lixos, lixeiras;
+let player, walls
+let lixos, lixeiras;
+let cadeiras;
 let botoes;
 let playerImg, lixoImg;
-let pegouLixo, lastLixoPego;
+let pegouLixo, LastItemPego;
 let banana, bananaPodre, garrafaVidro, bolinhaPapel;
 let cartazProcuradoLixo;
 let pontos;
@@ -23,7 +25,7 @@ function preload() {
 }
 
 function setup() {
-    fase = "menu";
+    fase = "fase2";
 
     player = { x: windowWidth / 2 - 50, y: windowHeight - 120, w: 100, h: 100, oldX: windowWidth / 2, oldY: windowHeight - 120, class: "player" };
 
@@ -256,7 +258,7 @@ function PreloadFase1()
 
 function SetupFase1()
 {
-    lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
+    LastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
 
     lixeiras = [
         lixeira_vermelha = { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
@@ -316,16 +318,16 @@ function DrawFase1()
     })
 
     // Verifica se o lixo está na lixeira certa
-    if (lastLixoPego && Colidiu(player, lastLixoPego)) // o lastLixoPego no 'if' verifica se o objeto está vazio ou não
+    if (LastItemPego && Colidiu(player, LastItemPego)) // o lastLixoPego no 'if' verifica se o objeto está vazio ou não
     {
         lixeiras.forEach(lixeira => {
-            if (lastLixoPego && Colidiu(lastLixoPego, lixeira)) {
-                if (lastLixoPego.type === lixeira.descarte)
+            if (LastItemPego && Colidiu(LastItemPego, lixeira)) {
+                if (LastItemPego.type === lixeira.descarte)
                     pontos += 10;
                 else
                     pontos -= 5;
-                lixos = lixos.filter(obj => obj !== lastLixoPego);
-                lastLixoPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
+                lixos = lixos.filter(obj => obj !== LastItemPego);
+                LastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
             }
         })
     }
@@ -356,31 +358,31 @@ function DrawFase1()
 function PegarLixo(player_funcao, lixos_funcao) {
     return (
         lixos_funcao.forEach(lixo => {
-            if (keyIsDown(32) && Colidiu(player_funcao, lixo) && (lastLixoPego == lixo || lastLixoPego.type == "null")) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
+            if (keyIsDown(32) && Colidiu(player_funcao, lixo) && (LastItemPego == lixo || LastItemPego.type == "null")) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
                 lixo.x = player_funcao.x + player_funcao.w - 10;
                 lixo.y = player_funcao.y + player_funcao.h / 2;
                 pegouLixo = true;
-                lastLixoPego = lixo;
+                LastItemPego = lixo;
                 // window.alert(lastLixoPego.type);
             }
-            else if (!keyIsDown(32)) lastLixoPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
+            else if (!keyIsDown(32)) LastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
         })
     )
 }
 
 function MostrarLixoReal() {
-    if (lastLixoPego && Colidiu(player, lastLixoPego)) {// o lastLixoPego no 'if' verifica se o objeto está vazio ou não
-        image(cartazProcuradoLixo, lastLixoPego.x, lastLixoPego.y - 75, 200, 300); // Mostra o cartaz de procurado
+    if (LastItemPego && Colidiu(player, LastItemPego)) {// o lastLixoPego no 'if' verifica se o objeto está vazio ou não
+        image(cartazProcuradoLixo, LastItemPego.x, LastItemPego.y - 75, 200, 300); // Mostra o cartaz de procurado
 
         // Verifica e mostra os lixos reais
-        if(lastLixoPego.type === "papel")
-            image(lixosReaisCarregados[0], lastLixoPego.x, lastLixoPego.y, 200, 200);
-        else if(lastLixoPego.type === "vidro")
-            image(lixosReaisCarregados[1], lastLixoPego.x, lastLixoPego.y, 150, 200);
-        else if (lastLixoPego.type === "organico")
-            image(lixosReaisCarregados[2], lastLixoPego.x, lastLixoPego.y, 200, 200);
-        else if (lastLixoPego.type === "plastico")
-            image(lixosReaisCarregados[3], lastLixoPego.x, lastLixoPego.y, 200, 200);
+        if(LastItemPego.type === "papel")
+            image(lixosReaisCarregados[0], LastItemPego.x, LastItemPego.y, 200, 200);
+        else if(LastItemPego.type === "vidro")
+            image(lixosReaisCarregados[1], LastItemPego.x, LastItemPego.y, 150, 200);
+        else if (LastItemPego.type === "organico")
+            image(lixosReaisCarregados[2], LastItemPego.x, LastItemPego.y, 200, 200);
+        else if (LastItemPego.type === "plastico")
+            image(lixosReaisCarregados[3], LastItemPego.x, LastItemPego.y, 200, 200);
     }
 }
 
@@ -435,11 +437,16 @@ function PreloadFase2()
 
 function SetupFase2()
 {
+    cadeiras = []
 }
 
 function DrawFase2()
 {
     background(0, 100, 0);
+
+    if(cadeiras.length < 10){
+        CriarCadeiras()
+    } 
 
     //// Armazena posição antiga
     player.oldX = player.x;
@@ -454,6 +461,11 @@ function DrawFase2()
     //     lixo.y = mouseY - lixo.h / 2;
     // }
 
+    PegarCadeira(player, cadeiras);
+    if (LastItemPego.type != "null") {
+    //RotacionarCadeira();
+}
+
     //// Verifica colisão com parede
     walls.forEach(wall => {
         if (Colidiu(player, wall)) {
@@ -465,6 +477,27 @@ function DrawFase2()
     ////Desenha personagem
     image(playerImg, player.x, player.y, player.w, player.h);
 
+    //Desenha as cadeiras
+    cadeiras.forEach(cadeira => {
+    push();
+
+    translate(cadeira.x + cadeira.w / 2, cadeira.y + cadeira.h / 2);
+    rotate(cadeira.angulo || 0);
+    imageMode(CENTER);
+
+    image(cadeira.imgCarregada, 0, 0, cadeira.w, cadeira.h);
+
+    pop();
+    });
+    
+    cadeiras.forEach(cadeira => {
+        if (!keyIsDown(32) && Colidiu(player, cadeira)) {
+            fill(255, 0, 0);
+            textSize(16);
+            text("Segure espaço", cadeira.x - 10, cadeira.y - 10);
+        }
+    })
+
     walls.forEach(wall => {
         fill(0, 255, 0);
         rect(wall.x, wall.y, wall.w, wall.h);
@@ -475,6 +508,71 @@ function DrawFase2()
     textSize(50);
     text(pontos, windowWidth - 100, 100);
 }
+
+function keyPressed() {
+    if (key === 'r' || key === 'R') {
+        if (LastItemPego.type != "null") {
+            LastItemPego.angulo += HALF_PI; // 90 graus
+        }
+    }
+}
+
+function CriarCadeiras() {
+    let dif_x = ((windowWidth - width) / 2);
+    let dif_y = ((windowHeight - height) / 2);
+
+    let cadeira_x;
+    let cadeira_y;
+
+    let tentativas = 0;
+    let posicao_possivel = false;
+    
+    while (!posicao_possivel && tentativas < 100){
+
+        posicao_possivel = true;
+        cadeira_x = random(dif_x + 50, (dif_x + width) - 200);
+        cadeira_y = random(dif_y + 50, (dif_y + height) - 50);
+
+        cadeiras.forEach(cadeira => {
+            if (Math.abs(cadeira.x - cadeira_x) < 50 && Math.abs(cadeira.y - cadeira_y) < 50) {
+                posicao_possivel = false;
+            }
+        })
+    }
+    
+
+    //let lixo = [0, 0, 25, 25, "", "", ""] //x, y, w, h, img, type, class
+    let cadeira_img = "";
+    let cadeira_img_carregada = null;
+
+    cadeira_img_carregada = lixosPixelImgCarregados[0]
+    //lixo_img = lixosPixelImgCarregados[rnd]
+
+    cadeiras.push({ x: cadeira_x, y: cadeira_y, w: 25, h: 25, img: cadeira_img, imgCarregada: cadeira_img_carregada, class: "cadeira", angulo: 0 }); 
+
+}
+
+function PegarCadeira(player_funcao, cadeiras_funcao) {
+    return (
+        cadeiras_funcao.forEach(cadeira => {
+            if (keyIsDown(32) && Colidiu(player_funcao, cadeira) && (LastItemPego == cadeira || LastItemPego.type == "null")) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
+                cadeira.x = player_funcao.x + player_funcao.w - 10;
+                cadeira.y = player_funcao.y + player_funcao.h / 2;
+                pegouLixo = true;
+                LastItemPego = cadeira;
+                // window.alert(lastLixoPego.type);
+            }
+            else if (!keyIsDown(32)) LastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
+        })
+    )
+}
+
+// function RotacionarCadeira() {
+//     if (keyIsDown(82) && LastItemPego.type != "null") { // 82 = tecla 'R'
+//         LastItemPego.angulo += 0.25; // gira aos poucos
+//     }
+// }
+
 // FASE 2--------------------------------------------------------------------------------------------------------------
 
 function Movimentar() 
