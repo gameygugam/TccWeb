@@ -8,6 +8,8 @@ let banana, bananaPodre, garrafaVidro, bolinhaPapel;
 let cartazProcuradoLixo;
 let pontos;
 let mapasImg;
+let lixosPixelCarregados, lixosReaisCarregados, cadeirasCarregadas;
+let lixeiras_img;
 
 let canvas; //Cria a tela do Jogo [Gustavo bot esqueceu de atribuir a tela em uma variável]
 let canvas_x, canvas_y;
@@ -25,7 +27,7 @@ function preload() {
 }
 
 function setup() {
-    fase = "menu";
+    fase = "fase2";
 
     player = { x: windowWidth / 2 - 50, y: windowHeight - 120, w: 100, h: 100, oldX: windowWidth / 2, oldY: windowHeight - 120, class: "player" };
 
@@ -217,11 +219,11 @@ function PreloadFase1()
     mapasImg[1] = mapa2 = loadImage("imagens/mapas/mapaPrototipo.png");
     // Carrega as imagens das lixeiras
     lixeiras_img = [
-        lixeira_vermelha = loadImage("imagens/lixeiras/lixeiraVermelha.png"),
-        lixeira_azul = loadImage("imagens/lixeiras/lixeiraAzul.png"),
-        lixeira_amarela = loadImage("imagens/lixeiras/lixeiraAmarela.png"),
-        lixeira_verde = loadImage("imagens/lixeiras/lixeiraVerde.png"),
-        lixeira_marrom = loadImage("imagens/lixeiras/lixeiraMarrom.png")
+        loadImage("imagens/lixeiras/lixeiraVermelha.png"),
+        loadImage("imagens/lixeiras/lixeiraAzul.png"),
+        loadImage("imagens/lixeiras/lixeiraAmarela.png"),
+        loadImage("imagens/lixeiras/lixeiraVerde.png"),
+        loadImage("imagens/lixeiras/lixeiraMarrom.png")
     ];
     /*
     // Sorteia em uma lista os diretórios das imagens dos lixos pixel art
@@ -239,20 +241,20 @@ function PreloadFase1()
     ];*/
 
     lixosPixelImgCarregados = [
-        bolinhaPapel = loadImage("imagens/lixos/bolinhaDePapelPixel.png"),
-        garrafaVidro = loadImage("imagens/lixos/garrafaVidroPixel.png"),
-        banana = loadImage("imagens/lixos/bananaPixel.png"),
-        bananaPodre = loadImage("imagens/lixos/bananaPodrePixel.png"),
-        garrafaPlastico = loadImage("imagens/lixos/garrafaDePlasticoPixel.png"),
+        loadImage("imagens/lixos/bolinhaDePapelPixel.png"),
+        loadImage("imagens/lixos/garrafaVidroPixel.png"),
+        loadImage("imagens/lixos/bananaPixel.png"),
+        loadImage("imagens/lixos/bananaPodrePixel.png"),
+        loadImage("imagens/lixos/garrafaDePlasticoPixel.png"),
     ];
     
     // Carrega as imagens dos lixos reais
     lixosReaisCarregados = [
-        bolinhaPapel = loadImage("imagens/lixos/bolinhaDePapel.png"), //0
-        garrafaVidro = loadImage("imagens/lixos/garrafaVidro.png"), //1
-        //banana = loadImage("imagens/lixos/banana.png"), //2
-        bananaPodre = loadImage("imagens/lixos/bananaPodre.png"), //3 -> 2
-        garrafaPlastico = loadImage("imagens/lixos/garrafaDePlastico.png") //4 -> 3
+        loadImage("imagens/lixos/bolinhaDePapel.png"), //0
+        loadImage("imagens/lixos/garrafaVidro.png"), //1
+        // loadImage("imagens/lixos/banana.png"), //2
+        loadImage("imagens/lixos/bananaPodre.png"), //3 -> 2
+        loadImage("imagens/lixos/garrafaDePlastico.png") //4 -> 3
     ]
     // Carrega a imagem do cartaz de procurado
     cartazProcuradoLixo = loadImage("imagens/cartazProcuradoLixo.png");
@@ -263,11 +265,11 @@ function SetupFase1()
     LastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
 
     lixeiras = [
-        lixeira_vermelha = { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
-        lixeira_azul = { x:  windowWidth - 100, y: windowHeight / 2 + 275, w: 100, h: 100, img: "imagens/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
-        lixeira_amarela = { x:  windowWidth - 100, y: windowHeight / 2 - 125, w: 100, h: 100, img: "imagens/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
-        lixeira_verde = { x:  windowWidth - 100, y: windowHeight / 2 - 275, w: 100, h: 100, img: "imagens/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
-        lixeira_marrom = { x: windowWidth - 100, y: windowHeight / 2, w: 100, h: 100, img: "imagens/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" }
+        { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
+        { x:  windowWidth - 100, y: windowHeight / 2 + 275, w: 100, h: 100, img: "imagens/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
+        { x:  windowWidth - 100, y: windowHeight / 2 - 125, w: 100, h: 100, img: "imagens/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
+        { x:  windowWidth - 100, y: windowHeight / 2 - 275, w: 100, h: 100, img: "imagens/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
+        { x: windowWidth - 100, y: windowHeight / 2, w: 100, h: 100, img: "imagens/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" }
     ];
     lixos = [];
     pontos = 0;
@@ -407,9 +409,9 @@ function CriarLixo() {
     let lixo_y = random(dif_y + 50, (dif_y + height) - 50);
 
     //let lixo = [0, 0, 25, 25, "", "", ""] //x, y, w, h, img, type, class
-    let lixo_img = "";
+    let lixo_img = null;
     let lixo_img_carregada = null;
-    let lixo_type = "";
+    let lixo_type = null;
         
     let rnd = floor(random(5));
 
@@ -454,12 +456,21 @@ function RotacionarLixo() {
 // FASE 2--------------------------------------------------------------------------------------------------------------
 function PreloadFase2()
 {
-
+    
 }
 
 function SetupFase2()
 {
-    cadeiras = []
+    cadeiras = [];
+    cadeirasCarregadas = [
+        loadImage("imagens/cadeiras/cadeiraFrente.png"),
+        loadImage("imagens/cadeiras/cadeiraAng220.png"),
+        loadImage("imagens/cadeiras/cadeiraEsquerda.png"),
+        loadImage("imagens/cadeiras/cadeiraFrente.png"),
+        loadImage("imagens/cadeiras/cadeiraCostas.png"),
+        loadImage("imagens/cadeiras/cadeiraFrente.png"),
+        loadImage("imagens/cadeiras/cadeiraAng310.png"),
+    ]
 }
 
 function DrawFase2()
@@ -484,7 +495,7 @@ function DrawFase2()
     // }
 
     PegarCadeira(player, cadeiras);
-    if (LastItemPego.type != "null") {
+    if (LastItemPego) {
     //RotacionarCadeira();
 }
 
@@ -501,15 +512,16 @@ function DrawFase2()
 
     //Desenha as cadeiras
     cadeiras.forEach(cadeira => {
-    push();
+        let rnd = floor(random(7));
+        push();
 
-    translate(cadeira.x + cadeira.w / 2, cadeira.y + cadeira.h / 2);
-    rotate(cadeira.angulo || 0);
-    imageMode(CENTER);
+        translate(cadeira.x + cadeira.w / 2, cadeira.y + cadeira.h / 2);
+        rotate(cadeira.angulo || 0);
+        imageMode(CENTER);
 
-    image(cadeira.imgCarregada, 0, 0, cadeira.w, cadeira.h);
+        image(cadeira.imgCarregada, 0, 0, cadeira.w, cadeira.h);
 
-    pop();
+        pop();
     });
     
     cadeiras.forEach(cadeira => {
@@ -533,8 +545,35 @@ function DrawFase2()
 
 function keyPressed2() {
     if (key === 'r' || key === 'R') {
-        if (LastItemPego.type != "null") {
-            LastItemPego.angulo += HALF_PI; // 90 graus
+        // ROTAÇÂO DE IMAGEM
+        if (LastItemPego) {
+            LastItemPego.angulo += HALF_PI - (HALF_PI / 2); // 45 graus
+
+            if (LastItemPego.angulo > PI + PI) {
+                lastItemPego.angulo = 0;
+            }
+            if (LastItemPego.angulo === 0) {
+                LastItemPego.imgCarregada = cadeirasCarregadas[0];
+            }
+            else if (LastItemPego.angulo === HALF_PI) {
+                LastItemPego.imgCarregada = cadeirasCarregadas[1];
+            }
+            else if (LastItemPego.angulo === HALF_PI / 2) {
+                LastItemPego.imgCarregada = cadeirasCarregadas[2];
+            }
+            else if (LastItemPego.angulo === PI - (HALF_PI / 2)) {
+                LastItemPego.imgCarregada = cadeirasCarregadas[3];
+            }
+            else if (LastItemPego.angulo === PI) {
+                LastItemPego.imgCarregada = cadeirasCarregadas[4];
+            }
+            else if (LastItemPego.angulo === PI + (HALF_PI / 2)) {
+                LastItemPego.imgCarregada = cadeirasCarregadas[5];
+            }
+            else if (LastItemPego.angulo === PI + HALF_PI) {
+                LastItemPego.imgCarregada = cadeirasCarregadas[6];
+            }
+            
         }
     }
 }
@@ -549,6 +588,8 @@ function CriarCadeiras() {
     let tentativas = 0;
     let posicao_possivel = false;
     
+    const rnd = floor(random(7));
+
     while (!posicao_possivel && tentativas < 100){
 
         posicao_possivel = true;
@@ -564,13 +605,13 @@ function CriarCadeiras() {
     
 
     //let lixo = [0, 0, 25, 25, "", "", ""] //x, y, w, h, img, type, class
-    let cadeira_img = "";
+    let cadeira_img = null;
     let cadeira_img_carregada = null;
 
-    cadeira_img_carregada = lixosPixelImgCarregados[0]
+    cadeira_img_carregada = cadeirasCarregadas[rnd];
     //lixo_img = lixosPixelImgCarregados[rnd]
 
-    cadeiras.push({ x: cadeira_x, y: cadeira_y, w: 25, h: 25, img: cadeira_img, imgCarregada: cadeira_img_carregada, class: "cadeira", angulo: 0 }); 
+    cadeiras.push({ x: cadeira_x, y: cadeira_y, w: 75, h: 75, img: cadeira_img, imgCarregada: cadeira_img_carregada, class: "cadeira", angulo: 0 }); 
 
 }
 
