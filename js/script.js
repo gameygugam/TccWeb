@@ -690,3 +690,13 @@ function Colidiu(a, b)
     //         && mouseY >= a.y
     //     );
     // }
+
+ window.addEventListener("click", () => {
+    const musica = document.getElementById("music");
+
+    if (musica) {
+        musica.volume = 0.3;
+        musica.play().catch(() => {});
+        console.log("tocou");
+    }
+}, { once: true });
