@@ -1,4 +1,5 @@
 let player, walls
+let LastItemPego_OldX, LastItemPego_OldY;
 let lixos, lixeiras;
 let cadeiras;
 let botoes;
@@ -287,6 +288,9 @@ function DrawFase1()
     player.oldX = player.x;
     player.oldY = player.y;
 
+    LastItemPego_OldX = lixo.x;
+    LastItemPego_OldY = lixo.y;
+
     //// Movimento
     Movimentar();
 
@@ -298,7 +302,7 @@ function DrawFase1()
 
     //// Verifica colisão com parede
     walls.forEach(wall => {
-        if (Colidiu(player, wall)) {
+        if (Colidiu(player, wall) || Colidiu(LastItemPego, wall)) {
             player.x = player.oldX;
             player.y = player.oldY;
         }
@@ -446,7 +450,11 @@ function CriarLixo() {
 }
 
 function RotacionarLixo() {
-    if (keyIsDown(82) && LastItemPego.type != "null") { // 82 = tecla 'R'
+    if (keyIsDown(81) && LastItemPego.type != "null") { // 82 = tecla 'Q'
+        LastItemPego.angulo -= 0.1; // gira aos poucos
+    }
+
+    else if (keyIsDown(69) && LastItemPego.type != "null") { // 82 = tecla 'E'
         LastItemPego.angulo += 0.1; // gira aos poucos
     }
 }
@@ -463,13 +471,14 @@ function SetupFase2()
 {
     cadeiras = [];
     cadeirasCarregadas = [
-        loadImage("imagens/cadeiras/cadeiraFrente.png"),
-        loadImage("imagens/cadeiras/cadeiraAng220.png"),
-        loadImage("imagens/cadeiras/cadeiraEsquerda.png"),
-        loadImage("imagens/cadeiras/cadeiraFrente.png"),
-        loadImage("imagens/cadeiras/cadeiraCostas.png"),
-        loadImage("imagens/cadeiras/cadeiraFrente.png"),
-        loadImage("imagens/cadeiras/cadeiraAng310.png"),
+        loadImage("imagens/cadeiras/cadeira_0.png"),
+        loadImage("imagens/cadeiras/cadeira_1.png"),
+        loadImage("imagens/cadeiras/cadeira_2.png"),
+        loadImage("imagens/cadeiras/cadeira_2.png"),
+        loadImage("imagens/cadeiras/cadeira_4.png"),
+        loadImage("imagens/cadeiras/cadeira_4.png"),
+        loadImage("imagens/cadeiras/cadeira_6.png"),
+        loadImage("imagens/cadeiras/cadeira_7.png"),
     ]
 }
 
@@ -484,6 +493,10 @@ function DrawFase2()
     //// Armazena posição antiga
     player.oldX = player.x;
     player.oldY = player.y;
+
+    //// Armazena posição antiga
+    LastItemPego_OldX = LastItemPego.x;
+    LastItemPego_OldY = LastItemPego.y;
 
     //// Movimento
     Movimentar();
@@ -501,14 +514,16 @@ function DrawFase2()
 
     //// Verifica colisão com parede
     walls.forEach(wall => {
-        if (Colidiu(player, wall)) {
+        if (Colidiu(player, wall) || Colidiu(LastItemPego, wall)) {
             player.x = player.oldX;
             player.y = player.oldY;
         }
-    });
 
-    ////Desenha personagem
-    image(playerImg, player.x, player.y, player.w, player.h);
+        if (Colidiu(LastItemPego, wall)) {
+            LastItemPego.x = LastItemPego_OldX;
+            LastItemPego.y = LastItemPego_OldY;
+        } 
+    });
 
     //Desenha as cadeiras
     cadeiras.forEach(cadeira => {
@@ -516,7 +531,7 @@ function DrawFase2()
         push();
 
         translate(cadeira.x + cadeira.w / 2, cadeira.y + cadeira.h / 2);
-        rotate(cadeira.angulo || 0);
+        rotate(cadeira.angulo);
         imageMode(CENTER);
 
         image(cadeira.imgCarregada, 0, 0, cadeira.w, cadeira.h);
@@ -537,6 +552,9 @@ function DrawFase2()
         rect(wall.x, wall.y, wall.w, wall.h);
     });
 
+    ////Desenha personagem
+    image(playerImg, player.x, player.y, player.w, player.h);
+
     // Mostra a pontuação na tela
     fill(0, 0, 0);
     textSize(50);
@@ -544,35 +562,26 @@ function DrawFase2()
 }
 
 function keyPressed2() {
-    if (key === 'r' || key === 'R') {
+    if (key === 'q' || key === 'Q') {
+
         // ROTAÇÂO DE IMAGEM
         if (LastItemPego) {
-            LastItemPego.angulo += HALF_PI - (HALF_PI / 2); // 45 graus
 
-            if (LastItemPego.angulo > PI + PI) {
-                lastItemPego.angulo = 0;
-            }
-            if (LastItemPego.angulo === 0) {
-                LastItemPego.imgCarregada = cadeirasCarregadas[0];
-            }
-            else if (LastItemPego.angulo === HALF_PI) {
-                LastItemPego.imgCarregada = cadeirasCarregadas[1];
-            }
-            else if (LastItemPego.angulo === HALF_PI / 2) {
-                LastItemPego.imgCarregada = cadeirasCarregadas[2];
-            }
-            else if (LastItemPego.angulo === PI - (HALF_PI / 2)) {
-                LastItemPego.imgCarregada = cadeirasCarregadas[3];
-            }
-            else if (LastItemPego.angulo === PI) {
-                LastItemPego.imgCarregada = cadeirasCarregadas[4];
-            }
-            else if (LastItemPego.angulo === PI + (HALF_PI / 2)) {
-                LastItemPego.imgCarregada = cadeirasCarregadas[5];
-            }
-            else if (LastItemPego.angulo === PI + HALF_PI) {
-                LastItemPego.imgCarregada = cadeirasCarregadas[6];
-            }
+            LastItemPego.variante--;
+            if (LastItemPego.variante < 0) LastItemPego.variante = 7;
+            LastItemPego.imgCarregada = cadeirasCarregadas[LastItemPego.variante];
+
+        }
+    }
+
+    else if (key === 'e' || key === 'E') {
+
+        // ROTAÇÂO DE IMAGEM
+        if (LastItemPego) {
+
+            LastItemPego.variante++;
+            if (LastItemPego.variante > 7) LastItemPego.variante = 0;
+            LastItemPego.imgCarregada = cadeirasCarregadas[LastItemPego.variante];
             
         }
     }
@@ -588,7 +597,7 @@ function CriarCadeiras() {
     let tentativas = 0;
     let posicao_possivel = false;
     
-    const rnd = floor(random(7));
+    let cadeira_variante = floor(random(7));
 
     while (!posicao_possivel && tentativas < 100){
 
@@ -608,10 +617,10 @@ function CriarCadeiras() {
     let cadeira_img = null;
     let cadeira_img_carregada = null;
 
-    cadeira_img_carregada = cadeirasCarregadas[rnd];
+    cadeira_img_carregada = cadeirasCarregadas[cadeira_variante];
     //lixo_img = lixosPixelImgCarregados[rnd]
 
-    cadeiras.push({ x: cadeira_x, y: cadeira_y, w: 75, h: 75, img: cadeira_img, imgCarregada: cadeira_img_carregada, class: "cadeira", angulo: 0 }); 
+    cadeiras.push({ x: cadeira_x, y: cadeira_y, w: 75, h: 75, img: cadeira_img, imgCarregada: cadeira_img_carregada, class: "cadeira", variante: cadeira_variante }); 
 
 }
 
@@ -625,7 +634,7 @@ function PegarCadeira(player_funcao, cadeiras_funcao) {
                 LastItemPego = cadeira;
                 // window.alert(lastLixoPego.type);
             }
-            else if (!keyIsDown(32)) LastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
+            else if (!keyIsDown(32)) LastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "cadeira", variante:0 };
         })
     )
 }
