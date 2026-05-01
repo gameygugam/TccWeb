@@ -1,0 +1,30 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    margin: 0;    
+    background-image: url("../Imagens/MenuFundo.png");
+    background-repeat: no-repeat;
+    background-position: center ;
+    background-size: cover;
+   
+}
+
+.caixa_login {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+}
+
+.bentrar{
+    background-color: aqua;
+    
+    
+}
+
+.bcriar{
+    background-color: rgb(100, 237, 107);
+}
