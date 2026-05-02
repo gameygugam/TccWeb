@@ -1,5 +1,6 @@
 let player, shift_esquerdo, walls
 let LastItemPego_OldX, LastItemPego_OldY;
+let timer_segundos, timer_ticks;
 let lixos, lixeiras;
 let cadeiras;
 let botoes;
@@ -276,7 +277,7 @@ function PreloadFase1()
 
 function SetupFase1()
 {
-    LastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
+    LastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
 
     lixeiras = [
         { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
@@ -287,6 +288,9 @@ function SetupFase1()
     ];
     lixos = [];
     pontos = 0;
+
+    //timer_segundos = 120;
+    //timer_ticks = 1200;
 }
 
 function DrawFase1()
@@ -348,7 +352,7 @@ function DrawFase1()
                 else
                     pontos -= 5;
                 lixos = lixos.filter(obj => obj !== LastItemPego);
-                LastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
+                LastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
             }
         })
     }
@@ -384,7 +388,7 @@ function DrawFase1()
     fill(0, 0, 0);
     textSize(50);
     text(pontos, windowWidth - 100, 100);
-    text("Opa tudo bom", windowWidth - 200,  200);
+    
 }
 
 // Funções Fase 1
@@ -494,6 +498,9 @@ function SetupFase2()
         loadImage("imagens/cadeiras/cadeira_6.png"),
         loadImage("imagens/cadeiras/cadeira_7.png"),
     ]
+
+    timer_segundos = 60;
+    timer_ticks = 3600;
 }
 
 function DrawFase2()
@@ -571,13 +578,20 @@ function DrawFase2()
     if (player.dash_cooldown > 0) player.dash_cooldown--;
     if (player.dash_duracao > 0) player.dash_duracao--;
 
+    timer_ticks--;
+    if (timer_ticks % 60 === 0) timer_segundos--;
+
     // Mostra a pontuação na tela
     fill(0, 0, 0);
     textSize(50);
+    text(timer_segundos, 100, 100);
+    text(timer_ticks, 300, 100);
     text(pontos, windowWidth - 100, 100);
+
     if (player.dash_cooldown <= 50 && player.dash_cooldown >= 41) fill(255, 0, 0)
     else if (player.dash_cooldown <= 40 && player.dash_cooldown >= 30) fill(0, 255, 0)
     else if (player.dash_cooldown < 30) fill(255, 0, 0)
+
     text(player.dash_cooldown, 50, windowHeight - 50);
 }
 
@@ -594,29 +608,17 @@ function keyPressed2() {
         }
     }
 
-    if (key === 'e' || key === 'E') {
+    else if (key === 'e' || key === 'E') {
 
         // ROTAÇÂO DE IMAGEM
         if (LastItemPego) {
 
-            LastItemPego.variante--;
-            if (LastItemPego.variante < 0) LastItemPego.variante = 7;
+            LastItemPego.variante++;
+            if (LastItemPego.variante < 7) LastItemPego.variante = 0;
             LastItemPego.imgCarregada = cadeirasCarregadas[LastItemPego.variante];
 
         }
     }
-
-    // if (event.code === 'ShiftLeft') {
-
-    //     // ROTAÇÂO DE IMAGEM
-    //     if (LastItemPego) {
-
-    //         LastItemPego.variante++;
-    //         if (LastItemPego.variante > 7) LastItemPego.variante = 0;
-    //         LastItemPego.imgCarregada = cadeirasCarregadas[LastItemPego.variante];
-            
-    //     }
-    // }
 }
 
 function CriarCadeiras() {
