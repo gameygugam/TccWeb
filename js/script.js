@@ -1,4 +1,4 @@
-let player, walls
+let player, shift_esquerdo, walls
 let LastItemPego_OldX, LastItemPego_OldY;
 let lixos, lixeiras;
 let cadeiras;
@@ -30,7 +30,9 @@ function preload() {
 function setup() {
     fase = "fase2";
 
-    player = { x: windowWidth / 2 - 50, y: windowHeight - 120, w: 100, h: 100, oldX: windowWidth / 2, oldY: windowHeight - 120, class: "player" };
+    player = { x: windowWidth / 2 - 50, y: windowHeight - 120, w: 100, h: 100, oldX: windowWidth / 2, oldY: windowHeight - 120, class: "player", dash_cooldown: 80, dash_duracao: 0 };
+
+
 
     walls = [
         wall1 = { x: 0, y: 0, w: windowWidth, h: 10, class: "wall" }, // Parede superior
@@ -72,6 +74,16 @@ function keyPressed()
         fase = "fase1";
 
     if (fase === "fase2") keyPressed2();
+
+    if (event.code === "ShiftLeft") {
+        shift_esquerdo = true;
+    }
+}
+
+function keyReleased(event) {
+    if (event.code === "ShiftLeft") {
+        shift_esquerdo = false;
+    }
 }
 
 //MENU-----------------------------------------------------------------------------------------------------------------
@@ -194,6 +206,7 @@ function DrawMenu()
     //     && mouseY >= botao_menu_fase_2.y)
     //     fase = "fase2";
 }
+
 //MENU-----------------------------------------------------------------------------------------------------------------
 
 //PAUSE----------------------------------------------------------------------------------------------------------------
@@ -371,6 +384,7 @@ function DrawFase1()
     fill(0, 0, 0);
     textSize(50);
     text(pontos, windowWidth - 100, 100);
+    text("Opa tudo bom", windowWidth - 200,  200);
 }
 
 // Funções Fase 1
@@ -554,11 +568,17 @@ function DrawFase2()
 
     ////Desenha personagem
     image(playerImg, player.x, player.y, player.w, player.h);
+    if (player.dash_cooldown > 0) player.dash_cooldown--;
+    if (player.dash_duracao > 0) player.dash_duracao--;
 
     // Mostra a pontuação na tela
     fill(0, 0, 0);
     textSize(50);
     text(pontos, windowWidth - 100, 100);
+    if (player.dash_cooldown <= 50 && player.dash_cooldown >= 41) fill(255, 0, 0)
+    else if (player.dash_cooldown <= 40 && player.dash_cooldown >= 30) fill(0, 255, 0)
+    else if (player.dash_cooldown < 30) fill(255, 0, 0)
+    text(player.dash_cooldown, 50, windowHeight - 50);
 }
 
 function keyPressed2() {
@@ -574,17 +594,29 @@ function keyPressed2() {
         }
     }
 
-    else if (key === 'e' || key === 'E') {
+    if (key === 'e' || key === 'E') {
 
         // ROTAÇÂO DE IMAGEM
         if (LastItemPego) {
 
-            LastItemPego.variante++;
-            if (LastItemPego.variante > 7) LastItemPego.variante = 0;
+            LastItemPego.variante--;
+            if (LastItemPego.variante < 0) LastItemPego.variante = 7;
             LastItemPego.imgCarregada = cadeirasCarregadas[LastItemPego.variante];
-            
+
         }
     }
+
+    // if (event.code === 'ShiftLeft') {
+
+    //     // ROTAÇÂO DE IMAGEM
+    //     if (LastItemPego) {
+
+    //         LastItemPego.variante++;
+    //         if (LastItemPego.variante > 7) LastItemPego.variante = 0;
+    //         LastItemPego.imgCarregada = cadeirasCarregadas[LastItemPego.variante];
+            
+    //     }
+    // }
 }
 
 function CriarCadeiras() {
@@ -657,7 +689,29 @@ function Movimentar()
     // Normaliza o vetor para não alterar a velocidade do personagem. EX: W = 4, S = 4; W + S != 8; W + S = 4
     if (dir.mag() > 0) {
         dir.normalize();
-        dir.mult(3);
+        //dir.mult(3);
+        if ((player.dash_cooldown <= 50 && player.dash_cooldown >= 41) && shift_esquerdo){
+            player.dash_cooldown = 300
+            player.dash_duracao = 10
+        }
+
+        else if ((player.dash_cooldown <= 40 && player.dash_cooldown >= 30) && shift_esquerdo){
+            player.dash_cooldown = 250
+            player.dash_duracao = 10
+            pontos++;
+        }
+
+        else if (player.dash_cooldown < 30 && shift_esquerdo){
+            player.dash_cooldown = 300
+            player.dash_duracao = 10
+        }
+
+        if (player.dash_duracao === 9 || player.dash_duracao === 8) dir.mult(9)
+        else if (player.dash_duracao === 7 || player.dash_duracao === 6) dir.mult(12)
+        else if (player.dash_duracao === 5 || player.dash_duracao === 4) dir.mult(12)
+        else if (player.dash_duracao === 3 || player.dash_duracao === 2) dir.mult(9)
+        else if (player.dash_duracao === 1) dir.mult(6)
+        else if (player.dash_duracao === 0) dir.mult(3)
     }
     player.x += dir.x;
     player.y += dir.y;    
@@ -679,6 +733,11 @@ function Colidiu(a, b)
         a.y < b.y + b.h &&
         a.y + a.h > b.y
     );
+
+
+
+
+
 }
 
 /*function SortearLixoPixel() {

@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css"> 
+    <script src="js/script.js"></script>
+    <script src="js/p5.js"></script>
     
     <title>TCCWEB</title>
 </head>
@@ -22,7 +24,7 @@
 
         <button type="submit" class="bcriar" onclick="window.location.href='PHP/login.php'">
          Entrar conta 
-       </button> <br> <br>
+        </button> <br> <br>
     </form>
     </div>
 
@@ -33,11 +35,10 @@
 
 
 </body>
-<script src="js/script.js"></script>
 </html>
 
  <?php
     if (isset($_GET['erro'])) {
-        echo "<p style='color:red'>Login inválido</p>";
+       echo "<p style='color:red'>Login inválido</p>";
     }
     ?>
