@@ -700,12 +700,10 @@ function Colidiu(a, b)
     //     );
     // }
 
- window.addEventListener("click", () => {
+ window.addEventListener("click", () => { //Dando play na musica de fundo quando clica em um lugar aleatório da tela
     const musica = document.getElementById("music");
-
     if (musica) {
-        musica.volume = 0.3;
+        musica.volume = 0.3; 
         musica.play().catch(() => {});
-        console.log("tocou");
     }
 }, { once: true });
