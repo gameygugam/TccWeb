@@ -1,4 +1,5 @@
-let player, shift_esquerdo, walls
+let is_fase_carregada;
+let player, walls, shift_esquerdo, tecla_esc;
 let LastItemPego_OldX, LastItemPego_OldY;
 let timer_segundos, timer_ticks;
 let lixos, lixeiras;
@@ -29,11 +30,10 @@ function preload() {
 }
 
 function setup() {
-    fase = "fase2";
+    fase = "menu";
+    is_fase_carregada = false;
 
     player = { x: windowWidth / 2 - 50, y: windowHeight - 120, w: 100, h: 100, oldX: windowWidth / 2, oldY: windowHeight - 120, class: "player", dash_cooldown: 80, dash_duracao: 0 };
-
-
 
     walls = [
         wall1 = { x: 0, y: 0, w: windowWidth, h: 10, class: "wall" }, // Parede superior
@@ -63,6 +63,13 @@ function draw() {
         DrawFase2(); // Desenha o Minigame 2
     else if(fase === "pause")
         DrawPause(); // Desenha o menu de Pause
+
+    Dash();
+    fill(0, 0, 0)
+    textSize(50)
+    text(pontos, windowWidth - 100, 100);
+
+    if (fase !== "menu" && tecla_esc) fase = "menu";
 }
 
 function keyPressed()
@@ -79,11 +86,19 @@ function keyPressed()
     if (event.code === "ShiftLeft") {
         shift_esquerdo = true;
     }
+
+    if (event.code === "Escape") {
+        tecla_esc = true;
+    }
 }
 
 function keyReleased(event) {
     if (event.code === "ShiftLeft") {
         shift_esquerdo = false;
+    }
+
+    if (event.code === "Escape") {
+        tecla_esc = false;
     }
 }
 
@@ -102,6 +117,9 @@ function SetupMenu()
     // botao_menu_fase_1 = botoes[1];
     // botoes.push(botao_menu_fase_2 = { x: (windowWidth / 2), y: 650, w: 200, h: 50, class: "botao" });
     // botao_menu_fase_2 = botoes[2];
+
+    timer_segundos = 0;
+    timer_ticks = 0;
 }
 
 function DrawMenu()
@@ -164,7 +182,6 @@ function DrawMenu()
         player.x = 20;
         player.y = windowHeight / 2 - 50;
     }
-    
 
     // // Cria o texto do Menu
     // fill(255, 255, 255);
@@ -232,6 +249,7 @@ function PreloadFase1()
 {
     // Carrega a imagem do mapa1
     mapasImg[1] = mapa2 = loadImage("imagens/mapas/mapaPrototipo.png");
+
     // Carrega as imagens das lixeiras
     lixeiras_img = [
         loadImage("imagens/lixeiras/lixeiraVermelha.png"),
@@ -240,6 +258,7 @@ function PreloadFase1()
         loadImage("imagens/lixeiras/lixeiraVerde.png"),
         loadImage("imagens/lixeiras/lixeiraMarrom.png")
     ];
+
     /*
     // Sorteia em uma lista os diretórios das imagens dos lixos pixel art
     lixosPixelImg = [
@@ -287,17 +306,25 @@ function SetupFase1()
         { x: windowWidth - 100, y: windowHeight / 2, w: 100, h: 100, img: "imagens/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" }
     ];
     lixos = [];
-    pontos = 0;
 
-    //timer_segundos = 120;
-    //timer_ticks = 1200;
+    pontos = 0;
+    timer_segundos = 0;
+    timer_ticks = 0;
 }
 
 function DrawFase1()
 {
+
+    if (!is_fase_carregada) {
+        timer_ticks = 3600;
+        timer_segundos = 60;
+        pontos = 0;
+        is_fase_carregada = true;
+    }
+
     // background(0, 100, 0);
     image(mapasImg[1], 0, 0, windowWidth, windowHeight);
-    
+
     ////repõe a quantidade de lixo no mapa
     if(lixos.length < 10) CriarLixo()
 
@@ -305,8 +332,8 @@ function DrawFase1()
     player.oldX = player.x;
     player.oldY = player.y;
 
-    LastItemPego_OldX = lixo.x;
-    LastItemPego_OldY = lixo.y;
+    LastItemPego_OldX = LastItemPego.x;
+    LastItemPego_OldY = LastItemPego.y;
 
     //// Movimento
     Movimentar();
@@ -362,9 +389,6 @@ function DrawFase1()
     MostrarLixoReal();
     RotacionarLixo();
 
-    ////Desenha personagem, lixo e parede
-    image(playerImg, player.x, player.y, player.w, player.h);
-
     lixeiras.forEach((lixeira, i) => { image(lixeiras_img[i], lixeira.x, lixeira.y, lixeira.w, lixeira.h) });
     
     lixos.forEach(lixo =>{
@@ -384,11 +408,22 @@ function DrawFase1()
     //     rect(wall.x, wall.y, wall.w, wall.h);
     // });
 
-    // Mostra a pontuação na tela
-    fill(0, 0, 0);
-    textSize(50);
-    text(pontos, windowWidth - 100, 100);
-    
+    ////Desenha personagem
+    image(playerImg, player.x, player.y, player.w, player.h);
+
+    TimerTick("Fase1");
+}
+
+function Dash(){
+
+    if (player.dash_cooldown > 0) player.dash_cooldown--;
+    if (player.dash_duracao > 0) player.dash_duracao--;
+
+    if (player.dash_cooldown <= 50 && player.dash_cooldown >= 41) fill(255, 0, 0)
+    else if (player.dash_cooldown <= 40 && player.dash_cooldown >= 30) fill(0, 255, 0)
+    else if (player.dash_cooldown < 30) fill(255, 0, 0)
+
+    text(player.dash_cooldown, 50, windowHeight - 50);
 }
 
 // Funções Fase 1
@@ -469,11 +504,11 @@ function CriarLixo() {
 
 function RotacionarLixo() {
     if (keyIsDown(81) && LastItemPego.type != "null") { // 82 = tecla 'Q'
-        LastItemPego.angulo -= 0.1; // gira aos poucos
+        LastItemPego.angulo += 0.1; // gira aos poucos
     }
 
     else if (keyIsDown(69) && LastItemPego.type != "null") { // 82 = tecla 'E'
-        LastItemPego.angulo += 0.1; // gira aos poucos
+        LastItemPego.angulo -= 0.1; // gira aos poucos
     }
 }
 
@@ -498,13 +533,16 @@ function SetupFase2()
         loadImage("imagens/cadeiras/cadeira_6.png"),
         loadImage("imagens/cadeiras/cadeira_7.png"),
     ]
-
-    timer_segundos = 60;
-    timer_ticks = 3600;
 }
 
 function DrawFase2()
 {
+    if(timer_ticks === 3600) {
+        pontos = 0;
+        timer_ticks = 0;
+        timer_segundos = 0;
+    }
+
     background(0, 100, 0);
 
     if(cadeiras.length < 10){
@@ -575,24 +613,8 @@ function DrawFase2()
 
     ////Desenha personagem
     image(playerImg, player.x, player.y, player.w, player.h);
-    if (player.dash_cooldown > 0) player.dash_cooldown--;
-    if (player.dash_duracao > 0) player.dash_duracao--;
 
-    timer_ticks--;
-    if (timer_ticks % 60 === 0) timer_segundos--;
-
-    // Mostra a pontuação na tela
-    fill(0, 0, 0);
-    textSize(50);
-    text(timer_segundos, 100, 100);
-    text(timer_ticks, 300, 100);
-    text(pontos, windowWidth - 100, 100);
-
-    if (player.dash_cooldown <= 50 && player.dash_cooldown >= 41) fill(255, 0, 0)
-    else if (player.dash_cooldown <= 40 && player.dash_cooldown >= 30) fill(0, 255, 0)
-    else if (player.dash_cooldown < 30) fill(255, 0, 0)
-
-    text(player.dash_cooldown, 50, windowHeight - 50);
+    TimerTick("Fase2");
 }
 
 function keyPressed2() {
@@ -718,6 +740,7 @@ function Movimentar()
     player.x += dir.x;
     player.y += dir.y;    
 }
+
 function windowResized() 
 {
     resizeCanvas(windowWidth, windowHeight);
@@ -725,6 +748,32 @@ function windowResized()
     canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
     canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
     canvas.position(canvas_x, canvas_y);
+}
+
+function TimerTick(fase_funcao){
+
+    if (fase_funcao === "Fase1"){
+        timer_ticks--;
+        if (timer_ticks % 60 === 0) timer_segundos--;
+        if (timer_segundos <= 0) {
+            fase = 'menu';
+            is_fase_carregada = false;
+        }
+    }
+
+    else if (fase_funcao === "Fase2"){
+        timer_ticks++;
+        if (timer_ticks % 60 === 0) {
+            timer_ticks = 0;
+            timer_segundos++;
+        }
+    }
+
+    fill(0, 0, 0);
+        textSize(50);
+        text(timer_segundos, 100, 100);
+        text(timer_ticks, 300, 100);
+
 }
 
 function Colidiu(a, b) 
@@ -735,11 +784,6 @@ function Colidiu(a, b)
         a.y < b.y + b.h &&
         a.y + a.h > b.y
     );
-
-
-
-
-
 }
 
 /*function SortearLixoPixel() {
