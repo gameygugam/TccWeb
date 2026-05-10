@@ -547,7 +547,7 @@ function DrawFase2()
 
     if(cadeiras.length < 10){
         CriarCadeiras()
-    } 
+    }
 
     //// Armazena posição antiga
     player.oldX = player.x;
@@ -636,11 +636,47 @@ function keyPressed2() {
         if (LastItemPego) {
 
             LastItemPego.variante++;
-            if (LastItemPego.variante < 7) LastItemPego.variante = 0;
+            if (LastItemPego.variante > 7) LastItemPego.variante = 0;
             LastItemPego.imgCarregada = cadeirasCarregadas[LastItemPego.variante];
 
         }
     }
+}
+
+function CriarQuadro() {
+
+    let quadro_x;
+    let quadro_y;
+
+    let quadro_width;
+    let quadro_height;
+    
+    let quadro_variante = 1//floor(random(3));
+
+    if (quadro_variante === 1) { //Quadro Superior
+        quadro_x = 0
+        quadro_y = 10
+        quadro_width = windowWidth
+        quadro_height = 10;
+    }
+
+    // walls = [
+    //     wall1 = { x: 0, y: 0, w: windowWidth, h: 10, class: "wall" }, // Parede superior
+    //     wall2 = { x: 0, y: 0, w: 10, h: windowHeight, class: "wall" }, // Parede esquerda
+    //     wall3 = { x: windowWidth - 10, y: 0, w: 10, h: windowHeight, class: "wall" }, //Parede direita
+    //     wall4 = { x: 0, y: windowHeight - 10, w: windowWidth , h: 10, class: "wall" } //Parede baixo
+    // ];
+    
+
+    // //let lixo = [0, 0, 25, 25, "", "", ""] //x, y, w, h, img, type, class
+    // let cadeira_img = null;
+    // let cadeira_img_carregada = null;
+
+    // cadeira_img_carregada = cadeirasCarregadas[cadeira_variante];
+    //lixo_img = lixosPixelImgCarregados[rnd]
+
+    cadeiras.push({ x: quadro_x, y: quadro_y, w: quadro_width, h: quadro_height, class: "quadro", variante: quadro_variante }); 
+
 }
 
 function CriarCadeiras() {
