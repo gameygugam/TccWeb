@@ -1,4 +1,7 @@
-let player, walls
+let is_fase_carregada;
+let player, walls, shift_esquerdo, tecla_esc;
+let LastItemPego_OldX, LastItemPego_OldY;
+let timer_segundos, timer_ticks;
 let lixos, lixeiras;
 let cadeiras;
 let botoes;
@@ -27,9 +30,10 @@ function preload() {
 }
 
 function setup() {
-    fase = "fase2";
+    fase = "menu";
+    is_fase_carregada = false;
 
-    player = { x: windowWidth / 2 - 50, y: windowHeight - 120, w: 100, h: 100, oldX: windowWidth / 2, oldY: windowHeight - 120, class: "player" };
+    player = { x: windowWidth / 2 - 50, y: windowHeight - 120, w: 100, h: 100, oldX: windowWidth / 2, oldY: windowHeight - 120, class: "player", dash_cooldown: 80, dash_duracao: 0 };
 
     walls = [
         wall1 = { x: 0, y: 0, w: windowWidth, h: 10, class: "wall" }, // Parede superior
@@ -59,6 +63,13 @@ function draw() {
         DrawFase2(); // Desenha o Minigame 2
     else if(fase === "pause")
         DrawPause(); // Desenha o menu de Pause
+
+    Dash();
+    fill(0, 0, 0)
+    textSize(50)
+    text(pontos, windowWidth - 100, 100);
+
+    if (fase !== "menu" && tecla_esc) fase = "menu";
 }
 
 function keyPressed()
@@ -71,6 +82,24 @@ function keyPressed()
         fase = "fase1";
 
     if (fase === "fase2") keyPressed2();
+
+    if (event.code === "ShiftLeft") {
+        shift_esquerdo = true;
+    }
+
+    if (event.code === "Escape") {
+        tecla_esc = true;
+    }
+}
+
+function keyReleased(event) {
+    if (event.code === "ShiftLeft") {
+        shift_esquerdo = false;
+    }
+
+    if (event.code === "Escape") {
+        tecla_esc = false;
+    }
 }
 
 //MENU-----------------------------------------------------------------------------------------------------------------
@@ -88,6 +117,9 @@ function SetupMenu()
     // botao_menu_fase_1 = botoes[1];
     // botoes.push(botao_menu_fase_2 = { x: (windowWidth / 2), y: 650, w: 200, h: 50, class: "botao" });
     // botao_menu_fase_2 = botoes[2];
+
+    timer_segundos = 0;
+    timer_ticks = 0;
 }
 
 function DrawMenu()
@@ -150,7 +182,6 @@ function DrawMenu()
         player.x = 20;
         player.y = windowHeight / 2 - 50;
     }
-    
 
     // // Cria o texto do Menu
     // fill(255, 255, 255);
@@ -193,6 +224,7 @@ function DrawMenu()
     //     && mouseY >= botao_menu_fase_2.y)
     //     fase = "fase2";
 }
+
 //MENU-----------------------------------------------------------------------------------------------------------------
 
 //PAUSE----------------------------------------------------------------------------------------------------------------
@@ -217,6 +249,7 @@ function PreloadFase1()
 {
     // Carrega a imagem do mapa1
     mapasImg[1] = mapa2 = loadImage("imagens/mapas/mapaPrototipo.png");
+
     // Carrega as imagens das lixeiras
     lixeiras_img = [
         loadImage("imagens/lixeiras/lixeiraVermelha.png"),
@@ -225,6 +258,7 @@ function PreloadFase1()
         loadImage("imagens/lixeiras/lixeiraVerde.png"),
         loadImage("imagens/lixeiras/lixeiraMarrom.png")
     ];
+
     /*
     // Sorteia em uma lista os diretórios das imagens dos lixos pixel art
     lixosPixelImg = [
@@ -262,7 +296,7 @@ function PreloadFase1()
 
 function SetupFase1()
 {
-    LastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
+    LastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
 
     lixeiras = [
         { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
@@ -272,20 +306,34 @@ function SetupFase1()
         { x: windowWidth - 100, y: windowHeight / 2, w: 100, h: 100, img: "imagens/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" }
     ];
     lixos = [];
+
     pontos = 0;
+    timer_segundos = 0;
+    timer_ticks = 0;
 }
 
 function DrawFase1()
 {
+
+    if (!is_fase_carregada) {
+        timer_ticks = 3600;
+        timer_segundos = 60;
+        pontos = 0;
+        is_fase_carregada = true;
+    }
+
     // background(0, 100, 0);
     image(mapasImg[1], 0, 0, windowWidth, windowHeight);
-    
+
     ////repõe a quantidade de lixo no mapa
     if(lixos.length < 10) CriarLixo()
 
     //// Armazena posição antiga
     player.oldX = player.x;
     player.oldY = player.y;
+
+    LastItemPego_OldX = LastItemPego.x;
+    LastItemPego_OldY = LastItemPego.y;
 
     //// Movimento
     Movimentar();
@@ -298,7 +346,7 @@ function DrawFase1()
 
     //// Verifica colisão com parede
     walls.forEach(wall => {
-        if (Colidiu(player, wall)) {
+        if (Colidiu(player, wall) || Colidiu(LastItemPego, wall)) {
             player.x = player.oldX;
             player.y = player.oldY;
         }
@@ -331,7 +379,7 @@ function DrawFase1()
                 else
                     pontos -= 5;
                 lixos = lixos.filter(obj => obj !== LastItemPego);
-                LastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
+                LastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
             }
         })
     }
@@ -340,9 +388,6 @@ function DrawFase1()
     PegarLixo(player, lixos);
     MostrarLixoReal();
     RotacionarLixo();
-
-    ////Desenha personagem, lixo e parede
-    image(playerImg, player.x, player.y, player.w, player.h);
 
     lixeiras.forEach((lixeira, i) => { image(lixeiras_img[i], lixeira.x, lixeira.y, lixeira.w, lixeira.h) });
     
@@ -363,10 +408,22 @@ function DrawFase1()
     //     rect(wall.x, wall.y, wall.w, wall.h);
     // });
 
-    // Mostra a pontuação na tela
-    fill(0, 0, 0);
-    textSize(50);
-    text(pontos, windowWidth - 100, 100);
+    ////Desenha personagem
+    image(playerImg, player.x, player.y, player.w, player.h);
+
+    TimerTick("Fase1");
+}
+
+function Dash(){
+
+    if (player.dash_cooldown > 0) player.dash_cooldown--;
+    if (player.dash_duracao > 0) player.dash_duracao--;
+
+    if (player.dash_cooldown <= 50 && player.dash_cooldown >= 41) fill(255, 0, 0)
+    else if (player.dash_cooldown <= 40 && player.dash_cooldown >= 30) fill(0, 255, 0)
+    else if (player.dash_cooldown < 30) fill(255, 0, 0)
+
+    text(player.dash_cooldown, 50, windowHeight - 50);
 }
 
 // Funções Fase 1
@@ -446,8 +503,12 @@ function CriarLixo() {
 }
 
 function RotacionarLixo() {
-    if (keyIsDown(82) && LastItemPego.type != "null") { // 82 = tecla 'R'
+    if (keyIsDown(81) && LastItemPego.type != "null") { // 82 = tecla 'Q'
         LastItemPego.angulo += 0.1; // gira aos poucos
+    }
+
+    else if (keyIsDown(69) && LastItemPego.type != "null") { // 82 = tecla 'E'
+        LastItemPego.angulo -= 0.1; // gira aos poucos
     }
 }
 
@@ -463,27 +524,38 @@ function SetupFase2()
 {
     cadeiras = [];
     cadeirasCarregadas = [
-        loadImage("imagens/cadeiras/cadeiraFrente.png"),
-        loadImage("imagens/cadeiras/cadeiraAng220.png"),
-        loadImage("imagens/cadeiras/cadeiraEsquerda.png"),
-        loadImage("imagens/cadeiras/cadeiraFrente.png"),
-        loadImage("imagens/cadeiras/cadeiraCostas.png"),
-        loadImage("imagens/cadeiras/cadeiraFrente.png"),
-        loadImage("imagens/cadeiras/cadeiraAng310.png"),
+        loadImage("imagens/cadeiras/cadeira_0.png"),
+        loadImage("imagens/cadeiras/cadeira_1.png"),
+        loadImage("imagens/cadeiras/cadeira_2.png"),
+        loadImage("imagens/cadeiras/cadeira_2.png"),
+        loadImage("imagens/cadeiras/cadeira_4.png"),
+        loadImage("imagens/cadeiras/cadeira_4.png"),
+        loadImage("imagens/cadeiras/cadeira_6.png"),
+        loadImage("imagens/cadeiras/cadeira_7.png"),
     ]
 }
 
 function DrawFase2()
 {
+    if(timer_ticks === 3600) {
+        pontos = 0;
+        timer_ticks = 0;
+        timer_segundos = 0;
+    }
+
     background(0, 100, 0);
 
     if(cadeiras.length < 10){
         CriarCadeiras()
-    } 
+    }
 
     //// Armazena posição antiga
     player.oldX = player.x;
     player.oldY = player.y;
+
+    //// Armazena posição antiga
+    LastItemPego_OldX = LastItemPego.x;
+    LastItemPego_OldY = LastItemPego.y;
 
     //// Movimento
     Movimentar();
@@ -501,14 +573,16 @@ function DrawFase2()
 
     //// Verifica colisão com parede
     walls.forEach(wall => {
-        if (Colidiu(player, wall)) {
+        if (Colidiu(player, wall) || Colidiu(LastItemPego, wall)) {
             player.x = player.oldX;
             player.y = player.oldY;
         }
-    });
 
-    ////Desenha personagem
-    image(playerImg, player.x, player.y, player.w, player.h);
+        if (Colidiu(LastItemPego, wall)) {
+            LastItemPego.x = LastItemPego_OldX;
+            LastItemPego.y = LastItemPego_OldY;
+        } 
+    });
 
     //Desenha as cadeiras
     cadeiras.forEach(cadeira => {
@@ -516,7 +590,7 @@ function DrawFase2()
         push();
 
         translate(cadeira.x + cadeira.w / 2, cadeira.y + cadeira.h / 2);
-        rotate(cadeira.angulo || 0);
+        rotate(cadeira.angulo);
         imageMode(CENTER);
 
         image(cadeira.imgCarregada, 0, 0, cadeira.w, cadeira.h);
@@ -537,45 +611,72 @@ function DrawFase2()
         rect(wall.x, wall.y, wall.w, wall.h);
     });
 
-    // Mostra a pontuação na tela
-    fill(0, 0, 0);
-    textSize(50);
-    text(pontos, windowWidth - 100, 100);
+    ////Desenha personagem
+    image(playerImg, player.x, player.y, player.w, player.h);
+
+    TimerTick("Fase2");
 }
 
 function keyPressed2() {
-    if (key === 'r' || key === 'R') {
+    if (key === 'q' || key === 'Q') {
+
         // ROTAÇÂO DE IMAGEM
         if (LastItemPego) {
-            LastItemPego.angulo += HALF_PI - (HALF_PI / 2); // 45 graus
 
-            if (LastItemPego.angulo > PI + PI) {
-                lastItemPego.angulo = 0;
-            }
-            if (LastItemPego.angulo === 0) {
-                LastItemPego.imgCarregada = cadeirasCarregadas[0];
-            }
-            else if (LastItemPego.angulo === HALF_PI) {
-                LastItemPego.imgCarregada = cadeirasCarregadas[1];
-            }
-            else if (LastItemPego.angulo === HALF_PI / 2) {
-                LastItemPego.imgCarregada = cadeirasCarregadas[2];
-            }
-            else if (LastItemPego.angulo === PI - (HALF_PI / 2)) {
-                LastItemPego.imgCarregada = cadeirasCarregadas[3];
-            }
-            else if (LastItemPego.angulo === PI) {
-                LastItemPego.imgCarregada = cadeirasCarregadas[4];
-            }
-            else if (LastItemPego.angulo === PI + (HALF_PI / 2)) {
-                LastItemPego.imgCarregada = cadeirasCarregadas[5];
-            }
-            else if (LastItemPego.angulo === PI + HALF_PI) {
-                LastItemPego.imgCarregada = cadeirasCarregadas[6];
-            }
-            
+            LastItemPego.variante--;
+            if (LastItemPego.variante < 0) LastItemPego.variante = 7;
+            LastItemPego.imgCarregada = cadeirasCarregadas[LastItemPego.variante];
+
         }
     }
+
+    else if (key === 'e' || key === 'E') {
+
+        // ROTAÇÂO DE IMAGEM
+        if (LastItemPego) {
+
+            LastItemPego.variante++;
+            if (LastItemPego.variante > 7) LastItemPego.variante = 0;
+            LastItemPego.imgCarregada = cadeirasCarregadas[LastItemPego.variante];
+
+        }
+    }
+}
+
+function CriarQuadro() {
+
+    let quadro_x;
+    let quadro_y;
+
+    let quadro_width;
+    let quadro_height;
+    
+    let quadro_variante = 1//floor(random(3));
+
+    if (quadro_variante === 1) { //Quadro Superior
+        quadro_x = 0
+        quadro_y = 10
+        quadro_width = windowWidth
+        quadro_height = 10;
+    }
+
+    // walls = [
+    //     wall1 = { x: 0, y: 0, w: windowWidth, h: 10, class: "wall" }, // Parede superior
+    //     wall2 = { x: 0, y: 0, w: 10, h: windowHeight, class: "wall" }, // Parede esquerda
+    //     wall3 = { x: windowWidth - 10, y: 0, w: 10, h: windowHeight, class: "wall" }, //Parede direita
+    //     wall4 = { x: 0, y: windowHeight - 10, w: windowWidth , h: 10, class: "wall" } //Parede baixo
+    // ];
+    
+
+    // //let lixo = [0, 0, 25, 25, "", "", ""] //x, y, w, h, img, type, class
+    // let cadeira_img = null;
+    // let cadeira_img_carregada = null;
+
+    // cadeira_img_carregada = cadeirasCarregadas[cadeira_variante];
+    //lixo_img = lixosPixelImgCarregados[rnd]
+
+    cadeiras.push({ x: quadro_x, y: quadro_y, w: quadro_width, h: quadro_height, class: "quadro", variante: quadro_variante }); 
+
 }
 
 function CriarCadeiras() {
@@ -588,7 +689,7 @@ function CriarCadeiras() {
     let tentativas = 0;
     let posicao_possivel = false;
     
-    const rnd = floor(random(7));
+    let cadeira_variante = floor(random(7));
 
     while (!posicao_possivel && tentativas < 100){
 
@@ -608,10 +709,10 @@ function CriarCadeiras() {
     let cadeira_img = null;
     let cadeira_img_carregada = null;
 
-    cadeira_img_carregada = cadeirasCarregadas[rnd];
+    cadeira_img_carregada = cadeirasCarregadas[cadeira_variante];
     //lixo_img = lixosPixelImgCarregados[rnd]
 
-    cadeiras.push({ x: cadeira_x, y: cadeira_y, w: 75, h: 75, img: cadeira_img, imgCarregada: cadeira_img_carregada, class: "cadeira", angulo: 0 }); 
+    cadeiras.push({ x: cadeira_x, y: cadeira_y, w: 75, h: 75, img: cadeira_img, imgCarregada: cadeira_img_carregada, class: "cadeira", variante: cadeira_variante }); 
 
 }
 
@@ -625,7 +726,7 @@ function PegarCadeira(player_funcao, cadeiras_funcao) {
                 LastItemPego = cadeira;
                 // window.alert(lastLixoPego.type);
             }
-            else if (!keyIsDown(32)) LastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo" };
+            else if (!keyIsDown(32)) LastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "cadeira", variante:0 };
         })
     )
 }
@@ -648,11 +749,34 @@ function Movimentar()
     // Normaliza o vetor para não alterar a velocidade do personagem. EX: W = 4, S = 4; W + S != 8; W + S = 4
     if (dir.mag() > 0) {
         dir.normalize();
-        dir.mult(3);
+        //dir.mult(3);
+        if ((player.dash_cooldown <= 50 && player.dash_cooldown >= 41) && shift_esquerdo){
+            player.dash_cooldown = 300
+            player.dash_duracao = 10
+        }
+
+        else if ((player.dash_cooldown <= 40 && player.dash_cooldown >= 30) && shift_esquerdo){
+            player.dash_cooldown = 250
+            player.dash_duracao = 10
+            pontos++;
+        }
+
+        else if (player.dash_cooldown < 30 && shift_esquerdo){
+            player.dash_cooldown = 300
+            player.dash_duracao = 10
+        }
+
+        if (player.dash_duracao === 9 || player.dash_duracao === 8) dir.mult(9)
+        else if (player.dash_duracao === 7 || player.dash_duracao === 6) dir.mult(12)
+        else if (player.dash_duracao === 5 || player.dash_duracao === 4) dir.mult(12)
+        else if (player.dash_duracao === 3 || player.dash_duracao === 2) dir.mult(9)
+        else if (player.dash_duracao === 1) dir.mult(6)
+        else if (player.dash_duracao === 0) dir.mult(3)
     }
     player.x += dir.x;
     player.y += dir.y;    
 }
+
 function windowResized() 
 {
     resizeCanvas(windowWidth, windowHeight);
@@ -660,6 +784,32 @@ function windowResized()
     canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
     canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
     canvas.position(canvas_x, canvas_y);
+}
+
+function TimerTick(fase_funcao){
+
+    if (fase_funcao === "Fase1"){
+        timer_ticks--;
+        if (timer_ticks % 60 === 0) timer_segundos--;
+        if (timer_segundos <= 0) {
+            fase = 'menu';
+            is_fase_carregada = false;
+        }
+    }
+
+    else if (fase_funcao === "Fase2"){
+        timer_ticks++;
+        if (timer_ticks % 60 === 0) {
+            timer_ticks = 0;
+            timer_segundos++;
+        }
+    }
+
+    fill(0, 0, 0);
+        textSize(50);
+        text(timer_segundos, 100, 100);
+        text(timer_ticks, 300, 100);
+
 }
 
 function Colidiu(a, b) 
@@ -690,3 +840,11 @@ function Colidiu(a, b)
     //         && mouseY >= a.y
     //     );
     // }
+
+ window.addEventListener("click", () => { //Dando play na musica de fundo quando clica em um lugar aleatório da tela
+    const musica = document.getElementById("music");
+    if (musica) {
+        musica.volume = 0.3; 
+        musica.play().catch(() => {});
+    }
+}, { once: true });
