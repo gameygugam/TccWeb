@@ -20,13 +20,13 @@ let fase;
 
 function preload() {
     // Carrega a imagem do player
-    playerImg = loadImage("imagens/castor.png");
+    playerImg = loadImage("../imagens/castor.png");
     mapasImg = [];
 
-    PreloadMenu(); // Pré carrega as imagens do Menu
-    PreloadFase1(); // Pré carrega as imagens do Minigame 1
-    PreloadFase2(); // Pré carrega as imagens do Minigame 1
-    PreloadPause(); // Pré carrega as imagens do menu de Pause
+    PreloadMenu(); // Pré carrega as ../imagens do Menu
+    PreloadFase1(); // Pré carrega as ../imagens do Minigame 1
+    PreloadFase2(); // Pré carrega as ../imagens do Minigame 1
+    PreloadPause(); // Pré carrega as ../imagens do menu de Pause
 }
 
 function setup() {
@@ -55,21 +55,21 @@ function setup() {
 }
 
 function draw() {
-    if(fase === "menu")
-        DrawMenu(); // Desenha o Menu
-    else if(fase === "fase1")
-        DrawFase1(); // Desenha o Minigame 1
-    else if(fase === "fase2")
-        DrawFase2(); // Desenha o Minigame 2
-    else if(fase === "pause")
-        DrawPause(); // Desenha o menu de Pause
+        if(fase === "menu")
+            DrawMenu(); // Desenha o Menu
+        else if(fase === "fase1")
+            DrawFase1(); // Desenha o Minigame 1
+        else if(fase === "fase2")
+            DrawFase2(); // Desenha o Minigame 2
+        else if(fase === "pause")
+            DrawPause(); // Desenha o menu de Pause
 
-    Dash();
-    fill(0, 0, 0)
-    textSize(50)
-    text(pontos, windowWidth - 100, 100);
+        Dash();
+        fill(0, 0, 0)
+        textSize(50)
+        text(pontos, windowWidth - 100, 100);
 
-    if (fase !== "menu" && tecla_esc) fase = "menu";
+        if (fase !== "menu" && tecla_esc) fase = "menu";
 }
 
 function keyPressed()
@@ -105,7 +105,7 @@ function keyReleased(event) {
 //MENU-----------------------------------------------------------------------------------------------------------------
 function PreloadMenu()
 {
-    mapasImg[0] = mapa1 = loadImage("imagens/mapas/mapaPrototipo.png");
+    mapasImg[0] = mapa1 = loadImage("../imagens/mapas/mapaPrototipo.png");
 }
 
 function SetupMenu()
@@ -248,19 +248,19 @@ function DrawPause()
 function PreloadFase1()
 {
     // Carrega a imagem do mapa1
-    mapasImg[1] = mapa2 = loadImage("imagens/mapas/mapaPrototipo.png");
+    mapasImg[1] = mapa2 = loadImage("../imagens/mapas/mapaPrototipo.png");
 
-    // Carrega as imagens das lixeiras
+    // Carrega as ../imagens das lixeiras
     lixeiras_img = [
-        loadImage("imagens/lixeiras/lixeiraVermelha.png"),
-        loadImage("imagens/lixeiras/lixeiraAzul.png"),
-        loadImage("imagens/lixeiras/lixeiraAmarela.png"),
-        loadImage("imagens/lixeiras/lixeiraVerde.png"),
-        loadImage("imagens/lixeiras/lixeiraMarrom.png")
+        loadImage("../imagens/lixeiras/lixeiraVermelha.png"),
+        loadImage("../imagens/lixeiras/lixeiraAzul.png"),
+        loadImage("../imagens/lixeiras/lixeiraAmarela.png"),
+        loadImage("../imagens/lixeiras/lixeiraVerde.png"),
+        loadImage("../imagens/lixeiras/lixeiraMarrom.png")
     ];
 
     /*
-    // Sorteia em uma lista os diretórios das imagens dos lixos pixel art
+    // Sorteia em uma lista os diretórios das ../imagens dos lixos pixel art
     lixosPixelImg = [
         lixo1 = SortearLixoPixel(),
         lixo2 = SortearLixoPixel(),
@@ -275,23 +275,23 @@ function PreloadFase1()
     ];*/
 
     lixosPixelImgCarregados = [
-        loadImage("imagens/lixos/bolinhaDePapelPixel.png"),
-        loadImage("imagens/lixos/garrafaVidroPixel.png"),
-        loadImage("imagens/lixos/bananaPixel.png"),
-        loadImage("imagens/lixos/bananaPodrePixel.png"),
-        loadImage("imagens/lixos/garrafaDePlasticoPixel.png"),
+        loadImage("../imagens/lixos/bolinhaDePapelPixel.png"),
+        loadImage("../imagens/lixos/garrafaVidroPixel.png"),
+        loadImage("../imagens/lixos/bananaPixel.png"),
+        loadImage("../imagens/lixos/bananaPodrePixel.png"),
+        loadImage("../imagens/lixos/garrafaDePlasticoPixel.png"),
     ];
     
-    // Carrega as imagens dos lixos reais
+    // Carrega as ../imagens dos lixos reais
     lixosReaisCarregados = [
-        loadImage("imagens/lixos/bolinhaDePapel.png"), //0
-        loadImage("imagens/lixos/garrafaVidro.png"), //1
-        // loadImage("imagens/lixos/banana.png"), //2
-        loadImage("imagens/lixos/bananaPodre.png"), //3 -> 2
-        loadImage("imagens/lixos/garrafaDePlastico.png") //4 -> 3
+        loadImage("../imagens/lixos/bolinhaDePapel.png"), //0
+        loadImage("../imagens/lixos/garrafaVidro.png"), //1
+        // loadImage("../imagens/lixos/banana.png"), //2
+        loadImage("../imagens/lixos/bananaPodre.png"), //3 -> 2
+        loadImage("../imagens/lixos/garrafaDePlastico.png") //4 -> 3
     ]
     // Carrega a imagem do cartaz de procurado
-    cartazProcuradoLixo = loadImage("imagens/cartazProcuradoLixo.png");
+    cartazProcuradoLixo = loadImage("../imagens/cartazProcuradoLixo.png");
 }
 
 function SetupFase1()
@@ -299,11 +299,11 @@ function SetupFase1()
     LastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
 
     lixeiras = [
-        { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
-        { x:  windowWidth - 100, y: windowHeight / 2 + 275, w: 100, h: 100, img: "imagens/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
-        { x:  windowWidth - 100, y: windowHeight / 2 - 125, w: 100, h: 100, img: "imagens/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
-        { x:  windowWidth - 100, y: windowHeight / 2 - 275, w: 100, h: 100, img: "imagens/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
-        { x: windowWidth - 100, y: windowHeight / 2, w: 100, h: 100, img: "imagens/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" }
+        { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
+        { x:  windowWidth - 100, y: windowHeight / 2 + 275, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
+        { x:  windowWidth - 100, y: windowHeight / 2 - 125, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
+        { x:  windowWidth - 100, y: windowHeight / 2 - 275, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
+        { x: windowWidth - 100, y: windowHeight / 2, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" }
     ];
     lixos = [];
 
@@ -487,15 +487,15 @@ function CriarLixo() {
     /*lixos[lixos.length - 1].img = lixosPixelImg[lixos.length - 1]; // Adiciona imagem pixel no parametro
     lixos[lixos.length - 1].imgCarregada = lixosPixelImgCarregados[lixos.length - 1]; // Adiciona imagem pixel carregada no parametro
     // Adiciona o tipo do lixo de acordo com as lixeiras existentes
-    if (lixos[lixos.length - 1].img === "imagens/lixos/bolinhaDePapelPixel.png")
+    if (lixos[lixos.length - 1].img === "../imagens/lixos/bolinhaDePapelPixel.png")
         lixos[lixos.length - 1].type = "papel"; // Azul
-    else if (lixos[lixos.length - 1].img === "imagens/lixos/garrafaVidroPixel.png")
+    else if (lixos[lixos.length - 1].img === "../imagens/lixos/garrafaVidroPixel.png")
         lixos[lixos.length - 1].type = "vidro"; // Verde
-    else if (lixos[lixos.length - 1].img === "imagens/lixos/bananaPixel.png")
+    else if (lixos[lixos.length - 1].img === "../imagens/lixos/bananaPixel.png")
         lixos[lixos.length - 1].type = "organico"; // Marrom
-    else if (lixos[lixos.length - 1].img === "imagens/lixos/bananaPodrePixel.png")
+    else if (lixos[lixos.length - 1].img === "../imagens/lixos/bananaPodrePixel.png")
         lixos[lixos.length - 1].type = "organico"; // Marrom
-    else if (lixos[lixos.length - 1].img === "imagens/lixos/garrafaDePlasticoPixel.png")
+    else if (lixos[lixos.length - 1].img === "../imagens/lixos/garrafaDePlasticoPixel.png")
         lixos[lixos.length - 1].type = "plastico"; // Vermelha*/
 
     /*lixos[lixos.length - 1].x = random(lixo_x + 50, (lixo_x + width) - 200);
@@ -524,14 +524,14 @@ function SetupFase2()
 {
     cadeiras = [];
     cadeirasCarregadas = [
-        loadImage("imagens/cadeiras/cadeira_0.png"),
-        loadImage("imagens/cadeiras/cadeira_1.png"),
-        loadImage("imagens/cadeiras/cadeira_2.png"),
-        loadImage("imagens/cadeiras/cadeira_2.png"),
-        loadImage("imagens/cadeiras/cadeira_4.png"),
-        loadImage("imagens/cadeiras/cadeira_4.png"),
-        loadImage("imagens/cadeiras/cadeira_6.png"),
-        loadImage("imagens/cadeiras/cadeira_7.png"),
+        loadImage("../imagens/cadeiras/cadeira_0.png"),
+        loadImage("../imagens/cadeiras/cadeira_1.png"),
+        loadImage("../imagens/cadeiras/cadeira_2.png"),
+        loadImage("../imagens/cadeiras/cadeira_2.png"),
+        loadImage("../imagens/cadeiras/cadeira_4.png"),
+        loadImage("../imagens/cadeiras/cadeira_4.png"),
+        loadImage("../imagens/cadeiras/cadeira_6.png"),
+        loadImage("../imagens/cadeiras/cadeira_7.png"),
     ]
 }
 
@@ -824,11 +824,11 @@ function Colidiu(a, b)
 
 /*function SortearLixoPixel() {
     let rand = floor(random(5));
-    if (rand === 0) return "imagens/lixos/bolinhaDePapelPixel.png";
-    else if (rand === 1) return "imagens/lixos/garrafaVidroPixel.png";
-    else if (rand === 2) return "imagens/lixos/bananaPixel.png";
-    else if (rand === 3) return "imagens/lixos/bananaPodrePixel.png";
-    else return "imagens/lixos/garrafaDePlasticoPixel.png";
+    if (rand === 0) return "../imagens/lixos/bolinhaDePapelPixel.png";
+    else if (rand === 1) return "../imagens/lixos/garrafaVidroPixel.png";
+    else if (rand === 2) return "../imagens/lixos/bananaPixel.png";
+    else if (rand === 3) return "../imagens/lixos/bananaPodrePixel.png";
+    else return "../imagens/lixos/garrafaDePlasticoPixel.png";
 }*/
 
     // function DragDrop(a) {

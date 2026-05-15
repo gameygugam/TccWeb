@@ -4,11 +4,10 @@ body {
     align-items: center;
     height: 100vh; 
     margin: 0;    
-    background-image: url("../Imagens/MenuFundo.png");
+    background-image: url("../imagens/MenuFundo.png");
     background-repeat: no-repeat;
     background-position: center ;
     background-size: cover;
-   
 }
 
 .caixa_login {
