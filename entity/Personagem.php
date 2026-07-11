@@ -1,33 +1,21 @@
 <?php
 
-class Usuario {
+class Personagem {
 
     private int    $id;
-    private string $nome;
-    private string $email;
-    private string $senha;
-    private string $foto_perfil;
-    private string $cor_principal;
-    private string $cor_secundaria;
-    private string $criadoEm;
+    private string $image;
+    private int    $width;
+    private int    $height;
 
     public function __construct(array $dados) {
         $this->id             = (int) ($dados['id']            ?? 0);
-        $this->nome           =        $dados['nome']          ?? '';
-        $this->email          =        $dados['email']         ?? '';
-        $this->senha          =        $dados['senha']         ?? '';
-        $this->foto_perfil    =        $dados['foto_perfil']   ?? '../assets/img_perfil/avatar.png';
-        $this->cor_principal  =        $dados['cor_principal'] ?? '#c9a45c';
-        $this->cor_secundaria =        $dados['cor_secundaria']?? '#212121';
-        $this->criadoEm       =        $dados['criado_em']     ?? '';
+        $this->image          =        $dados['image']         ?? '';
+        $this->width          = (int) ($dados['width']         ?? 0);
+        $this->height         = (int) ($dados['height']        ?? 0);
     }
 
-    public function getId():            int    { return $this->id; }
-    public function getNome():          string { return $this->nome; }
-    public function getEmail():         string { return $this->email; }
-    public function getSenha():         string { return $this->senha; }
-    public function getFotoPerfil():    string { return $this->foto_perfil; }
-    public function getCorPrincipal():  string { return $this->cor_principal; }
-    public function getCorSecundaria(): string { return $this->cor_secundaria; } 
-    public function getCriadoEm():      string { return $this->criadoEm; }
+    public function getId():            int      { return $this->id; }
+    public function getImage():         string   { return $this->image; }
+    public function getWidth():         int      { return $this->width; }
+    public function getHeight():        int      { return $this->height; }
 }

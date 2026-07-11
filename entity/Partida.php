@@ -1,6 +1,6 @@
 <?php
 
-class Usuario {
+class Partida {
 
     private int    $id;
     private int    $id_usuario;
