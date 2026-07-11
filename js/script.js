@@ -1,22 +1,21 @@
-let is_fase_carregada;
-let player, walls, shift_esquerdo, tecla_esc;
-let LastItemPego_OldX, LastItemPego_OldY;
-let timer_segundos, timer_ticks;
-let lixos, lixeiras;
-let cadeiras;
-let botoes;
-let playerImg, lixoImg;
-let pegouLixo, LastItemPego;
-let banana, bananaPodre, garrafaVidro, bolinhaPapel;
-let cartazProcuradoLixo;
-let pontos;
-let mapasImg;
-let lixosPixelCarregados, lixosReaisCarregados, cadeirasCarregadas;
-let lixeiras_img;
+// let is_fase_carregada;
+// let player, walls, shift_esquerdo, tecla_esc;
 
-let canvas; //Cria a tela do Jogo [Gustavo bot esqueceu de atribuir a tela em uma variável]
-let canvas_x, canvas_y;
-let fase;
+// let timer_segundos, timer_ticks;
+// let lixos, lixeiras;
+// let cadeiras;
+// let botoes;
+// let playerImg, lixoImg;
+// let pegouLixo, lastItemPego;
+// let cartazProcuradoLixo;
+// let pontos;
+// let mapasImg;
+// let lixosPixelCarregados, lixosReaisCarregados, cadeirasCarregadas;
+// let lixeiras_img;
+
+// let canvas; //Cria a tela do Jogo [Gustavo bot esqueceu de atribuir a tela em uma variável
+// let canvas_x, canvas_y;
+// let fase;
 
 function preload() {
     // Carrega a imagem do player
@@ -296,7 +295,7 @@ function PreloadFase1()
 
 function SetupFase1()
 {
-    LastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
+    lastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
 
     lixeiras = [
         { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
@@ -332,8 +331,8 @@ function DrawFase1()
     player.oldX = player.x;
     player.oldY = player.y;
 
-    LastItemPego_OldX = LastItemPego.x;
-    LastItemPego_OldY = LastItemPego.y;
+    lastItemPego_OldX = lastItemPego.x;
+    lastItemPego_OldY = lastItemPego.y;
 
     //// Movimento
     Movimentar();
@@ -346,7 +345,7 @@ function DrawFase1()
 
     //// Verifica colisão com parede
     walls.forEach(wall => {
-        if (Colidiu(player, wall) || Colidiu(LastItemPego, wall)) {
+        if (Colidiu(player, wall) || Colidiu(lastItemPego, wall)) {
             player.x = player.oldX;
             player.y = player.oldY;
         }
@@ -370,16 +369,16 @@ function DrawFase1()
     })
 
     // Verifica se o lixo está na lixeira certa
-    if (LastItemPego && Colidiu(player, LastItemPego)) // o lastLixoPego no 'if' verifica se o objeto está vazio ou não
+    if (lastItemPego && Colidiu(player, lastItemPego)) // o lastLixoPego no 'if' verifica se o objeto está vazio ou não
     {
         lixeiras.forEach(lixeira => {
-            if (LastItemPego && Colidiu(LastItemPego, lixeira)) {
-                if (LastItemPego.type === lixeira.descarte)
+            if (lastItemPego && Colidiu(lastItemPego, lixeira)) {
+                if (lastItemPego.type === lixeira.descarte)
                     pontos += 10;
                 else
                     pontos -= 5;
-                lixos = lixos.filter(obj => obj !== LastItemPego);
-                LastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
+                lixos = lixos.filter(obj => obj !== lastItemPego);
+                lastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
             }
         })
     }
@@ -430,31 +429,31 @@ function Dash(){
 function PegarLixo(player_funcao, lixos_funcao) {
     return (
         lixos_funcao.forEach(lixo => {
-            if (keyIsDown(32) && Colidiu(player_funcao, lixo) && (LastItemPego == lixo || LastItemPego.type == "null")) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
+            if (keyIsDown(32) && Colidiu(player_funcao, lixo) && (lastItemPego == lixo || lastItemPego.type == "null")) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
                 lixo.x = player_funcao.x + player_funcao.w - 10;
                 lixo.y = player_funcao.y + player_funcao.h / 2;
                 pegouLixo = true;
-                LastItemPego = lixo;
+                lastItemPego = lixo;
                 // window.alert(lastLixoPego.type);
             }
-            else if (!keyIsDown(32)) LastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
+            else if (!keyIsDown(32)) lastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
         })
     )
 }
 
 function MostrarLixoReal() {
-    if (LastItemPego && Colidiu(player, LastItemPego)) {// o lastLixoPego no 'if' verifica se o objeto está vazio ou não
-        image(cartazProcuradoLixo, LastItemPego.x, LastItemPego.y - 75, 200, 300); // Mostra o cartaz de procurado
+    if (lastItemPego && Colidiu(player, lastItemPego)) {// o lastLixoPego no 'if' verifica se o objeto está vazio ou não
+        image(cartazProcuradoLixo, lastItemPego.x, lastItemPego.y - 75, 200, 300); // Mostra o cartaz de procurado
 
         // Verifica e mostra os lixos reais
-        if(LastItemPego.type === "papel")
-            image(lixosReaisCarregados[0], LastItemPego.x, LastItemPego.y, 200, 200);
-        else if(LastItemPego.type === "vidro")
-            image(lixosReaisCarregados[1], LastItemPego.x, LastItemPego.y, 150, 200);
-        else if (LastItemPego.type === "organico")
-            image(lixosReaisCarregados[2], LastItemPego.x, LastItemPego.y, 200, 200);
-        else if (LastItemPego.type === "plastico")
-            image(lixosReaisCarregados[3], LastItemPego.x, LastItemPego.y, 200, 200);
+        if(lastItemPego.type === "papel")
+            image(lixosReaisCarregados[0], lastItemPego.x, lastItemPego.y, 200, 200);
+        else if(lastItemPego.type === "vidro")
+            image(lixosReaisCarregados[1], lastItemPego.x, lastItemPego.y, 150, 200);
+        else if (lastItemPego.type === "organico")
+            image(lixosReaisCarregados[2], lastItemPego.x, lastItemPego.y, 200, 200);
+        else if (lastItemPego.type === "plastico")
+            image(lixosReaisCarregados[3], lastItemPego.x, lastItemPego.y, 200, 200);
     }
 }
 
@@ -503,12 +502,12 @@ function CriarLixo() {
 }
 
 function RotacionarLixo() {
-    if (keyIsDown(81) && LastItemPego.type != "null") { // 82 = tecla 'Q'
-        LastItemPego.angulo += 0.1; // gira aos poucos
+    if (keyIsDown(81) && lastItemPego.type != "null") { // 82 = tecla 'Q'
+        lastItemPego.angulo += 0.1; // gira aos poucos
     }
 
-    else if (keyIsDown(69) && LastItemPego.type != "null") { // 82 = tecla 'E'
-        LastItemPego.angulo -= 0.1; // gira aos poucos
+    else if (keyIsDown(69) && lastItemPego.type != "null") { // 82 = tecla 'E'
+        lastItemPego.angulo -= 0.1; // gira aos poucos
     }
 }
 
@@ -554,8 +553,8 @@ function DrawFase2()
     player.oldY = player.y;
 
     //// Armazena posição antiga
-    LastItemPego_OldX = LastItemPego.x;
-    LastItemPego_OldY = LastItemPego.y;
+    lastItemPego_OldX = lastItemPego.x;
+    lastItemPego_OldY = lastItemPego.y;
 
     //// Movimento
     Movimentar();
@@ -567,20 +566,20 @@ function DrawFase2()
     // }
 
     PegarCadeira(player, cadeiras);
-    if (LastItemPego) {
+    if (lastItemPego) {
     //RotacionarCadeira();
 }
 
     //// Verifica colisão com parede
     walls.forEach(wall => {
-        if (Colidiu(player, wall) || Colidiu(LastItemPego, wall)) {
+        if (Colidiu(player, wall) || Colidiu(lastItemPego, wall)) {
             player.x = player.oldX;
             player.y = player.oldY;
         }
 
-        if (Colidiu(LastItemPego, wall)) {
-            LastItemPego.x = LastItemPego_OldX;
-            LastItemPego.y = LastItemPego_OldY;
+        if (Colidiu(lastItemPego, wall)) {
+            lastItemPego.x = lastItemPego_OldX;
+            lastItemPego.y = lastItemPego_OldY;
         } 
     });
 
@@ -621,11 +620,11 @@ function keyPressed2() {
     if (key === 'q' || key === 'Q') {
 
         // ROTAÇÂO DE IMAGEM
-        if (LastItemPego) {
+        if (lastItemPego) {
 
-            LastItemPego.variante--;
-            if (LastItemPego.variante < 0) LastItemPego.variante = 7;
-            LastItemPego.imgCarregada = cadeirasCarregadas[LastItemPego.variante];
+            lastItemPego.variante--;
+            if (lastItemPego.variante < 0) lastItemPego.variante = 7;
+            lastItemPego.imgCarregada = cadeirasCarregadas[lastItemPego.variante];
 
         }
     }
@@ -633,11 +632,11 @@ function keyPressed2() {
     else if (key === 'e' || key === 'E') {
 
         // ROTAÇÂO DE IMAGEM
-        if (LastItemPego) {
+        if (lastItemPego) {
 
-            LastItemPego.variante++;
-            if (LastItemPego.variante > 7) LastItemPego.variante = 0;
-            LastItemPego.imgCarregada = cadeirasCarregadas[LastItemPego.variante];
+            lastItemPego.variante++;
+            if (lastItemPego.variante > 7) lastItemPego.variante = 0;
+            lastItemPego.imgCarregada = cadeirasCarregadas[lastItemPego.variante];
 
         }
     }
@@ -719,21 +718,21 @@ function CriarCadeiras() {
 function PegarCadeira(player_funcao, cadeiras_funcao) {
     return (
         cadeiras_funcao.forEach(cadeira => {
-            if (keyIsDown(32) && Colidiu(player_funcao, cadeira) && (LastItemPego == cadeira || LastItemPego.type == "null")) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
+            if (keyIsDown(32) && Colidiu(player_funcao, cadeira) && (lastItemPego == cadeira || lastItemPego.type == "null")) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
                 cadeira.x = player_funcao.x + player_funcao.w - 10;
                 cadeira.y = player_funcao.y + player_funcao.h / 2;
                 pegouLixo = true;
-                LastItemPego = cadeira;
+                lastItemPego = cadeira;
                 // window.alert(lastLixoPego.type);
             }
-            else if (!keyIsDown(32)) LastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "cadeira", variante:0 };
+            else if (!keyIsDown(32)) lastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "cadeira", variante:0 };
         })
     )
 }
 
 // function RotacionarCadeira() {
-//     if (keyIsDown(82) && LastItemPego.type != "null") { // 82 = tecla 'R'
-//         LastItemPego.angulo += 0.25; // gira aos poucos
+//     if (keyIsDown(82) && lastItemPego.type != "null") { // 82 = tecla 'R'
+//         lastItemPego.angulo += 0.25; // gira aos poucos
 //     }
 // }
 
