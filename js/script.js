@@ -280,7 +280,7 @@ function PreloadFase1()
 
 function SetupFase1()
 {
-    fase1.lastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
+    fase1.lastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: null, angulo: 0 };
 
     fase1.lixeiras = [
         { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
@@ -299,7 +299,7 @@ function SetupFase1()
 function DrawFase1()
 {
 
-    if (!is_fase_carregada) {
+    if (!fase1.is_fase_carregada) {
         jogo.timer.ticks = 3600;
         jogo.timer.segundos = 60;
         jogo.pontos = 0;
@@ -363,8 +363,7 @@ function DrawFase1()
                 else
                     jogo.pontos -= 5;
                 fase1.lixos = fase1.lixos.filter(obj => obj !== fase1.lastItemPego);
-                // fase1.lastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
-                fase1.lastItemPego = null;
+                fase1.lastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
             }
         })
     }
@@ -415,14 +414,14 @@ function Dash(){
 function PegarLixo(player_funcao, lixos_funcao) {
     return (
         lixos_funcao.forEach(lixo => {
-            if (keyIsDown(32) && Colidiu(player_funcao, lixo) && (lastItemPego == lixo || lastItemPego.type == "null")) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
+            if (keyIsDown(32) && Colidiu(player_funcao, lixo) && (fase1.lastItemPego == lixo || fase1.lastItemPego.type == "null")) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
                 lixo.x = player_funcao.x + player_funcao.w - 10;
                 lixo.y = player_funcao.y + player_funcao.h / 2;
                 fase1.pegouLixo = true;
                 fase1.lastItemPego = lixo;
                 // window.alert(lastLixoPego.type);
             }
-            else if (!keyIsDown(32)) fase1.lasItemPego = null; //fase1.lastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
+            else if (!keyIsDown(32)) fase1.lastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
         })
     )
 }
@@ -517,6 +516,7 @@ function PreloadFase2()
 function SetupFase2()
 {
     fase2.cadeiras = [];
+    fase2.lastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: null, angulo: 0 };
 }
 
 function DrawFase2()
@@ -739,7 +739,7 @@ function Movimentar()
             jogo.player.dash_duracao = 10
         }
 
-        else if ((player.dash_cooldown <= 40 && player.dash_cooldown >= 30) && jogo.shift_esquerdo){
+        else if ((jogo.player.dash_cooldown <= 40 && jogo.player.dash_cooldown >= 30) && jogo.shift_esquerdo){
             jogo.player.dash_cooldown = 250
             jogo.player.dash_duracao = 10
             jogo.pontos++;
