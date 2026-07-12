@@ -2,57 +2,69 @@
 
 class Lixo {
 
-    // private int    $id;
-    // private int    $id_lixeira;
-    // private string $image;
-    // private int    $width;
-    // private int    $height;
+    //Talvez adicionar nome no futuro no BD
+
+    private int    $id;
+    private int    $id_lixeira;
+    private string $image;
+    private int    $width;
+    private int    $height;
     
-    // private int    $x;
-    // private int    $y;
-    // private string $image;
-    // private int    $image;
+    private int    $x;
+    private int    $y;
+    private string $material;
+    private float  $angulo;
 
-    // public function __construct(array $dados) {
-    //     $this->id               = (int) ($dados['id']            ?? 0);
-    //     $this->id_lixeira       = (int) ($dados['id_lixeira']    ?? 0);
-    //     $this->image            =        $dados['image']         ?? '';
-    //     $this->width            = (int) ($dados['width']         ?? 0);
-    //     $this->height           = (int) ($dados['height']        ?? 0);
-    //     $this->x                = (int) ($dados['x']             ?? 0);
-    //     $this->y                = (int) ($dados['y']             ?? 0);
-    // }
+    public function __construct(array $dados) {
+        $this->id               = (int)   ($dados['id']            ?? 0);
+        $this->id_lixeira       = (int)   ($dados['id_lixeira']    ?? 0);
+        $this->image            =          $dados['image']         ?? '';
+        $this->width            = (int)   ($dados['width']         ?? 0);
+        $this->height           = (int)   ($dados['height']        ?? 0);
+        $this->x                = (int)   ($dados['x']             ?? 0);
+        $this->y                = (int)   ($dados['y']             ?? 0);
+        $this->material         =          $dados['material']      ?? '';
+        $this->angulo           = (float) ($dados['angulo']        ?? 0);
+    }
 
-    // public function getId():            int      { return $this->id; }
-    // public function getIdLixeira():     int      { return $this->id_lixeira; }
-    // public function getImage():         string   { return $this->image; }
-    // public function getWidth():         int      { return $this->width; }
-    // public function getHeight():        int      { return $this->height; }
-    // public function getX():             int      { return $this->x; }
-    // public function getY():             int      { return $this->y; }
+    public function getId():            int      { return $this->id; }
+    public function getIdLixeira():     int      { return $this->id_lixeira; }
+    public function getImage():         string   { return $this->image; }
+    public function getWidth():         int      { return $this->width; }
+    public function getHeight():        int      { return $this->height; }
+    public function getX():             int      { return $this->x; }
+    public function getY():             int      { return $this->y; }
+    public function getMaterial():      string   { return $this->material; }
+    public function getAngulo():        float    { return $this->angulo; }
 
-    // public static function novo(int $id_lixeira, string $image, int $width, int $height): Lixo {
+    public static function novo(int $id_lixeira, string $image, int $width, int $height,
+    int $x, int $y, string $material, int $angulo): Lixo {
 
-    //     $lixo = new Lixo(['id_lixeira' => $id_lixeira]);
-    //     $lixo->alterarDados($image, $width, $height);
+        $lixo = new Lixo(['id_lixeira' => $id_lixeira]);
+        $lixo->alterarDados($image, $width, $height, $x, $y, $material, $angulo);
 
-    //     return $lixo;
-    // }
+        return $lixo;
+    }
 
-    // public function alterarDados(string $image, int $width, int $height): void {
+    public function alterarDados(string $image, int $width, int $height,
+    int $x, int $y, string $material, int $angulo): void {
 
-    //     $this->image         = $image;
-    //     $this->width         = $width;
-    //     $this->height        = $height;
-    // }
+        $this->image         = $image;
+        $this->width         = $width;
+        $this->height        = $height;
+        $this->x             = $x;
+        $this->y             = $y;
+        $this->material      = $material;
+        $this->angulo        = $angulo;
+    }
 
-    // public function registrarIdGerado(int $id): void {
-    //     if ($id <= 0) {
-    //         throw new InvalidArgumentException('ID inválido.');
-    //     }
+    public function registrarIdGerado(int $id): void {
+        if ($id <= 0) {
+            throw new InvalidArgumentException('ID inválido.');
+        }
 
-    //     $this->id = $id;
-    // }
+        $this->id = $id;
+    }
 }
 
 // function CriarLixo() {
