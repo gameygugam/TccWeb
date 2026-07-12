@@ -1,26 +1,7 @@
-// let is_fase_carregada;
-// let player, walls, shift_esquerdo, tecla_esc;
-
-// let timer_segundos, timer_ticks;
-// let lixos, lixeiras;
-// let cadeiras;
-// let botoes;
-// let playerImg, lixoImg;
-// let pegouLixo, lastItemPego;
-// let cartazProcuradoLixo;
-// let pontos;
-// let mapasImg;
-// let lixosPixelCarregados, lixosReaisCarregados, cadeirasCarregadas;
-// let lixeiras_img;
-
-// let canvas; //Cria a tela do Jogo [Gustavo bot esqueceu de atribuir a tela em uma variável
-// let canvas_x, canvas_y;
-// let fase;
-
 function preload() {
     // Carrega a imagem do player
-    playerImg = loadImage("../imagens/castor.png");
-    mapasImg = [];
+    jogo.playerImg = loadImage("../imagens/castor.png");
+    jogo.mapasImg = [];
 
     PreloadMenu(); // Pré carrega as ../imagens do Menu
     PreloadFase1(); // Pré carrega as ../imagens do Minigame 1
@@ -29,23 +10,27 @@ function preload() {
 }
 
 function setup() {
-    fase = "menu";
-    is_fase_carregada = false;
+    jogo.fase = "menu";
+    fase1.is_fase_carregada = false;
+    fase2.is_fase_carregada = false;
 
-    player = { x: windowWidth / 2 - 50, y: windowHeight - 120, w: 100, h: 100, oldX: windowWidth / 2, oldY: windowHeight - 120, class: "player", dash_cooldown: 80, dash_duracao: 0 };
+    jogo.player = { 
+        x: windowWidth / 2 - 50, y: windowHeight - 120, w: 100, h: 100,
+        oldX: windowWidth / 2, oldY: windowHeight - 120, class: "player", dash_cooldown: 80, dash_duracao: 0 
+    };
 
-    walls = [
+    jogo.walls = [
         wall1 = { x: 0, y: 0, w: windowWidth, h: 10, class: "wall" }, // Parede superior
         wall2 = { x: 0, y: 0, w: 10, h: windowHeight, class: "wall" }, // Parede esquerda
         wall3 = { x: windowWidth - 10, y: 0, w: 10, h: windowHeight, class: "wall" }, //Parede direita
         wall4 = { x: 0, y: windowHeight - 10, w: windowWidth , h: 10, class: "wall" } //Parede baixo
     ];
 
-    canvas = createCanvas(windowWidth, windowHeight);
+    jogo.canvas = createCanvas(windowWidth, windowHeight);
     noSmooth();
-    canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
-    canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
-    canvas.position(canvas_x, canvas_y);
+    jogo.canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
+    jogo.canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
+    jogo.canvas.position(jogo.canvas_x, jogo.canvas_y);
 
     SetupMenu();
     SetupFase1();
@@ -54,57 +39,57 @@ function setup() {
 }
 
 function draw() {
-        if(fase === "menu")
+        if(jogo.fase === "menu")
             DrawMenu(); // Desenha o Menu
-        else if(fase === "fase1")
+        else if(jogo.fase === "fase1")
             DrawFase1(); // Desenha o Minigame 1
-        else if(fase === "fase2")
+        else if(jogo.fase === "fase2")
             DrawFase2(); // Desenha o Minigame 2
-        else if(fase === "pause")
+        else if(jogo.fase === "pause")
             DrawPause(); // Desenha o menu de Pause
 
         Dash();
         fill(0, 0, 0)
         textSize(50)
-        text(pontos, windowWidth - 100, 100);
+        text(jogo.pontos, windowWidth - 100, 100);
 
-        if (fase !== "menu" && tecla_esc) fase = "menu";
+        if (jogo.fase !== "menu" && jogo.tecla_esc) jogo.fase = "menu";
 }
 
 function keyPressed()
 {
-    if(fase === "menu" && keyCode === ENTER)
-        fase = "fase1";
-    if(fase === "fase1" && keyCode === ESCAPE)
-        fase = "pause";
-    if (fase === "pause" && keyCode === ESCAPE)
-        fase = "fase1";
+    if(jogo.fase === "menu" && keyCode === ENTER)
+        jogo.fase = "fase1";
+    if(jogo.fase === "fase1" && keyCode === ESCAPE)
+        jogo.fase = "pause";
+    if (jogo.fase === "pause" && keyCode === ESCAPE)
+        jogo.fase = "fase1";
 
-    if (fase === "fase2") keyPressed2();
+    if (jogo.fase === "fase2") keyPressed2(fase2);
 
     if (event.code === "ShiftLeft") {
-        shift_esquerdo = true;
+        jogo.shift_esquerdo = true;
     }
 
     if (event.code === "Escape") {
-        tecla_esc = true;
+        jogo.tecla_esc = true;
     }
 }
 
 function keyReleased(event) {
     if (event.code === "ShiftLeft") {
-        shift_esquerdo = false;
+        jogo.shift_esquerdo = false;
     }
 
     if (event.code === "Escape") {
-        tecla_esc = false;
+        jogo.tecla_esc = false;
     }
 }
 
 //MENU-----------------------------------------------------------------------------------------------------------------
 function PreloadMenu()
 {
-    mapasImg[0] = mapa1 = loadImage("../imagens/mapas/mapaPrototipo.png");
+    jogo.mapasImg[0] = mapa1 = loadImage("../imagens/mapas/mapaPrototipo.png");
 }
 
 function SetupMenu()
@@ -117,30 +102,30 @@ function SetupMenu()
     // botoes.push(botao_menu_fase_2 = { x: (windowWidth / 2), y: 650, w: 200, h: 50, class: "botao" });
     // botao_menu_fase_2 = botoes[2];
 
-    timer_segundos = 0;
-    timer_ticks = 0;
+    jogo.timer.segundos = 0;
+    jogo.timer.ticks = 0;
 }
 
 function DrawMenu()
 {
     //// Cria o mapa
-    image(mapasImg[0], 0, 0, windowWidth, windowHeight);
+    image(jogo.mapasImg[0], 0, 0, windowWidth, windowHeight);
 
     //// Armazena posição antiga
-    player.oldX = player.x;
-    player.oldY = player.y;
+    jogo.player.oldX = jogo.player.x;
+    jogo.player.oldY = jogo.player.y;
 
     //// Movimento
     Movimentar();
 
     //// Desenha o player
-    image(playerImg, player.x, player.y, 100, 100);
+    image(jogo.playerImg, jogo.player.x, jogo.player.y, 100, 100);
 
     //// Verifica colisão com parede
-    walls.forEach(wall => {
-        if (Colidiu(player, wall)) {
-            player.x = player.oldX;
-            player.y = player.oldY;
+    jogo.walls.forEach(wall => {
+        if (Colidiu(jogo.player, wall)) {
+            jogo.player.x = jogo.player.oldX;
+            jogo.player.y = jogo.player.oldY;
         }
     })
     
@@ -163,23 +148,23 @@ function DrawMenu()
     let portaDireita = {x: windowWidth - 50, y: windowHeight/2 - 100, w: 35, h: 200};
 
     // Verifica a colisão com as portas para mudar fase
-    if (Colidiu(player, portaEsquerda))
+    if (Colidiu(jogo.player, portaEsquerda))
     {
-        fase = "fase1";
-        player.x = windowWidth / 2 - 50;
-        player.y = windowHeight - 120;
+        jogo.fase = "fase1";
+        jogo.player.x = windowWidth / 2 - 50;
+        jogo.player.y = windowHeight - 120;
     }
-    else if (Colidiu(player, portaMeio))
+    else if (Colidiu(jogo.player, portaMeio))
     {
-        fase = "fase2";
-        player.x = windowWidth / 2 - 50;
-        player.y = windowHeight - 120;
+        jogo.fase = "fase2";
+        jogo.player.x = windowWidth / 2 - 50;
+        jogo.player.y = windowHeight - 120;
     }
-    else if (Colidiu(player, portaDireita)) 
+    else if (Colidiu(jogo.player, portaDireita)) 
     {
-        fase = "fase1";
-        player.x = 20;
-        player.y = windowHeight / 2 - 50;
+        jogo.fase = "fase1";
+        jogo.player.x = 20;
+        jogo.player.y = windowHeight / 2 - 50;
     }
 
     // // Cria o texto do Menu
@@ -247,10 +232,10 @@ function DrawPause()
 function PreloadFase1()
 {
     // Carrega a imagem do mapa1
-    mapasImg[1] = mapa2 = loadImage("../imagens/mapas/mapaPrototipo.png");
+    jogo.mapasImg[1] = mapa2 = loadImage("../imagens/mapas/mapaPrototipo.png");
 
     // Carrega as ../imagens das lixeiras
-    lixeiras_img = [
+    fase1.lixeiras_img = [
         loadImage("../imagens/lixeiras/lixeiraVermelha.png"),
         loadImage("../imagens/lixeiras/lixeiraAzul.png"),
         loadImage("../imagens/lixeiras/lixeiraAmarela.png"),
@@ -273,7 +258,7 @@ function PreloadFase1()
         lixo10 = SortearLixoPixel()
     ];*/
 
-    lixosPixelImgCarregados = [
+    fase1.lixosPixelImgCarregados = [
         loadImage("../imagens/lixos/bolinhaDePapelPixel.png"),
         loadImage("../imagens/lixos/garrafaVidroPixel.png"),
         loadImage("../imagens/lixos/bananaPixel.png"),
@@ -282,7 +267,7 @@ function PreloadFase1()
     ];
     
     // Carrega as ../imagens dos lixos reais
-    lixosReaisCarregados = [
+    fase1.lixosReaisCarregados = [
         loadImage("../imagens/lixos/bolinhaDePapel.png"), //0
         loadImage("../imagens/lixos/garrafaVidro.png"), //1
         // loadImage("../imagens/lixos/banana.png"), //2
@@ -290,49 +275,49 @@ function PreloadFase1()
         loadImage("../imagens/lixos/garrafaDePlastico.png") //4 -> 3
     ]
     // Carrega a imagem do cartaz de procurado
-    cartazProcuradoLixo = loadImage("../imagens/cartazProcuradoLixo.png");
+    fase1.cartazProcuradoLixo = loadImage("../imagens/cartazProcuradoLixo.png");
 }
 
 function SetupFase1()
 {
-    lastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
+    fase1.lastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
 
-    lixeiras = [
+    fase1.lixeiras = [
         { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
         { x:  windowWidth - 100, y: windowHeight / 2 + 275, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
         { x:  windowWidth - 100, y: windowHeight / 2 - 125, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
         { x:  windowWidth - 100, y: windowHeight / 2 - 275, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
         { x: windowWidth - 100, y: windowHeight / 2, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" }
     ];
-    lixos = [];
+    fase1.lixos = [];
 
-    pontos = 0;
-    timer_segundos = 0;
-    timer_ticks = 0;
+    jogo.pontos = 0;
+    jogo.timer.segundos = 0;
+    jogo.timer.ticks = 0;
 }
 
 function DrawFase1()
 {
 
     if (!is_fase_carregada) {
-        timer_ticks = 3600;
-        timer_segundos = 60;
-        pontos = 0;
-        is_fase_carregada = true;
+        jogo.timer.ticks = 3600;
+        jogo.timer.segundos = 60;
+        jogo.pontos = 0;
+        fase1.is_fase_carregada = true;
     }
 
     // background(0, 100, 0);
-    image(mapasImg[1], 0, 0, windowWidth, windowHeight);
+    image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
 
     ////repõe a quantidade de lixo no mapa
-    if(lixos.length < 10) CriarLixo()
+    if(fase1.lixos.length < 10) CriarLixo()
 
     //// Armazena posição antiga
-    player.oldX = player.x;
-    player.oldY = player.y;
+    jogo.player.oldX = jogo.player.x;
+    jogo.player.oldY = jogo.player.y;
 
-    lastItemPego_OldX = lastItemPego.x;
-    lastItemPego_OldY = lastItemPego.y;
+    fase1.lastItemPego_OldX = fase1.lastItemPego.x;
+    fase1.lastItemPego_OldY = fase1.lastItemPego.y;
 
     //// Movimento
     Movimentar();
@@ -344,24 +329,24 @@ function DrawFase1()
     // }
 
     //// Verifica colisão com parede
-    walls.forEach(wall => {
-        if (Colidiu(player, wall) || Colidiu(lastItemPego, wall)) {
-            player.x = player.oldX;
-            player.y = player.oldY;
+    jogo.walls.forEach(wall => {
+        if (Colidiu(jogo.player, wall) || Colidiu(fase1.lastItemPego, wall)) {
+            jogo.player.x = jogo.player.oldX;
+            jogo.player.y = jogo.player.oldY;
         }
     })
 
     // Verifica a colisão com lixeira
-    lixeiras.forEach(lixeira => {
-        if (Colidiu(player, lixeira)) {
-            player.x = player.oldX;
-            player.y = player.oldY;
+    fase1.lixeiras.forEach(lixeira => {
+        if (Colidiu(jogo.player, lixeira)) {
+            jogo.player.x = jogo.player.oldX;
+            jogo.player.y = jogo.player.oldY;
         }
     })
 
     //// Mostra o texto no lixo
-    lixos.forEach(lixo => {
-        if (!keyIsDown(32) && Colidiu(player, lixo)) {
+    fase1.lixos.forEach(lixo => {
+        if (!keyIsDown(32) && Colidiu(jogo.player, lixo)) {
             fill(255, 0, 0);
             textSize(16);
             text("Segure espaço", lixo.x - 10, lixo.y - 10);
@@ -369,28 +354,29 @@ function DrawFase1()
     })
 
     // Verifica se o lixo está na lixeira certa
-    if (lastItemPego && Colidiu(player, lastItemPego)) // o lastLixoPego no 'if' verifica se o objeto está vazio ou não
+    if (fase1.lastItemPego && Colidiu(jogo.player, fase1.lastItemPego)) // o lastLixoPego no 'if' verifica se o objeto está vazio ou não
     {
-        lixeiras.forEach(lixeira => {
-            if (lastItemPego && Colidiu(lastItemPego, lixeira)) {
-                if (lastItemPego.type === lixeira.descarte)
-                    pontos += 10;
+        fase1.lixeiras.forEach(lixeira => {
+            if (fase1.lastItemPego && Colidiu(fase1.lastItemPego, lixeira)) {
+                if (fase1.lastItemPego.type === lixeira.descarte)
+                    jogo.pontos += 10;
                 else
-                    pontos -= 5;
-                lixos = lixos.filter(obj => obj !== lastItemPego);
-                lastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
+                    jogo.pontos -= 5;
+                fase1.lixos = fase1.lixos.filter(obj => obj !== fase1.lastItemPego);
+                // fase1.lastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
+                fase1.lastItemPego = null;
             }
         })
     }
 
     // Checa se o botao de espaco foi pressionado
-    PegarLixo(player, lixos);
+    PegarLixo(jogo.player, fase1.lixos);
     MostrarLixoReal();
     RotacionarLixo();
 
-    lixeiras.forEach((lixeira, i) => { image(lixeiras_img[i], lixeira.x, lixeira.y, lixeira.w, lixeira.h) });
+    fase1.lixeiras.forEach((lixeira, i) => { image(fase1.lixeiras_img[i], lixeira.x, lixeira.y, lixeira.w, lixeira.h) });
     
-    lixos.forEach(lixo =>{
+    fase1.lixos.forEach(lixo =>{
         push();
 
         translate(lixo.x + lixo.w / 2, lixo.y + lixo.h / 2);
@@ -408,21 +394,21 @@ function DrawFase1()
     // });
 
     ////Desenha personagem
-    image(playerImg, player.x, player.y, player.w, player.h);
+    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.w, jogo.player.h);
 
     TimerTick("Fase1");
 }
 
 function Dash(){
 
-    if (player.dash_cooldown > 0) player.dash_cooldown--;
-    if (player.dash_duracao > 0) player.dash_duracao--;
+    if (jogo.player.dash_cooldown > 0) jogo.player.dash_cooldown--;
+    if (jogo.player.dash_duracao > 0) jogo.player.dash_duracao--;
 
-    if (player.dash_cooldown <= 50 && player.dash_cooldown >= 41) fill(255, 0, 0)
-    else if (player.dash_cooldown <= 40 && player.dash_cooldown >= 30) fill(0, 255, 0)
-    else if (player.dash_cooldown < 30) fill(255, 0, 0)
+    if (jogo.player.dash_cooldown <= 50 && jogo.player.dash_cooldown >= 41) fill(255, 0, 0)
+    else if (jogo.player.dash_cooldown <= 40 && jogo.player.dash_cooldown >= 30) fill(0, 255, 0)
+    else if (jogo.player.dash_cooldown < 30) fill(255, 0, 0)
 
-    text(player.dash_cooldown, 50, windowHeight - 50);
+    text(jogo.player.dash_cooldown, 50, windowHeight - 50);
 }
 
 // Funções Fase 1
@@ -432,28 +418,28 @@ function PegarLixo(player_funcao, lixos_funcao) {
             if (keyIsDown(32) && Colidiu(player_funcao, lixo) && (lastItemPego == lixo || lastItemPego.type == "null")) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
                 lixo.x = player_funcao.x + player_funcao.w - 10;
                 lixo.y = player_funcao.y + player_funcao.h / 2;
-                pegouLixo = true;
-                lastItemPego = lixo;
+                fase1.pegouLixo = true;
+                fase1.lastItemPego = lixo;
                 // window.alert(lastLixoPego.type);
             }
-            else if (!keyIsDown(32)) lastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
+            else if (!keyIsDown(32)) fase1.lasItemPego = null; //fase1.lastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
         })
     )
 }
 
 function MostrarLixoReal() {
-    if (lastItemPego && Colidiu(player, lastItemPego)) {// o lastLixoPego no 'if' verifica se o objeto está vazio ou não
-        image(cartazProcuradoLixo, lastItemPego.x, lastItemPego.y - 75, 200, 300); // Mostra o cartaz de procurado
+    if (fase1.lastItemPego && Colidiu(jogo.player, fase1.lastItemPego)) {// o lastLixoPego no 'if' verifica se o objeto está vazio ou não
+        image(fase1.cartazProcuradoLixo, fase1.lastItemPego.x, fase1.lastItemPego.y - 75, 200, 300); // Mostra o cartaz de procurado
 
         // Verifica e mostra os lixos reais
-        if(lastItemPego.type === "papel")
-            image(lixosReaisCarregados[0], lastItemPego.x, lastItemPego.y, 200, 200);
-        else if(lastItemPego.type === "vidro")
-            image(lixosReaisCarregados[1], lastItemPego.x, lastItemPego.y, 150, 200);
-        else if (lastItemPego.type === "organico")
-            image(lixosReaisCarregados[2], lastItemPego.x, lastItemPego.y, 200, 200);
-        else if (lastItemPego.type === "plastico")
-            image(lixosReaisCarregados[3], lastItemPego.x, lastItemPego.y, 200, 200);
+        if(fase1.lastItemPego.type === "papel")
+            image(fase1.lixosReaisCarregados[0], fase1.lastItemPego.x, fase1.lastItemPego.y, 200, 200);
+        else if(fase1.lastItemPego.type === "vidro")
+            image(fase1.lixosReaisCarregados[1], fase1.lastItemPego.x, fase1.lastItemPego.y, 150, 200);
+        else if (fase1.lastItemPego.type === "organico")
+            image(fase1.lixosReaisCarregados[2], fase1.lastItemPego.x, fase1.lastItemPego.y, 200, 200);
+        else if (fase1.lastItemPego.type === "plastico")
+            image(fase1.lixosReaisCarregados[3], fase1.lastItemPego.x, fase1.lastItemPego.y, 200, 200);
     }
 }
 
@@ -471,7 +457,7 @@ function CriarLixo() {
         
     let rnd = floor(random(5));
 
-    lixo_img_carregada = lixosPixelImgCarregados[rnd]
+    lixo_img_carregada = fase1.lixosPixelImgCarregados[rnd]
     //lixo_img = lixosPixelImgCarregados[rnd]
 
     if (rnd == 0) lixo_type = "papel" //0 -> BolinhaDePapel
@@ -481,7 +467,7 @@ function CriarLixo() {
 
     let lixo_angulo = random(TWO_PI)
 
-    lixos.push({ x: lixo_x, y: lixo_y, w: 25, h: 25, img: lixo_img, imgCarregada: lixo_img_carregada, type: lixo_type, class: "lixo", angulo: lixo_angulo }); 
+    fase1.lixos.push({ x: lixo_x, y: lixo_y, w: 25, h: 25, img: lixo_img, imgCarregada: lixo_img_carregada, type: lixo_type, class: "lixo", angulo: lixo_angulo }); 
 
     /*lixos[lixos.length - 1].img = lixosPixelImg[lixos.length - 1]; // Adiciona imagem pixel no parametro
     lixos[lixos.length - 1].imgCarregada = lixosPixelImgCarregados[lixos.length - 1]; // Adiciona imagem pixel carregada no parametro
@@ -502,12 +488,12 @@ function CriarLixo() {
 }
 
 function RotacionarLixo() {
-    if (keyIsDown(81) && lastItemPego.type != "null") { // 82 = tecla 'Q'
-        lastItemPego.angulo += 0.1; // gira aos poucos
+    if (keyIsDown(81) && fase1.lastItemPego.type != "null") { // 82 = tecla 'Q'
+        fase1.lastItemPego.angulo += 0.1; // gira aos poucos
     }
 
-    else if (keyIsDown(69) && lastItemPego.type != "null") { // 82 = tecla 'E'
-        lastItemPego.angulo -= 0.1; // gira aos poucos
+    else if (keyIsDown(69) && fase1.lastItemPego.type != "null") { // 82 = tecla 'E'
+        fase1.lastItemPego.angulo -= 0.1; // gira aos poucos
     }
 }
 
@@ -516,13 +502,7 @@ function RotacionarLixo() {
 // FASE 2--------------------------------------------------------------------------------------------------------------
 function PreloadFase2()
 {
-    
-}
-
-function SetupFase2()
-{
-    cadeiras = [];
-    cadeirasCarregadas = [
+    fase2.cadeirasCarregadas = [
         loadImage("../imagens/cadeiras/cadeira_0.png"),
         loadImage("../imagens/cadeiras/cadeira_1.png"),
         loadImage("../imagens/cadeiras/cadeira_2.png"),
@@ -534,27 +514,32 @@ function SetupFase2()
     ]
 }
 
+function SetupFase2()
+{
+    fase2.cadeiras = [];
+}
+
 function DrawFase2()
 {
-    if(timer_ticks === 3600) {
-        pontos = 0;
-        timer_ticks = 0;
-        timer_segundos = 0;
+    if(jogo.timer.ticks === 3600) {
+        jogo.pontos = 0;
+        jogo.timer.ticks = 0;
+        jogo.timer.segundos = 0;
     }
 
     background(0, 100, 0);
 
-    if(cadeiras.length < 10){
+    if(fase2.cadeiras.length < 10){
         CriarCadeiras()
     }
 
     //// Armazena posição antiga
-    player.oldX = player.x;
-    player.oldY = player.y;
+    jogo.player.oldX = jogo.player.x;
+    jogo.player.oldY = jogo.player.y;
 
     //// Armazena posição antiga
-    lastItemPego_OldX = lastItemPego.x;
-    lastItemPego_OldY = lastItemPego.y;
+    fase2.lastItemPego_OldX = fase2.lastItemPego.x;
+    fase2.lastItemPego_OldY = fase2.lastItemPego.y;
 
     //// Movimento
     Movimentar();
@@ -565,26 +550,26 @@ function DrawFase2()
     //     lixo.y = mouseY - lixo.h / 2;
     // }
 
-    PegarCadeira(player, cadeiras);
-    if (lastItemPego) {
+    PegarCadeira(jogo.player, fase2.cadeiras);
+    if (fase2.lastItemPego) {
     //RotacionarCadeira();
 }
 
     //// Verifica colisão com parede
-    walls.forEach(wall => {
-        if (Colidiu(player, wall) || Colidiu(lastItemPego, wall)) {
-            player.x = player.oldX;
-            player.y = player.oldY;
+    jogo.walls.forEach(wall => {
+        if (Colidiu(jogo.player, wall) || Colidiu(fase2.lastItemPego, wall)) {
+            jogo.player.x = jogo.player.oldX;
+            jogo.player.y = jogo.player.oldY;
         }
 
-        if (Colidiu(lastItemPego, wall)) {
-            lastItemPego.x = lastItemPego_OldX;
-            lastItemPego.y = lastItemPego_OldY;
+        if (Colidiu(fase2.lastItemPego, wall)) {
+            fase2.lastItemPego.x = fase2.lastItemPego_OldX;
+            fase2.lastItemPego.y = fase2.lastItemPego_OldY;
         } 
     });
 
     //Desenha as cadeiras
-    cadeiras.forEach(cadeira => {
+    fase2.cadeiras.forEach(cadeira => {
         let rnd = floor(random(7));
         push();
 
@@ -597,34 +582,34 @@ function DrawFase2()
         pop();
     });
     
-    cadeiras.forEach(cadeira => {
-        if (!keyIsDown(32) && Colidiu(player, cadeira)) {
+    fase2.cadeiras.forEach(cadeira => {
+        if (!keyIsDown(32) && Colidiu(jogo.player, cadeira)) {
             fill(255, 0, 0);
             textSize(16);
             text("Segure espaço", cadeira.x - 10, cadeira.y - 10);
         }
     })
 
-    walls.forEach(wall => {
+    jogo.walls.forEach(wall => {
         fill(0, 255, 0);
         rect(wall.x, wall.y, wall.w, wall.h);
     });
 
     ////Desenha personagem
-    image(playerImg, player.x, player.y, player.w, player.h);
+    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.w, jogo.player.h);
 
     TimerTick("Fase2");
 }
 
-function keyPressed2() {
+function keyPressed2(fase) {
     if (key === 'q' || key === 'Q') {
 
         // ROTAÇÂO DE IMAGEM
-        if (lastItemPego) {
+        if (fase.lastItemPego) {
 
-            lastItemPego.variante--;
-            if (lastItemPego.variante < 0) lastItemPego.variante = 7;
-            lastItemPego.imgCarregada = cadeirasCarregadas[lastItemPego.variante];
+            fase.lastItemPego.variante--;
+            if (fase.lastItemPego.variante < 0) fase.lastItemPego.variante = 7;
+            fase.lastItemPego.imgCarregada = fase.cadeirasCarregadas[fase.lastItemPego.variante];
 
         }
     }
@@ -632,11 +617,11 @@ function keyPressed2() {
     else if (key === 'e' || key === 'E') {
 
         // ROTAÇÂO DE IMAGEM
-        if (lastItemPego) {
+        if (fase.lastItemPego) {
 
-            lastItemPego.variante++;
-            if (lastItemPego.variante > 7) lastItemPego.variante = 0;
-            lastItemPego.imgCarregada = cadeirasCarregadas[lastItemPego.variante];
+            fase.lastItemPego.variante++;
+            if (fase.lastItemPego.variante > 7) fase.lastItemPego.variante = 0;
+            fase.lastItemPego.imgCarregada = fase.cadeirasCarregadas[fase.lastItemPego.variante];
 
         }
     }
@@ -674,7 +659,7 @@ function CriarQuadro() {
     // cadeira_img_carregada = cadeirasCarregadas[cadeira_variante];
     //lixo_img = lixosPixelImgCarregados[rnd]
 
-    cadeiras.push({ x: quadro_x, y: quadro_y, w: quadro_width, h: quadro_height, class: "quadro", variante: quadro_variante }); 
+    fase2.cadeiras.push({ x: quadro_x, y: quadro_y, w: quadro_width, h: quadro_height, class: "quadro", variante: quadro_variante }); 
 
 }
 
@@ -696,7 +681,7 @@ function CriarCadeiras() {
         cadeira_x = random(dif_x + 50, (dif_x + width) - 200);
         cadeira_y = random(dif_y + 50, (dif_y + height) - 50);
 
-        cadeiras.forEach(cadeira => {
+        fase2.cadeiras.forEach(cadeira => {
             if (Math.abs(cadeira.x - cadeira_x) < 50 && Math.abs(cadeira.y - cadeira_y) < 50) {
                 posicao_possivel = false;
             }
@@ -708,24 +693,24 @@ function CriarCadeiras() {
     let cadeira_img = null;
     let cadeira_img_carregada = null;
 
-    cadeira_img_carregada = cadeirasCarregadas[cadeira_variante];
+    cadeira_img_carregada = fase2.cadeirasCarregadas[cadeira_variante];
     //lixo_img = lixosPixelImgCarregados[rnd]
 
-    cadeiras.push({ x: cadeira_x, y: cadeira_y, w: 75, h: 75, img: cadeira_img, imgCarregada: cadeira_img_carregada, class: "cadeira", variante: cadeira_variante }); 
+    fase2.cadeiras.push({ x: cadeira_x, y: cadeira_y, w: 75, h: 75, img: cadeira_img, imgCarregada: cadeira_img_carregada, class: "cadeira", variante: cadeira_variante }); 
 
 }
 
 function PegarCadeira(player_funcao, cadeiras_funcao) {
     return (
         cadeiras_funcao.forEach(cadeira => {
-            if (keyIsDown(32) && Colidiu(player_funcao, cadeira) && (lastItemPego == cadeira || lastItemPego.type == "null")) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
+            if (keyIsDown(32) && Colidiu(player_funcao, cadeira) && (fase2.lastItemPego == cadeira || fase2.lastItemPego.type == "null")) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
                 cadeira.x = player_funcao.x + player_funcao.w - 10;
                 cadeira.y = player_funcao.y + player_funcao.h / 2;
-                pegouLixo = true;
-                lastItemPego = cadeira;
+                fase2.pegouCadeira = true;
+                fase2.lastItemPego = cadeira;
                 // window.alert(lastLixoPego.type);
             }
-            else if (!keyIsDown(32)) lastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "cadeira", variante:0 };
+            else if (!keyIsDown(32)) fase2.lastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "cadeira", variante:0 };
         })
     )
 }
@@ -749,65 +734,65 @@ function Movimentar()
     if (dir.mag() > 0) {
         dir.normalize();
         //dir.mult(3);
-        if ((player.dash_cooldown <= 50 && player.dash_cooldown >= 41) && shift_esquerdo){
-            player.dash_cooldown = 300
-            player.dash_duracao = 10
+        if ((jogo.player.dash_cooldown <= 50 && jogo.player.dash_cooldown >= 41) && jogo.shift_esquerdo){
+            jogo.player.dash_cooldown = 300
+            jogo.player.dash_duracao = 10
         }
 
-        else if ((player.dash_cooldown <= 40 && player.dash_cooldown >= 30) && shift_esquerdo){
-            player.dash_cooldown = 250
-            player.dash_duracao = 10
-            pontos++;
+        else if ((player.dash_cooldown <= 40 && player.dash_cooldown >= 30) && jogo.shift_esquerdo){
+            jogo.player.dash_cooldown = 250
+            jogo.player.dash_duracao = 10
+            jogo.pontos++;
         }
 
-        else if (player.dash_cooldown < 30 && shift_esquerdo){
-            player.dash_cooldown = 300
-            player.dash_duracao = 10
+        else if (jogo.player.dash_cooldown < 30 && jogo.shift_esquerdo){
+            jogo.player.dash_cooldown = 300
+            jogo.player.dash_duracao = 10
         }
 
-        if (player.dash_duracao === 9 || player.dash_duracao === 8) dir.mult(9)
-        else if (player.dash_duracao === 7 || player.dash_duracao === 6) dir.mult(12)
-        else if (player.dash_duracao === 5 || player.dash_duracao === 4) dir.mult(12)
-        else if (player.dash_duracao === 3 || player.dash_duracao === 2) dir.mult(9)
-        else if (player.dash_duracao === 1) dir.mult(6)
-        else if (player.dash_duracao === 0) dir.mult(3)
+        if (jogo.player.dash_duracao === 9 || jogo.player.dash_duracao === 8) dir.mult(9)
+        else if (jogo.player.dash_duracao === 7 || jogo.player.dash_duracao === 6) dir.mult(12)
+        else if (jogo.player.dash_duracao === 5 || jogo.player.dash_duracao === 4) dir.mult(12)
+        else if (jogo.player.dash_duracao === 3 || jogo.player.dash_duracao === 2) dir.mult(9)
+        else if (jogo.player.dash_duracao === 1) dir.mult(6)
+        else if (jogo.player.dash_duracao === 0) dir.mult(3)
     }
-    player.x += dir.x;
-    player.y += dir.y;    
+    jogo.player.x += dir.x;
+    jogo.player.y += dir.y;    
 }
 
 function windowResized() 
 {
     resizeCanvas(windowWidth, windowHeight);
 
-    canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
-    canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
-    canvas.position(canvas_x, canvas_y);
+    jogo.canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
+    jogo.canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
+    jogo.canvas.position(jogo.canvas_x, jogo.canvas_y);
 }
 
 function TimerTick(fase_funcao){
 
     if (fase_funcao === "Fase1"){
-        timer_ticks--;
-        if (timer_ticks % 60 === 0) timer_segundos--;
-        if (timer_segundos <= 0) {
-            fase = 'menu';
-            is_fase_carregada = false;
+        jogo.timer.ticks--;
+        if (jogo.timer.ticks % 60 === 0) jogo.timer.segundos--;
+        if (jogo.timer.segundos <= 0) {
+            jogo.fase = 'menu';
+            fase1.is_fase_carregada = false;
         }
     }
 
     else if (fase_funcao === "Fase2"){
-        timer_ticks++;
-        if (timer_ticks % 60 === 0) {
-            timer_ticks = 0;
-            timer_segundos++;
+        jogo.timer.ticks++;
+        if (jogo.timer.ticks % 60 === 0) {
+            jogo.timer.ticks = 0;
+            jogo.timer.segundos++;
         }
     }
 
     fill(0, 0, 0);
         textSize(50);
-        text(timer_segundos, 100, 100);
-        text(timer_ticks, 300, 100);
+        text(jogo.timer.segundos, 100, 100);
+        text(jogo.timer.ticks, 300, 100);
 
 }
 
