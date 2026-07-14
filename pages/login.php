@@ -1,44 +1,121 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
-    
-    <title>TCCWEB</title>
-</head>
-<body>
-    <div class="caixa_login">
-        <h1>MENU</h1>
-        <form action="cadastro.php" method="post">
-            <input type="text" name="nome" placeholder="Nome" id="textoname" required> <br><br>
-            <input type="email" name="email" placeholder="Email" id="textoemail" required> <br><br>
-            <input type="password" name="senha" placeholder="Senha" id="textosenha" required> <br><br>
-
-            <button type="submit" class="bcriar">
-                Criar conta
-            </button> <br><br>
-
-            <button type="submit" class="bentrar">
-                Entrar na conta
-            </button> <br><br>
-        </form>
-    </div>
-        <audio id="music" loop>
-            <source src="../Audios/MenuSound.mp3" type="audio/mpeg">
-        </audio>
-</body>
-</html>
 <?php
 
-require_once __DIR__ . "/../includes/consulta.php";
+require_once __DIR__ . '\..\repository\UsuarioRepository.php';
 
-if(isset($_POST["bentrar"])) {
-    $query = new Consulta();
-    $login = $query->Login($_POST["email"], $_POST["senha"]);
+session_start();
+
+// Se já estiver logado, vai direto para a página principal
+if (!empty($_SESSION['id_usuario'])) {
+    header('Location: index.php');
+    exit;
 }
 
-if (isset($_GET['erro'])) {
-   echo "<p style='color:red'>Login inválido</p>";
+$erro = '';
+
+$repo = new UsuarioRepository();
+$nomeResponsavel = '';
+$nome = '';
+$idade = 0;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nomeResponsavel = $_POST['nomeResponsavel'];
+    $nome = $_POST['nome'];
+    $idade = $_POST['idade'];
+
+    if($nomeResponsavel === '' || $nome === '' || ($idade < 7 && $idade > 99)) {
+        $erro = 'Preencha todos os campos';
+    } 
+    else {
+        $usuario = $repo->buscarPorNomes($nomeResponsavel, $nome);
+
+        if ($usuario) {
+            $_SESSION['id'] = $usuario->getId();
+            $_SESSION['responsavel'] = $nomeResponsavel;
+            $_SESSION['nome'] = $nome;
+            $_SESSION['idade'] = $idade;
+
+            header('Location: index.php');
+            exit;
+        } else {
+            try {
+                $_SESSION['responsavel'] = $nomeResponsavel;
+                $_SESSION['nome'] = $nome;
+                $_SESSION['idade'] = $idade;
+
+                $repo->criarUsuario($nomeResponsavel, $nome, $idade);
+                $usuario = $repo->buscarPorNomes($nomeResponsavel, $nome);
+                $_SESSION['id_usuario'] = $usuario->getId();
+
+                header('Location: index.php');
+                exit;
+            } catch (Exception $e) {
+                $erro = 'Ocorreu um erro ao criar a conta';
+            }
+        }
+    }
 }
 ?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login — Castor's game</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body class="login-body">
+
+<div class="login-card">
+    <div class="login-logo">Castor's game</div>
+        <h1 class="login-title">Entrar no sistema</h1>
+
+<?php if ($erro !== ''): ?>
+    <div class="alert alert-erro"><?= htmlspecialchars($erro) ?></div>
+<?php endif; ?>
+
+<form method="POST" action="login.php">
+    <div class="form-group">
+        <label for="nomeResponsavel">Primeiro Nome Responsável</label><br>
+        <input
+        type="name"
+        id="nomeResponsavel"
+        name="nomeResponsavel"
+        placeholder="Ex: Fulano"
+        value="<?= htmlspecialchars($nomeResponsavel) ?>"
+        required
+        />
+    </div><br>
+
+    <div class="form-group">
+        <label for="nome">Primeiro Nome</label><br>
+        <input
+        type="name"
+        id="nome"
+        name="nome"
+        placeholder="Ex: Cicrano"
+        value="<?= htmlspecialchars($nome) ?>"
+        required
+        />
+    </div><br>
+
+    <div class="form-group">
+        <label for="idade">Idade</label><br>
+        <input
+        type="number"
+        id="idade"
+        name="idade"
+        placeholder="Ex: 12"
+        required
+        />
+    </div><br>
+
+    <button type="submit" class="btn btn-primary btn-full">Entrar</button>
+    <br>
+    <br>
+    <a href="cadastro.php" class="btn btn-secondary btn-full">Criar uma conta</a>
+    </form>
+
+</div>
+
+</body>
+</html>
