@@ -1,5 +1,5 @@
 // ESSE ARQUIVO ARMAZENA FUNÇÔES GLOBAIS DO JOGO
-
+<script>
 
 //PLAYER ---------------------------------------------------------------------------------------------------------------->
 
@@ -142,7 +142,8 @@ function keyPressed()
     if(jogo.fase === "menu" && keyCode === ENTER)
         jogo.fase = "fase1";
     if(jogo.fase === "fase1" && keyCode === ESCAPE)
-        jogo.fase = "pause";
+        // jogo.fase = "pause";
+        
     if (jogo.fase === "pause" && keyCode === ESCAPE)
         jogo.fase = "fase1";
 
@@ -353,3 +354,5 @@ function PegarCadeira(player_funcao, cadeiras_funcao) {
 //<--------
 
 //<-----------------------------------------------------------------------------------------------------------------------
+
+</script>

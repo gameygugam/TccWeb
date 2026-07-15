@@ -6,10 +6,12 @@
     <script src="../js/p5.js"></script>
     <script src="../js/globalVars.js"></script>
     <script src="../js/globalFunctions.js"></script>
-    <script src="../js/script.js"></script>
+    <!-- <script src="../js/script.js"></script> -->
     
     <title>TCCWEB</title>
 </head>
 <body>
+    <?php require_once __DIR__ . "/../js/globalFunctions.php" ?>
+    <?php require_once __DIR__ . "/../js/script.php" ?>
 </body>
 </html>

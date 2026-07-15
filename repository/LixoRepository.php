@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../config/conexao.php';
+require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../entity/Lixo.php';
 
 class LixoRepository {

@@ -1,3 +1,4 @@
+<script>
 function preload() {
     // Carrega a imagem do player
     jogo.playerImg = loadImage("../imagens/castor.png");
@@ -10,7 +11,7 @@ function preload() {
 }
 
 function setup() {
-    jogo.fase = "menu";
+    jogo.fase = <?= $_SESSION['fase'] ?>;
     fase1.is_fase_carregada = false;
     fase2.is_fase_carregada = false;
 
@@ -507,3 +508,4 @@ function DrawFase2()
         musica.play().catch(() => {});
     }
 }, { once: true });
+</script>

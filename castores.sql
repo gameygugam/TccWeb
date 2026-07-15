@@ -98,6 +98,7 @@ CREATE TABLE `personagem` (
 
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
+  `responsavel` varchar(20) DEFAULT NULL,
   `nome` varchar(20) DEFAULT NULL,
   `idade` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

@@ -33,6 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['responsavel'] = $nomeResponsavel;
             $_SESSION['nome'] = $nome;
             $_SESSION['idade'] = $idade;
+            
+            if(empty($_SESSION['fase'])) {
+                $_SESSION['fase'] = 'menu';
+            }
 
             header('Location: index.php');
             exit;
@@ -45,6 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $repo->criarUsuario($nomeResponsavel, $nome, $idade);
                 $usuario = $repo->buscarPorNomes($nomeResponsavel, $nome);
                 $_SESSION['id_usuario'] = $usuario->getId();
+
+                $_SESSION['fase'] = 'menu';
 
                 header('Location: index.php');
                 exit;
@@ -109,10 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         />
     </div><br>
 
-    <button type="submit" class="btn btn-primary btn-full">Entrar</button>
-    <br>
-    <br>
-    <a href="cadastro.php" class="btn btn-secondary btn-full">Criar uma conta</a>
+    <button type="submit" class="btn btn-primary btn-full">Entrar/Criar</button>
     </form>
 
 </div>

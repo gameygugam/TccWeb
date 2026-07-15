@@ -1,6 +1,6 @@
 <?php 
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'tccweb');
+define('DB_NAME', 'castores');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
