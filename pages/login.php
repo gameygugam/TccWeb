@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $usuario = $repo->buscarPorNomes($nomeResponsavel, $nome);
 
         if ($usuario) {
-            $_SESSION['id'] = $usuario->getId();
+            $_SESSION['id_usuario'] = $usuario->getId();
             $_SESSION['responsavel'] = $nomeResponsavel;
             $_SESSION['nome'] = $nome;
             $_SESSION['idade'] = $idade;
@@ -50,7 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $usuario = $repo->buscarPorNomes($nomeResponsavel, $nome);
                 $_SESSION['id_usuario'] = $usuario->getId();
 
-                $_SESSION['fase'] = 'menu';
+                if(empty($_SESSION['fase'])) {
+                    $_SESSION['fase'] = 'menu';
+                }
 
                 header('Location: index.php');
                 exit;

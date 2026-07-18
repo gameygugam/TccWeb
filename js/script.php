@@ -1,4 +1,11 @@
+<?php
+
+require_once __DIR__ . '\..\includes\auth.php';
+
+?>
+
 <script>
+
 function preload() {
     // Carrega a imagem do player
     jogo.playerImg = loadImage("../imagens/castor.png");
@@ -11,7 +18,7 @@ function preload() {
 }
 
 function setup() {
-    jogo.fase = <?= $_SESSION['fase'] ?>;
+    MudarFase("menu");
     fase1.is_fase_carregada = false;
     fase2.is_fase_carregada = false;
 
@@ -54,7 +61,10 @@ function draw() {
         textSize(50)
         text(jogo.pontos, windowWidth - 100, 100);
 
-        if (jogo.fase !== "menu" && jogo.tecla_esc) jogo.fase = "menu";
+        if (jogo.fase !== "menu" && jogo.tecla_esc) 
+        {
+            MudarFase("menu");
+        }
 }
 
 //MENU-----------------------------------------------------------------------------------------------------------------
@@ -121,19 +131,19 @@ function DrawMenu()
     // Verifica a colisão com as portas para mudar fase
     if (Colidiu(jogo.player, portaEsquerda))
     {
-        jogo.fase = "fase1";
+        MudarFase("fase1");
         jogo.player.x = windowWidth / 2 - 50;
         jogo.player.y = windowHeight - 120;
     }
     else if (Colidiu(jogo.player, portaMeio))
     {
-        jogo.fase = "fase2";
+        MudarFase("fase2");
         jogo.player.x = windowWidth / 2 - 50;
         jogo.player.y = windowHeight - 120;
     }
     else if (Colidiu(jogo.player, portaDireita)) 
     {
-        jogo.fase = "fase1";
+        MudarFase("fase1");
         jogo.player.x = 20;
         jogo.player.y = windowHeight / 2 - 50;
     }

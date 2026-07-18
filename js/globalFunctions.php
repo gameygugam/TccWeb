@@ -1,4 +1,9 @@
-// ESSE ARQUIVO ARMAZENA FUNÇÔES GLOBAIS DO JOGO
+<?php
+
+require_once __DIR__ . '\..\includes\auth.php';
+
+?>
+
 <script>
 
 //PLAYER ---------------------------------------------------------------------------------------------------------------->
@@ -63,6 +68,17 @@ function Dash(){
     text(jogo.player.dash_cooldown, 50, windowHeight - 50);
 }
 
+function MudarFase(fase) {
+    jogo.fase = fase;
+
+    fetch("../includes/salvar_fase.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "fase=" + fase
+    });
+}
 
 //<-----------------------------------------------------------------------------------------------------------------------
 
