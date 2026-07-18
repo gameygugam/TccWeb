@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11/07/2026 às 23:28
+-- Tempo de geração: 18/07/2026 às 23:45
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+-- Versão do PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -93,6 +93,19 @@ CREATE TABLE `personagem` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `sala`
+--
+
+CREATE TABLE `sala` (
+  `id` int(11) NOT NULL,
+  `organizacao_cadeiras` varchar(20) DEFAULT NULL,
+  `posicao_quadro` varchar(20) DEFAULT NULL,
+  `image` varchar(150) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `usuario`
 --
 
@@ -102,6 +115,13 @@ CREATE TABLE `usuario` (
   `nome` varchar(20) DEFAULT NULL,
   `idade` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `responsavel`, `nome`, `idade`) VALUES
+(1, 'a', 'f', 2);
 
 --
 -- Índices para tabelas despejadas
@@ -138,6 +158,12 @@ ALTER TABLE `partida`
 -- Índices de tabela `personagem`
 --
 ALTER TABLE `personagem`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `sala`
+--
+ALTER TABLE `sala`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -181,10 +207,16 @@ ALTER TABLE `personagem`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `sala`
+--
+ALTER TABLE `sala`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restrições para tabelas despejadas
