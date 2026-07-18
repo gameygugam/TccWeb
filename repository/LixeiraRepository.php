@@ -73,7 +73,6 @@ class LixeiraRepository {
             'INSERT INTO lixeira (img, w, h, x, y, material) VALUES (:img, :w, :h, :x, :y, :material)'
         );
         $stmt->execute([
-            ':id_l' => $lixeira->getIdLixeira(),
             ':img' => $lixeira->getImage(),
             ':w' => $lixeira->getWidth(),
             ':h' => $lixeira->getHeight(),

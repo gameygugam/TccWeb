@@ -28,4 +28,32 @@ class Lixeira {
     public function getMaterial():      string   { return $this->material; }
     public function getX():             int      { return $this->x; }
     public function getY():             int      { return $this->y; }
+
+    public static function novo(string $image, int $width, int $height,
+    int $x, int $y, string $material): Lixeira {
+
+        $lixeira = new Lixeira([]);
+        $lixeira->alterarDados($image, $width, $height, $x, $y, $material);
+
+        return $lixeira;
+    }
+
+    public function alterarDados(string $image, int $width, int $height,
+    int $x, int $y, string $material): void {
+
+        $this->image         = $image;
+        $this->width         = $width;
+        $this->height        = $height;
+        $this->x             = $x;
+        $this->y             = $y;
+        $this->material      = $material;
+    }
+
+    public function registrarIdGerado(int $id): void {
+        if ($id <= 0) {
+            throw new InvalidArgumentException('ID inválido.');
+        }
+
+        $this->id = $id;
+    }
 }
