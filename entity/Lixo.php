@@ -58,6 +58,35 @@ class Lixo {
         $this->angulo        = $angulo;
     }
 
+    public function AleatoriezarPosicaoLixo(int $windowWidth, int $windowHeight, int $width, int $height, array $lixos) {
+        
+        $dif_x = (($windowWidth - $width) / 2);
+        $dif_y = (($windowHeight - $height) / 2);
+
+        $lixo_x = 50;
+        $lixo_y = 50;
+
+        $tentativas = 0;
+        $posicao_possivel = false;
+
+        while (!$posicao_possivel && $tentativas < 100){
+
+            $posicao_possivel = true;
+            $lixo_x = random_int($dif_x + 50, ($dif_x + $width) - 200);
+            $lixo_y = random_int($dif_y + 50, ($dif_y + $height) - 50);
+
+            foreach ($lixos as $l){
+                if (abs($l->getX() - $lixo_x) < 50 && abs($l->getY() - $lixo_y) < 50) {
+                    $posicao_possivel = false;
+                }
+            }
+        }
+
+        $this->x = $lixo_x;
+        $this->y = $lixo_y;
+    
+    }
+
     public function registrarIdGerado(int $id): void {
         if ($id <= 0) {
             throw new InvalidArgumentException('ID inválido.');

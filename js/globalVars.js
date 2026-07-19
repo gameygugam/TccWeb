@@ -42,6 +42,8 @@ const jogo = {
         segundos: 0, 
         ticks: 0 
     },
+
+    timerGlobal: 0,
 };
 
 const menu = {
@@ -97,6 +99,7 @@ const fase2 = {
 
     //<-----------------------------------------------------------------------------------------------------------------------
 
+    sala: null,
     is_fase_carregada: false,
     pontos: 0,
 };

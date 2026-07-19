@@ -68,6 +68,38 @@ function Dash(){
     text(jogo.player.dash_cooldown, 50, windowHeight - 50);
 }
 
+function AnimacaoStandBy(){
+    // if (jogo.timerGlobal === 128 || jogo.timerGlobal === 129){
+    //     jogo.player.w = 105
+    //     jogo.player.h = 105
+    // }
+
+    // else if (jogo.timerGlobal === 130 || jogo.timerGlobal === 131){
+    //     jogo.player.w = 110
+    //     jogo.player.h = 110
+    // }
+
+    // else if (jogo.timerGlobal === 132 || jogo.timerGlobal === 133){
+    //     jogo.player.w = 115
+    //     jogo.player.h = 115
+    // }
+
+    // else if (jogo.timerGlobal === 134 || jogo.timerGlobal === 135){
+    //     jogo.player.w = 110
+    //     jogo.player.h = 110
+    // }
+
+    // else if (jogo.timerGlobal === 136 || jogo.timerGlobal === 137){
+    //     jogo.player.w = 105
+    //     jogo.player.h = 105
+    // }
+
+    // else if (jogo.timerGlobal === 138 || jogo.timerGlobal === 139){
+    //     jogo.player.w = 100
+    //     jogo.player.h = 100
+    // }
+}
+
 function MudarFase(fase) {
     jogo.fase = fase;
 
@@ -221,12 +253,29 @@ function MostrarLixoReal() {
     }
 }
 
-function CriarLixo() {
+function AleatoriezarPosicao(objeto) {
+    let dif_x = ((windowWidth - width) / 2);
+    let dif_y = ((windowHeight - height) / 2);
+
+    let objeto_x = random(dif_x + 50, (dif_x + width) - 50);
+    let objeto_y = random(dif_y + 50, (dif_y + height) - 50);
+}
+
+function AleatoriezarPosicaoLixo(lixo) {
     let dif_x = ((windowWidth - width) / 2);
     let dif_y = ((windowHeight - height) / 2);
 
     let lixo_x = random(dif_x + 50, (dif_x + width) - 200);
     let lixo_y = random(dif_y + 50, (dif_y + height) - 50);
+}
+
+function CriarLixo() {
+
+    let dif_x = ((windowWidth - width) / 2);
+    let dif_y = ((windowHeight - height) / 2);
+
+    let lixo_x = random(dif_x + 50, width - 200);
+    let lixo_y = random(dif_y + 50, height - 50);
 
     //let lixo = [0, 0, 25, 25, "", "", ""] //x, y, w, h, img, type, class
     let lixo_img = null;
@@ -245,7 +294,9 @@ function CriarLixo() {
 
     let lixo_angulo = random(TWO_PI)
 
-    fase1.lixos.push({ x: lixo_x, y: lixo_y, w: 25, h: 25, img: lixo_img, imgCarregada: lixo_img_carregada, type: lixo_type, class: "lixo", angulo: lixo_angulo }); 
+    lixo = fase1.lixos.push({ x: lixo_x, y: lixo_y, w: 25, h: 25, img: lixo_img, imgCarregada: lixo_img_carregada, type: lixo_type, class: "lixo", angulo: lixo_angulo });
+    // let lixo = Lixo.novo(null, lixo_img_carregada, 25, 25, lixo_x, lixo_y, lixo_type, lixo_angulo)
+    // fase1.lixos.push(lixo); 
 
     /*lixos[lixos.length - 1].img = lixosPixelImg[lixos.length - 1]; // Adiciona imagem pixel no parametro
     lixos[lixos.length - 1].imgCarregada = lixosPixelImgCarregados[lixos.length - 1]; // Adiciona imagem pixel carregada no parametro
@@ -278,6 +329,11 @@ function RotacionarLixo() {
 //<--------
 
 //fase2 -->
+
+function CriarSala() {
+    const sala_de_aula = Sala.novo(null, null, null)
+    fase2.sala = sala_de_aula
+}
 
 function CriarQuadro() {
 

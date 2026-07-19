@@ -40,6 +40,8 @@ function setup() {
     jogo.canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
     jogo.canvas.position(jogo.canvas_x, jogo.canvas_y);
 
+    jogo.timerGlobal = 0;
+
     SetupMenu();
     SetupFase1();
     SetupFase2();
@@ -47,24 +49,30 @@ function setup() {
 }
 
 function draw() {
-        if(jogo.fase === "menu")
-            DrawMenu(); // Desenha o Menu
-        else if(jogo.fase === "fase1")
-            DrawFase1(); // Desenha o Minigame 1
-        else if(jogo.fase === "fase2")
-            DrawFase2(); // Desenha o Minigame 2
-        else if(jogo.fase === "pause")
-            DrawPause(); // Desenha o menu de Pause
+    if (jogo.timerGlobal === 256) jogo.timerGlobal = 0
 
-        Dash();
-        fill(0, 0, 0)
-        textSize(50)
-        text(jogo.pontos, windowWidth - 100, 100);
+    if(jogo.fase === "menu")
+        DrawMenu(); // Desenha o Menu
+    else if(jogo.fase === "fase1")
+        DrawFase1(); // Desenha o Minigame 1
+    else if(jogo.fase === "fase2")
+        DrawFase2(); // Desenha o Minigame 2
+    else if(jogo.fase === "pause")
+        DrawPause(); // Desenha o menu de Pause
 
-        if (jogo.fase !== "menu" && jogo.tecla_esc) 
-        {
+    AnimacaoStandBy()
+    Dash();
+    fill(0, 0, 0)
+    textSize(50)
+    text(jogo.pontos, windowWidth - 100, 100);
+
+    if (jogo.fase !== "menu" && jogo.tecla_esc) 
+    {
             MudarFase("menu");
-        }
+    }
+
+    text(jogo.timerGlobal, 50, windowHeight - 100);
+    jogo.timerGlobal++
 }
 
 //MENU-----------------------------------------------------------------------------------------------------------------
@@ -100,7 +108,9 @@ function DrawMenu()
     Movimentar();
 
     //// Desenha o player
-    image(jogo.playerImg, jogo.player.x, jogo.player.y, 100, 100);
+    imageMode(CENTER)
+    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.w, jogo.player.h);
+    imageMode(CORNER)
 
     //// Verifica colisão com parede
     jogo.walls.forEach(wall => {
@@ -291,7 +301,7 @@ function DrawFase1()
     image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
 
     ////repõe a quantidade de lixo no mapa
-    if(fase1.lixos.length < 10) CriarLixo()
+    if(fase1.lixos.length < 10) CriarLixo();
 
     //// Armazena posição antiga
     jogo.player.oldX = jogo.player.x;
@@ -400,10 +410,12 @@ function SetupFase2()
 {
     fase2.cadeiras = [];
     fase2.lastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: null, angulo: 0 };
+    fase2.sala = Sala.novo("1", "2", null)
 }
 
 function DrawFase2()
 {
+
     if(jogo.timer.ticks === 3600) {
         jogo.pontos = 0;
         jogo.timer.ticks = 0;
