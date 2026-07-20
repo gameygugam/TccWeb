@@ -28,13 +28,43 @@ class Lixo {
         return lixo;
     }
 
+    static criarLixo(id_lixeira, lixo_type) {
+        const lixo = new Lixo({ id_lixeira });
+        
+        let image = ""
+        let width = 25
+        let height = 25
+        let x = 0
+        let y = 0
+        let material = lixo_type
+        let angulo = random(TWO_PI)
+
+        if (lixo_type === "papel") {
+            image = "../imagens/lixos/bolinhaDePapelPixel.png"
+        }
+        else if (lixo_type === "vidro") {
+            image = "../imagens/lixos/garrafaVidroPixel.png"
+        }
+        else if (lixo_type === "organico") {
+            let rnd = floor(random(2))
+            if (rnd === 0) image = "../imagens/lixos/bananaPixel.png"
+            else image = "../imagens/lixos/bananaPodrePixel.png"
+        }
+        else if (lixo_type === "plastico") {
+            image = "../imagens/lixos/garrafaDePlasticoPixel.png"
+        }
+
+        lixo.alterarDados(loadImage(image), width, height, x, y, material, angulo);
+        return lixo;
+    }
+
     alterarDados(image, width, height, x, y, material, angulo) {
-        this.image = image;
-        this.width = width;
-        this.height = height;
-        this.x      = x;
-        this.y = y;
-        this.material = material;
-        this.angulo = angulo;
+        this.image      = image;
+        this.width      = width;
+        this.height     = height;
+        this.x          = x;
+        this.y          = y;
+        this.material   = material;
+        this.angulo     = angulo;
     }
 }
