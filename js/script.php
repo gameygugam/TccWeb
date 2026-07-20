@@ -8,7 +8,7 @@ require_once __DIR__ . '\..\includes\auth.php';
 
 function preload() {
     // Carrega a imagem do player
-    jogo.playerImg = loadImage("../imagens/castor.png");
+    jogo.playerImg = loadImage("../assets/imagens/castor.png");
     jogo.mapasImg = [];
 
     PreloadMenu(); // Pré carrega as ../imagens do Menu
@@ -23,18 +23,19 @@ function setup() {
     fase2.is_fase_carregada = false;
 
     jogo.player = { 
-        x: windowWidth / 2 - 50, y: windowHeight - 120, w: 100, h: 100,
+        x: windowWidth / 2 - 50, y: windowHeight - 120, width: 100, height: 100,
         oldX: windowWidth / 2, oldY: windowHeight - 120, class: "player", dash_cooldown: 80, dash_duracao: 0 
     };
 
     jogo.walls = [
-        wall1 = { x: 0, y: 0, w: windowWidth, h: 10, class: "wall" }, // Parede superior
+        wall1 = { x: 0, y: 0, w: windowWidth-500, h: 10, class: "wall" }, // Parede superior
         wall2 = { x: 0, y: 0, w: 10, h: windowHeight, class: "wall" }, // Parede esquerda
         wall3 = { x: windowWidth - 10, y: 0, w: 10, h: windowHeight, class: "wall" }, //Parede direita
-        wall4 = { x: 0, y: windowHeight - 10, w: windowWidth , h: 10, class: "wall" } //Parede baixo
+        wall4 = { x: 0, y: windowHeight - 10, w: windowWidth-500 , h: 10, class: "wall" } //Parede baixo
     ];
-
-    jogo.canvas = createCanvas(windowWidth, windowHeight);
+    let canvasBorder = createCanvas(windowWidth, windowHeight);
+    noSmooth();
+    jogo.canvas = createCanvas(windowWidth-500, windowHeight);
     noSmooth();
     jogo.canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
     jogo.canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
@@ -78,7 +79,7 @@ function draw() {
 //MENU-----------------------------------------------------------------------------------------------------------------
 function PreloadMenu()
 {
-    jogo.mapasImg[0] = mapa1 = loadImage("../imagens/mapas/mapaPrototipo.png");
+    jogo.mapasImg[0] = mapa1 = loadImage("../assets/imagens/mapas/mapaPrototipo.png");
 }
 
 function SetupMenu()
@@ -98,7 +99,7 @@ function SetupMenu()
 function DrawMenu()
 {
     //// Cria o mapa
-    image(jogo.mapasImg[0], 0, 0, windowWidth, windowHeight);
+    image(jogo.mapasImg[0], 0, 0, windowWidth-500, windowHeight);
 
     //// Armazena posição antiga
     jogo.player.oldX = jogo.player.x;
@@ -109,7 +110,7 @@ function DrawMenu()
 
     //// Desenha o player
     imageMode(CENTER)
-    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.w, jogo.player.h);
+    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width, jogo.player.height);
     imageMode(CORNER)
 
     //// Verifica colisão com parede
@@ -223,15 +224,15 @@ function DrawPause()
 function PreloadFase1()
 {
     // Carrega a imagem do mapa1
-    jogo.mapasImg[1] = mapa2 = loadImage("../imagens/mapas/mapaPrototipo.png");
+    jogo.mapasImg[1] = mapa2 = loadImage("../assets/imagens/mapas/mapaPrototipo.png");
 
     // Carrega as ../imagens das lixeiras
     fase1.lixeiras_img = [
-        loadImage("../imagens/lixeiras/lixeiraVermelha.png"),
-        loadImage("../imagens/lixeiras/lixeiraAzul.png"),
-        loadImage("../imagens/lixeiras/lixeiraAmarela.png"),
-        loadImage("../imagens/lixeiras/lixeiraVerde.png"),
-        loadImage("../imagens/lixeiras/lixeiraMarrom.png")
+        loadImage("../assets/imagens/lixeiras/lixeiraVermelha.png"),
+        loadImage("../assets/imagens/lixeiras/lixeiraAzul.png"),
+        loadImage("../assets/imagens/lixeiras/lixeiraAmarela.png"),
+        loadImage("../assets/imagens/lixeiras/lixeiraVerde.png"),
+        loadImage("../assets/imagens/lixeiras/lixeiraMarrom.png")
     ];
 
     /*
@@ -250,35 +251,35 @@ function PreloadFase1()
     ];*/
 
     fase1.lixosPixelImgCarregados = [
-        loadImage("../imagens/lixos/bolinhaDePapelPixel.png"),
-        loadImage("../imagens/lixos/garrafaVidroPixel.png"),
-        loadImage("../imagens/lixos/bananaPixel.png"),
-        loadImage("../imagens/lixos/bananaPodrePixel.png"),
-        loadImage("../imagens/lixos/garrafaDePlasticoPixel.png"),
+        loadImage("../assets/imagens/lixos/bolinhaDePapelPixel.png"),
+        loadImage("../assets/imagens/lixos/garrafaVidroPixel.png"),
+        loadImage("../assets/imagens/lixos/bananaPixel.png"),
+        loadImage("../assets/imagens/lixos/bananaPodrePixel.png"),
+        loadImage("../assets/imagens/lixos/garrafaDePlasticoPixel.png"),
     ];
     
     // Carrega as ../imagens dos lixos reais
     fase1.lixosReaisCarregados = [
-        loadImage("../imagens/lixos/bolinhaDePapel.png"), //0
-        loadImage("../imagens/lixos/garrafaVidro.png"), //1
-        // loadImage("../imagens/lixos/banana.png"), //2
-        loadImage("../imagens/lixos/bananaPodre.png"), //3 -> 2
-        loadImage("../imagens/lixos/garrafaDePlastico.png") //4 -> 3
+        loadImage("../assets/imagens/lixos/bolinhaDePapel.png"), //0
+        loadImage("../assets/imagens/lixos/garrafaVidro.png"), //1
+        // loadImage("../assets/imagens/lixos/banana.png"), //2
+        loadImage("../assets/imagens/lixos/bananaPodre.png"), //3 -> 2
+        loadImage("../assets/imagens/lixos/garrafaDePlastico.png") //4 -> 3
     ]
     // Carrega a imagem do cartaz de procurado
-    fase1.cartazProcuradoLixo = loadImage("../imagens/cartazProcuradoLixo.png");
+    fase1.cartazProcuradoLixo = loadImage("../assets/imagens/cartazProcuradoLixo.png");
 }
 
 function SetupFase1()
 {
-    fase1.lastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: null, angulo: 0 };
+    fase1.lastItemPego = Lixo.novo(null, null, 0, 0, 0, 0, null, 0);
 
     fase1.lixeiras = [
-        { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
-        { x:  windowWidth - 100, y: windowHeight / 2 + 275, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
-        { x:  windowWidth - 100, y: windowHeight / 2 - 125, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
-        { x:  windowWidth - 100, y: windowHeight / 2 - 275, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
-        { x: windowWidth - 100, y: windowHeight / 2, w: 100, h: 100, img: "../imagens/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" }
+        { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "../assets/imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
+        { x:  windowWidth - 100, y: windowHeight / 2 + 275, w: 100, h: 100, img: "../assets/imagens/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
+        { x:  windowWidth - 100, y: windowHeight / 2 - 125, w: 100, h: 100, img: "../assets/imagens/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
+        { x:  windowWidth - 100, y: windowHeight / 2 - 275, w: 100, h: 100, img: "../assets/imagens/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
+        { x: windowWidth - 100, y: windowHeight / 2, w: 100, h: 100, img: "../assets/imagens/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" }
     ];
     fase1.lixos = [];
 
@@ -349,12 +350,12 @@ function DrawFase1()
     {
         fase1.lixeiras.forEach(lixeira => {
             if (fase1.lastItemPego && Colidiu(fase1.lastItemPego, lixeira)) {
-                if (fase1.lastItemPego.type === lixeira.descarte)
+                if (fase1.lastItemPego.material === lixeira.descarte)
                     jogo.pontos += 10;
                 else
                     jogo.pontos -= 5;
                 fase1.lixos = fase1.lixos.filter(obj => obj !== fase1.lastItemPego);
-                fase1.lastItemPego = { X: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
+                fase1.lastItemPego = Lixo.novo(null, null, 0, 0, 0, 0, null, 0);
             }
         })
     }
@@ -369,11 +370,11 @@ function DrawFase1()
     fase1.lixos.forEach(lixo =>{
         push();
 
-        translate(lixo.x + lixo.w / 2, lixo.y + lixo.h / 2);
+        translate(lixo.x + lixo.width / 2, lixo.y + lixo.height / 2);
         rotate(lixo.angulo);
         imageMode(CENTER);
 
-        image(lixo.imgCarregada, 0, 0, lixo.w, lixo.h);
+        image(lixo.image, 0, 0, lixo.width, lixo.height);
 
         pop();
     })
@@ -384,7 +385,7 @@ function DrawFase1()
     // });
 
     ////Desenha personagem
-    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.w, jogo.player.h);
+    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width, jogo.player.height);
 
     TimerTick("Fase1");
 }
@@ -395,21 +396,21 @@ function DrawFase1()
 function PreloadFase2()
 {
     fase2.cadeirasCarregadas = [
-        loadImage("../imagens/cadeiras/cadeira_0.png"),
-        loadImage("../imagens/cadeiras/cadeira_1.png"),
-        loadImage("../imagens/cadeiras/cadeira_2.png"),
-        loadImage("../imagens/cadeiras/cadeira_2.png"),
-        loadImage("../imagens/cadeiras/cadeira_4.png"),
-        loadImage("../imagens/cadeiras/cadeira_4.png"),
-        loadImage("../imagens/cadeiras/cadeira_6.png"),
-        loadImage("../imagens/cadeiras/cadeira_7.png"),
+        loadImage("../assets/imagens/cadeiras/cadeira_0.png"),
+        loadImage("../assets/imagens/cadeiras/cadeira_1.png"),
+        loadImage("../assets/imagens/cadeiras/cadeira_2.png"),
+        loadImage("../assets/imagens/cadeiras/cadeira_2.png"),
+        loadImage("../assets/imagens/cadeiras/cadeira_4.png"),
+        loadImage("../assets/imagens/cadeiras/cadeira_4.png"),
+        loadImage("../assets/imagens/cadeiras/cadeira_6.png"),
+        loadImage("../assets/imagens/cadeiras/cadeira_7.png"),
     ]
 }
 
 function SetupFase2()
 {
     fase2.cadeiras = [];
-    fase2.lastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: null, angulo: 0 };
+    // fase1.lastItemPego = Cadeira.novo(null, null, 0, 0, 0, 0, null, 0);
     fase2.sala = Sala.novo("1", "2", null)
 }
 
@@ -491,7 +492,7 @@ function DrawFase2()
     });
 
     ////Desenha personagem
-    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.w, jogo.player.h);
+    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width, jogo.player.height);
 
     TimerTick("Fase2");
 }
@@ -506,11 +507,11 @@ function DrawFase2()
 
 /*function SortearLixoPixel() {
     let rand = floor(random(5));
-    if (rand === 0) return "../imagens/lixos/bolinhaDePapelPixel.png";
-    else if (rand === 1) return "../imagens/lixos/garrafaVidroPixel.png";
-    else if (rand === 2) return "../imagens/lixos/bananaPixel.png";
-    else if (rand === 3) return "../imagens/lixos/bananaPodrePixel.png";
-    else return "../imagens/lixos/garrafaDePlasticoPixel.png";
+    if (rand === 0) return "../assets/imagens/lixos/bolinhaDePapelPixel.png";
+    else if (rand === 1) return "../assets/imagens/lixos/garrafaVidroPixel.png";
+    else if (rand === 2) return "../assets/imagens/lixos/bananaPixel.png";
+    else if (rand === 3) return "../assets/imagens/lixos/bananaPodrePixel.png";
+    else return "../assets/imagens/lixos/garrafaDePlasticoPixel.png";
 }*/
 
     // function DragDrop(a) {

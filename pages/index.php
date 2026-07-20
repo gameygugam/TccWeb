@@ -12,6 +12,7 @@ require_once __DIR__ . '\..\includes\auth.php';
     <script src="../js/p5.js"></script>
     <script src="../js/globalVars.js"></script>
     <script src="../entity/Sala.js"></script>
+    <script src="../entity/Lixo.js"></script>
     <!-- <script src="../js/globalFunctions.js"></script> -->
     <!-- <script src="../js/script.js"></script> -->
     

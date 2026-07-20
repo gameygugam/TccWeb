@@ -39,20 +39,20 @@ class Lixo {
         let material = lixo_type
         let angulo = random(TWO_PI)
 
-        if (lixo_type === "papel") {
-            image = "../imagens/lixos/bolinhaDePapelPixel.png"
-        }
-        else if (lixo_type === "vidro") {
-            image = "../imagens/lixos/garrafaVidroPixel.png"
-        }
-        else if (lixo_type === "organico") {
-            let rnd = floor(random(2))
-            if (rnd === 0) image = "../imagens/lixos/bananaPixel.png"
-            else image = "../imagens/lixos/bananaPodrePixel.png"
-        }
-        else if (lixo_type === "plastico") {
-            image = "../imagens/lixos/garrafaDePlasticoPixel.png"
-        }
+        // if (lixo_type === "papel") {
+        //     image = "../imagens/lixos/bolinhaDePapelPixel.png"
+        // }
+        // else if (lixo_type === "vidro") {
+        //     image = "../imagens/lixos/garrafaVidroPixel.png"
+        // }
+        // else if (lixo_type === "organico") {
+        //     let rnd = floor(random(2))
+        //     if (rnd === 0) image = "../imagens/lixos/bananaPixel.png"
+        //     else image = "../imagens/lixos/bananaPodrePixel.png"
+        // }
+        // else if (lixo_type === "plastico") {
+        //     image = "../imagens/lixos/garrafaDePlasticoPixel.png"
+        // }
 
         lixo.alterarDados(loadImage(image), width, height, x, y, material, angulo);
         return lixo;
