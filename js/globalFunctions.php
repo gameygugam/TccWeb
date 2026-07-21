@@ -275,7 +275,7 @@ function CriarLixo() {
     let dif_x = ((windowWidth - width) / 2);
     let dif_y = ((windowHeight - height) / 2);
 
-    let lixo_x = random(jogo.xInicialMapa, jogo.xFinalMapa - 250);
+    let lixo_x = random(jogo.xInicialMapa + 10, jogo.xFinalMapa - 250);
     let lixo_y = random(dif_y + 50, height - 50);
 
     //let lixo = [0, 0, 25, 25, "", "", ""] //x, y, w, h, img, type, class
