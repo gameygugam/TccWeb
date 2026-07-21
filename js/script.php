@@ -23,19 +23,19 @@ function setup() {
     fase2.is_fase_carregada = false;
 
     jogo.player = { 
-        x: windowWidth / 2 - 50, y: windowHeight - 120, width: 100, height: 100,
-        oldX: windowWidth / 2, oldY: windowHeight - 120, class: "player", dash_cooldown: 80, dash_duracao: 0 
+        x: windowWidth / 2 - 250, y: windowHeight - 200, width: 100, height: 100,
+        oldX: windowWidth / 2 - 250, oldY: windowHeight - 200, class: "player", dash_cooldown: 80, dash_duracao: 0 
     };
 
     jogo.walls = [
-        wall1 = { x: 0, y: 0, w: windowWidth-500, h: 10, class: "wall" }, // Parede superior
-        wall2 = { x: 0, y: 0, w: 10, h: windowHeight, class: "wall" }, // Parede esquerda
-        wall3 = { x: windowWidth - 10, y: 0, w: 10, h: windowHeight, class: "wall" }, //Parede direita
-        wall4 = { x: 0, y: windowHeight - 10, w: windowWidth-500 , h: 10, class: "wall" } //Parede baixo
+        wall1 = { x: 0, y: 0, width: windowWidth, height: 10, class: "wall" }, // Parede superior
+        wall2 = { x: -40, y: 0, width: 10, height: windowHeight, class: "wall" }, // Parede esquerda
+        wall3 = { x: windowWidth - 500, y: 0, width: 10, height: windowHeight, class: "wall" }, //Parede direita
+        wall4 = { x: 0, y: windowHeight - 50, width: windowWidth-500 , height: 10, class: "wall" } //Parede baixo
     ];
     let canvasBorder = createCanvas(windowWidth, windowHeight);
     noSmooth();
-    jogo.canvas = createCanvas(windowWidth-500, windowHeight);
+    jogo.canvas = createCanvas(windowWidth-500, windowHeight-50);
     noSmooth();
     jogo.canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
     jogo.canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
@@ -69,7 +69,7 @@ function draw() {
 
     if (jogo.fase !== "menu" && jogo.tecla_esc) 
     {
-            MudarFase("menu");
+        MudarFase("menu");
     }
 
     text(jogo.timerGlobal, 50, windowHeight - 100);
@@ -99,7 +99,7 @@ function SetupMenu()
 function DrawMenu()
 {
     //// Cria o mapa
-    image(jogo.mapasImg[0], 0, 0, windowWidth-500, windowHeight);
+    image(jogo.mapasImg[0], 0, 0, windowWidth-500, windowHeight-50);
 
     //// Armazena posição antiga
     jogo.player.oldX = jogo.player.x;
@@ -109,9 +109,9 @@ function DrawMenu()
     Movimentar();
 
     //// Desenha o player
-    imageMode(CENTER)
+    // imageMode(CENTER)
     image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width, jogo.player.height);
-    imageMode(CORNER)
+    // imageMode(CORNER)
 
     //// Verifica colisão com parede
     jogo.walls.forEach(wall => {
@@ -121,23 +121,23 @@ function DrawMenu()
         }
     })
     
-    // // Visualizar paredes
-    // walls.forEach(wall => {
-    //     fill(0, 255, 0);
-    //     rect(wall.x, wall.y, wall.w, wall.h);
-    // });
+    // Visualizar paredes
+    jogo.walls.forEach(wall => {
+        fill(0, 255, 0);
+        rect(wall.x, wall.y, wall.width, wall.height);
+    });
 
     fill(0, 0, 0);
-    rect(0, windowHeight/2 - 100, 35, 200);
-    let portaEsquerda = {x: 0, y: windowHeight/2 - 100, w: 35, h: 200};
+    rect(0, windowHeight/2 - 120, 35, 200);
+    let portaEsquerda = {x: 0, y: windowHeight/2 - 100, width: 35, height: 200};
 
     fill(0, 0, 0);
-    rect(windowWidth/2 - 100, 0, 200, 35);
-    let portaMeio = {x: windowWidth/2 - 100, y: 0, w: 200, h: 35};
+    rect(windowWidth/2 - 350, 10, 200, 35);
+    let portaMeio = {x: windowWidth/2 - 350, y: 30, width: 200, height: 35};
 
     fill(0, 0, 0);
-    rect(windowWidth - 50, windowHeight/2 - 100, 35, 200);
-    let portaDireita = {x: windowWidth - 50, y: windowHeight/2 - 100, w: 35, h: 200};
+    rect(windowWidth - 540, windowHeight/2 - 120, 35, 200);
+    let portaDireita = {x: windowWidth - 540, y: windowHeight/2 - 100, width: 35, height: 200};
 
     // Verifica a colisão com as portas para mudar fase
     if (Colidiu(jogo.player, portaEsquerda))
@@ -275,11 +275,11 @@ function SetupFase1()
     fase1.lastItemPego = Lixo.novo(null, null, 0, 0, 0, 0, null, 0);
 
     fase1.lixeiras = [
-        { x: windowWidth - 100, y: windowHeight / 2 + 125, w: 100, h: 100, img: "../assets/imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
-        { x:  windowWidth - 100, y: windowHeight / 2 + 275, w: 100, h: 100, img: "../assets/imagens/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
-        { x:  windowWidth - 100, y: windowHeight / 2 - 125, w: 100, h: 100, img: "../assets/imagens/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
-        { x:  windowWidth - 100, y: windowHeight / 2 - 275, w: 100, h: 100, img: "../assets/imagens/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
-        { x: windowWidth - 100, y: windowHeight / 2, w: 100, h: 100, img: "../assets/imagens/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" }
+        { x: windowWidth - 600, y: windowHeight / 2 + 125 - 25, width: 100, height: 100, img: "../assets/imagens/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
+        { x: windowWidth - 600, y: windowHeight / 2 + 275 - 25, width: 100, height: 100, img: "../assets/imagens/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
+        { x: windowWidth - 600, y: windowHeight / 2 - 125 - 75, width: 100, height: 100, img: "../assets/imagens/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
+        { x: windowWidth - 600, y: windowHeight / 2 - 275 - 75, width: 100, height: 100, img: "../assets/imagens/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
+        { x: windowWidth - 600, y: windowHeight / 2 - 50, width: 100, height: 100, img: "../assets/imagens/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" }
     ];
     fase1.lixos = [];
 
@@ -299,7 +299,7 @@ function DrawFase1()
     }
 
     // background(0, 100, 0);
-    image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
+    image(jogo.mapasImg[1], 0, 0, windowWidth-500, windowHeight-50);
 
     ////repõe a quantidade de lixo no mapa
     if(fase1.lixos.length < 10) CriarLixo();
@@ -365,7 +365,7 @@ function DrawFase1()
     MostrarLixoReal();
     RotacionarLixo();
 
-    fase1.lixeiras.forEach((lixeira, i) => { image(fase1.lixeiras_img[i], lixeira.x, lixeira.y, lixeira.w, lixeira.h) });
+    fase1.lixeiras.forEach((lixeira, i) => { image(fase1.lixeiras_img[i], lixeira.x, lixeira.y, lixeira.width, lixeira.height) });
     
     fase1.lixos.forEach(lixo =>{
         push();
@@ -379,10 +379,10 @@ function DrawFase1()
         pop();
     })
 
-    // walls.forEach(wall => {
-    //     fill(0, 255, 0);
-    //     rect(wall.x, wall.y, wall.w, wall.h);
-    // });
+    jogo.walls.forEach(wall => {
+        fill(0, 255, 0);
+        rect(wall.x, wall.y, wall.width, wall.height);
+    });
 
     ////Desenha personagem
     image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width, jogo.player.height);
