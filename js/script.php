@@ -356,7 +356,7 @@ function DrawFase1()
         if (!keyIsDown(32) && Colidiu(jogo.player, lixo)) {
             fill(255, 0, 0);
             textSize(16);
-            text("Aperte espaço", lixo.x - 10, lixo.y - 10);
+            text("Pressione 'E'", lixo.x - 10, lixo.y - 10);
         }
     })
 

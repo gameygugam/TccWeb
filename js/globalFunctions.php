@@ -207,13 +207,13 @@ function keyPressed()
         jogo.tecla_esc = true;
     }
 
-    // if (jogo.fase === "fase1") {
-    //     jogo.lixos.forEach(lixo => {
-    //         if (Colidiu(jogo.player, lixo) && event.code === "Space") {
-    //             PegarLixo(jogo.player, jogo.lixos);
-    //         }
-    //     })
-    // }
+    if (jogo.fase === "fase1") {
+        jogo.lixos.forEach(lixo => {
+            if (Colidiu(jogo.player, lixo) && event.code === "E") {
+                PegarLixo(jogo.player, jogo.lixos);
+            }
+        })
+    }
 }
 
 function keyReleased(event) {
