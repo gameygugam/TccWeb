@@ -18,13 +18,20 @@ function preload() {
 
 function setup() {
     MudarFase("menu");
+
+    jogo.canvas = createCanvas(windowWidth, windowHeight);
+    noSmooth();
+    jogo.canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
+    jogo.canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
+    jogo.canvas.position(jogo.canvas_x, jogo.canvas_y);
+
     fase1.is_fase_carregada = false;
     fase2.is_fase_carregada = false;
 
-    jogo.xInicialMapa = 188;
+    jogo.xInicialMapa = windowWidth / 2 - 775;
     jogo.xFinalMapa = windowWidth - 188;
 
-    jogo.yInicialMapa = 77;
+    jogo.yInicialMapa = windowHeight / 2 - 420;
     jogo.yFinalMapa = windowHeight - 77;
 
     jogo.widthMapa = windowWidth - 376;
@@ -41,12 +48,6 @@ function setup() {
         wall3 = { x: jogo.xFinalMapa, y: 0, width: 10, height: windowHeight, class: "wall" }, //Parede direita
         wall4 = { x: 0, y: jogo.yFinalMapa, width: windowWidth , height: 10, class: "wall" } //Parede baixo
     ];
-
-    jogo.canvas = createCanvas(windowWidth, windowHeight);
-    noSmooth();
-    jogo.canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
-    jogo.canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
-    jogo.canvas.position(jogo.canvas_x, jogo.canvas_y);
 
     jogo.timerGlobal = 0;
 
@@ -86,7 +87,6 @@ function draw() {
 //MENU-----------------------------------------------------------------------------------------------------------------
 function PreloadMenu()
 {
-    jogo.imgsBorda[0] = borda1 = loadImage("../assets/imagens/bordas/borda1.png");
     jogo.mapasImg[0] = mapa1 = loadImage("../assets/imagens/mapas/mapaPrototipo.png");
 }
 
@@ -106,10 +106,8 @@ function SetupMenu()
 
 function DrawMenu()
 {
-    //// Cria a borda
-    image(jogo.imgsBorda[0], 0, 0, windowWidth, windowHeight);
     //// Cria o mapa
-    image(jogo.mapasImg[0], jogo.xInicialMapa, jogo.yInicialMapa, windowWidth-500, windowHeight-50);
+    image(jogo.mapasImg[0], 0, 0, windowWidth, windowHeight);
 
     //// Armazena posição antiga
     jogo.player.oldX = jogo.player.x;
@@ -165,7 +163,7 @@ function DrawMenu()
     else if (Colidiu(jogo.player, portaDireita)) 
     {
         MudarFase("fase1");
-        jogo.player.x = 20;
+        jogo.player.x = jogo.xInicialMapa + 50;
         jogo.player.y = windowHeight / 2 - 50;
     }
 
@@ -233,12 +231,10 @@ function DrawPause()
 // FASE 1--------------------------------------------------------------------------------------------------------------
 function PreloadFase1()
 {
-    // Carrega a borda do mapa1
-    jogo.imgsBorda[1] = bordaFase1 = loadImage("../assets/imagens/bordas/bordaFase1.png");
     // Carrega a imagem do mapa1
     jogo.mapasImg[1] = mapaFase1 = loadImage("../assets/imagens/mapas/mapaFase1.png");
 
-    fase1.pranchetaLixo = loadImage("../assets/imagens/fase1/pranchetaLixo.png");
+    // fase1.pranchetaLixo = loadImage("../assets/imagens/fase1/pranchetaLixo.png");
 
     // Carrega as imagens das lixeiras
     fase1.lixeiras_img = [
@@ -312,13 +308,11 @@ function DrawFase1()
         fase1.is_fase_carregada = true;
     }
 
-    //// Cria a borda
-    image(jogo.imgsBorda[1], 0, 0, windowWidth, windowHeight);
     //// Cria o mapa
-    image(jogo.mapasImg[1], jogo.xInicialMapa, jogo.yInicialMapa, jogo.widthMapa, jogo.heightMapa);
+    image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
 
-    //// Cria a prancheta
-    image(fase1.pranchetaLixo, jogo.xFinalMapa + 10, jogo.yFinalMapa - 300, 175, 275);
+    // //// Cria a prancheta
+    // image(fase1.pranchetaLixo, jogo.xFinalMapa + 10, jogo.yFinalMapa - 300, 175, 275);
 
     ////repõe a quantidade de lixo no mapa
     if(fase1.lixos.length < 10) CriarLixo();
