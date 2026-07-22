@@ -32,6 +32,9 @@ const jogo = {
     xlimiteMapa: 0,
     ylimiteMapa: 0,
 
+    widthMapa: 0,
+    heightMapa: 0,
+
     imgsBorda: [],
     mapasImg: [],
 
@@ -73,6 +76,7 @@ const fase1 = {
     lixosPixelCarregados: [],
     lixosReaisCarregados: [],
     cartazProcuradoLixo: null,
+    pranchetaLixo: null,
 
     //<-----------------------------------------------------------------------------------------------------------------------
 

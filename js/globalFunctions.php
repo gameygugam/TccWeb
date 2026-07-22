@@ -197,12 +197,21 @@ function keyPressed()
 
     if (jogo.fase === "fase2") keyPressed2(fase2);
 
+
     if (event.code === "ShiftLeft") {
         jogo.shift_esquerdo = true;
     }
 
     if (event.code === "Escape") {
         jogo.tecla_esc = true;
+    }
+
+    if (jogo.fase === "fase1") {
+        jogo.lixos.forEach(lixo => {
+            if (Colidiu(jogo.player, lixo) && event.code === "Space") {
+                PegarLixo(jogo.player, lixo);
+            }
+        })
     }
 }
 
@@ -222,10 +231,11 @@ function keyReleased(event) {
 
 //fase1 -->
 
-function PegarLixo(player_funcao, lixos_funcao) {
+function PegarLixo(player_funcao, lixo_funcao) {
     return (
+        
         lixos_funcao.forEach(lixo => {
-            if (keyIsDown(32) && Colidiu(player_funcao, lixo) && (fase1.lastItemPego == lixo || fase1.lastItemPego.material == "null")) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
+            if (keyIsDown(32) && Colidiu(player_funcao, lixo) && (fase1.lastItemPego == lixo || fase1.lastItemPego.material == null)) { // 'lastLixoPego[6]' -> é considerado uma lista, não um objeto
                 lixo.x = player_funcao.x + player_funcao.width - 10;
                 lixo.y = player_funcao.y + player_funcao.height / 2;
                 fase1.pegouLixo = true;
@@ -266,8 +276,8 @@ function AleatoriezarPosicaoLixo(lixo) {
     let dif_x = ((windowWidth - width) / 2);
     let dif_y = ((windowHeight - height) / 2);
 
-    let lixo_x = random(dif_x + 50, (dif_x + width) - 200);
-    let lixo_y = random(dif_y + 50, (dif_y + height) - 50);
+    let lixo_x = random(jogo.xInicialMapa + 10, jogo.xFinalMapa - 250);
+    let lixo_y = random(jogo.yInicialMapa + 40, jogo.yFinalMapa - 50);
 }
 
 function CriarLixo() {
@@ -276,7 +286,7 @@ function CriarLixo() {
     let dif_y = ((windowHeight - height) / 2);
 
     let lixo_x = random(jogo.xInicialMapa + 10, jogo.xFinalMapa - 250);
-    let lixo_y = random(dif_y + 50, height - 50);
+    let lixo_y = random(jogo.yInicialMapa + 40, jogo.yFinalMapa - 50);
 
     //let lixo = [0, 0, 25, 25, "", "", ""] //x, y, w, h, img, type, class
     let lixo_img = null;
@@ -295,7 +305,7 @@ function CriarLixo() {
 
     let lixo_angulo = random(TWO_PI)
 
-    // let lixo = fase1.lixos.push({ x: lixo_x, y: lixo_y, w: 25, h: 25, img: lixo_img, imgCarregada: lixo_img_carregada, type: lixo_type, class: "lixo", angulo: lixo_angulo });
+    // let lixo = fase1.lixos.push({ x: lixo_x, y: lixo_y, width: 25, height: 25, img: lixo_img, imgCarregada: lixo_img_carregada, type: lixo_type, class: "lixo", angulo: lixo_angulo });
     let lixo = Lixo.novo(null, lixo_img_carregada, 25, 25, lixo_x, lixo_y, lixo_type, lixo_angulo);
     fase1.lixos.push(lixo);
 
