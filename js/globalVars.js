@@ -2,6 +2,8 @@
 
 const jogo = {
 
+    escala: 0, //A escala para a responsividade do site
+
     //PLAYER ---------------------------------------------------------------------------------------------------------------->
 
     player: null,
@@ -76,6 +78,7 @@ const fase1 = {
     lixosReaisCarregados: [],
     cartazProcuradoLixo: null,
     pranchetaLixo: null,
+    relogio: null,
 
     //<-----------------------------------------------------------------------------------------------------------------------
 
