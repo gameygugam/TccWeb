@@ -286,8 +286,8 @@ function CriarLixo() {
     let dif_x = ((windowWidth - width) / 2);
     let dif_y = ((windowHeight - height) / 2);
 
-    let lixo_x = random(jogo.xInicialMapa + 10, jogo.xFinalMapa - 250);
-    let lixo_y = random(jogo.yInicialMapa + 40, jogo.yFinalMapa - 50);
+    let lixo_x = random(jogo.xInicialMapa + 10 * jogo.escala, jogo.xFinalMapa - 250 * jogo.escala);
+    let lixo_y = random(jogo.yInicialMapa + 40 * jogo.escala, jogo.yFinalMapa - 50 * jogo.escala);
 
     //let lixo = [0, 0, 25, 25, "", "", ""] //x, y, w, h, img, type, class
     let lixo_img = null;
@@ -307,7 +307,7 @@ function CriarLixo() {
     let lixo_angulo = random(TWO_PI)
 
     // let lixo = fase1.lixos.push({ x: lixo_x, y: lixo_y, width: 25, height: 25, img: lixo_img, imgCarregada: lixo_img_carregada, type: lixo_type, class: "lixo", angulo: lixo_angulo });
-    let lixo = Lixo.novo(null, lixo_img_carregada, 25, 25, lixo_x, lixo_y, lixo_type, lixo_angulo);
+    let lixo = Lixo.novo(null, lixo_img_carregada, 25 * jogo.escala, 25 * jogo.escala, lixo_x, lixo_y, lixo_type, lixo_angulo);
     fase1.lixos.push(lixo);
 
     /*lixos[lixos.length - 1].img = lixosPixelImg[lixos.length - 1]; // Adiciona imagem pixel no parametro

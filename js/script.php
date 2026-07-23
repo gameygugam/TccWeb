@@ -119,7 +119,7 @@ function DrawMenu()
 
     //// Desenha o player
     // imageMode(CENTER)
-    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width, jogo.player.height);
+    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
     // imageMode(CORNER)
 
     //// Verifica colisão com parede
@@ -380,7 +380,7 @@ function DrawFase1()
     MostrarLixoReal();
     RotacionarLixo();
 
-    fase1.lixeiras.forEach((lixeira, i) => { image(fase1.lixeiras_img[i], lixeira.x, lixeira.y, lixeira.width, lixeira.height) });
+    fase1.lixeiras.forEach((lixeira, i) => { image(fase1.lixeiras_img[i], lixeira.x, lixeira.y, lixeira.width * jogo.escala, lixeira.height * jogo.escala) });
     
     fase1.lixos.forEach(lixo =>{
         push();
@@ -400,7 +400,7 @@ function DrawFase1()
     // });
 
     ////Desenha personagem
-    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width, jogo.player.height);
+    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
 
     // //// Cria o relógio
     // image(fase1.relogio, windowWidth/64, windowHeight/48, windowWidth/16, windowHeight/8);
@@ -514,7 +514,7 @@ function DrawFase2()
     });
 
     ////Desenha personagem
-    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width, jogo.player.height);
+    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
 
     TimerTick("Fase2");
 }
