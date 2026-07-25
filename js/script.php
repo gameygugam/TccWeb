@@ -248,7 +248,7 @@ function PreloadFase1()
     ];
 
     fase1.obstaculos_img = [
-        loadImage("../assets/imagens/fase1/lixeiras/lixeiraVermelha.png"),
+        loadImage("../assets/imagens/fase1/obstaculos/gangorraPixel.png"),
         loadImage("../assets/imagens/fase1/lixeiras/lixeiraAzul.png"),
         loadImage("../assets/imagens/fase1/lixeiras/lixeiraAmarela.png"),
         loadImage("../assets/imagens/fase1/lixeiras/lixeiraVerde.png"),
