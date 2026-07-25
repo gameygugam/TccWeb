@@ -247,6 +247,14 @@ function PreloadFase1()
         loadImage("../assets/imagens/fase1/lixeiras/lixeiraMarrom.png")
     ];
 
+    fase1.obstaculos_img = [
+        loadImage("../assets/imagens/fase1/lixeiras/lixeiraVermelha.png"),
+        loadImage("../assets/imagens/fase1/lixeiras/lixeiraAzul.png"),
+        loadImage("../assets/imagens/fase1/lixeiras/lixeiraAmarela.png"),
+        loadImage("../assets/imagens/fase1/lixeiras/lixeiraVerde.png"),
+        loadImage("../assets/imagens/fase1/lixeiras/lixeiraMarrom.png")
+    ];
+
     /*
     // Sorteia em uma lista os diretórios das ../imagens dos lixos pixel art
     lixosPixelImg = [
@@ -294,6 +302,7 @@ function SetupFase1()
         { x: jogo.xFinalMapa - 100, y: windowHeight / 2 - 50, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" }
     ];
     fase1.lixos = [];
+    fase1.obstaculos = [];
 
     jogo.pontos = 0;
     jogo.timer.segundos = 0;
@@ -318,6 +327,7 @@ function DrawFase1()
 
     ////repõe a quantidade de lixo no mapa
     if(fase1.lixos.length < 10) CriarLixo();
+    if(fase1.obstaculos.length < 3) CriarObstaculo();
 
     //// Armazena posição antiga
     jogo.player.oldX = jogo.player.x;
@@ -346,6 +356,13 @@ function DrawFase1()
     // Verifica a colisão com lixeira
     fase1.lixeiras.forEach(lixeira => {
         if (Colidiu(jogo.player, lixeira)) {
+            jogo.player.x = jogo.player.oldX;
+            jogo.player.y = jogo.player.oldY;
+        }
+    })
+
+    fase1.obstaculos.forEach(obstaculo => {
+        if (Colidiu(jogo.player, obstaculo)) {
             jogo.player.x = jogo.player.oldX;
             jogo.player.y = jogo.player.oldY;
         }
@@ -382,6 +399,8 @@ function DrawFase1()
 
     fase1.lixeiras.forEach((lixeira, i) => { image(fase1.lixeiras_img[i], lixeira.x, lixeira.y, lixeira.width * jogo.escala, lixeira.height * jogo.escala) });
     
+    fase1.obstaculos.forEach((obstaculo, i) => { image(fase1.obstaculos_img[i], obstaculo.x, obstaculo.y, obstaculo.width * jogo.escala, obstaculo.height * jogo.escala) });
+
     fase1.lixos.forEach(lixo =>{
         push();
 
@@ -393,6 +412,17 @@ function DrawFase1()
 
         pop();
     })
+
+    // fase1.obstaculos.forEach(obstaculo =>{
+    //     push();
+
+    //     translate(obstaculo.x + obstaculo.width / 2, obstaculo.y + obstaculo.height / 2);
+    //     imageMode(CENTER);
+
+    //     image(obstaculo.image, 0, 0, obstaculo.width, obstaculo.height);
+
+    //     pop();
+    // })
 
     // jogo.walls.forEach(wall => {
     //     fill(0, 255, 0);

@@ -328,6 +328,49 @@ function CriarLixo() {
     lixos[lixos.length - 1].y = random(lixo_y + 50, (lixo_y + height) - 50);*/
 }
 
+function CriarObstaculo() {
+
+    let dif_x = ((windowWidth - width) / 2);
+    let dif_y = ((windowHeight - height) / 2);
+
+    let obstaculo_x = random(jogo.xInicialMapa + 10 * jogo.escala, jogo.xFinalMapa - 250 * jogo.escala);
+    let obstaculo_y = random(jogo.yInicialMapa + 40 * jogo.escala, jogo.yFinalMapa - 50 * jogo.escala);
+
+    let obstaculo_img = null;
+    let obstaculo_img_carregada = null;
+        
+    // let rnd = floor(random(5));
+
+    obstaculo_img_carregada = fase1.obstaculos_img[0]
+    //lixo_img = lixosPixelImgCarregados[rnd]
+
+    // if (rnd == 0) lixo_type = "papel" //0 -> BolinhaDePapel
+    // else if (rnd == 1) lixo_type = "vidro" //0 -> Banana
+    // else if (rnd == 2 || rnd == 3) lixo_type = "organico" //0 -> BananaPodre
+    // else if (rnd == 4) lixo_type = "plastico" //0 -> GarrafaDePlastico
+
+    // let lixo = fase1.lixos.push({ x: lixo_x, y: lixo_y, width: 25, height: 25, img: lixo_img, imgCarregada: lixo_img_carregada, type: lixo_type, class: "lixo", angulo: lixo_angulo });
+    let obstaculo = Obstaculo.novo("brinquedo", "caminho", obstaculo_img_carregada, 100 * jogo.escala, 100 * jogo.escala, obstaculo_x, obstaculo_y);
+    fase1.obstaculos.push(obstaculo);
+
+    /*lixos[lixos.length - 1].img = lixosPixelImg[lixos.length - 1]; // Adiciona imagem pixel no parametro
+    lixos[lixos.length - 1].imgCarregada = lixosPixelImgCarregados[lixos.length - 1]; // Adiciona imagem pixel carregada no parametro
+    // Adiciona o tipo do lixo de acordo com as lixeiras existentes
+    if (lixos[lixos.length - 1].img === "../imagens/lixos/bolinhaDePapelPixel.png")
+        lixos[lixos.length - 1].type = "papel"; // Azul
+    else if (lixos[lixos.length - 1].img === "../imagens/lixos/garrafaVidroPixel.png")
+        lixos[lixos.length - 1].type = "vidro"; // Verde
+    else if (lixos[lixos.length - 1].img === "../imagens/lixos/bananaPixel.png")
+        lixos[lixos.length - 1].type = "organico"; // Marrom
+    else if (lixos[lixos.length - 1].img === "../imagens/lixos/bananaPodrePixel.png")
+        lixos[lixos.length - 1].type = "organico"; // Marrom
+    else if (lixos[lixos.length - 1].img === "../imagens/lixos/garrafaDePlasticoPixel.png")
+        lixos[lixos.length - 1].type = "plastico"; // Vermelha*/
+
+    /*lixos[lixos.length - 1].x = random(lixo_x + 50, (lixo_x + width) - 200);
+    lixos[lixos.length - 1].y = random(lixo_y + 50, (lixo_y + height) - 50);*/
+}
+
 function RotacionarLixo() {
     if (keyIsDown(81) && fase1.lastItemPego.material != "null") { // 82 = tecla 'Q'
         fase1.lastItemPego.angulo += 0.1; // gira aos poucos
