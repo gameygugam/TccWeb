@@ -434,7 +434,8 @@ function DrawFase1()
 
     // //// Cria o relógio
     // image(fase1.relogio, windowWidth/64, windowHeight/48, windowWidth/16, windowHeight/8);
-    image(fase1.relogio, 24* jogo.escala, 24* jogo.escala, 128 * jogo.escala, 128 * jogo.escala); //128 -> tamanho padrão do relógio
+    // image(fase1.relogio, 24* jogo.escala, 24* jogo.escala, 128 * jogo.escala, 128 * jogo.escala); //128 -> tamanho padrão do relógio
+    AnimacaoRelogio()
     TimerTick("Fase1");
 
     text("Escala:" + jogo.escala, 2000, 50);

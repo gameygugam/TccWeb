@@ -152,7 +152,7 @@ function TimerTick(fase_funcao){
 
     fill(0, 0, 0);
     textSize(50 * jogo.escala);
-    text(jogo.timer.segundos, 63 * jogo.escala, 105 * jogo.escala);
+    // text(jogo.timer.segundos, 63 * jogo.escala, 105 * jogo.escala);
     // image(fase1.relogio, windowWidth/64, windowHeight/48, windowWidth/16, windowHeight/8);
     text(jogo.timer.ticks, 300, 100);
 
@@ -357,6 +357,28 @@ function RotacionarLixo() {
     else if (keyIsDown(69) && fase1.lastItemPego.material != "null") { // 82 = tecla 'E'
         fase1.lastItemPego.angulo -= 0.1; // gira aos poucos
     }
+}
+
+function AnimacaoRelogio() {
+    let angulo = sin(frameCount * 0.03) * radians(8);
+    const tamanho = 128 * jogo.escala;
+    const x = 24 * jogo.escala;
+    const y = 24 * jogo.escala;
+
+    push();
+
+    translate(x + tamanho / 2, y + tamanho / 2);
+    rotate(angulo);
+    image(fase1.relogio, -tamanho / 2, -tamanho / 2, tamanho, tamanho);
+    
+    fill(0)
+    textSize(50 * jogo.escala);
+    textFont("monospace")
+    textAlign(CENTER, CENTER);
+    text(jogo.timer.segundos, 0, 0);
+
+    pop();
+    
 }
 
 //<--------
