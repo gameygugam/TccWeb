@@ -311,7 +311,6 @@ function SetupFase1()
 
 function DrawFase1()
 {
-
     if (!fase1.is_fase_carregada) {
         jogo.timer.ticks = 3600;
         jogo.timer.segundos = 60;
@@ -353,13 +352,13 @@ function DrawFase1()
         }
     })
 
-    // Verifica a colisão com lixeira
-    fase1.lixeiras.forEach(lixeira => {
-        if (Colidiu(jogo.player, lixeira)) {
-            jogo.player.x = jogo.player.oldX;
-            jogo.player.y = jogo.player.oldY;
-        }
-    })
+    // // Verifica a colisão com lixeira
+    // fase1.lixeiras.forEach(lixeira => {
+    //     if (Colidiu(jogo.player, lixeira)) {
+    //         jogo.player.x = jogo.player.oldX;
+    //         jogo.player.y = jogo.player.oldY;
+    //     }
+    // })
 
     fase1.obstaculos.forEach(obstaculo => {
         if (Colidiu(jogo.player, obstaculo)) {
@@ -370,30 +369,33 @@ function DrawFase1()
 
     //// Mostra o texto no lixo
     fase1.lixos.forEach(lixo => {
-        if (!keyIsDown(32) && Colidiu(jogo.player, lixo)) {
-            fill(255, 0, 0);
-            textSize(16);
-            text("Pressione 'E'", lixo.x - 10, lixo.y - 10);
+        if (!fase1.pegouLixo && Colidiu(jogo.player, lixo)) {
+            Interagir(lixo);
+        }
+    })
+
+    fase1.lixeiras.forEach(lixeira => {
+        if (fase1.pegouLixo && Colidiu(jogo.player, lixeira)) {
+            Interagir(lixeira);
         }
     })
 
     // Verifica se o lixo está na lixeira certa
-    if (fase1.lastItemPego && Colidiu(jogo.player, fase1.lastItemPego)) // o lastLixoPego no 'if' verifica se o objeto está vazio ou não
-    {
-        fase1.lixeiras.forEach(lixeira => {
-            if (fase1.lastItemPego && Colidiu(fase1.lastItemPego, lixeira)) {
-                if (fase1.lastItemPego.material === lixeira.descarte)
-                    jogo.pontos += 10;
-                else
-                    jogo.pontos -= 5;
-                fase1.lixos = fase1.lixos.filter(obj => obj !== fase1.lastItemPego);
-                fase1.lastItemPego = Lixo.novo(null, null, 0, 0, 0, 0, null, 0);
-            }
-        })
-    }
+    // if (fase1.lastItemPego && Colidiu(jogo.player, fase1.lastItemPego)) // o lastLixoPego no 'if' verifica se o objeto está vazio ou não
+    // {
+    //     fase1.lixeiras.forEach(lixeira => {
+    //         if (fase1.lastItemPego && Colidiu(fase1.lastItemPego, lixeira)) {
+    //             if (fase1.lastItemPego.material === lixeira.descarte)
+    //                 jogo.pontos += 10;
+    //             else
+    //                 jogo.pontos -= 5;
+    //             fase1.lixos = fase1.lixos.filter(obj => obj !== fase1.lastItemPego);
+    //             fase1.lastItemPego = Lixo.novo(null, null, 0, 0, 0, 0, null, 0);
+    //         }
+    //     })
+    // }
 
     // Checa se o botao de espaco foi pressionado
-    PegarLixo(jogo.player, fase1.lixos);
     MostrarLixoReal();
     RotacionarLixo();
 
