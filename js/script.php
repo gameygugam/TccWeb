@@ -9,6 +9,7 @@ require_once __DIR__ . '\..\includes\auth.php';
 function preload() {
     // Carrega a imagem do player
     jogo.playerImg = loadImage("../assets/imagens/castor.png");
+    tutorial.caixaDialogo = loadImage("../assets/imagens/tutorial/caixaTutorial.png");
 
     PreloadMenu(); // Pré carrega as ../imagens do Menu
     PreloadFase1(); // Pré carrega as ../imagens do Minigame 1
@@ -50,6 +51,7 @@ function setup() {
     ];
 
     jogo.timerGlobal = 0;
+    tutorial.ativo = true;
 
     SetupMenu();
     SetupFase1();
@@ -208,6 +210,46 @@ function DrawMenu()
     //     && mouseY <= botao_menu_fase_2.y + botao_menu_fase_2.h
     //     && mouseY >= botao_menu_fase_2.y)
     //     fase = "fase2";
+
+    //Cria o tutorial
+    if (tutorial.ativo) {
+        tint(255, tutorial.alpha);
+        image(tutorial.caixaDialogo, 0, 0, windowWidth, windowHeight);
+
+        noTint();
+        if (tutorial.alpha < 255) {
+            tutorial.alpha += 3;
+        }
+
+        switch(tutorial.incremento) {
+            case 0:
+                texto.conteudo = "nhoc-nhoc, nhoc-nhoc \n(Olá <?= $_SESSION['nome'] ?>, eu sou o Castor (Inserir Nome)).";
+                break;
+
+            case 1:
+                texto.conteudo = "(Me chamaram para uma missão de limpeza e \norganização do colégio (Inserir Nome)).";
+                break;
+            
+            case 2:
+                texto.conteudo = "nhac-nhac, nhac-nhac \n(Você pode me ajudar com isso?).";
+                break;
+            
+            case 3:
+                texto.conteudo = "(Muito bem, para se movimentar utilize \nas teclas W, A, S e D ou as setas do teclado).";
+                break;
+            
+            case 4:
+                texto.conteudo = "(A nossa primeira tarefa está no caminho \nda direita. Vamos la!).";
+                break;
+
+            default:
+                texto.conteudo = "";
+                tutorial.ativo = false;
+                tutorial.incremento = 0;
+                break;
+        }
+        Digitar();
+    }
 }
 
 //MENU-----------------------------------------------------------------------------------------------------------------

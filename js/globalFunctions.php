@@ -196,13 +196,15 @@ function keyPressed2(fase) {
 
 function keyPressed()
 {
-    if(jogo.fase === "menu" && keyCode === ENTER)
-        jogo.fase = "fase1";
-    if(jogo.fase === "fase1" && keyCode === ESCAPE)
-        // jogo.fase = "pause";
-        
-    if (jogo.fase === "pause" && keyCode === ESCAPE)
-        jogo.fase = "fase1";
+    if (tutorial.ativo && (key === "e" || key === "E")) {
+        texto.letras = 0;
+        tutorial.incremento++;
+    }
+    if(jogo.fase === "menu" && keyCode === ENTER) jogo.fase = "fase1";
+
+    if(jogo.fase === "fase1" && keyCode === ESCAPE) // jogo.fase = "pause";
+    
+    if (jogo.fase === "pause" && keyCode === ESCAPE) jogo.fase = "fase1";
 
     if (jogo.fase === "fase2") keyPressed2(fase2);
 
@@ -222,6 +224,8 @@ function keyPressed()
     if (jogo.fase === "fase1" && fase1.pegouLixo && (key === "e" || key === "E")) {
         DespejarLixo(jogo.player, fase1.lixeiras);
     }
+
+    
 }
 
 function keyReleased(event) {
@@ -239,6 +243,18 @@ function keyReleased(event) {
 //FASES ----------------------------------------------------------------------------------------------------------------->
 
 //fase1 -->
+
+function Digitar() {
+
+    if (millis() - texto.ultimoTempo > texto.intervalo) {
+        if (texto.letras < texto.conteudo.length) {
+            texto.letras++;
+            texto.ultimoTempo = millis();
+        }
+    }
+
+    text(texto.conteudo.substring(0, texto.letras), 40, windowHeight/2 + 200);
+}
 
 function PegarLixo(player_funcao, lixos_funcao) {
     return (

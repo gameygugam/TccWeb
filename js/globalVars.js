@@ -56,6 +56,20 @@ const jogo = {
     timerGlobal: 0,
 };
 
+const tutorial = {
+    alpha: 0,
+    ativo: false,
+    incremento: 0,
+    caixaDialogo: null,
+};
+
+const texto = {
+    intervalo: 50,
+    letras: 0,
+    ultimoTempo: 0,
+    conteudo: "",
+};
+
 const menu = {
 
     //BOTOES ---------------------------------------------------------------------------------------------------------------->
