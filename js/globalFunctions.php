@@ -102,6 +102,7 @@ function AnimacaoStandBy(){
 
 function MudarFase(fase) {
     jogo.fase = fase;
+    ReiniciarDialogo(tutorial);
 
     fetch("../includes/salvar_fase.php", {
         method: "POST",
@@ -114,10 +115,108 @@ function MudarFase(fase) {
 
 function Interagir(item) {
     fill(255, 0, 0);
-    textSize(16);
+    textFont(texto.fonte);
+    textSize(16 * jogo.escala);
     text("Pressione 'E'", item.x - 10, item.y - 10);
 }
 
+//<-----------------------------------------------------------------------------------------------------------------------
+
+//DIALOGOS -------------------------------------------------------------------------------------------------------------->
+
+function Dialogo(dialogo) {
+    switch (dialogo) 
+    {
+        case "tutorial":
+            tint(255, tutorial.alpha);
+            image(tutorial.caixaDialogo, 0, windowHeight/2 - 50, (windowWidth/2 + 375) * jogo.escala, (windowHeight/2 - 150) * jogo.escala);
+
+            noTint();
+            if (tutorial.alpha < 255) {
+                tutorial.alpha += 3;
+            }
+            textFont(texto.fonte);
+            textSize(32 * jogo.escala);
+            text("'E' para avançar", windowWidth/2 , windowHeight/2 + 235);
+
+            switch(tutorial.incremento) {
+                case 0:
+                    texto.conteudo = "nhoc-nhoc, nhoc-nhoc (Olá <?= $_SESSION['nome'] ?>, eu sou o Castor (Inserir Nome)).";
+                    break;
+
+                case 1:
+                    texto.conteudo = "(Me chamaram para uma missão de limpeza e organização do colégio (Inserir Nome)).";
+                    break;
+                
+                case 2:
+                    texto.conteudo = "nhac-nhac, nhac-nhac (Você pode me ajudar com isso?).";
+                    break;
+                
+                case 3:
+                    texto.conteudo = "(Muito bem, para se movimentar utilize as teclas W, A, S e D ou as setas do teclado).";
+                    break;
+                
+                case 4:
+                    texto.conteudo = "(A nossa primeira tarefa está no caminho da direita. Vamos la!).";
+                    break;
+
+                default:
+                    ReiniciarDialogo(tutorial);
+                    break;
+            }
+            Digitar();
+            break;
+
+        case "fase1":
+            switch(tutorial.incremento) {
+                case 0:
+                    tint(255, tutorial.alpha);
+                    image(tutorial.imagensFase1[0], 0, 0, windowWidth, windowHeight);
+
+                    noTint();
+                    if (tutorial.alpha < 255) {
+                        tutorial.alpha += 3;
+                    }
+                    break;
+
+                case 1:
+                    tutorial.alpha = 255;
+                    image(tutorial.imagensFase1[1], 0, 0, windowWidth, windowHeight);
+                    break;
+                
+                case 2:
+                    image(tutorial.imagensFase1[2], 0, 0, windowWidth, windowHeight);
+                    break;
+                
+                case 3:
+                    image(tutorial.imagensFase1[3], 0, 0, windowWidth, windowHeight);
+                    break;
+                
+                case 4:
+                    image(tutorial.imagensFase1[4], 0, 0, windowWidth, windowHeight);
+                    break;
+
+                case 5:
+                    image(tutorial.imagensFase1[5], 0, 0, windowWidth, windowHeight);
+                    break;
+
+                default:
+                    ReiniciarDialogo(tutorial);
+                    break;
+            }
+            // Digitar();
+            break;
+    }
+}
+
+function ReiniciarDialogo(dialogo) {
+    dialogo.conteudo = "";
+    dialogo.incremento = 0;
+    dialogo.ativo = false;
+    dialogo.alpha = 0;
+    dialogo.intervalo = 50;
+    dialogo.ultimoTempo = 0;
+}
 //<-----------------------------------------------------------------------------------------------------------------------
 
 //ABA ------------------------------------------------------------------------------------------------------------------->
@@ -200,7 +299,7 @@ function keyPressed()
         texto.letras = 0;
         tutorial.incremento++;
     }
-    if(jogo.fase === "menu" && keyCode === ENTER) jogo.fase = "fase1";
+    if(jogo.fase === "menu" && keyCode === ENTER) jogo.fase = "preFase1";
 
     if(jogo.fase === "fase1" && keyCode === ESCAPE) // jogo.fase = "pause";
     
@@ -217,6 +316,14 @@ function keyPressed()
         jogo.tecla_esc = true;
     }
 
+    if (jogo.fase === "preFase1" && Colidiu(jogo.player, fase1.lixeiras[0]) && (key === "e" || key === "E")) {
+        MudarFase("fase1");
+        jogo.player.x = jogo.xFinalMapa / 2;
+        jogo.player.y = jogo.yFinalMapa / 2;
+        ReiniciarDialogo(tutorial);
+        tutorial.ativo = true;
+    };
+
     if (jogo.fase === "fase1" && !fase1.pegouLixo && (key === "e" || key === "E")) {
         PegarLixo(jogo.player, fase1.lixos);
     }
@@ -224,6 +331,7 @@ function keyPressed()
     if (jogo.fase === "fase1" && fase1.pegouLixo && (key === "e" || key === "E")) {
         DespejarLixo(jogo.player, fase1.lixeiras);
     }
+
 
     
 }
@@ -253,7 +361,9 @@ function Digitar() {
         }
     }
 
-    text(texto.conteudo.substring(0, texto.letras), 40, windowHeight/2 + 200);
+    textFont(texto.fonte);
+    textSize(48 * jogo.escala);
+    text(texto.conteudo.substring(0, texto.letras), 40, (windowHeight/2 + 115), 980, 1000);
 }
 
 function PegarLixo(player_funcao, lixos_funcao) {

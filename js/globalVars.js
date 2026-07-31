@@ -61,9 +61,11 @@ const tutorial = {
     ativo: false,
     incremento: 0,
     caixaDialogo: null,
+    imagensFase1: [],
 };
 
 const texto = {
+    fonte: "",
     intervalo: 50,
     letras: 0,
     ultimoTempo: 0,

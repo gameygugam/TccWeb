@@ -10,8 +10,10 @@ function preload() {
     // Carrega a imagem do player
     jogo.playerImg = loadImage("../assets/imagens/castor.png");
     tutorial.caixaDialogo = loadImage("../assets/imagens/tutorial/caixaTutorial.png");
+    texto.fonte = loadFont("../assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf");
 
     PreloadMenu(); // Pré carrega as ../imagens do Menu
+    PreloadPreFase1();
     PreloadFase1(); // Pré carrega as ../imagens do Minigame 1
     PreloadFase2(); // Pré carrega as ../imagens do Minigame 1
     PreloadPause(); // Pré carrega as ../imagens do menu de Pause
@@ -54,6 +56,7 @@ function setup() {
     tutorial.ativo = true;
 
     SetupMenu();
+    SetupPreFase1();
     SetupFase1();
     SetupFase2();
     SetupPause();
@@ -65,6 +68,8 @@ function draw() {
 
     if(jogo.fase === "menu")
         DrawMenu(); // Desenha o Menu
+    else if(jogo.fase === "preFase1")
+        DrawPreFase1(); // Desenha o PreMinigame 1
     else if(jogo.fase === "fase1")
         DrawFase1(); // Desenha o Minigame 1
     else if(jogo.fase === "fase2")
@@ -87,7 +92,7 @@ function draw() {
     jogo.timerGlobal++
 }
 
-//MENU-----------------------------------------------------------------------------------------------------------------
+//MENU ----------------------------------------------------------------------------------------------------------->
 function PreloadMenu()
 {
     jogo.mapasImg[0] = mapa1 = loadImage("../assets/imagens/mapas/mapaPrototipo.png");
@@ -165,7 +170,7 @@ function DrawMenu()
     }
     else if (Colidiu(jogo.player, portaDireita)) 
     {
-        MudarFase("fase1");
+        MudarFase("preFase1");
         jogo.player.x = jogo.xInicialMapa + 50;
         jogo.player.y = windowHeight / 2 - 50;
     }
@@ -213,48 +218,13 @@ function DrawMenu()
 
     //Cria o tutorial
     if (tutorial.ativo) {
-        tint(255, tutorial.alpha);
-        image(tutorial.caixaDialogo, 0, 0, windowWidth, windowHeight);
-
-        noTint();
-        if (tutorial.alpha < 255) {
-            tutorial.alpha += 3;
-        }
-
-        switch(tutorial.incremento) {
-            case 0:
-                texto.conteudo = "nhoc-nhoc, nhoc-nhoc \n(Olá <?= $_SESSION['nome'] ?>, eu sou o Castor (Inserir Nome)).";
-                break;
-
-            case 1:
-                texto.conteudo = "(Me chamaram para uma missão de limpeza e \norganização do colégio (Inserir Nome)).";
-                break;
-            
-            case 2:
-                texto.conteudo = "nhac-nhac, nhac-nhac \n(Você pode me ajudar com isso?).";
-                break;
-            
-            case 3:
-                texto.conteudo = "(Muito bem, para se movimentar utilize \nas teclas W, A, S e D ou as setas do teclado).";
-                break;
-            
-            case 4:
-                texto.conteudo = "(A nossa primeira tarefa está no caminho \nda direita. Vamos la!).";
-                break;
-
-            default:
-                texto.conteudo = "";
-                tutorial.ativo = false;
-                tutorial.incremento = 0;
-                break;
-        }
-        Digitar();
+        Dialogo("tutorial");
     }
 }
 
-//MENU-----------------------------------------------------------------------------------------------------------------
+//<----------------------------------------------------------------------------------------------------------------
 
-//PAUSE----------------------------------------------------------------------------------------------------------------
+//PAUSE ---------------------------------------------------------------------------------------------------------->
 function PreloadPause()
 {
 
@@ -269,14 +239,54 @@ function DrawPause()
 {
 
 }
-//PAUSE----------------------------------------------------------------------------------------------------------------
+//<----------------------------------------------------------------------------------------------------------------
 
-// FASE 1--------------------------------------------------------------------------------------------------------------
-function PreloadFase1()
+//PREFASE1 ------------------------------------------------------------------------------------------------------->
+
+function PreloadPreFase1() 
 {
     // Carrega a imagem do mapa1
     jogo.mapasImg[1] = mapaFase1 = loadImage("../assets/imagens/mapas/mapaFase1.png");
+    tutorial.imagensFase1[0] = loadImage("../assets/imagens/tutorial/tutorialFase1_1.png");
+    tutorial.imagensFase1[1] = loadImage("../assets/imagens/tutorial/tutorialFase1_2.png");
+    tutorial.imagensFase1[2] = loadImage("../assets/imagens/tutorial/tutorialFase1_3.png");
+    tutorial.imagensFase1[3] = loadImage("../assets/imagens/tutorial/tutorialFase1_4.png");
+    tutorial.imagensFase1[4] = loadImage("../assets/imagens/tutorial/tutorialFase1_5.png");
+    tutorial.imagensFase1[5] = loadImage("../assets/imagens/tutorial/tutorialFase1_6.png");
+}
 
+function SetupPreFase1()
+{
+    
+}
+
+function DrawPreFase1()
+{
+    image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
+
+    //// Armazena posição antiga
+    jogo.player.oldX = jogo.player.x;
+    jogo.player.oldY = jogo.player.y;
+
+    //// Movimento
+    Movimentar();
+
+    //// Desenha o player
+    // imageMode(CENTER)
+    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
+    // imageMode(CORNER)
+
+    if (Colidiu(jogo.player, fase1.lixeiras[0])) {
+        Interagir(fase1.lixeiras[0]);
+    }
+    image(fase1.lixeiras_img[0], fase1.lixeiras[0].x, fase1.lixeiras[0].y, fase1.lixeiras[0].width * jogo.escala, fase1.lixeiras[0].height * jogo.escala);
+}
+
+//<----------------------------------------------------------------------------------------------------------------
+
+//FASE 1 --------------------------------------------------------------------------------------------------------->
+function PreloadFase1()
+{
     // fase1.pranchetaLixo = loadImage("../assets/imagens/fase1/pranchetaLixo.png");
     fase1.relogio = loadImage("../assets/imagens/fase1/relogio.png");
 
@@ -353,143 +363,152 @@ function SetupFase1()
 
 function DrawFase1()
 {
-    if (!fase1.is_fase_carregada) {
-        jogo.timer.ticks = 3600;
-        jogo.timer.segundos = 60;
-        jogo.pontos = 0;
-        fase1.is_fase_carregada = true;
+    if (tutorial.ativo)
+    {
+        // //// Cria o mapa
+        // image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
+        Dialogo("fase1");
     }
-
-    //// Cria o mapa
-    image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
-
-    // //// Cria a prancheta
-    // image(fase1.pranchetaLixo, jogo.xFinalMapa + 10, jogo.yFinalMapa - 300, 175, 275);
-
-    ////repõe a quantidade de lixo no mapa
-    if(fase1.lixos.length < 10) CriarLixo();
-    if(fase1.obstaculos.length < 3) CriarObstaculo();
-
-    //// Armazena posição antiga
-    jogo.player.oldX = jogo.player.x;
-    jogo.player.oldY = jogo.player.y;
-
-    fase1.lastItemPego_OldX = fase1.lastItemPego.x;
-    fase1.lastItemPego_OldY = fase1.lastItemPego.y;
-
-    //// Movimento
-    Movimentar();
-
-    ////Drag-Drop lixo
-    // if (dragDrop(lixo)) {
-    //     lixo.x = mouseX - lixo.w / 2;
-    //     lixo.y = mouseY - lixo.h / 2;
-    // }
-
-    //// Verifica colisão com parede
-    jogo.walls.forEach(wall => {
-        if (Colidiu(jogo.player, wall) || Colidiu(fase1.lastItemPego, wall)) {
-            jogo.player.x = jogo.player.oldX;
-            jogo.player.y = jogo.player.oldY;
+    else if(!tutorial.ativo) 
+    {
+        if (!fase1.is_fase_carregada) {
+            jogo.timer.ticks = 3600;
+            jogo.timer.segundos = 60;
+            jogo.pontos = 0;
+            fase1.is_fase_carregada = true;
         }
-    })
 
-    // // Verifica a colisão com lixeira
-    // fase1.lixeiras.forEach(lixeira => {
-    //     if (Colidiu(jogo.player, lixeira)) {
-    //         jogo.player.x = jogo.player.oldX;
-    //         jogo.player.y = jogo.player.oldY;
-    //     }
-    // })
+        //// Cria o mapa
+        image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
 
-    fase1.obstaculos.forEach(obstaculo => {
-        if (Colidiu(jogo.player, obstaculo)) {
-            jogo.player.x = jogo.player.oldX;
-            jogo.player.y = jogo.player.oldY;
-        }
-    })
+        // //// Cria a prancheta
+        // image(fase1.pranchetaLixo, jogo.xFinalMapa + 10, jogo.yFinalMapa - 300, 175, 275);
 
-    //// Mostra o texto no lixo
-    fase1.lixos.forEach(lixo => {
-        if (!fase1.pegouLixo && Colidiu(jogo.player, lixo)) {
-            Interagir(lixo);
-        }
-    })
+        ////repõe a quantidade de lixo no mapa
+        if(fase1.lixos.length < 10) CriarLixo();
+        if(fase1.obstaculos.length < 3) CriarObstaculo();
 
-    fase1.lixeiras.forEach(lixeira => {
-        if (fase1.pegouLixo && Colidiu(jogo.player, lixeira)) {
-            Interagir(lixeira);
-        }
-    })
+        //// Armazena posição antiga
+        jogo.player.oldX = jogo.player.x;
+        jogo.player.oldY = jogo.player.y;
 
-    // Verifica se o lixo está na lixeira certa
-    // if (fase1.lastItemPego && Colidiu(jogo.player, fase1.lastItemPego)) // o lastLixoPego no 'if' verifica se o objeto está vazio ou não
-    // {
-    //     fase1.lixeiras.forEach(lixeira => {
-    //         if (fase1.lastItemPego && Colidiu(fase1.lastItemPego, lixeira)) {
-    //             if (fase1.lastItemPego.material === lixeira.descarte)
-    //                 jogo.pontos += 10;
-    //             else
-    //                 jogo.pontos -= 5;
-    //             fase1.lixos = fase1.lixos.filter(obj => obj !== fase1.lastItemPego);
-    //             fase1.lastItemPego = Lixo.novo(null, null, 0, 0, 0, 0, null, 0);
-    //         }
-    //     })
-    // }
+        fase1.lastItemPego_OldX = fase1.lastItemPego.x;
+        fase1.lastItemPego_OldY = fase1.lastItemPego.y;
 
-    // Checa se o botao de espaco foi pressionado
-    MostrarLixoReal();
-    RotacionarLixo();
+        //// Movimento
+        Movimentar();
 
-    fase1.lixeiras.forEach((lixeira, i) => { image(fase1.lixeiras_img[i], lixeira.x, lixeira.y, lixeira.width * jogo.escala, lixeira.height * jogo.escala) });
-    
-    fase1.obstaculos.forEach((obstaculo, i) => { image(fase1.obstaculos_img[i], obstaculo.x, obstaculo.y, obstaculo.width * jogo.escala, obstaculo.height * jogo.escala) });
+        ////Drag-Drop lixo
+        // if (dragDrop(lixo)) {
+        //     lixo.x = mouseX - lixo.w / 2;
+        //     lixo.y = mouseY - lixo.h / 2;
+        // }
 
-    fase1.lixos.forEach(lixo =>{
-        push();
+        //// Verifica colisão com parede
+        jogo.walls.forEach(wall => {
+            if (Colidiu(jogo.player, wall) || Colidiu(fase1.lastItemPego, wall)) {
+                jogo.player.x = jogo.player.oldX;
+                jogo.player.y = jogo.player.oldY;
+            }
+        })
 
-        translate(lixo.x + lixo.width / 2, lixo.y + lixo.height / 2);
-        rotate(lixo.angulo);
-        imageMode(CENTER);
+        // // Verifica a colisão com lixeira
+        // fase1.lixeiras.forEach(lixeira => {
+        //     if (Colidiu(jogo.player, lixeira)) {
+        //         jogo.player.x = jogo.player.oldX;
+        //         jogo.player.y = jogo.player.oldY;
+        //     }
+        // })
 
-        image(lixo.image, 0, 0, lixo.width, lixo.height);
+        fase1.obstaculos.forEach(obstaculo => {
+            if (Colidiu(jogo.player, obstaculo)) {
+                jogo.player.x = jogo.player.oldX;
+                jogo.player.y = jogo.player.oldY;
+            }
+        })
 
-        pop();
-    })
+        //// Mostra o texto no lixo
+        fase1.lixos.forEach(lixo => {
+            if (!fase1.pegouLixo && Colidiu(jogo.player, lixo)) {
+                Interagir(lixo);
+            }
+        })
 
-    // fase1.obstaculos.forEach(obstaculo =>{
-    //     push();
+        fase1.lixeiras.forEach(lixeira => {
+            if (fase1.pegouLixo && Colidiu(jogo.player, lixeira)) {
+                Interagir(lixeira);
+            }
+        })
 
-    //     translate(obstaculo.x + obstaculo.width / 2, obstaculo.y + obstaculo.height / 2);
-    //     imageMode(CENTER);
+        // Verifica se o lixo está na lixeira certa
+        // if (fase1.lastItemPego && Colidiu(jogo.player, fase1.lastItemPego)) // o lastLixoPego no 'if' verifica se o objeto está vazio ou não
+        // {
+        //     fase1.lixeiras.forEach(lixeira => {
+        //         if (fase1.lastItemPego && Colidiu(fase1.lastItemPego, lixeira)) {
+        //             if (fase1.lastItemPego.material === lixeira.descarte)
+        //                 jogo.pontos += 10;
+        //             else
+        //                 jogo.pontos -= 5;
+        //             fase1.lixos = fase1.lixos.filter(obj => obj !== fase1.lastItemPego);
+        //             fase1.lastItemPego = Lixo.novo(null, null, 0, 0, 0, 0, null, 0);
+        //         }
+        //     })
+        // }
 
-    //     image(obstaculo.image, 0, 0, obstaculo.width, obstaculo.height);
+        // Checa se o botao de espaco foi pressionado
+        MostrarLixoReal();
+        RotacionarLixo();
 
-    //     pop();
-    // })
+        fase1.lixeiras.forEach((lixeira, i) => { image(fase1.lixeiras_img[i], lixeira.x, lixeira.y, lixeira.width * jogo.escala, lixeira.height * jogo.escala) });
+        
+        fase1.obstaculos.forEach((obstaculo, i) => { image(fase1.obstaculos_img[i], obstaculo.x, obstaculo.y, obstaculo.width * jogo.escala, obstaculo.height * jogo.escala) });
 
-    // jogo.walls.forEach(wall => {
-    //     fill(0, 255, 0);
-    //     rect(wall.x, wall.y, wall.width, wall.height);
-    // });
+        fase1.lixos.forEach(lixo =>{
+            push();
 
-    ////Desenha personagem
-    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
+            translate(lixo.x + lixo.width / 2, lixo.y + lixo.height / 2);
+            rotate(lixo.angulo);
+            imageMode(CENTER);
 
-    // //// Cria o relógio
-    // image(fase1.relogio, windowWidth/64, windowHeight/48, windowWidth/16, windowHeight/8);
-    // image(fase1.relogio, 24* jogo.escala, 24* jogo.escala, 128 * jogo.escala, 128 * jogo.escala); //128 -> tamanho padrão do relógio
-    AnimacaoRelogio()
-    TimerTick("Fase1");
+            image(lixo.image, 0, 0, lixo.width, lixo.height);
 
-    text("Escala:" + jogo.escala, 2000, 50);
-    text("Height:" + windowWidth, 100, 50);
-    text("Height:" + windowHeight, 1000, 50);
+            pop();
+        })
+
+        // fase1.obstaculos.forEach(obstaculo =>{
+        //     push();
+
+        //     translate(obstaculo.x + obstaculo.width / 2, obstaculo.y + obstaculo.height / 2);
+        //     imageMode(CENTER);
+
+        //     image(obstaculo.image, 0, 0, obstaculo.width, obstaculo.height);
+
+        //     pop();
+        // })
+
+        // jogo.walls.forEach(wall => {
+        //     fill(0, 255, 0);
+        //     rect(wall.x, wall.y, wall.width, wall.height);
+        // });
+
+        ////Desenha personagem
+        image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
+
+        // //// Cria o relógio
+        // image(fase1.relogio, windowWidth/64, windowHeight/48, windowWidth/16, windowHeight/8);
+        // image(fase1.relogio, 24* jogo.escala, 24* jogo.escala, 128 * jogo.escala, 128 * jogo.escala); //128 -> tamanho padrão do relógio
+        AnimacaoRelogio()
+        TimerTick("Fase1");
+
+        text("Escala:" + jogo.escala, 2000, 50);
+        text("Height:" + windowWidth, 100, 50);
+        text("Height:" + windowHeight, 1000, 50);
+    }
 }
 
-// FASE 1---------------------------------------------------------------------------------------------------------------
+//<----------------------------------------------------------------------------------------------------------------
 
-// FASE 2--------------------------------------------------------------------------------------------------------------
+//FASE 2 --------------------------------------------------------------------------------------------------------->
 function PreloadFase2()
 {
     fase2.cadeirasCarregadas = [
@@ -611,15 +630,15 @@ function DrawFase2()
     else return "../assets/imagens/fase1/lixos/garrafaDePlasticoPixel.png";
 }*/
 
-    // function DragDrop(a) {
-    //     return (
-    //         mouseIsPressed &&
-    //         mouseX <= a.x + a.w
-    //         && mouseX >= a.x
-    //         && mouseY <= a.y + a.h
-    //         && mouseY >= a.y
-    //     );
-    // }
+// function DragDrop(a) {
+//     return (
+//         mouseIsPressed &&
+//         mouseX <= a.x + a.w
+//         && mouseX >= a.x
+//         && mouseY <= a.y + a.h
+//         && mouseY >= a.y
+//     );
+// }
 
  window.addEventListener("click", () => { //Dando play na musica de fundo quando clica em um lugar aleatório da tela
     const musica = document.getElementById("music");
@@ -628,4 +647,6 @@ function DrawFase2()
         musica.play().catch(() => {});
     }
 }, { once: true });
+
+//<---------------------------------------------------------------------------------------------------------------
 </script>
