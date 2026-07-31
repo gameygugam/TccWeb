@@ -424,6 +424,8 @@ function MostrarLixoReal() {
             image(fase1.lixosReaisCarregados[2], (windowWidth - 182), (windowHeight - 350), 200 * jogo.escala, 200 * jogo.escala);
         else if (fase1.lastItemPego.material === "plastico")
             image(fase1.lixosReaisCarregados[3], (windowWidth - 180), (windowHeight - 350), 200 * jogo.escala, 200 * jogo.escala);
+        else if (fase1.lastItemPego.material === "metal")
+            image(fase1.lixosReaisCarregados[4], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
     }
 }
 
@@ -456,7 +458,7 @@ function CriarLixo() {
     let lixo_img_carregada = null;
     let lixo_type = null;
         
-    let rnd = floor(random(5));
+    let rnd = floor(random(6));
 
     lixo_img_carregada = fase1.lixosPixelImgCarregados[rnd]
     //lixo_img = lixosPixelImgCarregados[rnd]
@@ -465,6 +467,7 @@ function CriarLixo() {
     else if (rnd == 1) lixo_type = "vidro" //0 -> Banana
     else if (rnd == 2 || rnd == 3) lixo_type = "organico" //0 -> BananaPodre
     else if (rnd == 4) lixo_type = "plastico" //0 -> GarrafaDePlastico
+    else if (rnd == 5) lixo_type = "metal" //0 -> GarrafaDePlastico
 
     let lixo_angulo = random(TWO_PI)
 
