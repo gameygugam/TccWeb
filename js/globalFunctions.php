@@ -18,33 +18,53 @@ function Movimentar()
     // Normaliza o vetor para não alterar a velocidade do personagem. EX: W = 4, S = 4; W + S != 8; W + S = 4
     if (dir.mag() > 0) {
         dir.normalize();
-        //dir.mult(3);
-        if ((jogo.player.dash_cooldown <= 50 && jogo.player.dash_cooldown >= 41) && jogo.shift_esquerdo){
-            jogo.player.dash_cooldown = 300
-            jogo.player.dash_duracao = 10
-        }
-
-        else if ((jogo.player.dash_cooldown <= 40 && jogo.player.dash_cooldown >= 30) && jogo.shift_esquerdo){
-            jogo.player.dash_cooldown = 250
-            jogo.player.dash_duracao = 10
-            jogo.pontos++;
-        }
-
-        else if (jogo.player.dash_cooldown < 30 && jogo.shift_esquerdo){
-            jogo.player.dash_cooldown = 300
-            jogo.player.dash_duracao = 10
-        }
-
-        if (jogo.player.dash_duracao === 9 || jogo.player.dash_duracao === 8) dir.mult(9)
-        else if (jogo.player.dash_duracao === 7 || jogo.player.dash_duracao === 6) dir.mult(12)
-        else if (jogo.player.dash_duracao === 5 || jogo.player.dash_duracao === 4) dir.mult(12)
-        else if (jogo.player.dash_duracao === 3 || jogo.player.dash_duracao === 2) dir.mult(9)
-        else if (jogo.player.dash_duracao === 1) dir.mult(6)
-        else if (jogo.player.dash_duracao === 0) dir.mult(3)
+        dir.mult(4 * jogo.escala);
+        if (keyIsDown(16) || keyIsDown(SHIFT)) dir.mult(1.5)
     }
     jogo.player.x += dir.x;
     jogo.player.y += dir.y;    
 }
+// <--------------------------------------------------------------------------
+
+//FUNÇÃO MOVIMENTAR + DASH ------------------------------------------>
+// function Movimentar() 
+// {
+//     let dir = createVector(0, 0);
+//     if (keyIsDown(87) || keyIsDown(UP_ARROW)) dir.y -= 1;
+//     if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) dir.y += 1;
+//     if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) dir.x -= 1;
+//     if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) dir.x += 1;
+//     // Normaliza o vetor para não alterar a velocidade do personagem. EX: W = 4, S = 4; W + S != 8; W + S = 4
+//     if (dir.mag() > 0) {
+//         dir.normalize();
+//         //dir.mult(3);
+//         if ((jogo.player.dash_cooldown <= 50 && jogo.player.dash_cooldown >= 41) && jogo.shift_esquerdo){
+//             jogo.player.dash_cooldown = 300
+//             jogo.player.dash_duracao = 10
+//         }
+
+//         else if ((jogo.player.dash_cooldown <= 40 && jogo.player.dash_cooldown >= 30) && jogo.shift_esquerdo){
+//             jogo.player.dash_cooldown = 250
+//             jogo.player.dash_duracao = 10
+//             jogo.pontos++;
+//         }
+
+//         else if (jogo.player.dash_cooldown < 30 && jogo.shift_esquerdo){
+//             jogo.player.dash_cooldown = 300
+//             jogo.player.dash_duracao = 10
+//         }
+
+//         if (jogo.player.dash_duracao === 9 || jogo.player.dash_duracao === 8) dir.mult(9)
+//         else if (jogo.player.dash_duracao === 7 || jogo.player.dash_duracao === 6) dir.mult(12)
+//         else if (jogo.player.dash_duracao === 5 || jogo.player.dash_duracao === 4) dir.mult(12)
+//         else if (jogo.player.dash_duracao === 3 || jogo.player.dash_duracao === 2) dir.mult(9)
+//         else if (jogo.player.dash_duracao === 1) dir.mult(6)
+//         else if (jogo.player.dash_duracao === 0) dir.mult(3)
+//     }
+//     jogo.player.x += dir.x;
+//     jogo.player.y += dir.y;    
+// }
+// <--------------------------------------------------------------------------
 
 function Colidiu(a, b) 
 {
@@ -391,7 +411,7 @@ function PegarLixo(player_funcao, lixos_funcao) {
         //         fase1.lastItemPego = lixo;
         //         // window.alert(lastLixoPego.type);
         //     }
-        //     else if (!keyIsDown(32)) fase1.lastItemPego = Lixo.novo(null, null, 0, 0, 0, 0, null, 0);
+        //     else if (!keyIsDown(32)) fase1.lastItemPego = Lixo.novo("", null, null, 0, 0, 0, 0, null, 0);
         //     // fase1.lastItemPego = { x: 0, y: 0, w: 0, h: 0 , img: "", img_carregada: null, type: "null", class: "lixo", angulo: 0 };
         // })
     )
@@ -420,16 +440,20 @@ function MostrarLixoReal() {
         image(fase1.cartazProcuradoLixo, (windowWidth - 182), (windowHeight - 400), 200 * jogo.escala, 300 * jogo.escala); // Mostra o cartaz de procurado
 
         // Verifica e mostra os lixos reais
-        if(fase1.lastItemPego.material === "papel")
+        if(fase1.lastItemPego.nome === "bolinhaDePapel")
             image(fase1.lixosReaisCarregados[0], (windowWidth - 180), (windowHeight - 335), 200 * jogo.escala, 200 * jogo.escala);
-        else if(fase1.lastItemPego.material === "vidro")
+        else if(fase1.lastItemPego.nome === "garrafaDeVidro")
             image(fase1.lixosReaisCarregados[1], (windowWidth - 155), (windowHeight - 350), 150 * jogo.escala, 200 * jogo.escala);
-        else if (fase1.lastItemPego.material === "organico")
+        else if (fase1.lastItemPego.nome === "banana")
             image(fase1.lixosReaisCarregados[2], (windowWidth - 182), (windowHeight - 350), 200 * jogo.escala, 200 * jogo.escala);
-        else if (fase1.lastItemPego.material === "plastico")
+        else if (fase1.lastItemPego.nome === "bananaPodre")
             image(fase1.lixosReaisCarregados[3], (windowWidth - 180), (windowHeight - 350), 200 * jogo.escala, 200 * jogo.escala);
-        else if (fase1.lastItemPego.material === "metal")
+        else if (fase1.lastItemPego.nome === "garrafaDePlastico")
             image(fase1.lixosReaisCarregados[4], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
+        else if (fase1.lastItemPego.nome === "placaDeMetal")
+            image(fase1.lixosReaisCarregados[5], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
+        else if (fase1.lastItemPego.nome === "pilha")
+            image(fase1.lixosReaisCarregados[6], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
     }
 }
 
@@ -458,25 +482,51 @@ function CriarLixo() {
     let lixo_y = random(jogo.yInicialMapa + 40 * jogo.escala, jogo.yFinalMapa - 50 * jogo.escala);
 
     //let lixo = [0, 0, 25, 25, "", "", ""] //x, y, w, h, img, type, class
+    let lixo_nome = null;
     let lixo_img = null;
     let lixo_img_carregada = null;
     let lixo_type = null;
         
-    let rnd = floor(random(6));
+    let indice = floor(random(7));
 
-    lixo_img_carregada = fase1.lixosPixelImgCarregados[rnd]
-    //lixo_img = lixosPixelImgCarregados[rnd]
+    if (indice == 0) {
+        lixo_nome = "bolinhaDePapel"
+        lixo_type = "papel"
+    }
+    else if (indice == 1) {
+        lixo_nome = "garrafaDeVidro"
+        lixo_type = "vidro"
+    }
+    else if (indice == 2 || indice == 3) {
+        if (indice == 2) lixo_nome = "banana"
+        else if (indice == 3) lixo_nome = "bananaPodre"
+        lixo_type = "organico"
+    }
+    else if (indice == 4) {
+        lixo_nome = "garrafaDePlastico"
+        lixo_type = "plastico"
+    }
+    else if (indice == 5) {
+        lixo_nome = "placaDeMetal"
+        lixo_type = "metal"
+    }
+    else if (indice == 6) {
+        lixo_nome = "pilha"
+        lixo_type = "nao_reciclavel"
+    }
+    // else if (rnd == 2 || rnd == 3) lixo_type = "organico" //0 -> BananaPodre
+    // else if (rnd == 4) lixo_type = "plastico" //0 -> GarrafaDePlastico
+    // else if (rnd == 5) lixo_type = "metal" //0 -> GarrafaDePlastico
 
-    if (rnd == 0) lixo_type = "papel" //0 -> BolinhaDePapel
-    else if (rnd == 1) lixo_type = "vidro" //0 -> Banana
-    else if (rnd == 2 || rnd == 3) lixo_type = "organico" //0 -> BananaPodre
-    else if (rnd == 4) lixo_type = "plastico" //0 -> GarrafaDePlastico
-    else if (rnd == 5) lixo_type = "metal" //0 -> GarrafaDePlastico
+    lixo_img_carregada = fase1.lixosPixelImgCarregados[indice]
+    //lixo_img = lixosPixelImgCarregados[indice]
+
+    
 
     let lixo_angulo = random(TWO_PI)
 
     // let lixo = fase1.lixos.push({ x: lixo_x, y: lixo_y, width: 25, height: 25, img: lixo_img, imgCarregada: lixo_img_carregada, type: lixo_type, class: "lixo", angulo: lixo_angulo });
-    let lixo = Lixo.novo(null, lixo_img_carregada, 25 * jogo.escala, 25 * jogo.escala, lixo_x, lixo_y, lixo_type, lixo_angulo);
+    let lixo = Lixo.novo(null, lixo_nome, lixo_img_carregada, 25 * jogo.escala, 25 * jogo.escala, lixo_x, lixo_y, lixo_type, lixo_angulo);
     fase1.lixos.push(lixo);
 
     /*lixos[lixos.length - 1].img = lixosPixelImg[lixos.length - 1]; // Adiciona imagem pixel no parametro
@@ -540,7 +590,7 @@ function AnimacaoRelogio() {
     
     fill(0)
     textSize(50 * jogo.escala);
-    textFont("monospace")
+    textFont(texto.fonte)
     textAlign(CENTER, CENTER);
     text(jogo.timer.segundos, 0, 0);
 
