@@ -70,6 +70,10 @@ const texto = {
     letras: 0,
     ultimoTempo: 0,
     conteudo: "",
+    caixaX: 0,
+    caixaY: 0,
+    caixaWidth: 0,
+    caixaHeight: 0,
 };
 
 const menu = {

@@ -31,14 +31,15 @@ function setup() {
     fase1.is_fase_carregada = false;
     fase2.is_fase_carregada = false;
 
-    jogo.xInicialMapa = windowWidth / 2 - 775;
-    jogo.xFinalMapa = windowWidth - 188;
+    // jogo.xInicialMapa = windowWidth / 2 - 785; // ERRADO!!!
+    jogo.xInicialMapa = windowWidth / 2 - windowWidth / 2.45;
+    // jogo.xFinalMapa = windowWidth - 188; // ERRADO!!!
+    jogo.xFinalMapa = windowWidth - windowWidth * 0.093;
 
-    jogo.yInicialMapa = windowHeight / 2 - 420;
-    jogo.yFinalMapa = windowHeight - 77;
-
-    jogo.widthMapa = windowWidth - 376;
-    jogo.heightMapa = windowHeight - 154;
+    // jogo.yInicialMapa = windowHeight / 2 - 430; // ERRADO!!!
+    jogo.yInicialMapa = windowHeight / 2 - windowHeight / 2.3;
+    // jogo.yFinalMapa = windowHeight - 77; // ERRADO!!!
+    jogo.yFinalMapa = windowHeight - windowHeight * 0.07;
 
     jogo.player = { 
         x: jogo.xFinalMapa / 2, y: jogo.yFinalMapa / 2, width: 100, height: 100,
@@ -46,14 +47,19 @@ function setup() {
     };
 
     jogo.walls = [
-        wall1 = { x: 0, y: jogo.yInicialMapa - 10, width: windowWidth, height: 10, class: "wall" }, // Parede superior
-        wall2 = { x: jogo.xInicialMapa - 10, y: 0, width: 10, height: windowHeight, class: "wall" }, // Parede esquerda
+        wall1 = { x: 0, y: jogo.yInicialMapa, width: windowWidth, height: 10, class: "wall" }, // Parede superior
+        wall2 = { x: jogo.xInicialMapa, y: 0, width: 10, height: windowHeight, class: "wall" }, // Parede esquerda
         wall3 = { x: jogo.xFinalMapa, y: 0, width: 10, height: windowHeight, class: "wall" }, //Parede direita
         wall4 = { x: 0, y: jogo.yFinalMapa, width: windowWidth , height: 10, class: "wall" } //Parede baixo
     ];
 
     jogo.timerGlobal = 0;
     tutorial.ativo = true;
+
+    texto.caixaX = 0;
+    texto.caixaY = (windowHeight/2 - 50);
+    texto.caixaWidth = (windowWidth/2 + 375);
+    texto.caixaHeight = (windowHeight/2 - 150);
 
     SetupMenu();
     SetupPreFase1();
@@ -264,6 +270,12 @@ function DrawPreFase1()
 {
     image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
 
+    // Visualizar paredes
+    jogo.walls.forEach(wall => {
+        fill(0, 255, 0);
+        rect(wall.x, wall.y, wall.width, wall.height);
+    });
+
     //// Armazena posição antiga
     jogo.player.oldX = jogo.player.x;
     jogo.player.oldY = jogo.player.y;
@@ -275,6 +287,14 @@ function DrawPreFase1()
     // imageMode(CENTER)
     image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
     // imageMode(CORNER)
+
+    //// Verifica colisão com parede
+    jogo.walls.forEach(wall => {
+        if (Colidiu(jogo.player, wall)) {
+            jogo.player.x = jogo.player.oldX;
+            jogo.player.y = jogo.player.oldY;
+        }
+    })
 
     if (Colidiu(jogo.player, fase1.lixeiras[0])) {
         Interagir(fase1.lixeiras[0]);

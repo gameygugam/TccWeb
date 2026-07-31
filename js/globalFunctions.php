@@ -65,6 +65,7 @@ function Dash(){
     else if (jogo.player.dash_cooldown <= 40 && jogo.player.dash_cooldown >= 30) fill(0, 255, 0)
     else if (jogo.player.dash_cooldown < 30) fill(255, 0, 0)
 
+    textFont(texto.fonte);
     text(jogo.player.dash_cooldown, 50, windowHeight - 50);
 }
 
@@ -128,16 +129,18 @@ function Dialogo(dialogo) {
     switch (dialogo) 
     {
         case "tutorial":
+            push();
+            scale(jogo.escala);
             tint(255, tutorial.alpha);
-            image(tutorial.caixaDialogo, 0, windowHeight/2 - 50, (windowWidth/2 + 375) * jogo.escala, (windowHeight/2 - 150) * jogo.escala);
+            image(tutorial.caixaDialogo, texto.caixaX, texto.caixaY, texto.caixaWidth, texto.caixaHeight);
 
             noTint();
             if (tutorial.alpha < 255) {
                 tutorial.alpha += 3;
             }
             textFont(texto.fonte);
-            textSize(32 * jogo.escala);
-            text("'E' para avançar", windowWidth/2 , windowHeight/2 + 235);
+            textSize(32);
+            text("'E' para avançar", texto.caixaX + texto.caixaWidth*0.79, texto.caixaY + texto.caixaHeight*0.9);
 
             switch(tutorial.incremento) {
                 case 0:
@@ -165,6 +168,7 @@ function Dialogo(dialogo) {
                     break;
             }
             Digitar();
+            pop();
             break;
 
         case "fase1":
@@ -362,8 +366,8 @@ function Digitar() {
     }
 
     textFont(texto.fonte);
-    textSize(48 * jogo.escala);
-    text(texto.conteudo.substring(0, texto.letras), 40, (windowHeight/2 + 115), 980, 1000);
+    textSize(48);
+    text(texto.conteudo.substring(0, texto.letras), texto.caixaX + 40, texto.caixaY + texto.caixaHeight*0.5, texto.caixaWidth - texto.caixaWidth*0.2, texto.caixaHeight);
 }
 
 function PegarLixo(player_funcao, lixos_funcao) {
