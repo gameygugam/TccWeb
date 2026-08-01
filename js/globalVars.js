@@ -65,6 +65,7 @@ const tutorial = {
 };
 
 const texto = {
+    ativo: false,
     fonte: "",
     intervalo: 50,
     letras: 0,
@@ -74,6 +75,7 @@ const texto = {
     caixaY: 0,
     caixaWidth: 0,
     caixaHeight: 0,
+    incremento: 0,
 };
 
 const menu = {

@@ -57,7 +57,7 @@ function setup() {
     tutorial.ativo = true;
 
     texto.caixaX = 0;
-    texto.caixaY = (windowHeight/2 - 50);
+    texto.caixaY = (windowHeight/2 + 75);
     texto.caixaWidth = (windowWidth/2 + 375);
     texto.caixaHeight = (windowHeight/2 - 150);
 

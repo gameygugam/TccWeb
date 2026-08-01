@@ -129,6 +129,7 @@ function Dialogo(dialogo) {
     switch (dialogo) 
     {
         case "tutorial":
+            texto.ativo = true;
             push();
             scale(jogo.escala);
             tint(255, tutorial.alpha);
@@ -142,7 +143,7 @@ function Dialogo(dialogo) {
             textSize(32);
             text("'E' para avançar", texto.caixaX + texto.caixaWidth*0.79, texto.caixaY + texto.caixaHeight*0.9);
 
-            switch(tutorial.incremento) {
+            switch(texto.incremento) {
                 case 0:
                     texto.conteudo = "nhoc-nhoc, nhoc-nhoc (Olá <?= $_SESSION['nome'] ?>, eu sou o Castor (Inserir Nome)).";
                     break;
@@ -184,7 +185,7 @@ function Dialogo(dialogo) {
                     break;
 
                 case 1:
-                    tutorial.alpha = 255;
+                    tutorial.alpha = 0;
                     image(tutorial.imagensFase1[1], 0, 0, windowWidth, windowHeight);
                     break;
                 
@@ -204,6 +205,66 @@ function Dialogo(dialogo) {
                     image(tutorial.imagensFase1[5], 0, 0, windowWidth, windowHeight);
                     break;
 
+                case 6:
+                    texto.ativo = true;
+                    //// Cria o mapa
+                    image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
+
+                    ////Desenha personagem
+                    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
+
+                    fase1.lixeiras.forEach((lixeira, i) => { image(fase1.lixeiras_img[i], lixeira.x, lixeira.y, lixeira.width * jogo.escala, lixeira.height * jogo.escala) });
+
+                    push();
+                    scale(jogo.escala);
+                    tint(255, tutorial.alpha);
+                    image(tutorial.caixaDialogo, texto.caixaX, texto.caixaY, texto.caixaWidth, texto.caixaHeight);
+
+                    noTint();
+                    if (tutorial.alpha < 255) {
+                        tutorial.alpha += 3;
+                    }
+                    textFont(texto.fonte);
+                    textSize(32);
+                    text("'E' para avançar", texto.caixaX + texto.caixaWidth*0.79, texto.caixaY + texto.caixaHeight*0.9);
+
+                    switch(texto.incremento) {
+                        case 0:
+                            texto.conteudo = "Nhec-Nhec, Nhec-Nhec (Esse é o nossa primeira missão, vamos coletar o lixo!!).";
+                            break;
+                        
+                        case 1:
+                            texto.conteudo = "(Como você observou antes, os lixos precisam ser descartados nas suas respectivas lixeiras).";
+                            break;
+                        
+                        case 2:
+                            texto.conteudo = "(Para pegar o lixo, basta pressionar a tecla 'E' no teclado).";
+                            break;
+                        
+                        case 3:
+                            texto.conteudo = "Nhac-Nhac (Você só pode pegar 1 lixo por vez).";
+                            break;
+
+                        case 4:
+                            texto.conteudo = "(Para jogar o lixo na lixeira pressione a tecla 'E' novamente).";
+                            break;
+
+                        case 5:
+                            texto.conteudo = "(Ao acertar a lixeira você ganha 10 pontos, mas se errar perde 5 pontos).";
+                            break;
+
+                        case 6:
+                            texto.conteudo = "Nhoc-Nhoc (Entendido? Vamos la! Boa sorte <?= $_SESSION['nome'] ?>).";
+                            texto.ativo = false;
+                            break;
+
+                        default:
+                            break;
+                    }
+                    Digitar();
+                    pop();
+                    break;
+
                 default:
                     ReiniciarDialogo(tutorial);
                     break;
@@ -214,12 +275,14 @@ function Dialogo(dialogo) {
 }
 
 function ReiniciarDialogo(dialogo) {
-    dialogo.conteudo = "";
     dialogo.incremento = 0;
     dialogo.ativo = false;
     dialogo.alpha = 0;
-    dialogo.intervalo = 50;
-    dialogo.ultimoTempo = 0;
+    texto.conteudo = "";
+    texto.ativo = false;
+    texto.intervalo = 50;
+    texto.ultimoTempo = 0;
+    texto.incremento = 0;
 }
 //<-----------------------------------------------------------------------------------------------------------------------
 
@@ -299,9 +362,10 @@ function keyPressed2(fase) {
 
 function keyPressed()
 {
-    if (tutorial.ativo && (key === "e" || key === "E")) {
+    if (tutorial.ativo && !texto.ativo &&(key === "e" || key === "E")) tutorial.incremento++;
+    if (texto.ativo && (key === "e" || key === "E")) {
         texto.letras = 0;
-        tutorial.incremento++;
+        texto.incremento++;
     }
     if(jogo.fase === "menu" && keyCode === ENTER) jogo.fase = "preFase1";
 
