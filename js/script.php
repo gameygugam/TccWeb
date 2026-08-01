@@ -349,6 +349,7 @@ function PreloadFase1()
         loadImage("../assets/imagens/fase1/lixos/bananaPixel.png"),
         loadImage("../assets/imagens/fase1/lixos/bananaPodrePixel.png"),
         loadImage("../assets/imagens/fase1/lixos/garrafaDePlasticoPixel.png"),
+        loadImage("../assets/imagens/fase1/lixos/placaDeMetalPixel.png"), //5
         loadImage("../assets/imagens/fase1/lixos/pilhaPixel.png"),
     ];
     
@@ -356,10 +357,11 @@ function PreloadFase1()
     fase1.lixosReaisCarregados = [
         loadImage("../assets/imagens/fase1/lixos/bolinhaDePapel.png"), //0
         loadImage("../assets/imagens/fase1/lixos/garrafaVidro.png"), //1
-        // loadImage("../assets/imagens/fase1/lixos/banana.png"), //2
-        loadImage("../assets/imagens/fase1/lixos/bananaPodre.png"), //3 -> 2
-        loadImage("../assets/imagens/fase1/lixos/garrafaDePlastico.png"), //4 -> 3
-        loadImage("../assets/imagens/fase1/lixos/pilha.png"), //5 -> 4
+        loadImage("../assets/imagens/fase1/lixos/banana.png"), //2
+        loadImage("../assets/imagens/fase1/lixos/bananaPodre.png"), //3
+        loadImage("../assets/imagens/fase1/lixos/garrafaDePlastico.png"), //4
+        loadImage("../assets/imagens/fase1/lixos/placaDeMetalPixel.png"), //5
+        loadImage("../assets/imagens/fase1/lixos/pilha.png"), //6
     ]
     // Carrega a imagem do cartaz de procurado
     fase1.cartazProcuradoLixo = loadImage("../assets/imagens/fase1/cartazProcuradoLixo.png");
@@ -375,7 +377,7 @@ function SetupFase1()
         { x: jogo.xFinalMapa - 100, y: windowHeight / 2 - 125 - 75, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
         { x: jogo.xFinalMapa - 100, y: windowHeight / 2 - 275 - 75, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
         { x: jogo.xFinalMapa - 100, y: windowHeight / 2 - 50, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" },
-        { x: jogo.xFinalMapa - 300, y: windowHeight / 2 - 50, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraCinza.png", descarte: "metal", class: "lixeira" }
+        { x: jogo.xFinalMapa - 300, y: windowHeight / 2 - 50, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraCinza.png", descarte: "nao_reciclavel", class: "lixeira" }
     ];
     fase1.lixos = [];
     fase1.obstaculos = [];

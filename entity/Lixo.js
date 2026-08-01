@@ -1,6 +1,7 @@
 class Lixo {
 
     constructor(dados = {}) {
+        this.nome       = dados.nome        ?? "";    
         this.id         = dados.id          ?? 0;
         this.id_lixeira = dados.id_lixeira  ?? 0;
         this.image      = dados.image       ?? "";
@@ -12,6 +13,7 @@ class Lixo {
         this.angulo     = dados.angulo      ?? 0;
     }
 
+    getNome()       { return this.nome; }
     getId()         { return this.id; }
     getIdLixeira()  { return this.id_lixeira; }
     getImage()      { return this.image; }
@@ -22,9 +24,9 @@ class Lixo {
     getMaterial()   { return this.material; }
     getAngulo()     { return this.angulo; }
 
-    static novo(id_lixeira, image, width, height, x, y, material, angulo) {
+    static novo(id_lixeira, nome, image, width, height, x, y, material, angulo) {
         const lixo = new Lixo({ id_lixeira });
-        lixo.alterarDados(image, width, height, x, y, material, angulo);
+        lixo.alterarDados(nome, image, width, height, x, y, material, angulo);
         return lixo;
     }
 
@@ -54,11 +56,12 @@ class Lixo {
         //     image = "../imagens/lixos/garrafaDePlasticoPixel.png"
         // }
 
-        lixo.alterarDados(loadImage(image), width, height, x, y, material, angulo);
+        lixo.alterarDados(nome, loadImage(image), width, height, x, y, material, angulo);
         return lixo;
     }
 
-    alterarDados(image, width, height, x, y, material, angulo) {
+    alterarDados(nome, image, width, height, x, y, material, angulo) {
+        this.nome       = nome;
         this.image      = image;
         this.width      = width;
         this.height     = height;

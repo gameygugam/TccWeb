@@ -8,6 +8,26 @@ body {
     background-repeat: no-repeat;
     background-position: center ;
     background-size: cover;
+    overflow:hidden;
+    background:linear-gradient(#4CAF50,#2E7D32);
+    font-family:'monospace'
+}
+
+.titulo{
+    text-align:center;
+    color:#D7FFD9;
+    font-size:60px;
+    text-shadow:
+    4px 4px #1B5E20;
+    margin-bottom:45px;
+}
+
+.subtitulo{
+    color:#d9ffd7;
+    text-align:center;
+    margin-bottom:35px;
+    font-size:30px;
+    line-height:22px;
 }
 
 .caixa_login {
@@ -16,7 +36,15 @@ body {
     border-radius: 12px;
     text-align: center;
     color: white;
+
+    position:absolute;
+    width:100%;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
+
 
 .bentrar{
     background-color: aqua;
@@ -26,4 +54,65 @@ body {
 
 .bcriar{
     background-color: rgb(100, 237, 107);
+}
+
+.btn{
+    background:#8BC34A;
+    color:#173A19;
+    border:5px solid #33691E;
+    padding:18px;
+    cursor:pointer;
+    font-family:'monospace';
+    transition:.15s;
+    font-size:13px;
+}
+
+.btn:hover{
+
+    background:#C5E1A5;
+    transform:translateY(-3px);
+    box-shadow:0 6px 0 #33691E;
+}
+
+.btn:active{
+    transform:translateY(3px);
+    box-shadow:none;
+
+}
+
+.folha{
+    position:absolute;
+    color:#81C784;
+    font-size:26px;
+    animation:cair 7s linear infinite;
+    opacity:.7;
+}
+
+.f1{left:8%; animation-delay:0s;}
+.f2{left:25%; animation-delay:2s;}
+.f3{left:75%; animation-delay:4s;}
+.f4{left:90%; animation-delay:1s;}
+
+@keyframes cair{
+
+0%{
+transform:translateY(-100px) rotate(0deg);
+}
+
+100%{
+transform:translateY(110vh) rotate(360deg);
+}
+
+}
+
+@keyframes flutuar{
+
+0%,100%{
+transform:translateY(0) scaleX(-1);
+}
+
+50%{
+transform:translateY(-8px) scaleX(-1);
+}
+
 }
