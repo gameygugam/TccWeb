@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    overflow:hidden;
+    background:linear-gradient(#4CAF50,#2E7D32);
+    font-family:'Press Start 2P', cursive;
+}
+
+#menu{
+    position:absolute;
+    width:100%;
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.menu-box{
+    position:relative;
+
+    width:650px;
+    padding:40px;
+
+    background:#6D4C41;
+
+    border:8px solid #4E342E;
+
+    box-shadow:
+        0 0 0 8px #8D6E63,
+        12px 12px 0 #0006;
+
+    image-rendering:pixelated;
+}
+
+.titulo{
+    text-align:center;
+    color:#D7FFD9;
+
+    font-size:30px;
+
+    text-shadow:
+    4px 4px #1B5E20;
+
+    margin-bottom:45px;
+}
+
+.subtitulo{
+    color:#d9ffd7;
+    text-align:center;
+    margin-bottom:35px;
+    font-size:10px;
+    line-height:22px;
+}
+
+.botoes{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.botao{
+    background:#8BC34A;
+
+    color:#173A19;
+
+    border:5px solid #33691E;
+
+    padding:18px;
+
+    cursor:pointer;
+
+    font-family:'Press Start 2P';
+
+    transition:.15s;
+
+    font-size:13px;
+}
+
+.botao:hover{
+
+    background:#C5E1A5;
+
+    transform:translateY(-3px);
+
+    box-shadow:0 6px 0 #33691E;
+}
+
+.botao:active{
+
+    transform:translateY(3px);
+
+    box-shadow:none;
+
+}
+
+.castor{
+
+    position:absolute;
+
+    right:-80px;
+
+    bottom:-10px;
+
+    font-size:110px;
+
+    transform:scaleX(-1);
+
+    animation:flutuar 2s infinite ease-in-out;
+
+}
+
+.folha{
+    position:absolute;
+
+    color:#81C784;
+
+    font-size:26px;
+
+    animation:cair 7s linear infinite;
+
+    opacity:.7;
+}
+
+.f1{left:8%; animation-delay:0s;}
+.f2{left:25%; animation-delay:2s;}
+.f3{left:75%; animation-delay:4s;}
+.f4{left:90%; animation-delay:1s;}
+
+@keyframes cair{
+
+0%{
+transform:translateY(-100px) rotate(0deg);
+}
+
+100%{
+transform:translateY(110vh) rotate(360deg);
+}
+
+}
+
+@keyframes flutuar{
+
+0%,100%{
+transform:translateY(0) scaleX(-1);
+}
+
+50%{
+transform:translateY(-8px) scaleX(-1);
+}
+
+}
