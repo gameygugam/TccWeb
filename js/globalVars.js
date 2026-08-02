@@ -3,11 +3,15 @@
 const jogo = {
 
     escala: 0, //A escala para a responsividade do site
+    contagemIniciar: 4, //Contagem para iniciar a fase
+    pause: false, //Se o jogo está pausado ou não
 
     //PLAYER ---------------------------------------------------------------------------------------------------------------->
 
     player: null,
     playerImg: null,
+    playerImgEsquerda: null,
+    playerImgDireita: null,
 
     //<-----------------------------------------------------------------------------------------------------------------------
 
@@ -44,7 +48,7 @@ const jogo = {
     //TECLAS ---------------------------------------------------------------------------------------------------------------->
 
     shift_esquerdo: false,
-    tecla_esc: false,
+    sairDoJogo: false,
 
     //<-----------------------------------------------------------------------------------------------------------------------
 
@@ -62,6 +66,7 @@ const tutorial = {
     incremento: 0,
     caixaDialogo: null,
     imagensFase1: [],
+    contagemIniciar: 4,
 };
 
 const texto = {

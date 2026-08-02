@@ -8,7 +8,9 @@ require_once __DIR__ . '\..\includes\auth.php';
 
 function preload() {
     // Carrega a imagem do player
-    jogo.playerImg = loadImage("../assets/imagens/castor.png");
+    jogo.playerImg = loadImage("../assets/imagens/castorDireita.png");
+    jogo.playerImgEsquerda = loadImage("../assets/imagens/castorEsquerda.png");
+    jogo.playerImgDireita = loadImage("../assets/imagens/castorDireita.png");
     tutorial.caixaDialogo = loadImage("../assets/imagens/tutorial/caixaTutorial.png");
     texto.fonte = loadFont("../assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf");
 
@@ -54,7 +56,8 @@ function setup() {
     ];
 
     jogo.timerGlobal = 0;
-    tutorial.ativo = true;
+    tutorial.ativo = false;
+    jogo.contagemIniciar = 4;
 
     texto.caixaX = 0;
     texto.caixaY = (windowHeight/2 + 75);
@@ -89,7 +92,7 @@ function draw() {
     textSize(50)
     text(jogo.pontos, windowWidth - 100, 100);
 
-    if (jogo.fase !== "menu" && jogo.tecla_esc) 
+    if (jogo.fase !== "menu" && jogo.sairDoJogo) 
     {
         MudarFase("menu");
     }
@@ -131,9 +134,7 @@ function DrawMenu()
     Movimentar();
 
     //// Desenha o player
-    // imageMode(CENTER)
     image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
-    // imageMode(CORNER)
 
     //// Verifica colisão com parede
     jogo.walls.forEach(wall => {
@@ -381,6 +382,7 @@ function SetupFase1()
     ];
     fase1.lixos = [];
     fase1.obstaculos = [];
+    tutorial.ativo = false;
 
     jogo.pontos = 0;
     jogo.timer.segundos = 0;
@@ -421,8 +423,7 @@ function DrawFase1()
         fase1.lastItemPego_OldX = fase1.lastItemPego.x;
         fase1.lastItemPego_OldY = fase1.lastItemPego.y;
 
-        //// Movimento
-        Movimentar();
+        
 
         ////Drag-Drop lixo
         // if (dragDrop(lixo)) {
@@ -524,7 +525,11 @@ function DrawFase1()
         // image(fase1.relogio, windowWidth/64, windowHeight/48, windowWidth/16, windowHeight/8);
         // image(fase1.relogio, 24* jogo.escala, 24* jogo.escala, 128 * jogo.escala, 128 * jogo.escala); //128 -> tamanho padrão do relógio
         AnimacaoRelogio()
-        TimerTick("Fase1");
+        if (!jogo.pause) {
+            Movimentar();
+            TimerTick("Fase1");
+        } 
+        
 
         text("Escala:" + jogo.escala, 2000, 50);
         text("Height:" + windowWidth, 100, 50);

@@ -15,6 +15,10 @@ function Movimentar()
     if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) dir.y += 1;
     if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) dir.x -= 1;
     if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) dir.x += 1;
+
+    if ((keyIsDown(65) || keyIsDown(LEFT_ARROW)) && !jogo.pause) jogo.playerImg = jogo.playerImgEsquerda
+    if ((keyIsDown(68) || keyIsDown(RIGHT_ARROW)) && !jogo.pause) jogo.playerImg = jogo.playerImgDireita
+
     // Normaliza o vetor para não alterar a velocidade do personagem. EX: W = 4, S = 4; W + S != 8; W + S = 4
     if (dir.mag() > 0) {
         dir.normalize();
@@ -401,7 +405,12 @@ function keyPressed()
     }
 
     if (event.code === "Escape") {
-        jogo.tecla_esc = true;
+        if (jogo.pause === false) jogo.pause = true;
+        else if (jogo.pause === true) jogo.pause = false;
+    }
+
+    if (event.code === "Backspace") {
+        jogo.sairDoJogo = true;
     }
 
     if (jogo.fase === "preFase1" && Colidiu(jogo.player, fase1.lixeiras[0]) && (key === "e" || key === "E")) {
@@ -412,11 +421,11 @@ function keyPressed()
         tutorial.ativo = true;
     };
 
-    if (jogo.fase === "fase1" && !fase1.pegouLixo && (key === "e" || key === "E")) {
+    if (jogo.fase === "fase1" && !fase1.pegouLixo && !jogo.pause && (key === "e" || key === "E")) {
         PegarLixo(jogo.player, fase1.lixos);
     }
 
-    if (jogo.fase === "fase1" && fase1.pegouLixo && (key === "e" || key === "E")) {
+    if (jogo.fase === "fase1" && fase1.pegouLixo && !jogo.pause && (key === "e" || key === "E")) {
         DespejarLixo(jogo.player, fase1.lixeiras);
     }
 
@@ -429,8 +438,12 @@ function keyReleased(event) {
         jogo.shift_esquerdo = false;
     }
 
-    if (event.code === "Escape") {
-        jogo.tecla_esc = false;
+    // if (event.code === "Escape") {
+    //     jogo.pause = false;
+    // }
+
+    if (event.code === "Backspace") {
+        jogo.sairDoJogo = false;
     }
 }
 
@@ -641,7 +654,8 @@ function RotacionarLixo() {
 }
 
 function AnimacaoRelogio() {
-    let angulo = sin(frameCount * 0.03) * radians(8);
+    let angulo = 0
+    if (!jogo.pause) angulo = sin(frameCount * 0.03) * radians(8);
     const tamanho = 128 * jogo.escala;
     const x = 24 * jogo.escala;
     const y = 24 * jogo.escala;
@@ -656,7 +670,7 @@ function AnimacaoRelogio() {
     textSize(50 * jogo.escala);
     textFont(texto.fonte)
     textAlign(CENTER, CENTER);
-    text(jogo.timer.segundos, 0, 0);
+    text(jogo.timer.segundos, 0, -(5 * jogo.escala));
 
     pop();
     
