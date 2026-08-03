@@ -5,10 +5,10 @@ require_once __DIR__ . '\..\repository\UsuarioRepository.php';
 session_start();
 
 // Se já estiver logado, vai direto para a página principal
-if (!empty($_SESSION['id_usuario'])) {
-    header('Location: index.php');
-    exit;
-}
+// if (!empty($_SESSION['id_usuario'])) {
+//     header('Location: index.php');
+//     exit;
+// }
 
 $erro = '';
 
@@ -79,50 +79,88 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="folha f4">🍃</div>
 
 <div class="login-card">
-    <div class="login-logo titulo">Castor's game</div>
-        <h1 class="login-title subtitulo">Entrar no sistema</h1>
+    <div class="prego prego1"></div>
+    <div class="prego prego2"></div>
+    <div class="prego prego3"></div>
+    <div class="prego prego4"></div>
+
+<h1 class="titulo">
+    CASTOR'S GAME
+</h1>
+
+<p class="subtitulo">
+    Uma aventura dentuça.
+</p>
 
 <?php if ($erro !== ''): ?>
-    <div class="alert alert-erro"><?= htmlspecialchars($erro) ?></div>
+    <div class="alert"><?= htmlspecialchars($erro) ?></div>
 <?php endif; ?>
 
-<form method="POST" action="login.php">
-    <div class="form-group">
-        <label for="nomeResponsavel">Primeiro Nome Responsável</label><br>
-        <input
-        type="name"
-        id="nomeResponsavel"
-        name="nomeResponsavel"
-        placeholder="Ex: Fulano"
-        value="<?= htmlspecialchars($nomeResponsavel) ?>"
-        required
-        />
-    </div><br>
+<form method="POST" action="login.php" class="login-form">
+   <div class="campo">
 
-    <div class="form-group">
-        <label for="nome">Primeiro Nome</label><br>
-        <input
-        type="name"
-        id="nome"
-        name="nome"
-        placeholder="Ex: Cicrano"
-        value="<?= htmlspecialchars($nome) ?>"
-        required
-        />
-    </div><br>
+    <span class="iconepixel"></span>
 
-    <div class="form-group">
-        <label for="idade">Idade</label><br>
-        <input
-        type="number"
-        id="idade"
-        name="idade"
-        placeholder="Ex: 12"
-        required
-        />
-    </div><br>
+    <div>
 
-    <button type="submit" class="btn btn-primary btn-full">Entrar/Criar</button>
+        <label class="placa-label" for="nomeResponsavel">Primeiro Nome Responsável</label>
+
+        <input
+            type="text"
+            id="nomeResponsavel"
+            name="nomeResponsavel"
+            placeholder="Ex: Fulano"
+            value="<?= htmlspecialchars($nomeResponsavel) ?>"
+            required
+        >
+
+    </div>
+
+</div>
+
+    <div class="campo">
+
+    <span class="iconepixel"></span>
+
+    <div>
+
+        <label class="placa-label" for="nome">Primeiro Nome</label>
+
+        <input
+            type="text"
+            id="nome"
+            name="nome"
+            placeholder="Ex: Ciclano"
+            value="<?= htmlspecialchars($nome) ?>"
+            required
+        >
+
+    </div>
+
+</div>
+
+    <div class="campo">
+
+    <span class="iconepixel"></span>
+
+    <div>
+
+        <label class="placa-label" for="idade">Idade</label>
+
+        <input
+            type="number"
+            id="idade"
+            name="idade"
+            placeholder="Ex: 12"
+            value="<?= htmlspecialchars($idade) ?>"
+            required
+        >
+
+    </div>
+
+</div>
+
+    <button type="submit" class="botao">Entrar/Criar</button>
     </form>
 
 </div>
