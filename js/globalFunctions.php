@@ -10,23 +10,26 @@ require_once __DIR__ . '\..\includes\auth.php';
 
 function Movimentar() 
 {
-    let dir = createVector(0, 0);
-    if (keyIsDown(87) || keyIsDown(UP_ARROW)) dir.y -= 1;
-    if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) dir.y += 1;
-    if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) dir.x -= 1;
-    if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) dir.x += 1;
+    if(!jogo.pause) {
+        let dir = createVector(0, 0);
+        if (keyIsDown(87) || keyIsDown(UP_ARROW)) dir.y -= 1;
+        if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) dir.y += 1;
+        if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) dir.x -= 1;
+        if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) dir.x += 1;
 
-    if ((keyIsDown(65) || keyIsDown(LEFT_ARROW)) && !jogo.pause) jogo.playerImg = jogo.playerImgEsquerda
-    if ((keyIsDown(68) || keyIsDown(RIGHT_ARROW)) && !jogo.pause) jogo.playerImg = jogo.playerImgDireita
+        if ((keyIsDown(65) || keyIsDown(LEFT_ARROW))) jogo.playerImg = jogo.playerImgEsquerda
+        if ((keyIsDown(68) || keyIsDown(RIGHT_ARROW))) jogo.playerImg = jogo.playerImgDireita
 
-    // Normaliza o vetor para não alterar a velocidade do personagem. EX: W = 4, S = 4; W + S != 8; W + S = 4
-    if (dir.mag() > 0) {
-        dir.normalize();
-        dir.mult(4 * jogo.escala);
-        if (keyIsDown(16) || keyIsDown(SHIFT)) dir.mult(1.5)
+        // Normaliza o vetor para não alterar a velocidade do personagem. EX: W = 4, S = 4; W + S != 8; W + S = 4
+        if (dir.mag() > 0) {
+            dir.normalize();
+            dir.mult(4 * jogo.escala);
+            if (keyIsDown(16) || keyIsDown(SHIFT)) dir.mult(1.5)
+        }
+        jogo.player.x += dir.x;
+        jogo.player.y += dir.y;   
     }
-    jogo.player.x += dir.x;
-    jogo.player.y += dir.y;    
+     
 }
 // <--------------------------------------------------------------------------
 
@@ -77,6 +80,15 @@ function Colidiu(a, b)
         a.x + a.width > b.x &&
         a.y < b.y + b.height &&
         a.y + a.height > b.y
+    );
+}
+
+function MouseNoBotao(mouse, botao) {
+    return (
+        mouse.x >= botao.x &&
+        mouse.x <= botao.x + botao.width &&
+        mouse.y >= botao.y &&
+        mouse.y <= botao.y + botao.height
     );
 }
 
@@ -327,24 +339,27 @@ function windowResized()
 
 function TimerTick(fase_funcao){
 
-    if (fase_funcao === "Fase1"){
-        jogo.timer.ticks--;
-        if (jogo.timer.ticks % 60 === 0) jogo.timer.segundos--;
-        if (jogo.timer.segundos <= 0) {
-            jogo.fase = 'menu';
-            fase1.is_fase_carregada = false;
-            fase1.obstaculos = [];
-            fase1.lixos = [];
+    if(!jogo.pause){
+        if (fase_funcao === "Fase1"){
+            jogo.timer.ticks--;
+            if (jogo.timer.ticks % 60 === 0) jogo.timer.segundos--;
+            if (jogo.timer.segundos <= 0) {
+                jogo.fase = 'menu';
+                fase1.is_fase_carregada = false;
+                fase1.obstaculos = [];
+                fase1.lixos = [];
+            }
         }
-    }
 
-    else if (fase_funcao === "Fase2"){
-        jogo.timer.ticks++;
-        if (jogo.timer.ticks % 60 === 0) {
-            jogo.timer.ticks = 0;
-            jogo.timer.segundos++;
+        else if (fase_funcao === "Fase2"){
+            jogo.timer.ticks++;
+            if (jogo.timer.ticks % 60 === 0) {
+                jogo.timer.ticks = 0;
+                jogo.timer.segundos++;
+            }
         }
     }
+    
 
     fill(0, 0, 0);
     textSize(50 * jogo.escala);
@@ -405,8 +420,7 @@ function keyPressed()
     }
 
     if (event.code === "Escape") {
-        if (jogo.pause === false) jogo.pause = true;
-        else if (jogo.pause === true) jogo.pause = false;
+        MenuPause()
     }
 
     if (event.code === "Backspace") {
@@ -444,6 +458,21 @@ function keyReleased(event) {
 
     if (event.code === "Backspace") {
         jogo.sairDoJogo = false;
+    }
+}
+
+//<-----------------------------------------------------------------------------------------------------------------------
+
+//PAUSE ----------------------------------------------------------------------------------------------------------------->
+
+function MenuPause(){
+    if (jogo.pause === false && pause.menuPause === false) {
+        pause.menuPause = true;
+        jogo.pause = true;
+    }
+    else if (jogo.pause === true && pause.menuPause === true) {
+        pause.menuPause = false;
+        jogo.pause = false;
     }
 }
 

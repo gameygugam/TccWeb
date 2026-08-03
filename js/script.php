@@ -30,6 +30,8 @@ function setup() {
     jogo.canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
     jogo.canvas.position(jogo.canvas_x, jogo.canvas_y);
 
+    jogo.escala = min(width / 1920, height / 1080); //1920 -> Width Padrão, 1080 -> Height Padrão
+
     fase1.is_fase_carregada = false;
     fase2.is_fase_carregada = false;
 
@@ -83,8 +85,8 @@ function draw() {
         DrawFase1(); // Desenha o Minigame 1
     else if(jogo.fase === "fase2")
         DrawFase2(); // Desenha o Minigame 2
-    else if(jogo.fase === "pause")
-        DrawPause(); // Desenha o menu de Pause
+
+    if(pause.menuPause) DrawPause(); // Desenha o menu de Pause
 
     AnimacaoStandBy()
     Dash();
@@ -95,10 +97,35 @@ function draw() {
     if (jogo.fase !== "menu" && jogo.sairDoJogo) 
     {
         MudarFase("menu");
+        jogo.sairDoJogo = false
     }
 
     text(jogo.timerGlobal, 50, windowHeight - 100);
     jogo.timerGlobal++
+}
+
+function mousePressed() {
+
+    let mouse = {x: mouseX, y: mouseY}
+
+    if(MouseNoBotao(mouse, pause.botaoContinuar)) {
+        MenuPause()
+    }
+
+    else if(MouseNoBotao(mouse, pause.botaoReiniciar)) {
+        MudarFase("fase1")
+        MenuPause()
+    }
+
+    else if(MouseNoBotao(mouse, pause.botaoOpcoes)) {
+        pause.menuPause = false;
+        jogo.pause = false;
+    }
+
+    else if(MouseNoBotao(mouse, pause.botaoSair)) {
+        jogo.sairDoJogo = true;
+        MenuPause()
+    }
 }
 
 //MENU ----------------------------------------------------------------------------------------------------------->
@@ -239,12 +266,82 @@ function PreloadPause()
 
 function SetupPause()
 {
+    pause.background = loadImage("../assets/imagens/pause/background.png");
+    pause.width = 500 * jogo.escala
+    pause.height = 600 * jogo.escala
+    pause.x = (width / 2) - (pause.width / 2)
+    pause.y = (height / 2) - (pause.height / 2)
 
+    pause.btnImg = loadImage("../assets/imagens/pause/background.png");
+    pause.btnWidth = 150 * jogo.escala
+    pause.btnHeight = 50 * jogo.escala
+
+    pause.txtTamanho = 20 * jogo.escala
+    pause.txtFonte = loadFont("../assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf")
+
+    pause.titulo.tamanho = 50 * jogo.escala
+    pause.titulo.x = pause.x + (pause.width / 6)
+    pause.titulo.y = pause.y + (pause.height / 5)
+
+    pause.botaoXCentralizado = pause.x + ((pause.width / 2) - ((125 * jogo.escala) / 2))
+    // pause.x -> posição inicial, borda da esquerda do menu
+    // (pause.width / 2) -> Centralizado no meio do menu, porém a centralização ocorre a partir do ponto esquerdo superior do botão
+    // ((125 * jogo.escala) / 2)) -> tamanho do botão dividido por 2 para finalmente achar o meio certinho do menu alinhado com o botão
+
+    // let textoTamanho = 20 * jogo.escala
+    // let textoFonte = loadFont("../assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf")
+
+    pause.botaoContinuar.width = pause.btnWidth
+    pause.botaoContinuar.height = pause.btnHeight
+    pause.botaoContinuar.x = pause.x + ((pause.width / 2) - (pause.btnWidth / 2))
+    pause.botaoContinuar.y = pause.y + ((pause.height / 2) - (75 * jogo.escala))
+    pause.botaoContinuar.texto_x = pause.botaoContinuar.x + (pause.btnWidth / 5)
+    pause.botaoContinuar.texto_y = pause.botaoContinuar.y + (pause.btnHeight / 1.75)
+
+    pause.botaoReiniciar.width = pause.btnWidth
+    pause.botaoReiniciar.height = pause.btnHeight
+    pause.botaoReiniciar.x = pause.x + ((pause.width / 2) - (pause.btnWidth / 2))
+    pause.botaoReiniciar.y = pause.y + ((pause.height / 2))
+    pause.botaoReiniciar.texto_x = pause.botaoReiniciar.x + (pause.btnWidth / 5)
+    pause.botaoReiniciar.texto_y = pause.botaoReiniciar.y + (pause.btnHeight / 1.75)
+
+    pause.botaoOpcoes.width = pause.btnWidth
+    pause.botaoOpcoes.height = pause.btnHeight
+    pause.botaoOpcoes.x = pause.x + ((pause.width / 2) - (pause.btnWidth / 2))
+    pause.botaoOpcoes.y = pause.y + ((pause.height / 2) + (75 * jogo.escala))
+    pause.botaoOpcoes.texto_x = pause.botaoOpcoes.x + (pause.btnWidth / 3.5)
+    pause.botaoOpcoes.texto_y = pause.botaoOpcoes.y + (pause.btnHeight / 1.75)
+    
+    pause.botaoSair.width = pause.btnWidth
+    pause.botaoSair.height = pause.btnHeight
+    pause.botaoSair.x = pause.x + ((pause.width / 2) - (pause.btnWidth / 2))
+    pause.botaoSair.y = pause.y + ((pause.height / 2) + (150 * jogo.escala))
+    pause.botaoSair.texto_x = pause.botaoSair.x + (pause.btnWidth / 2.75)
+    pause.botaoSair.texto_y = pause.botaoSair.y + (pause.btnHeight / 1.75)
 }
 
 function DrawPause()
-{
+{    
+    image(pause.btnImg, pause.x, pause.y, pause.width, pause.height)
+    
+    textFont(pause.txtFonte)
+    textSize(pause.txtTamanho)
 
+    image(pause.btnImg, pause.botaoContinuar.x, pause.botaoContinuar.y, pause.btnWidth, pause.btnHeight)
+    text("Continuar", pause.botaoContinuar.texto_x, pause.botaoContinuar.texto_y)
+
+    image(pause.btnImg, pause.botaoReiniciar.x, pause.botaoReiniciar.y, pause.btnWidth, pause.btnHeight)
+    text("Reiniciar", pause.botaoReiniciar.texto_x, pause.botaoReiniciar.texto_y)
+
+    image(pause.btnImg, pause.botaoOpcoes.x, pause.botaoOpcoes.y, pause.btnWidth, pause.btnHeight)
+    text("Opções", pause.botaoOpcoes.texto_x, pause.botaoOpcoes.texto_y)
+
+    image(pause.btnImg, pause.botaoSair.x, pause.botaoSair.y, pause.btnWidth, pause.btnHeight)
+    text("Sair", pause.botaoSair.texto_x, pause.botaoSair.texto_y)
+
+    textSize(pause.titulo.tamanho)
+    text("CASTOR'S GAME", pause.titulo.x, pause.titulo.y)
+    
 }
 //<----------------------------------------------------------------------------------------------------------------
 
@@ -423,7 +520,7 @@ function DrawFase1()
         fase1.lastItemPego_OldX = fase1.lastItemPego.x;
         fase1.lastItemPego_OldY = fase1.lastItemPego.y;
 
-        
+        Movimentar();        
 
         ////Drag-Drop lixo
         // if (dragDrop(lixo)) {
@@ -525,10 +622,7 @@ function DrawFase1()
         // image(fase1.relogio, windowWidth/64, windowHeight/48, windowWidth/16, windowHeight/8);
         // image(fase1.relogio, 24* jogo.escala, 24* jogo.escala, 128 * jogo.escala, 128 * jogo.escala); //128 -> tamanho padrão do relógio
         AnimacaoRelogio()
-        if (!jogo.pause) {
-            Movimentar();
-            TimerTick("Fase1");
-        } 
+        TimerTick("Fase1");
         
 
         text("Escala:" + jogo.escala, 2000, 50);
