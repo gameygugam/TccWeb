@@ -22,13 +22,15 @@ function preload() {
 }
 
 function setup() {
-    MudarFase("menu");
+    MudarFase("fase1");
 
     jogo.canvas = createCanvas(windowWidth, windowHeight);
     noSmooth();
     jogo.canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
     jogo.canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
     jogo.canvas.position(jogo.canvas_x, jogo.canvas_y);
+
+    jogo.escala = min(width / 1920, height / 1080);
 
     fase1.is_fase_carregada = false;
     fase2.is_fase_carregada = false;
@@ -44,7 +46,7 @@ function setup() {
     jogo.yFinalMapa = windowHeight - windowHeight * 0.07;
 
     jogo.player = { 
-        x: jogo.xFinalMapa / 2, y: jogo.yFinalMapa / 2, width: 100, height: 100,
+        x: jogo.xFinalMapa / 2, y: jogo.yFinalMapa / 2, width: (windowWidth / 20), height: (windowHeight / 10),
         oldX: jogo.xFinalMapa / 2, oldY: jogo.yFinalMapa / 2, class: "player", dash_cooldown: 80, dash_duracao: 0 
     };
 
@@ -323,8 +325,8 @@ function PreloadFase1()
 
     fase1.obstaculos_img = [
         loadImage("../assets/imagens/fase1/obstaculos/gangorraPixel.png"),
-        loadImage("../assets/imagens/fase1/lixeiras/lixeiraAzul.png"),
-        loadImage("../assets/imagens/fase1/lixeiras/lixeiraAmarela.png"),
+        loadImage("../assets/imagens/fase1/obstaculos/escorregadorPixel.png"),
+        loadImage("../assets/imagens/fase1/obstaculos/gaiolaLabirintoV1Pixel.png"),
         loadImage("../assets/imagens/fase1/lixeiras/lixeiraVerde.png"),
         loadImage("../assets/imagens/fase1/lixeiras/lixeiraMarrom.png")
     ];
@@ -382,7 +384,7 @@ function SetupFase1()
     ];
     fase1.lixos = [];
     fase1.obstaculos = [];
-    tutorial.ativo = false;
+    tutorial.ativo = true;
 
     jogo.pontos = 0;
     jogo.timer.segundos = 0;
@@ -397,7 +399,7 @@ function DrawFase1()
         // image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
         Dialogo("fase1");
     }
-    else if(!tutorial.ativo) 
+    else if(!tutorial.ativo)
     {
         if (!fase1.is_fase_carregada) {
             jogo.timer.ticks = 3600;
@@ -420,10 +422,7 @@ function DrawFase1()
         jogo.player.oldX = jogo.player.x;
         jogo.player.oldY = jogo.player.y;
 
-        fase1.lastItemPego_OldX = fase1.lastItemPego.x;
-        fase1.lastItemPego_OldY = fase1.lastItemPego.y;
-
-        
+        if(!jogo.pause) Movimentar();
 
         ////Drag-Drop lixo
         // if (dragDrop(lixo)) {
@@ -433,7 +432,7 @@ function DrawFase1()
 
         //// Verifica colisão com parede
         jogo.walls.forEach(wall => {
-            if (Colidiu(jogo.player, wall) || Colidiu(fase1.lastItemPego, wall)) {
+            if (Colidiu(jogo.player, wall)) {
                 jogo.player.x = jogo.player.oldX;
                 jogo.player.y = jogo.player.oldY;
             }
@@ -488,7 +487,9 @@ function DrawFase1()
 
         fase1.lixeiras.forEach((lixeira, i) => { image(fase1.lixeiras_img[i], lixeira.x, lixeira.y, lixeira.width * jogo.escala, lixeira.height * jogo.escala) });
         
-        fase1.obstaculos.forEach((obstaculo, i) => { image(fase1.obstaculos_img[i], obstaculo.x, obstaculo.y, obstaculo.width * jogo.escala, obstaculo.height * jogo.escala) });
+        fase1.obstaculos.forEach((obstaculo, i) => {
+            image(fase1.obstaculos_img[i], obstaculo.x - obstaculo.width*0.15, obstaculo.y - obstaculo.height*0.15, (obstaculo.width + obstaculo.width/4) * jogo.escala, (obstaculo.height + obstaculo.height/4) * jogo.escala) 
+        });
 
         fase1.lixos.forEach(lixo =>{
             push();
@@ -513,10 +514,10 @@ function DrawFase1()
         //     pop();
         // })
 
-        // jogo.walls.forEach(wall => {
-        //     fill(0, 255, 0);
-        //     rect(wall.x, wall.y, wall.width, wall.height);
-        // });
+        jogo.walls.forEach(wall => {
+            fill(0, 255, 0);
+            rect(wall.x, wall.y, wall.width, wall.height);
+        });
 
         ////Desenha personagem
         image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
@@ -524,12 +525,8 @@ function DrawFase1()
         // //// Cria o relógio
         // image(fase1.relogio, windowWidth/64, windowHeight/48, windowWidth/16, windowHeight/8);
         // image(fase1.relogio, 24* jogo.escala, 24* jogo.escala, 128 * jogo.escala, 128 * jogo.escala); //128 -> tamanho padrão do relógio
-        AnimacaoRelogio()
-        if (!jogo.pause) {
-            Movimentar();
-            TimerTick("Fase1");
-        } 
-        
+        AnimacaoRelogio();
+        if(!jogo.pause) TimerTick("Fase1");
 
         text("Escala:" + jogo.escala, 2000, 50);
         text("Height:" + windowWidth, 100, 50);

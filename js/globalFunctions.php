@@ -169,7 +169,7 @@ function Dialogo(dialogo) {
 
             switch(texto.incremento) {
                 case 0:
-                    texto.conteudo = "nhoc-nhoc, nhoc-nhoc (Olá <?= $_SESSION['nome'] ?>, eu sou o Castor (Inserir Nome)).";
+                    texto.conteudo = "nhoc-nhoc, nhoc-nhoc (Olá <?= $_SESSION['nome'] ?>, eu sou o Castor Robertinho).";
                     break;
 
                 case 1:
@@ -254,7 +254,7 @@ function Dialogo(dialogo) {
 
                     switch(texto.incremento) {
                         case 0:
-                            texto.conteudo = "Nhec-Nhec, Nhec-Nhec (Esse é o nossa primeira missão, vamos coletar o lixo!!).";
+                            texto.conteudo = "Nhec-Nhec, Nhec-Nhec (Esse é a nossa primeira missão, vamos coletar o lixo!!).";
                             break;
                         
                         case 1:
@@ -278,6 +278,10 @@ function Dialogo(dialogo) {
                             break;
 
                         case 6:
+                            texto.conteudo = "(Tome cuidado com os obstáculos no caminho, eles podem te atrapalhar, mas eu sei que você consegue desviar).";
+                            break;
+
+                        case 7:
                             texto.conteudo = "Nhoc-Nhoc (Entendido? Vamos la! Boa sorte <?= $_SESSION['nome'] ?>).";
                             texto.ativo = false;
                             break;
@@ -293,7 +297,6 @@ function Dialogo(dialogo) {
                     ReiniciarDialogo(tutorial);
                     break;
             }
-            // Digitar();
             break;
     }
 }
@@ -314,11 +317,20 @@ function ReiniciarDialogo(dialogo) {
 
 function windowResized() 
 {
-    resizeCanvas(windowWidth, windowHeight);
+    if(windowWidth >= 640 && windowHeight >= 480) {
+        resizeCanvas(windowWidth, windowHeight);
 
-    jogo.canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
-    jogo.canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
-    jogo.canvas.position(jogo.canvas_x, jogo.canvas_y);
+        jogo.canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
+        jogo.canvas_y = ((windowHeight - height) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (Y)
+        jogo.canvas.position(jogo.canvas_x, jogo.canvas_y);
+    }
+    else {
+        windowWidth = 640;
+        windowHeight = 480;
+    }
+
+    jogo.pause = true;
+    setup();
 }
 
 //<-----------------------------------------------------------------------------------------------------------------------
