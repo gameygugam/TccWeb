@@ -269,13 +269,13 @@ function PreloadPause()
 
 function SetupPause()
 {
-    pause.background = loadImage("../assets/imagens/pause/background.png");
+    pause.background = loadImage("../assets/imagens/pause/background2.png");
     pause.width = 500 * jogo.escala
     pause.height = 600 * jogo.escala
     pause.x = (width / 2) - (pause.width / 2)
     pause.y = (height / 2) - (pause.height / 2)
 
-    pause.btnImg = loadImage("../assets/imagens/pause/background.png");
+    pause.btnImg = loadImage("../assets/imagens/pause/background2.png");
     pause.btnWidth = 150 * jogo.escala
     pause.btnHeight = 50 * jogo.escala
 
