@@ -22,7 +22,7 @@ function preload() {
 }
 
 function setup() {
-    MudarFase("fase1");
+    MudarFase("menu");
 
     jogo.canvas = createCanvas(windowWidth, windowHeight);
     noSmooth();
@@ -324,6 +324,7 @@ function DrawPause()
 {    
     image(pause.btnImg, pause.x, pause.y, pause.width, pause.height)
     
+    // fill(0,0,0)
     textFont(pause.txtFonte)
     textSize(pause.txtTamanho)
 
@@ -441,26 +442,79 @@ function PreloadFase1()
         lixo10 = SortearLixoPixel()
     ];*/
 
-    fase1.lixosPixelImgCarregados = [
-        loadImage("../assets/imagens/fase1/lixos/bolinhaDePapelPixel.png"),
-        loadImage("../assets/imagens/fase1/lixos/garrafaVidroPixel.png"),
-        loadImage("../assets/imagens/fase1/lixos/bananaPixel.png"),
-        loadImage("../assets/imagens/fase1/lixos/bananaPodrePixel.png"),
-        loadImage("../assets/imagens/fase1/lixos/garrafaDePlasticoPixel.png"),
-        loadImage("../assets/imagens/fase1/lixos/placaDeMetalPixel.png"), //5
-        loadImage("../assets/imagens/fase1/lixos/pilhaPixel.png"),
-    ];
+    // fase1.lixosPixelImgCarregados = [
+    //     loadImage("../assets/imagens/fase1/lixos/bolinhaDePapelPixel.png"),
+    //     loadImage("../assets/imagens/fase1/lixos/garrafaVidroPixel.png"),
+    //     loadImage("../assets/imagens/fase1/lixos/bananaPixel.png"),
+    //     loadImage("../assets/imagens/fase1/lixos/bananaPodrePixel.png"),
+    //     loadImage("../assets/imagens/fase1/lixos/garrafaDePlasticoPixel.png"),
+    //     loadImage("../assets/imagens/fase1/lixos/placaDeMetalPixel.png"),
+    //     loadImage("../assets/imagens/fase1/lixos/pilhaPixel.png"),
+    // ];
+
+    fase1.lixosImgCarregados.pixel.papel = [
+        loadImage("../assets/imagens/fase1/lixos/pixel/bolinhaDePapelPixel.png"),
+        loadImage("../assets/imagens/fase1/lixos/pixel/caixaDePapelaoPixel.png"),
+    ]
+
+    fase1.lixosImgCarregados.pixel.vidro = [
+        loadImage("../assets/imagens/fase1/lixos/pixel/garrafaVidroPixel.png"),
+    ]
+
+    fase1.lixosImgCarregados.pixel.organico = [
+        loadImage("../assets/imagens/fase1/lixos/pixel/bananaPixel.png"),
+        loadImage("../assets/imagens/fase1/lixos/pixel/bananaPodrePixel.png"),
+    ]
+
+    fase1.lixosImgCarregados.pixel.plastico = [
+        loadImage("../assets/imagens/fase1/lixos/pixel/garrafaDePlasticoPixel.png"),
+    ]
+
+    fase1.lixosImgCarregados.pixel.metal = [
+        loadImage("../assets/imagens/fase1/lixos/pixel/placaDeMetalPixel.png"),
+    ]
+
+    fase1.lixosImgCarregados.pixel.naoReciclavel = [
+        loadImage("../assets/imagens/fase1/lixos/pixel/pilhaPixel.png"),
+    ]
     
     // Carrega as ../imagens dos lixos reais
-    fase1.lixosReaisCarregados = [
-        loadImage("../assets/imagens/fase1/lixos/bolinhaDePapel.png"), //0
-        loadImage("../assets/imagens/fase1/lixos/garrafaVidro.png"), //1
-        loadImage("../assets/imagens/fase1/lixos/banana.png"), //2
-        loadImage("../assets/imagens/fase1/lixos/bananaPodre.png"), //3
-        loadImage("../assets/imagens/fase1/lixos/garrafaDePlastico.png"), //4
-        loadImage("../assets/imagens/fase1/lixos/placaDeMetalPixel.png"), //5
-        loadImage("../assets/imagens/fase1/lixos/pilha.png"), //6
+    // fase1.lixosReaisCarregados = [
+    //     loadImage("../assets/imagens/fase1/lixos/bolinhaDePapel.png"), //0
+    //     loadImage("../assets/imagens/fase1/lixos/garrafaVidro.png"), //1
+    //     loadImage("../assets/imagens/fase1/lixos/banana.png"), //2
+    //     loadImage("../assets/imagens/fase1/lixos/bananaPodre.png"), //3
+    //     loadImage("../assets/imagens/fase1/lixos/garrafaDePlastico.png"), //4
+    //     loadImage("../assets/imagens/fase1/lixos/placaDeMetalPixel.png"), //5
+    //     loadImage("../assets/imagens/fase1/lixos/pilha.png"), //6
+    // ]
+
+    fase1.lixosImgCarregados.reais.papel = [
+        loadImage("../assets/imagens/fase1/lixos/reais/bolinhaDePapel.png"),
+        loadImage("../assets/imagens/fase1/lixos/pixel/caixaDePapelaoPixel.png"),
     ]
+
+    fase1.lixosImgCarregados.reais.vidro = [
+        loadImage("../assets/imagens/fase1/lixos/reais/garrafaVidro.png"),
+    ]
+
+    fase1.lixosImgCarregados.reais.organico = [
+        loadImage("../assets/imagens/fase1/lixos/reais/banana.png"),
+        loadImage("../assets/imagens/fase1/lixos/reais/bananaPodre.png"),
+    ]
+
+    fase1.lixosImgCarregados.reais.plastico = [
+        loadImage("../assets/imagens/fase1/lixos/reais/garrafaDePlastico.png"),
+    ]
+
+    fase1.lixosImgCarregados.reais.metal = [
+        loadImage("../assets/imagens/fase1/lixos/pixel/placaDeMetalPixel.png"),
+    ]
+
+    fase1.lixosImgCarregados.reais.naoReciclavel = [
+        loadImage("../assets/imagens/fase1/lixos/reais/pilha.png"),
+    ]
+
     // Carrega a imagem do cartaz de procurado
     fase1.cartazProcuradoLixo = loadImage("../assets/imagens/fase1/cartazProcuradoLixo.png");
 }

@@ -103,6 +103,24 @@ const fase1 = {
     lixeiras_img: [],
     lixosPixelCarregados: [],
     lixosReaisCarregados: [],
+    lixosImgCarregados:{
+        reais: {
+            papel: [],
+            vidro: [],
+            organico: [],
+            plastico: [],
+            metal: [],
+            naoReciclavel: [],
+        },
+        pixel: {
+            papel: [],
+            vidro: [],
+            organico: [],
+            plastico: [],
+            metal: [],
+            naoReciclavel: [],
+        },
+    },
     cartazProcuradoLixo: null,
     pranchetaLixo: null,
 
