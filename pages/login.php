@@ -15,7 +15,7 @@ $erro = '';
 $repo = new UsuarioRepository();
 $nomeResponsavel = '';
 $nome = '';
-$idade = 0;
+$idade = 1;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nomeResponsavel = $_POST['nomeResponsavel'];
@@ -77,6 +77,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="folha f2">🍃</div>
 <div class="folha f3">🍃</div>
 <div class="folha f4">🍃</div>
+<div class="folha f5">🍃</div>
+<div class="folha f6">🍃</div>
+<div class="folha f7">🍃</div>
+<div class="folha f8">🍃</div>
 
 <div class="login-card">
     <div class="prego prego1"></div>
@@ -153,6 +157,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             name="idade"
             placeholder="Ex: 12"
             value="<?= htmlspecialchars($idade) ?>"
+            min=1
+            max=99
             required
         >
 

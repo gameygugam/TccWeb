@@ -322,13 +322,10 @@ FOLHAS
 .folha{
 
     position:absolute;
-
     color:#9be79c;
-
+    top: -50px;
     font-size:24px;
-
     opacity:.75;
-
     animation:cair 8s linear infinite;
 }
 
@@ -336,6 +333,10 @@ FOLHAS
 .f2{left:27%;animation-delay:2s;}
 .f3{left:70%;animation-delay:5s;}
 .f4{left:90%;animation-delay:1s;}
+.f5{left:15%;animation-delay:11s;}
+.f6{left:67%;animation-delay:4s;}
+.f7{left:89%;animation-delay:7s;}
+.f8{left:53%;animation-delay:3s;}
 
 /*==========================
 ANIMAÇÕES
