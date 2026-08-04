@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 18/07/2026 às 23:45
+-- Tempo de geração: 04/08/2026 às 21:32
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -74,7 +74,8 @@ CREATE TABLE `partida` (
   `id_usuario` int(11) DEFAULT NULL,
   `id_personagem` int(11) DEFAULT NULL,
   `fase` int(1) DEFAULT NULL,
-  `tempo` int(11) DEFAULT NULL
+  `tempo` int(11) DEFAULT NULL,
+  `pontuacao` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -121,7 +122,9 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `responsavel`, `nome`, `idade`) VALUES
-(1, 'a', 'f', 2);
+(1, 'a', 'f', 2),
+(2, 'Igor', 'Bola de Fogo', 1),
+(3, 'Igor', 'Xavier', 17);
 
 --
 -- Índices para tabelas despejadas
@@ -216,7 +219,7 @@ ALTER TABLE `sala`
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restrições para tabelas despejadas
