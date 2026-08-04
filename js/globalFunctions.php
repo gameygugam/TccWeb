@@ -353,8 +353,8 @@ function TimerTick(fase_funcao){
 
     if(!jogo.pause){
         if (fase_funcao === "Fase1"){
-            jogo.timer.ticks--;
-            if (jogo.timer.ticks % 60 === 0) jogo.timer.segundos--;
+            jogo.timer.ticks++;
+            if (jogo.timer.ticks % 80 === 0) jogo.timer.segundos--;
             if (jogo.timer.segundos <= 0) {
                 jogo.fase = 'menu';
                 fase1.is_fase_carregada = false;
@@ -457,7 +457,30 @@ function keyPressed()
 
     //TECLAS PARA REMOVER QUANDO ACABAR O JOGO!!! (ATALHO PROS PROGRAMMER)
 
-    if (key === "l" || key === "L") CriarLixo()
+    if (key === "l" || key === "L") {
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        
+    }
 
     if (key === "t" || key === "T") tutorial.ativo = false
 
@@ -592,11 +615,28 @@ function AleatoriezarPosicao(objeto) {
 }
 
 function AleatoriezarPosicaoLixo(lixo) {
-    // let dif_x = ((windowWidth - width) / 2);
-    // let dif_y = ((windowHeight - height) / 2);
+    let pode_sair = false
+    while(!pode_sair){
+        pode_sair = true
 
-    let lixo_x = random(jogo.xInicialMapa + 10, jogo.xFinalMapa - 250);
-    let lixo_y = random(jogo.yInicialMapa + 40, jogo.yFinalMapa - 50);
+        lixo.x = random(jogo.xInicialMapa + 10 * jogo.escala, jogo.xFinalMapa - 10 * jogo.escala);
+        lixo.y = random(jogo.yInicialMapa + 10 * jogo.escala, jogo.yFinalMapa - 10 * jogo.escala);
+
+        fase1.obstaculos.forEach(obstaculo => {
+            console.log("TEM OBSTACULO")
+            if (Colidiu(lixo, obstaculo)) {
+                pode_sair = false
+            }
+        })
+
+        fase1.lixeiras.forEach(lixeira => {
+            if (Colidiu(lixo, lixeira)) {
+                pode_sair = false
+            }
+        })
+        console.log("a")
+    }
+    return lixo
 }
 
 function CriarLixo() {
@@ -604,8 +644,35 @@ function CriarLixo() {
     let dif_x = ((windowWidth - width) / 2);
     let dif_y = ((windowHeight - height) / 2);
 
-    let lixo_x = random(jogo.xInicialMapa + 10 * jogo.escala, jogo.xFinalMapa - 250 * jogo.escala);
-    let lixo_y = random(jogo.yInicialMapa + 40 * jogo.escala, jogo.yFinalMapa - 50 * jogo.escala);
+    let lixo_x = null
+    let lixo_y = null
+    let lixo_coordenadas = {x: null, y: null}
+    let pode_sair = false
+
+    // while(!pode_sair){
+    //     pode_sair = true
+
+    //     lixo_x = random(jogo.xInicialMapa + 10 * jogo.escala, jogo.xFinalMapa - 10 * jogo.escala);
+    //     lixo_y = random(jogo.yInicialMapa + 10 * jogo.escala, jogo.yFinalMapa - 10 * jogo.escala);
+
+    //     lixo_coordenadas = {x: lixo_x, y: lixo_y}
+
+    //     fase1.obstaculos.forEach(obstaculo => {
+    //         console.log("TEM OBSTACULO")
+    //         if (Colidiu(lixo_coordenadas, obstaculo)) {
+    //             pode_sair = false
+    //         }
+    //     })
+
+    //     fase1.lixeiras.forEach(lixeira => {
+    //         if (Colidiu(lixo_coordenadas, lixeira)) {
+    //             pode_sair = false
+    //         }
+    //     })
+    //     console.log("a")
+    // }
+
+    
 
     //let lixo = [0, 0, 25, 25, "", "", ""] //x, y, w, h, img, type, class
     let lixo_type = RandomizarLixoType()
@@ -613,13 +680,17 @@ function CriarLixo() {
     let lixo_img = CarregarLixoImgPorNome(lixo_nome);
     let lixo_width = 30;
     let lixo_height = 30;
-    if (lixo_nome === "garrafaDePlastico" || lixo_nome === "pilha") {
+    if (lixo_nome === "garrafaDePlastico" || lixo_nome === "pilha" || lixo_nome === "latinha" || lixo_nome === "macaComida") {
         lixo_width = 20;
         lixo_height = 30;
     }
-    if (lixo_nome === "caixaDePapelao") {
+    else if (lixo_nome === "caixaDePapelao") {
         lixo_width = 35;
         lixo_height = 35;
+    }
+    else if (lixo_nome === "chicleteMascado") {
+        lixo_width = 20;
+        lixo_height = 20;
     }
 
     // if (lixo_type === "papel") {
@@ -678,7 +749,12 @@ function CriarLixo() {
     // let lixo = fase1.lixos.push({ x: lixo_x, y: lixo_y, width: 25, height: 25, img: lixo_img, imgCarregada: lixo_img_carregada, type: lixo_type, class: "lixo", angulo: lixo_angulo });
     
     let lixo = Lixo.novo(null, lixo_nome, lixo_img, lixo_width * jogo.escala, lixo_height * jogo.escala, lixo_x, lixo_y, lixo_type, lixo_angulo);
-    fase1.lixos.push(lixo);
+    
+    lixo = AleatoriezarPosicaoLixo(lixo)
+
+    return lixo
+    
+    // fase1.lixos.push(lixo);
 
     /*lixos[lixos.length - 1].img = lixosPixelImg[lixos.length - 1]; // Adiciona imagem pixel no parametro
     lixos[lixos.length - 1].imgCarregada = lixosPixelImgCarregados[lixos.length - 1]; // Adiciona imagem pixel carregada no parametro
@@ -820,7 +896,8 @@ function CriarObstaculo() {
     obstaculo_img_carregada = fase1.obstaculos_img[0]
 
     let obstaculo = Obstaculo.novo("brinquedo", "caminho", obstaculo_img_carregada, 100 * jogo.escala, 100 * jogo.escala, obstaculo_x, obstaculo_y);
-    fase1.obstaculos.push(obstaculo);
+    return obstaculo
+    // fase1.obstaculos.push(obstaculo);
 }
 
 function RotacionarLixo() {

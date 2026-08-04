@@ -22,7 +22,7 @@ function preload() {
 }
 
 function setup() {
-    MudarFase("menu");
+    // MudarFase("menu");
 
     jogo.canvas = createCanvas(windowWidth, windowHeight);
     noSmooth();
@@ -74,7 +74,6 @@ function setup() {
 }
 
 function draw() {
-    if (jogo.timerGlobal === 256) jogo.timerGlobal = 0
     jogo.escala = min(width / 1920, height / 1080); //1920 -> Width Padrão, 1080 -> Height Padrão
 
     if(jogo.fase === "menu")
@@ -86,7 +85,10 @@ function draw() {
     else if(jogo.fase === "fase2")
         DrawFase2(); // Desenha o Minigame 2
 
-    if(pause.menuPause) DrawPause(); // Desenha o menu de Pause
+    if(pause.menuPause) {
+        filter(BLUR, 2);
+        DrawPause(); // Desenha o menu de Pause
+    }
 
     AnimacaoStandBy()
     Dash();
@@ -100,7 +102,7 @@ function draw() {
         jogo.sairDoJogo = false
     }
 
-    text(jogo.timerGlobal, 50, windowHeight - 100);
+    text("TG:" + jogo.timerGlobal, 50, windowHeight - 100);
     jogo.timerGlobal++
 }
 
@@ -114,16 +116,17 @@ function mousePressed() {
 
     else if(MouseNoBotao(mouse, pause.botaoReiniciar)) {
         MudarFase("fase1")
-        MenuPause()
+        setup()
+        
     }
 
     else if(MouseNoBotao(mouse, pause.botaoOpcoes)) {
-        pause.menuPause = false;
-        jogo.pause = false;
+        MenuPause()
     }
 
     else if(MouseNoBotao(mouse, pause.botaoSair)) {
         jogo.sairDoJogo = true;
+        setup()
         MenuPause()
     }
 }
@@ -324,7 +327,7 @@ function DrawPause()
 {    
     image(pause.btnImg, pause.x, pause.y, pause.width, pause.height)
     
-    // fill(0,0,0)
+    fill(0,0,0)
     textFont(pause.txtFonte)
     textSize(pause.txtTamanho)
 
@@ -535,13 +538,18 @@ function SetupFase1()
         { x: jogo.xFinalMapa - 100, y: windowHeight / 2 - 50, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" },
         { x: jogo.xFinalMapa - 300, y: windowHeight / 2 - 50, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraCinza.png", descarte: "nao_reciclavel", class: "lixeira" }
     ];
+    fase1.obstaculos = [
+        CriarObstaculo(),
+        CriarObstaculo(),
+        CriarObstaculo(),
+    ];
     fase1.lixos = [];
-    fase1.obstaculos = [];
     tutorial.ativo = true;
 
     jogo.pontos = 0;
     jogo.timer.segundos = 0;
     jogo.timer.ticks = 0;
+    jogo.timer.start = 0;
 }
 
 function DrawFase1()
@@ -555,9 +563,11 @@ function DrawFase1()
     else if(!tutorial.ativo)
     {
         if (!fase1.is_fase_carregada) {
-            jogo.timer.ticks = 3600;
+            jogo.timer.start = 0;
+            jogo.timer.ticks = 0;
             jogo.timer.segundos = 60;
             jogo.pontos = 0;
+            jogo.pause = true
             fase1.is_fase_carregada = true;
         }
 
@@ -568,7 +578,7 @@ function DrawFase1()
         // image(fase1.pranchetaLixo, jogo.xFinalMapa + 10, jogo.yFinalMapa - 300, 175, 275);
 
         ////repõe a quantidade de lixo no mapa
-        if(fase1.lixos.length < 10) CriarLixo();
+        if(fase1.lixos.length < 10) fase1.lixos.push(CriarLixo());
         if(fase1.obstaculos.length < 3) CriarObstaculo();
 
         //// Armazena posição antiga
@@ -677,14 +687,40 @@ function DrawFase1()
         ////Desenha personagem
         image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
 
-        // filter(BLUR, 2);
-        // filter(GRAY, 1);
-
         // //// Cria o relógio
         // image(fase1.relogio, windowWidth/64, windowHeight/48, windowWidth/16, windowHeight/8);
         // image(fase1.relogio, 24* jogo.escala, 24* jogo.escala, 128 * jogo.escala, 128 * jogo.escala); //128 -> tamanho padrão do relógio
         AnimacaoRelogio();
         if(!jogo.pause) TimerTick("Fase1");
+
+        if(jogo.timer.start <= 300) {
+            filter(BLUR, 1);
+
+            textSize(150 * jogo.escala)
+
+            if(jogo.timer.start <= 80) {
+                fill(255, 50, 50);    // Vermelho (3)
+                text("3", width / 2, height / 2);
+                }
+            else if(jogo.timer.start <= 160) {
+                fill(255, 220, 0);    // Amarelo (2)
+                text("2", width / 2, height / 2);
+                }
+            else if(jogo.timer.start <= 240) {
+                fill(80, 255, 80);    // Verde (1)
+                text("1", width / 2, height / 2);
+                }
+            else if(jogo.timer.start <= 300) {
+                fill(0, 255, 0)
+                text("JÁ!", width / 2, height / 2);
+                }
+            jogo.timer.start++
+
+            textSize(50 * jogo.escala)
+            fill(0,0,0)
+            text("TS:" + jogo.timer.start, 100, 200);
+        }
+        else if (jogo.timer.start == 301) jogo.pause = false
 
 
         text("Escala:" + jogo.escala, 2000, 50);

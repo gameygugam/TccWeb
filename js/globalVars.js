@@ -25,7 +25,7 @@ const jogo = {
 
     //FASES ----------------------------------------------------------------------------------------------------------------->
 
-    fase: null,
+    fase: "menu",
     walls: [],
     pontos: 0,
 
@@ -54,7 +54,8 @@ const jogo = {
 
     timer: { 
         segundos: 0, 
-        ticks: 0 
+        ticks: 0,
+        start: 0,
     },
 
     timerGlobal: 0,
