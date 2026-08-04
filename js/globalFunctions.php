@@ -150,6 +150,18 @@ function MudarFase(fase) {
     });
 }
 
+function SalvarPontos(fase) {
+    if(fase === "fase1") {
+        fetch("../includes/salvar_pontos.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "fase=" + fase + "&pontos=" + fase1.pontos
+        });
+    }
+}
+
 function Interagir(item) {
     fill(255, 0, 0);
     textFont(texto.fonte);
@@ -162,9 +174,11 @@ function Interagir(item) {
 //DIALOGOS -------------------------------------------------------------------------------------------------------------->
 
 function Dialogo(dialogo) {
+    background(0, 0, 0, 125);
+
     switch (dialogo) 
     {
-        case "tutorial":
+        case "menu":
             texto.ativo = true;
             push();
             scale(jogo.escala);
@@ -571,9 +585,9 @@ function DespejarLixo(player_funcao, lixeiras_funcao) {
         lixeiras_funcao.forEach(lixeira => {
             if(Colidiu(player_funcao, lixeira) && fase1.pegouLixo){
                 if (fase1.lastItemPego.material === lixeira.descarte)
-                    jogo.pontos += 10;
+                    fase1.pontos += 10;
                 else
-                    jogo.pontos -= 5;
+                    fase1.pontos -= 5;
                 fase1.lastItemPego = Lixo.novo(null, null, 0, 0, 0, 0, null, 0);
                 fase1.pegouLixo = false;
             }
