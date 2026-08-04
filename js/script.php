@@ -464,18 +464,22 @@ function PreloadFase1()
     fase1.lixosImgCarregados.pixel.organico = [
         loadImage("../assets/imagens/fase1/lixos/pixel/bananaPixel.png"),
         loadImage("../assets/imagens/fase1/lixos/pixel/bananaPodrePixel.png"),
+        loadImage("../assets/imagens/fase1/lixos/pixel/macaComidaPixel.png"),
     ]
 
     fase1.lixosImgCarregados.pixel.plastico = [
         loadImage("../assets/imagens/fase1/lixos/pixel/garrafaDePlasticoPixel.png"),
+        loadImage("../assets/imagens/fase1/lixos/pixel/copoDePlasticoPixel.png"),
     ]
 
     fase1.lixosImgCarregados.pixel.metal = [
         loadImage("../assets/imagens/fase1/lixos/pixel/placaDeMetalPixel.png"),
+        loadImage("../assets/imagens/fase1/lixos/pixel/latinhaPixel.png"),
     ]
 
     fase1.lixosImgCarregados.pixel.naoReciclavel = [
         loadImage("../assets/imagens/fase1/lixos/pixel/pilhaPixel.png"),
+        loadImage("../assets/imagens/fase1/lixos/pixel/chicleteMascadoPixel.png"),
     ]
     
     // Carrega as ../imagens dos lixos reais
@@ -672,6 +676,9 @@ function DrawFase1()
 
         ////Desenha personagem
         image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
+
+        // filter(BLUR, 2);
+        // filter(GRAY, 1);
 
         // //// Cria o relógio
         // image(fase1.relogio, windowWidth/64, windowHeight/48, windowWidth/16, windowHeight/8);

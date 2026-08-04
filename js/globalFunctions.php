@@ -455,7 +455,11 @@ function keyPressed()
         DespejarLixo(jogo.player, fase1.lixeiras);
     }
 
+    //TECLAS PARA REMOVER QUANDO ACABAR O JOGO!!! (ATALHO PROS PROGRAMMER)
+
     if (key === "l" || key === "L") CriarLixo()
+
+    if (key === "t" || key === "T") tutorial.ativo = false
 
 
     
@@ -607,14 +611,16 @@ function CriarLixo() {
     let lixo_type = RandomizarLixoType()
     let lixo_nome = RandomizarLixoNomePorTipo(lixo_type);
     let lixo_img = CarregarLixoImgPorNome(lixo_nome);
-    let lixo_width = 25;
-    let lixo_height = 25;
+    let lixo_width = 30;
+    let lixo_height = 30;
     if (lixo_nome === "garrafaDePlastico" || lixo_nome === "pilha") {
-        lixo_width = 15;
-        lixo_height = 25;
+        lixo_width = 20;
+        lixo_height = 30;
     }
-    
-    
+    if (lixo_nome === "caixaDePapelao") {
+        lixo_width = 35;
+        lixo_height = 35;
+    }
 
     // if (lixo_type === "papel") {
     //     lixo_nome = "bolinhaDePapel"
@@ -665,8 +671,9 @@ function CriarLixo() {
 
 
     let lixo_angulo = random(TWO_PI)
-    lixo_width = random((lixo_width - 5), (lixo_width + 5))
-    lixo_height = random((lixo_height - 5), (lixo_height + 5))
+    let variacao = floor(random(-3, 3))
+    lixo_width += variacao
+    lixo_height += variacao
 
     // let lixo = fase1.lixos.push({ x: lixo_x, y: lixo_y, width: 25, height: 25, img: lixo_img, imgCarregada: lixo_img_carregada, type: lixo_type, class: "lixo", angulo: lixo_angulo });
     
@@ -721,21 +728,28 @@ function RandomizarLixoNomePorTipo(lixo_type){
     }
 
     else if (lixo_type === "organico") {
-        let rnd = floor(random(2))
+        let rnd = floor(random(3))
         if (rnd === 0) lixo_nome = "banana"
         else if (rnd === 1) lixo_nome = "bananaPodre"
+        else if (rnd === 2) lixo_nome = "macaComida"
     }
 
     else if (lixo_type === "plastico") {
-        lixo_nome = "garrafaDePlastico"
+        let rnd = floor(random(2))
+        if (rnd === 0) lixo_nome = "garrafaDePlastico"
+        else if (rnd === 1) lixo_nome = "copoDePlastico"
     }
 
     else if (lixo_type === "metal") {
-        lixo_nome = "placaDeMetal"
+        let rnd = floor(random(2))
+        if (rnd === 0) lixo_nome = "placaDeMetal"
+        else if (rnd === 1) lixo_nome = "latinha"
     }
 
     else if (lixo_type === "nao_reciclavel") {
-        lixo_nome = "pilha"
+       let rnd = floor(random(2))
+        if (rnd === 0) lixo_nome = "pilha"
+        else if (rnd === 1) lixo_nome = "chicleteMascado"
     }
 
     if (lixo_nome === null) throw new Error("variável LIXO_NOME é NULL na função 'RandomizarLixoNomePorTipo'")
@@ -761,14 +775,26 @@ function CarregarLixoImgPorNome(lixo_nome){
     else if (lixo_nome === "bananaPodre"){
         lixo_img = fase1.lixosImgCarregados.pixel.organico[1]
     }
+    else if (lixo_nome === "macaComida"){
+        lixo_img = fase1.lixosImgCarregados.pixel.organico[2]
+    }
     else if (lixo_nome === "garrafaDePlastico"){
         lixo_img = fase1.lixosImgCarregados.pixel.plastico[0]
+    }
+    else if (lixo_nome === "copoDePlastico"){
+        lixo_img = fase1.lixosImgCarregados.pixel.plastico[1]
     }
     else if (lixo_nome === "placaDeMetal"){
         lixo_img = fase1.lixosImgCarregados.pixel.metal[0]
     }
+    else if (lixo_nome === "latinha"){
+        lixo_img = fase1.lixosImgCarregados.pixel.metal[1]
+    }
     else if (lixo_nome === "pilha"){
         lixo_img = fase1.lixosImgCarregados.pixel.naoReciclavel[0]
+    }
+    else if (lixo_nome === "chicleteMascado"){
+        lixo_img = fase1.lixosImgCarregados.pixel.naoReciclavel[1]
     }
 
     if (lixo_img === null) throw new Error("variável LIXO_IMG é NULL na função 'CarregarLixoImgPorNome'")
