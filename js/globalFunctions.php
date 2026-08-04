@@ -447,12 +447,14 @@ function keyPressed()
         tutorial.ativo = true;
     };
 
-    if (jogo.fase === "fase1" && !fase1.pegouLixo && !jogo.pause && (key === "e" || key === "E")) {
+    if (jogo.fase === "fase1" && !fase1.pegouLixo && !jogo.pause && (key === "e" || key === "E") && jogo.cooldownInteragir <= 0) {
         PegarLixo(jogo.player, fase1.lixos);
+        jogo.cooldownInteragir = 15
     }
 
-    if (jogo.fase === "fase1" && fase1.pegouLixo && !jogo.pause && (key === "e" || key === "E")) {
+    if (jogo.fase === "fase1" && fase1.pegouLixo && !jogo.pause && (key === "e" || key === "E") && jogo.cooldownInteragir <= 0) {
         DespejarLixo(jogo.player, fase1.lixeiras);
+        jogo.cooldownInteragir = 15
     }
 
     //TECLAS PARA REMOVER QUANDO ACABAR O JOGO!!! (ATALHO PROS PROGRAMMER)

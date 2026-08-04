@@ -61,6 +61,8 @@ function setup() {
     tutorial.ativo = false;
     jogo.contagemIniciar = 4;
 
+    jogo.cooldownInteragir = 0;
+
     texto.caixaX = 0;
     texto.caixaY = (windowHeight/2 + 75);
     texto.caixaWidth = (windowWidth/2 + 375);
@@ -104,6 +106,8 @@ function draw() {
 
     text("TG:" + jogo.timerGlobal, 50, windowHeight - 100);
     jogo.timerGlobal++
+
+    if(jogo.cooldownInteragir > 0) jogo.cooldownInteragir--
 }
 
 function mousePressed() {
