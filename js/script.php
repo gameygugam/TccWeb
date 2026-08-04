@@ -134,8 +134,9 @@ function mousePressed() {
 
     else if(MouseNoBotao(mouse, pause.botaoSair)) {
         jogo.sairDoJogo = true;
-        setup()
-        MenuPause()
+        // setup()
+        // MenuPause()
+        window.location.href = "logout.php";
     }
 }
 
