@@ -12,6 +12,7 @@ const jogo = {
     playerImg: null,
     playerImgEsquerda: null,
     playerImgDireita: null,
+    cooldownInteragir: 0,
 
     //<-----------------------------------------------------------------------------------------------------------------------
 
