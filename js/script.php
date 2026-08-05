@@ -200,8 +200,8 @@ function DrawMenu()
         let portaEsquerda = {x: jogo.xInicialMapa, y: jogo.yFinalMapa/2 - jogo.yFinalMapa/15, width: 35 * jogo.escala, height: 200 * jogo.escala};
 
         fill(0, 0, 0);
-        rect(jogo.xFinalMapa / 2 - 100, jogo.yInicialMapa, 200, 35);
-        let portaMeio = {x: jogo.xFinalMapa / 2 - 100, y: jogo.yInicialMapa - jogo.yFinalMapa/15, width: 200, height: 35};
+        rect(jogo.xFinalMapa/2.02, jogo.yInicialMapa, 200, 35);
+        let portaMeio = {x: jogo.xFinalMapa/2, y: jogo.yInicialMapa - jogo.yFinalMapa/15, width: 200, height: 35};
 
         fill(0, 0, 0);
         rect(jogo.xFinalMapa - 35, jogo.yFinalMapa/2 - jogo.yFinalMapa/15, 35*jogo.escala, 200*jogo.escala);
@@ -212,7 +212,7 @@ function DrawMenu()
         {
             MudarFase("fase1");
             jogo.player.x = windowWidth / 2 - 50;
-            jogo.player.y = windowHeight - 120;
+            jogo.player.y = jogo.yFinalMapa - jogo.player.height;
         }
         else if (Colidiu(jogo.player, portaMeio))
         {
@@ -400,8 +400,8 @@ function DrawPreFase1()
     // imageMode(CORNER)
 
     fill(0, 0, 0);
-    rect(jogo.xInicialMapa, jogo.yFinalMapa/2 - jogo.yFinalMapa/10, 35 * jogo.escala, 200 * jogo.escala);
-    let portaEsquerda = {x: jogo.xInicialMapa, y: jogo.yFinalMapa/2 - jogo.yFinalMapa/10, width: 35 * jogo.escala, height: 200 * jogo.escala};
+    rect(jogo.xInicialMapa, jogo.yFinalMapa/2 - jogo.yFinalMapa/15, 35 * jogo.escala, 200 * jogo.escala);
+    let portaEsquerda = {x: jogo.xInicialMapa, y: jogo.yFinalMapa/2 - jogo.yFinalMapa/15, width: 35 * jogo.escala, height: 200 * jogo.escala};
 
     if (Colidiu(jogo.player, portaEsquerda))
     {
@@ -550,12 +550,12 @@ function SetupFase1()
     fase1.lastItemPego = Lixo.novo(null, null, 0, 0, 0, 0, null, 0);
 
     fase1.lixeiras = [
-        { x: jogo.xFinalMapa - 100, y: windowHeight / 2 + 125 - 25, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
-        { x: jogo.xFinalMapa - 100, y: windowHeight / 2 + 275 - 25, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
-        { x: jogo.xFinalMapa - 100, y: windowHeight / 2 - 125 - 75, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
-        { x: jogo.xFinalMapa - 100, y: windowHeight / 2 - 275 - 75, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
-        { x: jogo.xFinalMapa - 100, y: windowHeight / 2 - 50, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" },
-        { x: jogo.xFinalMapa - 300, y: windowHeight / 2 - 50, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraCinza.png", descarte: "nao_reciclavel", class: "lixeira" }
+        { x: jogo.xInicialMapa*2, y: jogo.yInicialMapa*1.5, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
+        { x: jogo.xFinalMapa/1.9, y: jogo.yInicialMapa*1.5, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
+        { x: jogo.xFinalMapa*0.85, y: jogo.yInicialMapa*1.5, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
+        { x: jogo.xInicialMapa*2, y: jogo.yFinalMapa/1.15, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
+        { x: jogo.xFinalMapa/1.9, y: jogo.yFinalMapa/1.15, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" },
+        { x: jogo.xFinalMapa*0.85, y: jogo.yFinalMapa/1.15, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraCinza.png", descarte: "nao_reciclavel", class: "lixeira" }
     ];
     fase1.obstaculos = [
         CriarObstaculo(),
@@ -598,7 +598,7 @@ function DrawFase1()
 
         ////repõe a quantidade de lixo no mapa
         if(fase1.lixos.length < 10) fase1.lixos.push(CriarLixo());
-        if(fase1.obstaculos.length < 3) CriarObstaculo();
+        if(fase1.obstaculos.length < 3) fase1.obstaculos.push(CriarObstaculo());
 
         //// Armazena posição antiga
         jogo.player.oldX = jogo.player.x;

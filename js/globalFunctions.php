@@ -174,13 +174,12 @@ function Interagir(item) {
 //DIALOGOS -------------------------------------------------------------------------------------------------------------->
 
 function Dialogo(dialogo) {
-    background(0, 0, 0, 125);
-
     switch (dialogo) 
     {
         case "menu":
             texto.ativo = true;
             push();
+            background(0, 0, 0, 125);
             scale(jogo.escala);
             tint(255, tutorial.alpha);
             image(tutorial.caixaDialogo, texto.caixaX, texto.caixaY, texto.caixaWidth, texto.caixaHeight);
@@ -211,6 +210,10 @@ function Dialogo(dialogo) {
                     break;
                 
                 case 4:
+                    texto.conteudo = "(Para correr segure a tecla Shift enquanto se movimenta).";
+                    break;
+
+                case 5:
                     texto.conteudo = "(A nossa primeira tarefa está no caminho da direita. Vamos la!).";
                     break;
 
@@ -257,6 +260,7 @@ function Dialogo(dialogo) {
 
                 case 6:
                     texto.ativo = true;
+                    background(0, 0, 0, 125);
                     //// Cria o mapa
                     image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
 
@@ -432,11 +436,6 @@ function keyPressed()
         texto.letras = 0;
         texto.incremento++;
     }
-    if(jogo.fase === "menu" && keyCode === ENTER) jogo.fase = "preFase1";
-
-    if(jogo.fase === "fase1" && keyCode === ESCAPE) // jogo.fase = "pause";
-    
-    if (jogo.fase === "pause" && keyCode === ESCAPE) jogo.fase = "fase1";
 
     if (jogo.fase === "fase2") keyPressed2(fase2);
 
@@ -500,6 +499,11 @@ function keyPressed()
 
     if (key === "t" || key === "T") tutorial.ativo = false
 
+    if(jogo.fase === "menu" && keyCode === ENTER) jogo.fase = "preFase1";
+
+    if(jogo.fase === "fase1" && keyCode === ESCAPE) // jogo.fase = "pause";
+    
+    if (jogo.fase === "pause" && keyCode === ESCAPE) jogo.fase = "fase1";
 
     
 }
@@ -622,7 +626,7 @@ function MostrarLixoReal() {
     }
 }
 
-function AleatoriezarPosicao(objeto) {
+function AleatorizarPosicao(objeto) {
     let dif_x = ((windowWidth - width) / 2);
     let dif_y = ((windowHeight - height) / 2);
 
@@ -630,13 +634,13 @@ function AleatoriezarPosicao(objeto) {
     let objeto_y = random(dif_y + 50, (dif_y + height) - 50);
 }
 
-function AleatoriezarPosicaoLixo(lixo) {
+function AleatorizarPosicaoLixo(lixo) {
     let pode_sair = false
     while(!pode_sair){
         pode_sair = true
 
-        lixo.x = random(jogo.xInicialMapa + 10 * jogo.escala, jogo.xFinalMapa - 10 * jogo.escala);
-        lixo.y = random(jogo.yInicialMapa + 10 * jogo.escala, jogo.yFinalMapa - 10 * jogo.escala);
+        lixo.x = random(jogo.xInicialMapa*1.3 * jogo.escala, jogo.xFinalMapa*1.05 * jogo.escala);
+        lixo.y = random(jogo.yInicialMapa*1.8 * jogo.escala, jogo.yFinalMapa * jogo.escala);
 
         fase1.obstaculos.forEach(obstaculo => {
             console.log("TEM OBSTACULO")
@@ -652,7 +656,38 @@ function AleatoriezarPosicaoLixo(lixo) {
         })
         console.log("a")
     }
-    return lixo
+    return lixo;
+}
+
+function AleatorizarPosicaoObstaculo(obstaculo) {
+    let pode_sair = false
+    while(!pode_sair){
+        pode_sair = true
+
+        obstaculo.x = random(jogo.xInicialMapa*1.8 * jogo.escala, jogo.xFinalMapa*0.995 * jogo.escala);
+        obstaculo.y = random(jogo.yInicialMapa*3.5 * jogo.escala, jogo.yFinalMapa*0.9 * jogo.escala);
+
+        if(Colidiu(obstaculo, jogo.player)) {
+            pode_sair = false;
+        }
+        
+        fase1.obstaculos.forEach(obstaculo2 => {
+            if (Colidiu(obstaculo, obstaculo2) || 
+            (obstaculo.x <= obstaculo2.x + obstaculo2.width && obstaculo.x + obstaculo.width >= obstaculo2.x) && 
+            (obstaculo.y <= obstaculo2.y + obstaculo2.height && obstaculo.y + obstaculo.height >= obstaculo2.y)) 
+            {
+                pode_sair = false;
+            }
+        })
+
+        fase1.lixeiras.forEach(lixeira => {
+            if (Colidiu(obstaculo, lixeira)) {
+                pode_sair = false;
+            }
+        })
+        console.log("a");
+    }
+    return obstaculo
 }
 
 function CriarLixo() {
@@ -766,7 +801,7 @@ function CriarLixo() {
     
     let lixo = Lixo.novo(null, lixo_nome, lixo_img, lixo_width * jogo.escala, lixo_height * jogo.escala, lixo_x, lixo_y, lixo_type, lixo_angulo);
     
-    lixo = AleatoriezarPosicaoLixo(lixo)
+    lixo = AleatorizarPosicaoLixo(lixo)
 
     return lixo
     
@@ -901,7 +936,7 @@ function CriarObstaculo() {
     let dif_x = ((windowWidth - width) / 2);
     let dif_y = ((windowHeight - height) / 2);
 
-    let obstaculo_x = random(jogo.xInicialMapa + 10 * jogo.escala, jogo.xFinalMapa - 250 * jogo.escala);
+    let obstaculo_x = random(jogo.xInicialMapa*1.2 * jogo.escala, jogo.xFinalMapa/5 * jogo.escala);
     let obstaculo_y = random(jogo.yInicialMapa + 40 * jogo.escala, jogo.yFinalMapa - 50 * jogo.escala);
 
     let obstaculo_img = null;
@@ -912,6 +947,9 @@ function CriarObstaculo() {
     obstaculo_img_carregada = fase1.obstaculos_img[0]
 
     let obstaculo = Obstaculo.novo("brinquedo", "caminho", obstaculo_img_carregada, 100 * jogo.escala, 100 * jogo.escala, obstaculo_x, obstaculo_y);
+
+    AleatorizarPosicaoObstaculo(obstaculo);
+
     return obstaculo
     // fase1.obstaculos.push(obstaculo);
 }
