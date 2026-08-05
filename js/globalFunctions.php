@@ -137,6 +137,12 @@ function AnimacaoStandBy(){
     // }
 }
 
+function TocarSom(sons) {
+
+    let rnd = floor(random(sons.length))
+    sons[rnd].play()
+}
+
 function MudarFase(fase) {
     jogo.fase = fase;
     ReiniciarDialogo(tutorial);
@@ -430,11 +436,12 @@ function TimerTick(fase_funcao){
     }
     
 
-    fill(0, 0, 0);
-    textSize(50 * jogo.escala);
+    // fill(0, 0, 0);
+    // textSize(50 * jogo.escala);
     // text(jogo.timer.segundos, 63 * jogo.escala, 105 * jogo.escala);
     // image(fase1.relogio, windowWidth/64, windowHeight/48, windowWidth/16, windowHeight/8);
-    text(jogo.timer.ticks, 300, 100);
+    
+    // text(jogo.timer.ticks, 300, 100);
 
 }
 
