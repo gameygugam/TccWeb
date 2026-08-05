@@ -320,15 +320,11 @@ FOLHAS
 ==========================*/
 
 .folha{
-
     position:absolute;
-
     color:#9be79c;
-
+    top: -50px;
     font-size:24px;
-
     opacity:.75;
-
     animation:cair 8s linear infinite;
 }
 
@@ -336,6 +332,10 @@ FOLHAS
 .f2{left:27%;animation-delay:2s;}
 .f3{left:70%;animation-delay:5s;}
 .f4{left:90%;animation-delay:1s;}
+.f5{left:15%;animation-delay:11s;}
+.f6{left:67%;animation-delay:4s;}
+.f7{left:89%;animation-delay:7s;}
+.f8{left:53%;animation-delay:3s;}
 
 /*==========================
 ANIMAÇÕES
@@ -350,4 +350,108 @@ ANIMAÇÕES
     to{
         transform:translateY(110vh) rotate(360deg);
     }
+}
+
+/*==================================================
+    SCOREBOARD
+==================================================*/
+
+.scoreboard{
+
+    flex-shrink:0;
+
+    width:320px;
+
+    position:relative;
+
+    padding:30px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #b9864a,
+            #a66d37,
+            #8f5a2d,
+            #693d18
+        );
+
+    border:8px solid #4a2b12;
+
+    border-radius:10px;
+
+    box-shadow:
+        inset 0 0 0 5px #c99758,
+        inset 0 0 0 10px #7b4a22,
+        0 15px 35px rgba(0,0,0,.45);
+        
+}
+
+.scoreboard h2{
+
+    text-align:center;
+    position: relative;
+    color:#fff6c7;
+    font-size:22px;
+    margin-bottom:25px;
+    text-shadow:3px 3px #5c3117;
+
+}
+
+.linha{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:12px;
+
+    margin-bottom:10px;
+
+    background:rgba(255,255,255,.08);
+
+    border:3px solid #6a4021;
+
+    color:#fff6c7;
+
+    font-size:10px;
+
+}
+
+.primeiro{
+
+    background:#d7b052;
+
+    color:#3a220d;
+
+}
+
+.score-footer{
+
+    margin-top:20px;
+
+    padding-top:15px;
+
+    border-top:3px dashed #dba76d;
+
+    text-align:center;
+
+    color:#ffe9ab;
+
+    font-size:9px;
+
+}
+
+.tela-container{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:45px;
+
+    z-index:20;
 }

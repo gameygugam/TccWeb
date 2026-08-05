@@ -66,10 +66,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Login — Castor's game</title>
-    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="stylesheet" href="../assets/style.css"/>
 </head>
 <body class="login-body">
 
@@ -77,91 +77,143 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="folha f2">🍃</div>
 <div class="folha f3">🍃</div>
 <div class="folha f4">🍃</div>
+<div class="folha f5">🍃</div>
+<div class="folha f6">🍃</div>
+<div class="folha f7">🍃</div>
+<div class="folha f8">🍃</div>
 
-<div class="login-card">
-    <div class="prego prego1"></div>
-    <div class="prego prego2"></div>
-    <div class="prego prego3"></div>
-    <div class="prego prego4"></div>
 
-<h1 class="titulo">
-    CASTOR'S GAME
-</h1>
 
-<p class="subtitulo">
-    Uma aventura dentuça.
-</p>
 
-<?php if ($erro !== ''): ?>
-    <div class="alert"><?= htmlspecialchars($erro) ?></div>
-<?php endif; ?>
 
-<form method="POST" action="login.php" class="login-form">
-   <div class="campo">
+<div class="tela-container">
+    <div class="login-card">
+    
+        <div class="prego prego1"></div>
+        <div class="prego prego2"></div>
+        <div class="prego prego3"></div>
+        <div class="prego prego4"></div>
 
-    <span class="iconepixel"></span>
+    <h1 class="titulo">
+        CASTOR'S GAME
+    </h1>
 
-    <div>
+    <p class="subtitulo">
+        Uma aventura dentuça.
+    </p>
 
-        <label class="placa-label" for="nomeResponsavel">Primeiro Nome Responsável</label>
+    <?php if ($erro !== ''): ?>
+        <div class="alert"><?= htmlspecialchars($erro) ?></div>
+    <?php endif; ?>
 
-        <input
-            type="text"
-            id="nomeResponsavel"
-            name="nomeResponsavel"
-            placeholder="Ex: Fulano"
-            value="<?= htmlspecialchars($nomeResponsavel) ?>"
-            required
-        >
-
-    </div>
-
-</div>
-
+    <form method="POST" action="login.php" class="login-form">
     <div class="campo">
 
-    <span class="iconepixel"></span>
+        <span class="iconepixel"></span>
 
-    <div>
+        <div>
 
-        <label class="placa-label" for="nome">Primeiro Nome</label>
+            <label class="placa-label" for="nomeResponsavel">Primeiro Nome Responsável</label>
 
-        <input
-            type="text"
-            id="nome"
-            name="nome"
-            placeholder="Ex: Ciclano"
-            value="<?= htmlspecialchars($nome) ?>"
-            required
-        >
+            <input
+                type="text"
+                id="nomeResponsavel"
+                name="nomeResponsavel"
+                placeholder="Ex: Fulano"
+                value="<?= htmlspecialchars($nomeResponsavel) ?>"
+                required
+            >
 
-    </div>
-
-</div>
-
-    <div class="campo">
-
-    <span class="iconepixel"></span>
-
-    <div>
-
-        <label class="placa-label" for="idade">Idade</label>
-
-        <input
-            type="number"
-            id="idade"
-            name="idade"
-            placeholder="Ex: 12"
-            value="<?= htmlspecialchars($idade) ?>"
-            required
-        >
-
-    </div>
+        </div>
 
 </div>
 
-    <button type="submit" class="botao">Entrar/Criar</button>
-    </form>
+        <div class="campo">
+
+        <span class="iconepixel"></span>
+
+        <div>
+
+            <label class="placa-label" for="nome">Primeiro Nome</label>
+
+            <input
+                type="text"
+                id="nome"
+                name="nome"
+                placeholder="Ex: Ciclano"
+                value="<?= htmlspecialchars($nome) ?>"
+                required
+            >
+
+        </div>
+
+    </div>
+
+        <div class="campo">
+
+        <span class="iconepixel"></span>
+
+        <div>
+
+            <label class="placa-label" for="idade">Idade</label>
+
+            <input
+                type="number"
+                id="idade"
+                name="idade"
+                placeholder="Ex: 12"
+                value="<?= htmlspecialchars($idade) ?>"
+                required
+            >
+
+        </div>
+
+    </div>
+
+        <button type="submit" class="botao">Entrar/Criar</button>
+        </form>
+
+    </div>
+
+    <div class="scoreboard">
+
+        <div class="prego prego1"></div>
+        <div class="prego prego2"></div>
+        <div class="prego prego3"></div>
+        <div class="prego prego4"></div>
+
+        <h2>🏆 Ranking</h2>
+
+        <div class="linha primeiro">
+            <span>🥇 João</span>
+            <span>8500</span>
+        </div>
+
+        <div class="linha">
+            <span>🥈 Maria</span>
+            <span>7900</span>
+        </div>
+
+        <div class="linha">
+            <span>🥉 Pedro</span>
+            <span>7200</span>
+        </div>
+
+        <div class="linha">
+            <span>4. Lucas</span>
+            <span>6100</span>
+        </div>
+
+        <div class="linha">
+            <span>5. Ana</span>
+            <span>5300</span>
+        </div>
+
+        <div class="score-footer">
+            Melhor Castor Hoje ⭐
+        </div>
+
+    </div>
 
 </div>
 
