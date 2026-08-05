@@ -261,7 +261,6 @@ function Dialogo(dialogo) {
 
                 case 6:
                     texto.ativo = true;
-                    background(0, 0, 0, 125);
                     //// Cria o mapa
                     image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
 
@@ -272,6 +271,7 @@ function Dialogo(dialogo) {
 
                     push();
                     scale(jogo.escala);
+                    background(0, 0, 0, 125);
                     tint(255, tutorial.alpha);
                     image(tutorial.caixaDialogo, texto.caixaX, texto.caixaY, texto.caixaWidth, texto.caixaHeight);
 
@@ -373,7 +373,7 @@ function TimerTick(fase_funcao){
     if(!jogo.pause){
         if (fase_funcao === "fase1"){
             jogo.timer.ticks++;
-            if (jogo.timer.ticks % 10 === 0) jogo.timer.segundos--;
+            if (jogo.timer.ticks % 80 === 0) jogo.timer.segundos--;
             if (jogo.timer.segundos <= 0) {
                 MudarFase("preFase1");
                 RegistrarPartida("fase1");
@@ -641,8 +641,8 @@ function AleatorizarPosicaoLixo(lixo) {
     while(!pode_sair){
         pode_sair = true
 
-        lixo.x = random(jogo.xInicialMapa*1.3 * jogo.escala, jogo.xFinalMapa*1.05 * jogo.escala);
-        lixo.y = random(jogo.yInicialMapa*1.8 * jogo.escala, jogo.yFinalMapa * jogo.escala);
+        lixo.x = random(jogo.xInicialMapa*1.3, jogo.xFinalMapa*0.95);
+        lixo.y = random(jogo.yInicialMapa*1.8, jogo.yFinalMapa*0.95);
 
         fase1.obstaculos.forEach(obstaculo => {
             console.log("TEM OBSTACULO")
@@ -666,8 +666,8 @@ function AleatorizarPosicaoObstaculo(obstaculo) {
     while(!pode_sair){
         pode_sair = true
 
-        obstaculo.x = random(jogo.xInicialMapa*1.8 * jogo.escala, jogo.xFinalMapa*0.995 * jogo.escala);
-        obstaculo.y = random(jogo.yInicialMapa*3.5 * jogo.escala, jogo.yFinalMapa*0.9 * jogo.escala);
+        obstaculo.x = random(jogo.xInicialMapa*1.8, jogo.xFinalMapa*0.9);
+        obstaculo.y = random(jogo.yInicialMapa*3.5, jogo.yFinalMapa*0.8);
 
         if(Colidiu(obstaculo, jogo.player)) {
             pode_sair = false;
@@ -675,8 +675,8 @@ function AleatorizarPosicaoObstaculo(obstaculo) {
         
         fase1.obstaculos.forEach(obstaculo2 => {
             if (Colidiu(obstaculo, obstaculo2) || 
-            (obstaculo.x <= obstaculo2.x + obstaculo2.width && obstaculo.x + obstaculo.width >= obstaculo2.x) && 
-            (obstaculo.y <= obstaculo2.y + obstaculo2.height && obstaculo.y + obstaculo.height >= obstaculo2.y)) 
+            (obstaculo.x <= obstaculo2.x + obstaculo2.width*2 && obstaculo.x + obstaculo.width*2 >= obstaculo2.x) && 
+            (obstaculo.y <= obstaculo2.y + obstaculo2.height*2 && obstaculo.y + obstaculo.height*2 >= obstaculo2.y)) 
             {
                 pode_sair = false;
             }
@@ -938,8 +938,8 @@ function CriarObstaculo() {
     let dif_x = ((windowWidth - width) / 2);
     let dif_y = ((windowHeight - height) / 2);
 
-    let obstaculo_x = random(jogo.xInicialMapa*1.2 * jogo.escala, jogo.xFinalMapa/5 * jogo.escala);
-    let obstaculo_y = random(jogo.yInicialMapa + 40 * jogo.escala, jogo.yFinalMapa - 50 * jogo.escala);
+    let obstaculo_x = random(jogo.xInicialMapa*1.2, jogo.xFinalMapa/5);
+    let obstaculo_y = random(jogo.yInicialMapa + 40, jogo.yFinalMapa - 50);
 
     let obstaculo_img = null;
     let obstaculo_img_carregada = null;

@@ -68,9 +68,9 @@ function setup() {
     jogo.cooldownInteragir = 0;
 
     texto.caixaX = 0;
-    texto.caixaY = (windowHeight/2 + 75);
-    texto.caixaWidth = (windowWidth/2 + 375);
-    texto.caixaHeight = (windowHeight/2 - 150);
+    texto.caixaY = 550;
+    texto.caixaWidth = 1300;
+    texto.caixaHeight = 350;
 
     SetupMenu();
     SetupPreFase1();
