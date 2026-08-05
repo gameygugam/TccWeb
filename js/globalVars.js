@@ -145,6 +145,9 @@ const fase1 = {
     relogio: null,
     is_fase_carregada: false,
     pontos: 0,
+
+    placa: null,
+    placaImg: null,
 };
 
 const fase2 = {

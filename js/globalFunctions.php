@@ -163,35 +163,45 @@ function RegistrarPartida(fase) {
     }
 }
 
-function Interagir(item) {
+function Interagir(item, itemString) {
     fill(255, 0, 0);
     textFont(texto.fonte);
-    textSize(16 * jogo.escala);
-    text("Pressione 'E'", item.x - 10, item.y - 10);
+    if(itemString === "placa") {
+        textSize(64 * jogo.escala);
+        text("Pressione 'E'", jogo.xFinalMapa/2-100 * jogo.escala, jogo.yFinalMapa-64 * jogo.escala);
+    }
+    else {
+        textSize(16 * jogo.escala);
+        text("Pressione 'E'", item.x - 10, item.y - 10);
+    }
 }
 
 //<-----------------------------------------------------------------------------------------------------------------------
 
 //DIALOGOS -------------------------------------------------------------------------------------------------------------->
 
+function CaixaDialogo() {
+    push();
+    background(0, 0, 0, 125);
+    scale(jogo.escala);
+    tint(255, tutorial.alpha);
+    image(tutorial.caixaDialogo, texto.caixaX, texto.caixaY, texto.caixaWidth, texto.caixaHeight);
+
+    noTint();
+    if (tutorial.alpha < 255) {
+        tutorial.alpha += 3;
+    }
+    textFont(texto.fonte);
+    textSize(32);
+    text("'E' para avançar", texto.caixaX + texto.caixaWidth*0.79, texto.caixaY + texto.caixaHeight*0.9);
+}
+
 function Dialogo(dialogo) {
     switch (dialogo) 
     {
         case "menu":
             texto.ativo = true;
-            push();
-            background(0, 0, 0, 125);
-            scale(jogo.escala);
-            tint(255, tutorial.alpha);
-            image(tutorial.caixaDialogo, texto.caixaX, texto.caixaY, texto.caixaWidth, texto.caixaHeight);
-
-            noTint();
-            if (tutorial.alpha < 255) {
-                tutorial.alpha += 3;
-            }
-            textFont(texto.fonte);
-            textSize(32);
-            text("'E' para avançar", texto.caixaX + texto.caixaWidth*0.79, texto.caixaY + texto.caixaHeight*0.9);
+            CaixaDialogo();
 
             switch(texto.incremento) {
                 case 0:
@@ -226,6 +236,27 @@ function Dialogo(dialogo) {
             pop();
             break;
 
+        case "preFase1":
+            texto.ativo = true;
+            CaixaDialogo();
+
+            switch(texto.incremento) {
+                case 0:
+                    texto.conteudo = "Nhac-Nhac, Nhac-Nhac (Para começar nossa tarefa basta chegar perto daquela placa e pressionar a tecla 'E').";
+                    break;
+
+                case 1:
+                    texto.conteudo = "(Fazendo isso a tarefa irá iniciar imediatamente).";
+                    break;
+                
+                default:
+                    ReiniciarDialogo(tutorial);
+                    break;
+            }
+            Digitar();
+            pop();
+            break;
+
         case "fase1":
             switch(tutorial.incremento) {
                 case 0:
@@ -236,27 +267,45 @@ function Dialogo(dialogo) {
                     if (tutorial.alpha < 255) {
                         tutorial.alpha += 3;
                     }
+                    textFont(texto.fonte);
+                    textSize(32);
+                    text("'E' para avançar", windowWidth*0.79, windowHeight*0.9);
                     break;
 
                 case 1:
                     tutorial.alpha = 0;
                     image(tutorial.imagensFase1[1], 0, 0, windowWidth, windowHeight);
+                    textFont(texto.fonte);
+                    textSize(32);
+                    text("'E' para avançar", windowWidth*0.79, windowHeight*0.9);
                     break;
                 
                 case 2:
                     image(tutorial.imagensFase1[2], 0, 0, windowWidth, windowHeight);
+                    textFont(texto.fonte);
+                    textSize(32);
+                    text("'E' para avançar", windowWidth*0.79, windowHeight*0.9);
                     break;
                 
                 case 3:
                     image(tutorial.imagensFase1[3], 0, 0, windowWidth, windowHeight);
+                    textFont(texto.fonte);
+                    textSize(32);
+                    text("'E' para avançar", windowWidth*0.79, windowHeight*0.9);
                     break;
                 
                 case 4:
                     image(tutorial.imagensFase1[4], 0, 0, windowWidth, windowHeight);
+                    textFont(texto.fonte);
+                    textSize(32);
+                    text("'E' para avançar", windowWidth*0.79, windowHeight*0.9);
                     break;
 
                 case 5:
                     image(tutorial.imagensFase1[5], 0, 0, windowWidth, windowHeight);
+                    textFont(texto.fonte);
+                    textSize(32);
+                    text("'E' para avançar", windowWidth*0.79, windowHeight*0.9);
                     break;
 
                 case 6:
@@ -269,19 +318,7 @@ function Dialogo(dialogo) {
 
                     fase1.lixeiras.forEach((lixeira, i) => { image(fase1.lixeiras_img[i], lixeira.x, lixeira.y, lixeira.width * jogo.escala, lixeira.height * jogo.escala) });
 
-                    push();
-                    scale(jogo.escala);
-                    background(0, 0, 0, 125);
-                    tint(255, tutorial.alpha);
-                    image(tutorial.caixaDialogo, texto.caixaX, texto.caixaY, texto.caixaWidth, texto.caixaHeight);
-
-                    noTint();
-                    if (tutorial.alpha < 255) {
-                        tutorial.alpha += 3;
-                    }
-                    textFont(texto.fonte);
-                    textSize(32);
-                    text("'E' para avançar", texto.caixaX + texto.caixaWidth*0.79, texto.caixaY + texto.caixaHeight*0.9);
+                    CaixaDialogo();
 
                     switch(texto.incremento) {
                         case 0:
@@ -305,7 +342,7 @@ function Dialogo(dialogo) {
                             break;
 
                         case 5:
-                            texto.conteudo = "(Ao acertar a lixeira você ganha 10 pontos, mas se errar perde 5 pontos).";
+                            texto.conteudo = "(Ao acertar o material correto da lixeira você ganha 10 pontos, mas se errar perde 5 pontos).";
                             break;
 
                         case 6:
@@ -450,11 +487,7 @@ function keyPressed()
         MenuPause()
     }
 
-    if (event.code === "Backspace") {
-        jogo.sairDoJogo = true;
-    }
-
-    if (jogo.fase === "preFase1" && Colidiu(jogo.player, fase1.lixeiras[0]) && (key === "e" || key === "E")) {
+    if (jogo.fase === "preFase1" && Colidiu(jogo.player, fase1.placa) && (key === "e" || key === "E")) {
         MudarFase("fase1");
         jogo.player.x = jogo.xFinalMapa / 2;
         jogo.player.y = jogo.yFinalMapa / 2;
@@ -473,6 +506,10 @@ function keyPressed()
     }
 
     //TECLAS PARA REMOVER QUANDO ACABAR O JOGO!!! (ATALHO PROS PROGRAMMER)
+
+    if (event.code === "Backspace") {
+        jogo.sairDoJogo = true;
+    }
 
     if (key === "l" || key === "L") {
         fase1.lixos.push(CriarLixo())

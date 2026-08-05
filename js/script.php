@@ -50,8 +50,8 @@ function setup() {
     jogo.yFinalMapa = windowHeight - windowHeight * 0.07;
 
     jogo.player = { 
-        x: jogo.xFinalMapa / 2, y: jogo.yFinalMapa / 2, width: (windowWidth / 20), height: (windowHeight / 10),
-        oldX: jogo.xFinalMapa / 2, oldY: jogo.yFinalMapa / 2, class: "player", dash_cooldown: 80, dash_duracao: 0 
+        x: jogo.xFinalMapa/2+30*jogo.escala, y: jogo.yFinalMapa/2, width: (windowWidth / 20), height: (windowHeight / 10),
+        oldX: jogo.xFinalMapa/2+30*jogo.escala, oldY: jogo.yFinalMapa/2, class: "player", dash_cooldown: 80, dash_duracao: 0 
     };
 
     jogo.walls = [
@@ -196,16 +196,16 @@ function DrawMenu()
         //     rect(wall.x, wall.y, wall.width, wall.height);
         // });
 
-        fill(0, 0, 0);
-        rect(jogo.xInicialMapa, jogo.yFinalMapa/2 - jogo.yFinalMapa/15, 35*jogo.escala, 200*jogo.escala);
+        // fill(0, 0, 0);
+        // rect(jogo.xInicialMapa, jogo.yFinalMapa/2 - jogo.yFinalMapa/15, 35*jogo.escala, 200*jogo.escala);
         let portaEsquerda = {x: jogo.xInicialMapa, y: jogo.yFinalMapa/2 - jogo.yFinalMapa/15, width: 35 * jogo.escala, height: 200 * jogo.escala};
 
-        fill(0, 0, 0);
-        rect(jogo.xFinalMapa/2.02, jogo.yInicialMapa, 200, 35);
-        let portaMeio = {x: jogo.xFinalMapa/2, y: jogo.yInicialMapa - jogo.yFinalMapa/15, width: 200, height: 35};
+        // fill(0, 0, 0);
+        // rect(jogo.xFinalMapa/2.02, jogo.yInicialMapa, 200*jogo.escala, 35*jogo.escala);
+        let portaMeio = {x: jogo.xFinalMapa/2, y: jogo.yInicialMapa, width: 200*jogo.escala, height: 35*jogo.escala};
 
-        fill(0, 0, 0);
-        rect(jogo.xFinalMapa - 35, jogo.yFinalMapa/2 - jogo.yFinalMapa/15, 35*jogo.escala, 200*jogo.escala);
+        // fill(0, 0, 0);
+        // rect(jogo.xFinalMapa - 35, jogo.yFinalMapa/2 - jogo.yFinalMapa/15, 35*jogo.escala, 200*jogo.escala);
         let portaDireita = {x: jogo.xFinalMapa - 35, y: jogo.yFinalMapa / 2 - jogo.yFinalMapa/15, width: 35*jogo.escala, height: 200*jogo.escala};
 
         // Verifica a colisão com as portas para mudar fase
@@ -223,6 +223,7 @@ function DrawMenu()
         else if (Colidiu(jogo.player, portaDireita)) 
         {
             MudarFase("preFase1");
+            tutorial.ativo = true;
             jogo.player.x = jogo.xInicialMapa + jogo.player.width*0.5;
         }
 
@@ -365,63 +366,75 @@ function PreloadPreFase1()
 {
     // Carrega a imagem do mapa1
     jogo.mapasImg[1] = mapaFase1 = loadImage("../assets/imagens/mapas/mapaFase1.png");
+    // jogo.mapasImg[1] = mapaFase1 = loadImage("../assets/imagens/mapas/mapaPrototipo.png");
     tutorial.imagensFase1[0] = loadImage("../assets/imagens/tutorial/tutorialFase1_1.png");
     tutorial.imagensFase1[1] = loadImage("../assets/imagens/tutorial/tutorialFase1_2.png");
     tutorial.imagensFase1[2] = loadImage("../assets/imagens/tutorial/tutorialFase1_3.png");
     tutorial.imagensFase1[3] = loadImage("../assets/imagens/tutorial/tutorialFase1_4.png");
     tutorial.imagensFase1[4] = loadImage("../assets/imagens/tutorial/tutorialFase1_5.png");
     tutorial.imagensFase1[5] = loadImage("../assets/imagens/tutorial/tutorialFase1_6.png");
+    fase1.placaImg = loadImage("../assets/imagens/fase1/placa.png")
 }
 
 function SetupPreFase1()
 {
-    
+    fase1.placa = {x: windowWidth/2 - 50 * jogo.escala, y: windowHeight/2 - 100 * jogo.escala, width: 100 * jogo.escala, height: 200 * jogo.escala}
 }
 
 function DrawPreFase1()
 {
-    image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
-
-    // Visualizar paredes
-    jogo.walls.forEach(wall => {
-        fill(0, 255, 0);
-        rect(wall.x, wall.y, wall.width, wall.height);
-    });
-
-    //// Armazena posição antiga
-    jogo.player.oldX = jogo.player.x;
-    jogo.player.oldY = jogo.player.y;
-
-    //// Movimento
-    Movimentar();
-
-    //// Desenha o player
-    // imageMode(CENTER)
-    image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
-    // imageMode(CORNER)
-
-    fill(0, 0, 0);
-    rect(jogo.xInicialMapa, jogo.yFinalMapa/2 - jogo.yFinalMapa/15, 35 * jogo.escala, 200 * jogo.escala);
-    let portaEsquerda = {x: jogo.xInicialMapa, y: jogo.yFinalMapa/2 - jogo.yFinalMapa/15, width: 35 * jogo.escala, height: 200 * jogo.escala};
-
-    if (Colidiu(jogo.player, portaEsquerda))
-    {
-        MudarFase("menu");
-        jogo.player.x = jogo.xFinalMapa - jogo.player.width*1.5;
+    if(tutorial.ativo) {
+        image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
+        image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
+        image(fase1.placaImg, fase1.placa.x, fase1.placa.y, fase1.placa.width, fase1.placa.height);
+        Dialogo("preFase1");
     }
+    else {
+        image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
 
-    //// Verifica colisão com parede
-    jogo.walls.forEach(wall => {
-        if (Colidiu(jogo.player, wall)) {
-            jogo.player.x = jogo.player.oldX;
-            jogo.player.y = jogo.player.oldY;
+        // Visualizar paredes
+        // jogo.walls.forEach(wall => {
+        //     fill(0, 255, 0);
+        //     rect(wall.x, wall.y, wall.width, wall.height);
+        // });
+
+        //// Armazena posição antiga
+        jogo.player.oldX = jogo.player.x;
+        jogo.player.oldY = jogo.player.y;
+
+        //// Movimento
+        Movimentar();
+
+        image(fase1.placaImg, fase1.placa.x, fase1.placa.y, fase1.placa.width, fase1.placa.height);
+
+        //// Desenha o player
+        // imageMode(CENTER)
+        image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
+        // imageMode(CORNER)
+
+        // fill(0, 0, 0);
+        // rect(jogo.xInicialMapa, jogo.yFinalMapa/2 - jogo.yFinalMapa/15, 35 * jogo.escala, 200 * jogo.escala);
+        let portaEsquerda = {x: jogo.xInicialMapa, y: jogo.yFinalMapa/2 - jogo.yFinalMapa/15, width: 35 * jogo.escala, height: 200 * jogo.escala};
+
+        if (Colidiu(jogo.player, portaEsquerda))
+        {
+            MudarFase("menu");
+            tutorial.ativo = false;
+            jogo.player.x = jogo.xFinalMapa - jogo.player.width*2;
         }
-    })
 
-    if (Colidiu(jogo.player, fase1.lixeiras[0])) {
-        Interagir(fase1.lixeiras[0]);
+        //// Verifica colisão com parede
+        jogo.walls.forEach(wall => {
+            if (Colidiu(jogo.player, wall)) {
+                jogo.player.x = jogo.player.oldX;
+                jogo.player.y = jogo.player.oldY;
+            }
+        })
+
+        if (Colidiu(jogo.player, fase1.placa)) {
+            Interagir(fase1.placa, "placa");
+        }
     }
-    image(fase1.lixeiras_img[0], fase1.lixeiras[0].x, fase1.lixeiras[0].y, fase1.lixeiras[0].width * jogo.escala, fase1.lixeiras[0].height * jogo.escala);
 }
 
 //<----------------------------------------------------------------------------------------------------------------
@@ -645,13 +658,13 @@ function DrawFase1()
         //// Mostra o texto no lixo
         fase1.lixos.forEach(lixo => {
             if (!fase1.pegouLixo && Colidiu(jogo.player, lixo)) {
-                Interagir(lixo);
+                Interagir(lixo, "lixo");
             }
         })
 
         fase1.lixeiras.forEach(lixeira => {
             if (fase1.pegouLixo && Colidiu(jogo.player, lixeira)) {
-                Interagir(lixeira);
+                Interagir(lixeira, "lixeira");
             }
         })
 
@@ -724,19 +737,19 @@ function DrawFase1()
 
             if(jogo.timer.start <= 80) {
                 fill(255, 50, 50);    // Vermelho (3)
-                text("3", width / 2, height / 2);
+                text("3", jogo.xFinalMapa/2+60 * jogo.escala, jogo.yFinalMapa/2+75 * jogo.escala);
                 }
             else if(jogo.timer.start <= 160) {
                 fill(255, 220, 0);    // Amarelo (2)
-                text("2", width / 2, height / 2);
+                text("2", jogo.xFinalMapa/2+60 * jogo.escala, jogo.yFinalMapa/2+75 * jogo.escala);
                 }
             else if(jogo.timer.start <= 240) {
                 fill(80, 255, 80);    // Verde (1)
-                text("1", width / 2, height / 2);
+                text("1", jogo.xFinalMapa/2+60 * jogo.escala, jogo.yFinalMapa/2+75 * jogo.escala);
                 }
             else if(jogo.timer.start <= 300) {
                 fill(0, 255, 0)
-                text("JÁ!", width / 2, height / 2);
+                text("JÁ!", jogo.xFinalMapa/2-10 * jogo.escala, jogo.yFinalMapa/2+75 * jogo.escala);
                 }
             jogo.timer.start++
 
