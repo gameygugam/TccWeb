@@ -15,7 +15,7 @@ $erro = '';
 $repo = new UsuarioRepository();
 $nomeResponsavel = '';
 $nome = '';
-$idade = 0;
+$idade = 1;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nomeResponsavel = $_POST['nomeResponsavel'];
@@ -136,6 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <label class="placa-label" for="nome">Primeiro Nome</label>
 
+
             <input
                 type="text"
                 id="nome"
@@ -146,6 +147,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             >
 
         </div>
+
+        <input
+            type="number"
+            id="idade"
+            name="idade"
+            placeholder="Ex: 12"
+            value="<?= htmlspecialchars($idade) ?>"
+            min=1
+            max=99
+            required
+        >
+
 
     </div>
 

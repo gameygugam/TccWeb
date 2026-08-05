@@ -12,6 +12,7 @@ const jogo = {
     playerImg: null,
     playerImgEsquerda: null,
     playerImgDireita: null,
+    cooldownInteragir: 0,
 
     //<-----------------------------------------------------------------------------------------------------------------------
 
@@ -25,9 +26,8 @@ const jogo = {
 
     //FASES ----------------------------------------------------------------------------------------------------------------->
 
-    fase: null,
+    fase: "menu",
     walls: [],
-    pontos: 0,
 
     //<-----------------------------------------------------------------------------------------------------------------------
 
@@ -54,7 +54,8 @@ const jogo = {
 
     timer: { 
         segundos: 0, 
-        ticks: 0 
+        ticks: 0,
+        start: 0,
     },
 
     timerGlobal: 0,
@@ -103,12 +104,30 @@ const fase1 = {
     lixeiras_img: [],
     lixosPixelCarregados: [],
     lixosReaisCarregados: [],
+    lixosImgCarregados:{
+        reais: {
+            papel: [],
+            vidro: [],
+            organico: [],
+            plastico: [],
+            metal: [],
+            naoReciclavel: [],
+        },
+        pixel: {
+            papel: [],
+            vidro: [],
+            organico: [],
+            plastico: [],
+            metal: [],
+            naoReciclavel: [],
+        },
+    },
     cartazProcuradoLixo: null,
     pranchetaLixo: null,
 
     //<-----------------------------------------------------------------------------------------------------------------------
 
-    //LIXOS/LIXEIRAS -------------------------------------------------------------------------------------------------------->
+    //OBSTÁCULOS ------------------------------------------------------------------------------------------------------------>
 
     obstaculos: [],
     obstaculos_img: [],
@@ -125,6 +144,7 @@ const fase1 = {
     
     relogio: null,
     is_fase_carregada: false,
+    pontos: 0,
 };
 
 const fase2 = {

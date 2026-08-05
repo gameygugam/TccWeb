@@ -150,6 +150,19 @@ function MudarFase(fase) {
     });
 }
 
+function RegistrarPartida(fase) {
+    if(fase === "fase1") {
+        fetch("../includes/salvar_partida.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "fase=" + fase + "&tempo=" + 0 + "&pontos=" + fase1.pontos
+        })
+        console.log("Partida Registrada");
+    }
+}
+
 function Interagir(item) {
     fill(255, 0, 0);
     textFont(texto.fonte);
@@ -164,9 +177,10 @@ function Interagir(item) {
 function Dialogo(dialogo) {
     switch (dialogo) 
     {
-        case "tutorial":
+        case "menu":
             texto.ativo = true;
             push();
+            background(0, 0, 0, 125);
             scale(jogo.escala);
             tint(255, tutorial.alpha);
             image(tutorial.caixaDialogo, texto.caixaX, texto.caixaY, texto.caixaWidth, texto.caixaHeight);
@@ -197,6 +211,10 @@ function Dialogo(dialogo) {
                     break;
                 
                 case 4:
+                    texto.conteudo = "(Para correr segure a tecla Shift enquanto se movimenta).";
+                    break;
+
+                case 5:
                     texto.conteudo = "(A nossa primeira tarefa está no caminho da direita. Vamos la!).";
                     break;
 
@@ -253,6 +271,7 @@ function Dialogo(dialogo) {
 
                     push();
                     scale(jogo.escala);
+                    background(0, 0, 0, 125);
                     tint(255, tutorial.alpha);
                     image(tutorial.caixaDialogo, texto.caixaX, texto.caixaY, texto.caixaWidth, texto.caixaHeight);
 
@@ -352,18 +371,19 @@ function windowResized()
 function TimerTick(fase_funcao){
 
     if(!jogo.pause){
-        if (fase_funcao === "Fase1"){
-            jogo.timer.ticks--;
-            if (jogo.timer.ticks % 60 === 0) jogo.timer.segundos--;
+        if (fase_funcao === "fase1"){
+            jogo.timer.ticks++;
+            if (jogo.timer.ticks % 80 === 0) jogo.timer.segundos--;
             if (jogo.timer.segundos <= 0) {
-                jogo.fase = 'menu';
+                MudarFase("preFase1");
+                RegistrarPartida("fase1");
                 fase1.is_fase_carregada = false;
                 fase1.obstaculos = [];
                 fase1.lixos = [];
             }
         }
 
-        else if (fase_funcao === "Fase2"){
+        else if (fase_funcao === "fase2"){
             jogo.timer.ticks++;
             if (jogo.timer.ticks % 60 === 0) {
                 jogo.timer.ticks = 0;
@@ -418,11 +438,6 @@ function keyPressed()
         texto.letras = 0;
         texto.incremento++;
     }
-    if(jogo.fase === "menu" && keyCode === ENTER) jogo.fase = "preFase1";
-
-    if(jogo.fase === "fase1" && keyCode === ESCAPE) // jogo.fase = "pause";
-    
-    if (jogo.fase === "pause" && keyCode === ESCAPE) jogo.fase = "fase1";
 
     if (jogo.fase === "fase2") keyPressed2(fase2);
 
@@ -447,14 +462,50 @@ function keyPressed()
         tutorial.ativo = true;
     };
 
-    if (jogo.fase === "fase1" && !fase1.pegouLixo && !jogo.pause && (key === "e" || key === "E")) {
+    if (jogo.fase === "fase1" && !fase1.pegouLixo && !jogo.pause && (key === "e" || key === "E") && jogo.cooldownInteragir <= 0) {
         PegarLixo(jogo.player, fase1.lixos);
+        jogo.cooldownInteragir = 15
     }
 
-    if (jogo.fase === "fase1" && fase1.pegouLixo && !jogo.pause && (key === "e" || key === "E")) {
+    if (jogo.fase === "fase1" && fase1.pegouLixo && !jogo.pause && (key === "e" || key === "E") && jogo.cooldownInteragir <= 0) {
         DespejarLixo(jogo.player, fase1.lixeiras);
+        jogo.cooldownInteragir = 15
     }
 
+    //TECLAS PARA REMOVER QUANDO ACABAR O JOGO!!! (ATALHO PROS PROGRAMMER)
+
+    if (key === "l" || key === "L") {
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        fase1.lixos.push(CriarLixo())
+        
+    }
+
+    if (key === "t" || key === "T") tutorial.ativo = false
+
+    if(jogo.fase === "menu" && keyCode === ENTER) jogo.fase = "preFase1";
+
+    if(jogo.fase === "fase1" && keyCode === ESCAPE) // jogo.fase = "pause";
+    
+    if (jogo.fase === "pause" && keyCode === ESCAPE) jogo.fase = "fase1";
 
     
 }
@@ -540,9 +591,9 @@ function DespejarLixo(player_funcao, lixeiras_funcao) {
         lixeiras_funcao.forEach(lixeira => {
             if(Colidiu(player_funcao, lixeira) && fase1.pegouLixo){
                 if (fase1.lastItemPego.material === lixeira.descarte)
-                    jogo.pontos += 10;
+                    fase1.pontos += 10;
                 else
-                    jogo.pontos -= 5;
+                    fase1.pontos -= 5;
                 fase1.lastItemPego = Lixo.novo(null, null, 0, 0, 0, 0, null, 0);
                 fase1.pegouLixo = false;
             }
@@ -559,23 +610,33 @@ function MostrarLixoReal() {
 
         // Verifica e mostra os lixos reais
         if(fase1.lastItemPego.nome === "bolinhaDePapel")
-            image(fase1.lixosReaisCarregados[0], (windowWidth - 180), (windowHeight - 335), 200 * jogo.escala, 200 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.papel[0], (windowWidth - 180), (windowHeight - 335), 200 * jogo.escala, 200 * jogo.escala);
+        else if(fase1.lastItemPego.nome === "caixaDePapelao")
+            image(fase1.lixosImgCarregados.reais.papel[1], (windowWidth - 155), (windowHeight - 350), 150 * jogo.escala, 200 * jogo.escala);
         else if(fase1.lastItemPego.nome === "garrafaDeVidro")
-            image(fase1.lixosReaisCarregados[1], (windowWidth - 155), (windowHeight - 350), 150 * jogo.escala, 200 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.vidro[0], (windowWidth - 155), (windowHeight - 350), 150 * jogo.escala, 200 * jogo.escala);
         else if (fase1.lastItemPego.nome === "banana")
-            image(fase1.lixosReaisCarregados[2], (windowWidth - 182), (windowHeight - 350), 200 * jogo.escala, 200 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.organico[0], (windowWidth - 182), (windowHeight - 350), 200 * jogo.escala, 200 * jogo.escala);
         else if (fase1.lastItemPego.nome === "bananaPodre")
-            image(fase1.lixosReaisCarregados[3], (windowWidth - 180), (windowHeight - 350), 200 * jogo.escala, 200 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.organico[1], (windowWidth - 180), (windowHeight - 350), 200 * jogo.escala, 200 * jogo.escala);
+        else if (fase1.lastItemPego.nome === "macaComida")
+            image(fase1.lixosImgCarregados.reais.organico[2], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
         else if (fase1.lastItemPego.nome === "garrafaDePlastico")
-            image(fase1.lixosReaisCarregados[4], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.plastico[0], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
+        else if (fase1.lastItemPego.nome === "copoDePlastico")
+            image(fase1.lixosImgCarregados.reais.plastico[1], (windowWidth - 180), (windowHeight - 325), 150 * jogo.escala, 150 * jogo.escala);
         else if (fase1.lastItemPego.nome === "placaDeMetal")
-            image(fase1.lixosReaisCarregados[5], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.metal[0], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
+        else if (fase1.lastItemPego.nome === "latinha")
+            image(fase1.lixosImgCarregados.reais.metal[1], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
         else if (fase1.lastItemPego.nome === "pilha")
-            image(fase1.lixosReaisCarregados[6], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.naoReciclavel[0], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
+        else if (fase1.lastItemPego.nome === "chicleteMascado")
+            image(fase1.lixosImgCarregados.reais.naoReciclavel[1], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
     }
 }
 
-function AleatoriezarPosicao(objeto) {
+function AleatorizarPosicao(objeto) {
     let dif_x = ((windowWidth - width) / 2);
     let dif_y = ((windowHeight - height) / 2);
 
@@ -583,12 +644,60 @@ function AleatoriezarPosicao(objeto) {
     let objeto_y = random(dif_y + 50, (dif_y + height) - 50);
 }
 
-function AleatoriezarPosicaoLixo(lixo) {
-    // let dif_x = ((windowWidth - width) / 2);
-    // let dif_y = ((windowHeight - height) / 2);
+function AleatorizarPosicaoLixo(lixo) {
+    let pode_sair = false
+    while(!pode_sair){
+        pode_sair = true
 
-    let lixo_x = random(jogo.xInicialMapa + 10, jogo.xFinalMapa - 250);
-    let lixo_y = random(jogo.yInicialMapa + 40, jogo.yFinalMapa - 50);
+        lixo.x = random(jogo.xInicialMapa*1.3, jogo.xFinalMapa*0.95);
+        lixo.y = random(jogo.yInicialMapa*1.8, jogo.yFinalMapa*0.95);
+
+        fase1.obstaculos.forEach(obstaculo => {
+            console.log("TEM OBSTACULO")
+            if (Colidiu(lixo, obstaculo)) {
+                pode_sair = false
+            }
+        })
+
+        fase1.lixeiras.forEach(lixeira => {
+            if (Colidiu(lixo, lixeira)) {
+                pode_sair = false
+            }
+        })
+        console.log("a")
+    }
+    return lixo;
+}
+
+function AleatorizarPosicaoObstaculo(obstaculo) {
+    let pode_sair = false
+    while(!pode_sair){
+        pode_sair = true
+
+        obstaculo.x = random(jogo.xInicialMapa*1.8, jogo.xFinalMapa*0.9);
+        obstaculo.y = random(jogo.yInicialMapa*3.5, jogo.yFinalMapa*0.8);
+
+        if(Colidiu(obstaculo, jogo.player)) {
+            pode_sair = false;
+        }
+        
+        fase1.obstaculos.forEach(obstaculo2 => {
+            if (Colidiu(obstaculo, obstaculo2) || 
+            (obstaculo.x <= obstaculo2.x + obstaculo2.width*2 && obstaculo.x + obstaculo.width*2 >= obstaculo2.x) && 
+            (obstaculo.y <= obstaculo2.y + obstaculo2.height*2 && obstaculo.y + obstaculo.height*2 >= obstaculo2.y)) 
+            {
+                pode_sair = false;
+            }
+        })
+
+        fase1.lixeiras.forEach(lixeira => {
+            if (Colidiu(obstaculo, lixeira)) {
+                pode_sair = false;
+            }
+        })
+        console.log("a");
+    }
+    return obstaculo
 }
 
 function CriarLixo() {
@@ -596,56 +705,117 @@ function CriarLixo() {
     let dif_x = ((windowWidth - width) / 2);
     let dif_y = ((windowHeight - height) / 2);
 
-    let lixo_x = random(jogo.xInicialMapa + 10 * jogo.escala, jogo.xFinalMapa - 250 * jogo.escala);
-    let lixo_y = random(jogo.yInicialMapa + 40 * jogo.escala, jogo.yFinalMapa - 50 * jogo.escala);
+    let lixo_x = null
+    let lixo_y = null
+    let lixo_coordenadas = {x: null, y: null}
+    let pode_sair = false
+
+    // while(!pode_sair){
+    //     pode_sair = true
+
+    //     lixo_x = random(jogo.xInicialMapa + 10 * jogo.escala, jogo.xFinalMapa - 10 * jogo.escala);
+    //     lixo_y = random(jogo.yInicialMapa + 10 * jogo.escala, jogo.yFinalMapa - 10 * jogo.escala);
+
+    //     lixo_coordenadas = {x: lixo_x, y: lixo_y}
+
+    //     fase1.obstaculos.forEach(obstaculo => {
+    //         console.log("TEM OBSTACULO")
+    //         if (Colidiu(lixo_coordenadas, obstaculo)) {
+    //             pode_sair = false
+    //         }
+    //     })
+
+    //     fase1.lixeiras.forEach(lixeira => {
+    //         if (Colidiu(lixo_coordenadas, lixeira)) {
+    //             pode_sair = false
+    //         }
+    //     })
+    //     console.log("a")
+    // }
+
+    
 
     //let lixo = [0, 0, 25, 25, "", "", ""] //x, y, w, h, img, type, class
-    let lixo_nome = null;
-    let lixo_img = null;
-    let lixo_img_carregada = null;
-    let lixo_type = null;
-        
-    let indice = floor(random(7));
+    let lixo_type = RandomizarLixoType()
+    let lixo_nome = RandomizarLixoNomePorTipo(lixo_type);
+    let lixo_img = CarregarLixoImgPorNome(lixo_nome);
+    let lixo_width = 30;
+    let lixo_height = 30;
+    if (lixo_nome === "garrafaDePlastico" || lixo_nome === "pilha" || lixo_nome === "latinha" || lixo_nome === "macaComida") {
+        lixo_width = 20;
+        lixo_height = 30;
+    }
+    else if (lixo_nome === "caixaDePapelao") {
+        lixo_width = 35;
+        lixo_height = 35;
+    }
+    else if (lixo_nome === "chicleteMascado") {
+        lixo_width = 20;
+        lixo_height = 20;
+    }
 
-    if (indice == 0) {
-        lixo_nome = "bolinhaDePapel"
-        lixo_type = "papel"
-    }
-    else if (indice == 1) {
-        lixo_nome = "garrafaDeVidro"
-        lixo_type = "vidro"
-    }
-    else if (indice == 2 || indice == 3) {
-        if (indice == 2) lixo_nome = "banana"
-        else if (indice == 3) lixo_nome = "bananaPodre"
-        lixo_type = "organico"
-    }
-    else if (indice == 4) {
-        lixo_nome = "garrafaDePlastico"
-        lixo_type = "plastico"
-    }
-    else if (indice == 5) {
-        lixo_nome = "placaDeMetal"
-        lixo_type = "metal"
-    }
-    else if (indice == 6) {
-        lixo_nome = "pilha"
-        lixo_type = "nao_reciclavel"
-    }
+    // if (lixo_type === "papel") {
+    //     lixo_nome = "bolinhaDePapel"
+    //     lixo_img_carregada = fase1.lixosImgCarregados.pixel.papel[0]
+    // }
+    // else if (indice == 1) {
+    //     lixo_nome = "garrafaDeVidro"
+    //     lixo_type = "vidro"
+    //     lixo_img_carregada = fase1.lixosImgCarregados.pixel.vidro[0]
+    // }
+    // else if (indice == 2 || indice == 3) {
+    //     if (indice == 2) {
+    //         lixo_nome = "banana"
+    //         lixo_img_carregada = fase1.lixosImgCarregados.pixel.organico[0]
+    //     }
+    //     else if (indice == 3) {
+    //         lixo_nome = "bananaPodre"
+    //         lixo_img_carregada = fase1.lixosImgCarregados.pixel.organico[1]
+    //     }
+
+    //     lixo_type = "organico"
+    // }
+    // else if (indice == 4) {
+    //     lixo_nome = "garrafaDePlastico"
+    //     lixo_type = "plastico"
+    //     lixo_img_carregada = fase1.lixosImgCarregados.pixel.plastico[0]
+    //     lixo_width = 15
+    //     lixo_height = 25
+    // }
+    // else if (indice == 5) {
+    //     lixo_nome = "placaDeMetal"
+    //     lixo_type = "metal"
+    //     lixo_img_carregada = fase1.lixosImgCarregados.pixel.metal[0]
+    // }
+    // else if (indice == 6) {
+    //     lixo_nome = "pilha"
+    //     lixo_type = "nao_reciclavel"
+    //     lixo_img_carregada = fase1.lixosImgCarregados.pixel.naoReciclavel[0]
+    //     lixo_width = 15
+    //     lixo_height = 25
+    // }
     // else if (rnd == 2 || rnd == 3) lixo_type = "organico" //0 -> BananaPodre
     // else if (rnd == 4) lixo_type = "plastico" //0 -> GarrafaDePlastico
     // else if (rnd == 5) lixo_type = "metal" //0 -> GarrafaDePlastico
 
-    lixo_img_carregada = fase1.lixosPixelImgCarregados[indice]
+    // lixo_img_carregada = null
     //lixo_img = lixosPixelImgCarregados[indice]
 
-    
 
     let lixo_angulo = random(TWO_PI)
+    let variacao = floor(random(-3, 3))
+    lixo_width += variacao
+    lixo_height += variacao
 
     // let lixo = fase1.lixos.push({ x: lixo_x, y: lixo_y, width: 25, height: 25, img: lixo_img, imgCarregada: lixo_img_carregada, type: lixo_type, class: "lixo", angulo: lixo_angulo });
-    let lixo = Lixo.novo(null, lixo_nome, lixo_img_carregada, 25 * jogo.escala, 25 * jogo.escala, lixo_x, lixo_y, lixo_type, lixo_angulo);
-    fase1.lixos.push(lixo);
+    
+    let lixo = Lixo.novo(null, lixo_nome, lixo_img, lixo_width * jogo.escala, lixo_height * jogo.escala, lixo_x, lixo_y, lixo_type, lixo_angulo);
+    
+    lixo = AleatorizarPosicaoLixo(lixo)
+
+    return lixo
+    
+    // fase1.lixos.push(lixo);
 
     /*lixos[lixos.length - 1].img = lixosPixelImg[lixos.length - 1]; // Adiciona imagem pixel no parametro
     lixos[lixos.length - 1].imgCarregada = lixosPixelImgCarregados[lixos.length - 1]; // Adiciona imagem pixel carregada no parametro
@@ -665,13 +835,119 @@ function CriarLixo() {
     lixos[lixos.length - 1].y = random(lixo_y + 50, (lixo_y + height) - 50);*/
 }
 
+function RandomizarLixoType(){
+    let rnd = floor(random(6))
+    let lixo_type = null
+
+    if (rnd === 0) lixo_type = "papel"
+    else if (rnd === 1) lixo_type = "vidro"
+    else if (rnd === 2) lixo_type = "organico"
+    else if (rnd === 3) lixo_type = "plastico"
+    else if (rnd === 4) lixo_type = "metal"
+    else if (rnd === 5) lixo_type = "nao_reciclavel"
+
+    if (lixo_type === null) throw new Error("variável LIXO_TYPE é NULL na função 'RandomizarLixoType'")
+
+    return lixo_type
+}
+
+function RandomizarLixoNomePorTipo(lixo_type){
+    let lixo_nome = ""
+
+    if (lixo_type === "papel") {
+        let rnd = floor(random(2))
+        if (rnd === 0) lixo_nome = "bolinhaDePapel"
+        else if (rnd === 1) lixo_nome = "caixaDePapelao"
+    }
+
+    else if (lixo_type === "vidro") {
+        lixo_nome = "garrafaDeVidro"
+    }
+
+    else if (lixo_type === "organico") {
+        let rnd = floor(random(3))
+        if (rnd === 0) lixo_nome = "banana"
+        else if (rnd === 1) lixo_nome = "bananaPodre"
+        else if (rnd === 2) lixo_nome = "macaComida"
+    }
+
+    else if (lixo_type === "plastico") {
+        let rnd = floor(random(2))
+        if (rnd === 0) lixo_nome = "garrafaDePlastico"
+        else if (rnd === 1) lixo_nome = "copoDePlastico"
+    }
+
+    else if (lixo_type === "metal") {
+        let rnd = floor(random(2))
+        if (rnd === 0) lixo_nome = "placaDeMetal"
+        else if (rnd === 1) lixo_nome = "latinha"
+    }
+
+    else if (lixo_type === "nao_reciclavel") {
+       let rnd = floor(random(2))
+        if (rnd === 0) lixo_nome = "pilha"
+        else if (rnd === 1) lixo_nome = "chicleteMascado"
+    }
+
+    if (lixo_nome === null) throw new Error("variável LIXO_NOME é NULL na função 'RandomizarLixoNomePorTipo'")
+
+    return lixo_nome
+}
+
+function CarregarLixoImgPorNome(lixo_nome){
+    let lixo_img = null
+
+    if (lixo_nome === "bolinhaDePapel"){
+        lixo_img = fase1.lixosImgCarregados.pixel.papel[0]
+    }
+    else if (lixo_nome === "caixaDePapelao"){
+        lixo_img = fase1.lixosImgCarregados.pixel.papel[1]
+    }
+    else if (lixo_nome === "garrafaDeVidro"){
+        lixo_img = fase1.lixosImgCarregados.pixel.vidro[0]
+    }
+    else if (lixo_nome === "banana"){
+        lixo_img = fase1.lixosImgCarregados.pixel.organico[0]
+    }
+    else if (lixo_nome === "bananaPodre"){
+        lixo_img = fase1.lixosImgCarregados.pixel.organico[1]
+    }
+    else if (lixo_nome === "macaComida"){
+        lixo_img = fase1.lixosImgCarregados.pixel.organico[2]
+    }
+    else if (lixo_nome === "garrafaDePlastico"){
+        lixo_img = fase1.lixosImgCarregados.pixel.plastico[0]
+    }
+    else if (lixo_nome === "copoDePlastico"){
+        lixo_img = fase1.lixosImgCarregados.pixel.plastico[1]
+    }
+    else if (lixo_nome === "placaDeMetal"){
+        lixo_img = fase1.lixosImgCarregados.pixel.metal[0]
+    }
+    else if (lixo_nome === "latinha"){
+        lixo_img = fase1.lixosImgCarregados.pixel.metal[1]
+    }
+    else if (lixo_nome === "pilha"){
+        lixo_img = fase1.lixosImgCarregados.pixel.naoReciclavel[0]
+    }
+    else if (lixo_nome === "chicleteMascado"){
+        lixo_img = fase1.lixosImgCarregados.pixel.naoReciclavel[1]
+    }
+
+    if (lixo_img === null) throw new Error("variável LIXO_IMG é NULL na função 'CarregarLixoImgPorNome'")
+
+    return lixo_img
+}
+
+
+
 function CriarObstaculo() {
 
     let dif_x = ((windowWidth - width) / 2);
     let dif_y = ((windowHeight - height) / 2);
 
-    let obstaculo_x = random(jogo.xInicialMapa + 10 * jogo.escala, jogo.xFinalMapa - 250 * jogo.escala);
-    let obstaculo_y = random(jogo.yInicialMapa + 40 * jogo.escala, jogo.yFinalMapa - 50 * jogo.escala);
+    let obstaculo_x = random(jogo.xInicialMapa*1.2, jogo.xFinalMapa/5);
+    let obstaculo_y = random(jogo.yInicialMapa + 40, jogo.yFinalMapa - 50);
 
     let obstaculo_img = null;
     let obstaculo_img_carregada = null;
@@ -681,7 +957,11 @@ function CriarObstaculo() {
     obstaculo_img_carregada = fase1.obstaculos_img[0]
 
     let obstaculo = Obstaculo.novo("brinquedo", "caminho", obstaculo_img_carregada, 100 * jogo.escala, 100 * jogo.escala, obstaculo_x, obstaculo_y);
-    fase1.obstaculos.push(obstaculo);
+
+    AleatorizarPosicaoObstaculo(obstaculo);
+
+    return obstaculo
+    // fase1.obstaculos.push(obstaculo);
 }
 
 function RotacionarLixo() {
