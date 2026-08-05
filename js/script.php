@@ -518,7 +518,7 @@ function PreloadFase1()
 
     fase1.lixosImgCarregados.reais.papel = [
         loadImage("../assets/imagens/fase1/lixos/reais/bolinhaDePapel.png"),
-        loadImage("../assets/imagens/fase1/lixos/pixel/caixaDePapelaoPixel.png"),
+        loadImage("../assets/imagens/fase1/lixos/reais/caixaDePapelao.png"),
     ]
 
     fase1.lixosImgCarregados.reais.vidro = [
@@ -528,18 +528,22 @@ function PreloadFase1()
     fase1.lixosImgCarregados.reais.organico = [
         loadImage("../assets/imagens/fase1/lixos/reais/banana.png"),
         loadImage("../assets/imagens/fase1/lixos/reais/bananaPodre.png"),
+        loadImage("../assets/imagens/fase1/lixos/reais/macaComida.png"),
     ]
 
     fase1.lixosImgCarregados.reais.plastico = [
         loadImage("../assets/imagens/fase1/lixos/reais/garrafaDePlastico.png"),
+        loadImage("../assets/imagens/fase1/lixos/reais/copoDePlastico.png"),
     ]
 
     fase1.lixosImgCarregados.reais.metal = [
-        loadImage("../assets/imagens/fase1/lixos/pixel/placaDeMetalPixel.png"),
+        loadImage("../assets/imagens/fase1/lixos/reais/placaDeMetal.png"),
+        loadImage("../assets/imagens/fase1/lixos/reais/latinha.png"),
     ]
 
     fase1.lixosImgCarregados.reais.naoReciclavel = [
         loadImage("../assets/imagens/fase1/lixos/reais/pilha.png"),
+        loadImage("../assets/imagens/fase1/lixos/reais/chicleteMascado.png"),
     ]
 
     // Carrega a imagem do cartaz de procurado
