@@ -28,6 +28,14 @@ function setup() {
         MudarFase("menu");
     <?php endif; ?>
 
+    jogo.som = {
+        marteloMenu: [
+            new Audio("../assets/audio/batida_martelo_1.wav"),
+            new Audio("../assets/audio/batida_martelo_2.wav"),
+            new Audio("../assets/audio/batida_martelo_3.wav"),
+        ],
+    }
+
     jogo.canvas = createCanvas(windowWidth, windowHeight);
     noSmooth();
     jogo.canvas_x = ((windowWidth - width) / 2); //A diferença do tamanho da tela e do canvas para centralizar o jogo (X)
@@ -108,7 +116,7 @@ function draw() {
         jogo.sairDoJogo = false
     }
 
-    text("TG:" + jogo.timerGlobal, 50, windowHeight - 100);
+    // text("TG:" + jogo.timerGlobal, 50, windowHeight - 100);
     jogo.timerGlobal++
 
     if(jogo.cooldownInteragir > 0) jogo.cooldownInteragir--
@@ -118,25 +126,29 @@ function mousePressed() {
 
     let mouse = {x: mouseX, y: mouseY}
 
-    if(MouseNoBotao(mouse, pause.botaoContinuar)) {
-        MenuPause()
-    }
+    if(pause.menuPause){
+        if(MouseNoBotao(mouse, pause.botaoContinuar)) {
+            MenuPause()
+        }
 
-    else if(MouseNoBotao(mouse, pause.botaoReiniciar)) {
-        MudarFase("fase1")
-        setup()
-        
-    }
+        else if(MouseNoBotao(mouse, pause.botaoReiniciar)) {
+            MudarFase("fase1")
+            setup()
+            
+        }
 
-    else if(MouseNoBotao(mouse, pause.botaoOpcoes)) {
-        MenuPause()
-    }
+        else if(MouseNoBotao(mouse, pause.botaoOpcoes)) {
+            MenuPause()
+        }
 
-    else if(MouseNoBotao(mouse, pause.botaoSair)) {
-        jogo.sairDoJogo = true;
-        // setup()
-        // MenuPause()
-        window.location.href = "logout.php";
+        else if(MouseNoBotao(mouse, pause.botaoSair)) {
+            jogo.sairDoJogo = true;
+            // setup()
+            // MenuPause()
+            window.location.href = "logout.php";
+        }
+
+        if(MouseNoBotao(mouse, pause)) TocarSom(jogo.som.marteloMenu)
     }
 }
 
@@ -285,7 +297,7 @@ function SetupPause()
     pause.x = (width / 2) - (pause.width / 2)
     pause.y = (height / 2) - (pause.height / 2)
 
-    pause.btnImg = loadImage("../assets/imagens/pause/background2.png");
+    pause.btnImg = loadImage("../assets/imagens/pause/btnImg.png");
     pause.btnWidth = 150 * jogo.escala
     pause.btnHeight = 50 * jogo.escala
 
@@ -335,7 +347,7 @@ function SetupPause()
 
 function DrawPause()
 {    
-    image(pause.btnImg, pause.x, pause.y, pause.width, pause.height)
+    image(pause.background, pause.x, pause.y, pause.width, pause.height)
     
     fill(0,0,0)
     textFont(pause.txtFonte)
@@ -747,9 +759,9 @@ function DrawFase1()
         else if (jogo.timer.start == 301) jogo.pause = false
 
 
-        text("Escala:" + jogo.escala, 2000, 50);
-        text("Height:" + windowWidth, 100, 50);
-        text("Height:" + windowHeight, 1000, 50);
+        // text("Escala:" + jogo.escala, 2000, 50);
+        // text("Height:" + windowWidth, 100, 50);
+        // text("Height:" + windowHeight, 1000, 50);
     }
 }
 
