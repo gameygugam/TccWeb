@@ -711,7 +711,7 @@ function DrawFase1()
         // image(fase1.relogio, windowWidth/64, windowHeight/48, windowWidth/16, windowHeight/8);
         // image(fase1.relogio, 24* jogo.escala, 24* jogo.escala, 128 * jogo.escala, 128 * jogo.escala); //128 -> tamanho padrão do relógio
         AnimacaoRelogio();
-        if(!jogo.pause) TimerTick("Fase1");
+        if(!jogo.pause) TimerTick("fase1");
 
         if(jogo.timer.start <= 300) {
             filter(BLUR, 1);
@@ -853,7 +853,7 @@ function DrawFase2()
     ////Desenha personagem
     image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
 
-    TimerTick("Fase2");
+    TimerTick("fase2");
 }
 
 // function RotacionarCadeira() {

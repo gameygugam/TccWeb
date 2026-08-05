@@ -54,9 +54,10 @@ class PartidaRepository {
         }
 
         $stmt = $this->pdo->prepare(
-            'INSERT INTO partida (fase, tempo, pontuacao) VALUES (:fase, :tempo, :pontuacao)'
+            'INSERT INTO partida (id_usuario, fase, tempo, pontuacao) VALUES (:id_usuario, :fase, :tempo, :pontuacao)'
         );
         $stmt->execute([
+            ':id_usuario' => $partida->getIdUsuario(),
             ':fase' => $partida->getFase(),
             ':tempo' => $partida->getTempo(),
             ':pontuacao' => $partida->getPontuacao()

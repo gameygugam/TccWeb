@@ -150,15 +150,16 @@ function MudarFase(fase) {
     });
 }
 
-function SalvarPontos(fase) {
+function RegistrarPartida(fase) {
     if(fase === "fase1") {
-        fetch("../includes/salvar_pontos.php", {
+        fetch("../includes/salvar_partida.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: "fase=" + fase + "&pontos=" + fase1.pontos
-        });
+            body: "fase=" + fase + "&tempo=" + 0 + "&pontos=" + fase1.pontos
+        })
+        console.log("Partida Registrada");
     }
 }
 
@@ -370,18 +371,19 @@ function windowResized()
 function TimerTick(fase_funcao){
 
     if(!jogo.pause){
-        if (fase_funcao === "Fase1"){
+        if (fase_funcao === "fase1"){
             jogo.timer.ticks++;
-            if (jogo.timer.ticks % 80 === 0) jogo.timer.segundos--;
+            if (jogo.timer.ticks % 10 === 0) jogo.timer.segundos--;
             if (jogo.timer.segundos <= 0) {
-                jogo.fase = 'menu';
+                MudarFase("preFase1");
+                RegistrarPartida("fase1");
                 fase1.is_fase_carregada = false;
                 fase1.obstaculos = [];
                 fase1.lixos = [];
             }
         }
 
-        else if (fase_funcao === "Fase2"){
+        else if (fase_funcao === "fase2"){
             jogo.timer.ticks++;
             if (jogo.timer.ticks % 60 === 0) {
                 jogo.timer.ticks = 0;
