@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '\..\repository\UsuarioRepository.php';
+require_once __DIR__ . '\..\repository\PartidaRepository.php';
 
 session_start();
 
@@ -13,9 +14,12 @@ session_start();
 $erro = '';
 
 $repo = new UsuarioRepository();
+$repoPartida = new PartidaRepository();
 $nomeResponsavel = '';
 $nome = '';
 $idade = 1;
+
+$leaderboard = $repoPartida->leaderboard();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nomeResponsavel = $_POST['nomeResponsavel'];
@@ -184,37 +188,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="prego prego3"></div>
         <div class="prego prego4"></div>
 
-        <h2>Ranking</h2>
+        <h2>Ranking Fase 1</h2>
 
-        <div class="linha primeiro">
-            <span>1# João</span>
-            <span>8500</span>
-        </div>
-
-        <div class="linha">
-            <span>2# Maria</span>
-            <span>7900</span>
-        </div>
-
-        <div class="linha">
-            <span>3# Pedro</span>
-            <span>7200</span>
-        </div>
-
-        <div class="linha">
-            <span>4# Lucas</span>
-            <span>6100</span>
-        </div>
-
-        <div class="linha">
-            <span>5# Ana</span>
-            <span>5300</span>
-        </div>
-
-        <!-- <div class="score-footer">
-            Melhor Castor Hoje 
-        </div> -->
-
+        <?php if(!empty($leaderboard[0])): ?>
+            <div class="linha primeiro">
+                <span>1# <?= $leaderboard[0]['nome'] ?></span>
+                <span><?= $leaderboard[0]['MAX(p.pontuacao)']?></span>
+            </div>
+            <?php if(!empty($leaderboard[1])): ?>
+                <div class="linha">
+                    <span>2# <?= $leaderboard[1]['nome'] ?></span>
+                    <span><?= $leaderboard[1]['MAX(p.pontuacao)']?></span>
+                </div>
+                <?php if(!empty($leaderboard[2])): ?>
+                    <div class="linha">
+                        <span>3# <?= $leaderboard[2]['nome'] ?></span>
+                        <span><?= $leaderboard[2]['MAX(p.pontuacao)']?></span>
+                    </div>
+                    <?php if(!empty($leaderboard[3])): ?>
+                        <div class="linha">
+                            <span>4# <?= $leaderboard[3]['nome'] ?></span>
+                            <span><?= $leaderboard[3]['MAX(p.pontuacao)']?></span>
+                        </div>
+                        <?php if(!empty($leaderboard[4])): ?>
+                            <div class="linha">
+                                <span>5# <?= $leaderboard[4]['nome'] ?></span>
+                                <span><?= $leaderboard[4]['MAX(p.pontuacao)']?></span>
+                            </div>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endif; ?>
+        <?php endif; ?>
     </div>
 
 </div>

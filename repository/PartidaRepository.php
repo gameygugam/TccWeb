@@ -86,4 +86,17 @@ class PartidaRepository {
         $stmt = $this->pdo->prepare('DELETE FROM partida WHERE id = :id');
         $stmt->execute([':id' => $id]);
     }
+
+    public function leaderboard(): array {
+        $stmt = $this->pdo->prepare(
+            'SELECT u.nome, MAX(p.pontuacao) FROM usuario u, partida p
+            WHERE u.id = p.id_usuario GROUP BY u.nome ORDER BY p.pontuacao DESC LIMIT 5'
+        );
+        $stmt->execute();
+        $leaderboard = [];
+        foreach ($stmt->fetchAll() as $dados) {
+            $leaderboard[] = $dados;
+        }
+        return $leaderboard;
+    }
 }
