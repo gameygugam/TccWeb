@@ -148,17 +148,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         </div>
 
-        <input
-            type="number"
-            id="idade"
-            name="idade"
-            placeholder="Ex: 12"
-            value="<?= htmlspecialchars($idade) ?>"
-            min=1
-            max=99
-            required
-        >
-
 
     </div>
 
@@ -195,36 +184,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="prego prego3"></div>
         <div class="prego prego4"></div>
 
-        <h2>🏆 Ranking</h2>
+        <h2>Ranking</h2>
 
         <div class="linha primeiro">
-            <span>🥇 João</span>
+            <span>1# João</span>
             <span>8500</span>
         </div>
 
         <div class="linha">
-            <span>🥈 Maria</span>
+            <span>2# Maria</span>
             <span>7900</span>
         </div>
 
         <div class="linha">
-            <span>🥉 Pedro</span>
+            <span>3# Pedro</span>
             <span>7200</span>
         </div>
 
         <div class="linha">
-            <span>4. Lucas</span>
+            <span>4# Lucas</span>
             <span>6100</span>
         </div>
 
         <div class="linha">
-            <span>5. Ana</span>
+            <span>5# Ana</span>
             <span>5300</span>
         </div>
 
-        <div class="score-footer">
-            Melhor Castor Hoje ⭐
-        </div>
+        <!-- <div class="score-footer">
+            Melhor Castor Hoje 
+        </div> -->
 
     </div>
 
