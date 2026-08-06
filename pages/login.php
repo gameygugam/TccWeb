@@ -168,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 id="idade"
                 name="idade"
                 placeholder="Ex: 12"
-                value="<?= htmlspecialchars($idade) ?>"
+                value=""
                 required
             >
 
@@ -192,28 +192,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <?php if(!empty($leaderboard[0])): ?>
             <div class="linha primeiro">
-                <span>1# <?= $leaderboard[0]['nome'] ?></span>
-                <span><?= $leaderboard[0]['MAX(p.pontuacao)']?></span>
+                <span>1# <?= $leaderboard[0]['responsavel'] ?>/<?= $leaderboard[0]['nome'] ?></span>
+                <span><?= $leaderboard[0]['pontos']?></span>
             </div>
             <?php if(!empty($leaderboard[1])): ?>
                 <div class="linha">
-                    <span>2# <?= $leaderboard[1]['nome'] ?></span>
-                    <span><?= $leaderboard[1]['MAX(p.pontuacao)']?></span>
+                    <span>2# <?= $leaderboard[1]['responsavel'] ?>/<?= $leaderboard[1]['nome'] ?></span>
+                    <span><?= $leaderboard[1]['pontos']?></span>
                 </div>
                 <?php if(!empty($leaderboard[2])): ?>
                     <div class="linha">
-                        <span>3# <?= $leaderboard[2]['nome'] ?></span>
-                        <span><?= $leaderboard[2]['MAX(p.pontuacao)']?></span>
+                        <span>3# <?= $leaderboard[2]['responsavel'] ?>/<?= $leaderboard[2]['nome'] ?></span>
+                        <span><?= $leaderboard[2]['pontos']?></span>
                     </div>
                     <?php if(!empty($leaderboard[3])): ?>
                         <div class="linha">
-                            <span>4# <?= $leaderboard[3]['nome'] ?></span>
-                            <span><?= $leaderboard[3]['MAX(p.pontuacao)']?></span>
+                            <span>4# <?= $leaderboard[3]['responsavel'] ?>/<?= $leaderboard[3]['nome'] ?></span>
+                            <span><?= $leaderboard[3]['pontos']?></span>
                         </div>
                         <?php if(!empty($leaderboard[4])): ?>
                             <div class="linha">
-                                <span>5# <?= $leaderboard[4]['nome'] ?></span>
-                                <span><?= $leaderboard[4]['MAX(p.pontuacao)']?></span>
+                                <span>5# <?= $leaderboard[4]['responsavel'] ?>/<?= $leaderboard[4]['nome'] ?></span>
+                                <span><?= $leaderboard[4]['pontos']?></span>
                             </div>
                         <?php endif; ?>
                     <?php endif; ?>

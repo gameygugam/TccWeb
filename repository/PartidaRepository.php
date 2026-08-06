@@ -89,8 +89,11 @@ class PartidaRepository {
 
     public function leaderboard(): array {
         $stmt = $this->pdo->prepare(
-            'SELECT u.nome, MAX(p.pontuacao) FROM usuario u, partida p
-            WHERE u.id = p.id_usuario GROUP BY u.nome ORDER BY p.pontuacao DESC LIMIT 5'
+            'SELECT u.nome, u.responsavel, MAX(p.pontuacao) as pontos
+            FROM usuario u, partida p
+            WHERE u.id = p.id_usuario
+            GROUP BY u.nome
+            ORDER BY p.pontuacao DESC LIMIT 5'
         );
         $stmt->execute();
         $leaderboard = [];

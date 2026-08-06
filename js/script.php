@@ -122,36 +122,6 @@ function draw() {
     if(jogo.cooldownInteragir > 0) jogo.cooldownInteragir--
 }
 
-function mousePressed() {
-
-    let mouse = {x: mouseX, y: mouseY}
-
-    if(pause.menuPause){
-        if(MouseNoBotao(mouse, pause.botaoContinuar)) {
-            MenuPause()
-        }
-
-        else if(MouseNoBotao(mouse, pause.botaoReiniciar)) {
-            MudarFase("fase1")
-            setup()
-            
-        }
-
-        else if(MouseNoBotao(mouse, pause.botaoOpcoes)) {
-            MenuPause()
-        }
-
-        else if(MouseNoBotao(mouse, pause.botaoSair)) {
-            jogo.sairDoJogo = true;
-            // setup()
-            // MenuPause()
-            window.location.href = "logout.php";
-        }
-
-        if(MouseNoBotao(mouse, pause)) TocarSom(jogo.som.marteloMenu)
-    }
-}
-
 //MENU ----------------------------------------------------------------------------------------------------------->
 function PreloadMenu()
 {
@@ -390,7 +360,7 @@ function PreloadPreFase1()
 
 function SetupPreFase1()
 {
-    fase1.placa = {x: windowWidth/2 - 50 * jogo.escala, y: windowHeight/2 - 100 * jogo.escala, width: 100 * jogo.escala, height: 200 * jogo.escala}
+    fase1.placa = {x: windowWidth/2 + 50 * jogo.escala, y: windowHeight/2 - 100 * jogo.escala, width: 100 * jogo.escala, height: 200 * jogo.escala}
 }
 
 function DrawPreFase1()

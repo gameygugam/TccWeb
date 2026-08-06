@@ -29,7 +29,6 @@ function Movimentar()
         jogo.player.x += dir.x;
         jogo.player.y += dir.y;   
     }
-     
 }
 // <--------------------------------------------------------------------------
 
@@ -199,7 +198,7 @@ function CaixaDialogo() {
     }
     textFont(texto.fonte);
     textSize(32);
-    text("'E' para avançar", texto.caixaX + texto.caixaWidth*0.79, texto.caixaY + texto.caixaHeight*0.9);
+    text("Pressione 'E' para avançar", texto.caixaX + texto.caixaWidth*0.65, texto.caixaY + texto.caixaHeight*0.9);
 }
 
 function Dialogo(dialogo) {
@@ -275,7 +274,7 @@ function Dialogo(dialogo) {
                     }
                     textFont(texto.fonte);
                     textSize(32);
-                    text("'E' para avançar", windowWidth*0.79, windowHeight*0.9);
+                    text("Pressione 'E' para avançar", windowWidth*0.7, windowHeight*0.9);
                     break;
 
                 case 1:
@@ -283,35 +282,35 @@ function Dialogo(dialogo) {
                     image(tutorial.imagensFase1[1], 0, 0, windowWidth, windowHeight);
                     textFont(texto.fonte);
                     textSize(32);
-                    text("'E' para avançar", windowWidth*0.79, windowHeight*0.9);
+                    text("Pressione 'E' para avançar", windowWidth*0.7, windowHeight*0.9);
                     break;
                 
                 case 2:
                     image(tutorial.imagensFase1[2], 0, 0, windowWidth, windowHeight);
                     textFont(texto.fonte);
                     textSize(32);
-                    text("'E' para avançar", windowWidth*0.79, windowHeight*0.9);
+                    text("Pressione 'E' para avançar", windowWidth*0.7, windowHeight*0.9);
                     break;
                 
                 case 3:
                     image(tutorial.imagensFase1[3], 0, 0, windowWidth, windowHeight);
                     textFont(texto.fonte);
                     textSize(32);
-                    text("'E' para avançar", windowWidth*0.79, windowHeight*0.9);
+                    text("Pressione 'E' para avançar", windowWidth*0.7, windowHeight*0.9);
                     break;
                 
                 case 4:
                     image(tutorial.imagensFase1[4], 0, 0, windowWidth, windowHeight);
                     textFont(texto.fonte);
                     textSize(32);
-                    text("'E' para avançar", windowWidth*0.79, windowHeight*0.9);
+                    text("Pressione 'E' para avançar", windowWidth*0.7, windowHeight*0.9);
                     break;
 
                 case 5:
                     image(tutorial.imagensFase1[5], 0, 0, windowWidth, windowHeight);
                     textFont(texto.fonte);
                     textSize(32);
-                    text("'E' para avançar", windowWidth*0.79, windowHeight*0.9);
+                    text("Pressione 'E' para avançar", windowWidth*0.7, windowHeight*0.9);
                     break;
 
                 case 6:
@@ -447,7 +446,7 @@ function TimerTick(fase_funcao){
 
 //<-----------------------------------------------------------------------------------------------------------------------
 
-//TECLAS ----------------------------------------------------------------------------------------------------------------->
+//TECLAS/MOUSE ---------------------------------------------------------------------------------------------------------->      
 
 function keyPressed2(fase) {
     if (key === 'q' || key === 'Q') {
@@ -565,6 +564,36 @@ function keyReleased(event) {
 
     if (event.code === "Backspace") {
         jogo.sairDoJogo = false;
+    }
+}
+
+function mousePressed() {
+
+    let mouse = {x: mouseX, y: mouseY}
+
+    if(pause.menuPause){
+        if(MouseNoBotao(mouse, pause.botaoContinuar)) {
+            MenuPause()
+        }
+
+        else if(MouseNoBotao(mouse, pause.botaoReiniciar)) {
+            MudarFase("fase1")
+            setup()
+            
+        }
+
+        else if(MouseNoBotao(mouse, pause.botaoOpcoes)) {
+            MenuPause()
+        }
+
+        else if(MouseNoBotao(mouse, pause.botaoSair)) {
+            jogo.sairDoJogo = true;
+            // setup()
+            // MenuPause()
+            window.location.href = "logout.php";
+        }
+
+        if(MouseNoBotao(mouse, pause)) TocarSom(jogo.som.marteloMenu)
     }
 }
 
