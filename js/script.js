@@ -36,14 +36,10 @@ async function setup() {
     fase1.is_fase_carregada = false;
     fase2.is_fase_carregada = false;
 
-    // jogo.xInicialMapa = windowWidth / 2 - 785; // ERRADO!!!
     jogo.xInicialMapa = windowWidth / 2 - windowWidth / 2.45;
-    // jogo.xFinalMapa = windowWidth - 188; // ERRADO!!!
     jogo.xFinalMapa = windowWidth - windowWidth * 0.093;
 
-    // jogo.yInicialMapa = windowHeight / 2 - 430; // ERRADO!!!
     jogo.yInicialMapa = windowHeight / 2 - windowHeight / 2.3;
-    // jogo.yFinalMapa = windowHeight - 77; // ERRADO!!!
     jogo.yFinalMapa = windowHeight - windowHeight * 0.07;
 
     MudarFase(jogo.fase);
@@ -135,6 +131,13 @@ function SetupMenu()
 
 function DrawMenu()
 {
+    if(jogo.player === null)
+    {
+        jogo.player = {
+            x: jogo.xFinalMapa/2+30*jogo.escala, y: jogo.yFinalMapa/2, width: (windowWidth / 20), height: (windowHeight / 10),
+            oldX: jogo.xFinalMapa/2+30*jogo.escala, oldY: jogo.yFinalMapa/2, class: "player", dash_cooldown: 80, dash_duracao: 0 
+        };
+    }
     //// Cria o mapa
     image(jogo.mapasImg[0], 0, 0, windowWidth, windowHeight);
 
