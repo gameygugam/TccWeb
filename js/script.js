@@ -13,9 +13,9 @@ function preload() {
     PreloadPause(); // Pré carrega as imagens do menu de Pause
 }
 
-function setup() {
-    PegarNome();
-    PegarFase();
+async function setup() {
+    await PegarFase();
+    await PegarNome();
 
     jogo.som = {
         marteloMenu: [
