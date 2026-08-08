@@ -1,38 +1,27 @@
-<?php
-
-require_once __DIR__ . '\..\includes\auth.php';
-
-?>
-
-<script>
-
 function preload() {
     // Carrega a imagem do player
-    jogo.playerImg = loadImage("../assets/imagens/castorDireita.png");
-    jogo.playerImgEsquerda = loadImage("../assets/imagens/castorEsquerda.png");
-    jogo.playerImgDireita = loadImage("../assets/imagens/castorDireita.png");
-    tutorial.caixaDialogo = loadImage("../assets/imagens/tutorial/caixaTutorial.png");
-    texto.fonte = loadFont("../assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf");
+    jogo.playerImg = loadImage("assets/imagens/castorDireita.png");
+    jogo.playerImgEsquerda = loadImage("assets/imagens/castorEsquerda.png");
+    jogo.playerImgDireita = loadImage("assets/imagens/castorDireita.png");
+    tutorial.caixaDialogo = loadImage("assets/imagens/tutorial/caixaTutorial.png");
+    texto.fonte = loadFont("assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf");
 
-    PreloadMenu(); // Pré carrega as ../imagens do Menu
+    PreloadMenu(); // Pré carrega as imagens do Menu
     PreloadPreFase1();
-    PreloadFase1(); // Pré carrega as ../imagens do Minigame 1
-    PreloadFase2(); // Pré carrega as ../imagens do Minigame 1
-    PreloadPause(); // Pré carrega as ../imagens do menu de Pause
+    PreloadFase1(); // Pré carrega as imagens do Minigame 1
+    PreloadFase2(); // Pré carrega as imagens do Minigame 1
+    PreloadPause(); // Pré carrega as imagens do menu de Pause
 }
 
 function setup() {
-    <?php if(isset($_SESSION['fase'])):?>
-        jogo.fase = "<?php echo $_SESSION['fase']; ?>";
-    <?php else:?>
-        MudarFase("menu");
-    <?php endif; ?>
+    PegarNome();
+    PegarFase();
 
     jogo.som = {
         marteloMenu: [
-            new Audio("../assets/audio/batida_martelo_1.wav"),
-            new Audio("../assets/audio/batida_martelo_2.wav"),
-            new Audio("../assets/audio/batida_martelo_3.wav"),
+            new Audio("assets/audio/batida_martelo_1.wav"),
+            new Audio("assets/audio/batida_martelo_2.wav"),
+            new Audio("assets/audio/batida_martelo_3.wav"),
         ],
     }
 
@@ -56,6 +45,8 @@ function setup() {
     jogo.yInicialMapa = windowHeight / 2 - windowHeight / 2.3;
     // jogo.yFinalMapa = windowHeight - 77; // ERRADO!!!
     jogo.yFinalMapa = windowHeight - windowHeight * 0.07;
+
+    MudarFase(jogo.fase);
 
     jogo.player = { 
         x: jogo.xFinalMapa/2+30*jogo.escala, y: jogo.yFinalMapa/2, width: (windowWidth / 20), height: (windowHeight / 10),
@@ -125,7 +116,7 @@ function draw() {
 //MENU ----------------------------------------------------------------------------------------------------------->
 function PreloadMenu()
 {
-    jogo.mapasImg[0] = mapa1 = loadImage("../assets/imagens/mapas/mapaMenu.png");
+    jogo.mapasImg[0] = mapa1 = loadImage("assets/imagens/mapas/mapaMenu.png");
 }
 
 function SetupMenu()
@@ -180,29 +171,29 @@ function DrawMenu()
 
         // fill(0, 0, 0);
         // rect(jogo.xInicialMapa, jogo.yFinalMapa/2 - jogo.yFinalMapa/15, 35*jogo.escala, 200*jogo.escala);
-        let portaEsquerda = {x: jogo.xInicialMapa, y: jogo.yFinalMapa/2 - jogo.yFinalMapa/15, width: 35 * jogo.escala, height: 200 * jogo.escala};
+        // let portaEsquerda = {x: jogo.xInicialMapa, y: jogo.yFinalMapa/2 - jogo.yFinalMapa/15, width: 35 * jogo.escala, height: 200 * jogo.escala};
 
         // fill(0, 0, 0);
         // rect(jogo.xFinalMapa/2.02, jogo.yInicialMapa, 200*jogo.escala, 35*jogo.escala);
-        let portaMeio = {x: jogo.xFinalMapa/2, y: jogo.yInicialMapa, width: 200*jogo.escala, height: 35*jogo.escala};
+        // let portaMeio = {x: jogo.xFinalMapa/2, y: jogo.yInicialMapa, width: 200*jogo.escala, height: 35*jogo.escala};
 
         // fill(0, 0, 0);
         // rect(jogo.xFinalMapa - 35, jogo.yFinalMapa/2 - jogo.yFinalMapa/15, 35*jogo.escala, 200*jogo.escala);
         let portaDireita = {x: jogo.xFinalMapa - 35, y: jogo.yFinalMapa / 2 - jogo.yFinalMapa/15, width: 35*jogo.escala, height: 200*jogo.escala};
 
         // Verifica a colisão com as portas para mudar fase
-        if (Colidiu(jogo.player, portaEsquerda))
-        {
-            MudarFase("fase1");
-            jogo.player.x = windowWidth / 2 - 50;
-            jogo.player.y = jogo.yFinalMapa - jogo.player.height;
-        }
-        else if (Colidiu(jogo.player, portaMeio))
-        {
-            MudarFase("fase2");
-            jogo.player.y = jogo.xFinalMapa/2 - jogo.player.width/2;
-        }
-        else if (Colidiu(jogo.player, portaDireita)) 
+        // if (Colidiu(jogo.player, portaEsquerda))
+        // {
+        //     MudarFase("fase1");
+        //     jogo.player.x = windowWidth / 2 - 50;
+        //     jogo.player.y = jogo.yFinalMapa - jogo.player.height;
+        // }
+        // else if (Colidiu(jogo.player, portaMeio))
+        // {
+        //     MudarFase("fase2");
+        //     jogo.player.y = jogo.xFinalMapa/2 - jogo.player.width/2;
+        // }
+        if (Colidiu(jogo.player, portaDireita)) 
         {
             MudarFase("preFase1");
             tutorial.ativo = true;
@@ -262,18 +253,18 @@ function PreloadPause()
 
 function SetupPause()
 {
-    pause.background = loadImage("../assets/imagens/pause/background2.png");
+    pause.background = loadImage("assets/imagens/pause/background2.png");
     pause.width = 500 * jogo.escala
     pause.height = 600 * jogo.escala
     pause.x = (width / 2) - (pause.width / 2)
     pause.y = (height / 2) - (pause.height / 2)
 
-    pause.btnImg = loadImage("../assets/imagens/pause/btnImg.png");
+    pause.btnImg = loadImage("assets/imagens/pause/btnImg.png");
     pause.btnWidth = 150 * jogo.escala
     pause.btnHeight = 50 * jogo.escala
 
     pause.txtTamanho = 20 * jogo.escala
-    pause.txtFonte = loadFont("../assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf")
+    pause.txtFonte = loadFont("assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf")
 
     pause.titulo.tamanho = 50 * jogo.escala
     pause.titulo.x = pause.x + (pause.width / 6)
@@ -285,7 +276,7 @@ function SetupPause()
     // ((125 * jogo.escala) / 2)) -> tamanho do botão dividido por 2 para finalmente achar o meio certinho do menu alinhado com o botão
 
     // let textoTamanho = 20 * jogo.escala
-    // let textoFonte = loadFont("../assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf")
+    // let textoFonte = loadFont("assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf")
 
     pause.botaoContinuar.width = pause.btnWidth
     pause.botaoContinuar.height = pause.btnHeight
@@ -347,15 +338,15 @@ function DrawPause()
 function PreloadPreFase1() 
 {
     // Carrega a imagem do mapa1
-    jogo.mapasImg[1] = mapaFase1 = loadImage("../assets/imagens/mapas/mapaFase1.png");
-    // jogo.mapasImg[1] = mapaFase1 = loadImage("../assets/imagens/mapas/mapaPrototipo.png");
-    tutorial.imagensFase1[0] = loadImage("../assets/imagens/tutorial/tutorialFase1_1.png");
-    tutorial.imagensFase1[1] = loadImage("../assets/imagens/tutorial/tutorialFase1_2.png");
-    tutorial.imagensFase1[2] = loadImage("../assets/imagens/tutorial/tutorialFase1_3.png");
-    tutorial.imagensFase1[3] = loadImage("../assets/imagens/tutorial/tutorialFase1_4.png");
-    tutorial.imagensFase1[4] = loadImage("../assets/imagens/tutorial/tutorialFase1_5.png");
-    tutorial.imagensFase1[5] = loadImage("../assets/imagens/tutorial/tutorialFase1_6.png");
-    fase1.placaImg = loadImage("../assets/imagens/fase1/placa.png")
+    jogo.mapasImg[1] = mapaFase1 = loadImage("assets/imagens/mapas/mapaFase1.png");
+    // jogo.mapasImg[1] = mapaFase1 = loadImage("assets/imagens/mapas/mapaPrototipo.png");
+    tutorial.imagensFase1[0] = loadImage("assets/imagens/tutorial/tutorialFase1_1.png");
+    tutorial.imagensFase1[1] = loadImage("assets/imagens/tutorial/tutorialFase1_2.png");
+    tutorial.imagensFase1[2] = loadImage("assets/imagens/tutorial/tutorialFase1_3.png");
+    tutorial.imagensFase1[3] = loadImage("assets/imagens/tutorial/tutorialFase1_4.png");
+    tutorial.imagensFase1[4] = loadImage("assets/imagens/tutorial/tutorialFase1_5.png");
+    tutorial.imagensFase1[5] = loadImage("assets/imagens/tutorial/tutorialFase1_6.png");
+    fase1.placaImg = loadImage("assets/imagens/fase1/placa.png")
 }
 
 function SetupPreFase1()
@@ -424,29 +415,29 @@ function DrawPreFase1()
 //FASE 1 --------------------------------------------------------------------------------------------------------->
 function PreloadFase1()
 {
-    // fase1.pranchetaLixo = loadImage("../assets/imagens/fase1/pranchetaLixo.png");
-    fase1.relogio = loadImage("../assets/imagens/fase1/relogio.png");
+    // fase1.pranchetaLixo = loadImage("assets/imagens/fase1/pranchetaLixo.png");
+    fase1.relogio = loadImage("assets/imagens/fase1/relogio.png");
 
     // Carrega as imagens das lixeiras
     fase1.lixeiras_img = [
-        loadImage("../assets/imagens/fase1/lixeiras/lixeiraVermelha.png"),
-        loadImage("../assets/imagens/fase1/lixeiras/lixeiraAzul.png"),
-        loadImage("../assets/imagens/fase1/lixeiras/lixeiraAmarela.png"),
-        loadImage("../assets/imagens/fase1/lixeiras/lixeiraVerde.png"),
-        loadImage("../assets/imagens/fase1/lixeiras/lixeiraMarrom.png"),
-        loadImage("../assets/imagens/fase1/lixeiras/lixeiraCinza.png")
+        loadImage("assets/imagens/fase1/lixeiras/lixeiraVermelha.png"),
+        loadImage("assets/imagens/fase1/lixeiras/lixeiraAzul.png"),
+        loadImage("assets/imagens/fase1/lixeiras/lixeiraAmarela.png"),
+        loadImage("assets/imagens/fase1/lixeiras/lixeiraVerde.png"),
+        loadImage("assets/imagens/fase1/lixeiras/lixeiraMarrom.png"),
+        loadImage("assets/imagens/fase1/lixeiras/lixeiraCinza.png")
     ];
 
     fase1.obstaculos_img = [
-        loadImage("../assets/imagens/fase1/obstaculos/gangorraPixel.png"),
-        loadImage("../assets/imagens/fase1/obstaculos/escorregadorPixel.png"),
-        loadImage("../assets/imagens/fase1/obstaculos/gaiolaLabirintoV1Pixel.png"),
-        loadImage("../assets/imagens/fase1/lixeiras/lixeiraVerde.png"),
-        loadImage("../assets/imagens/fase1/lixeiras/lixeiraMarrom.png")
+        loadImage("assets/imagens/fase1/obstaculos/gangorraPixel.png"),
+        loadImage("assets/imagens/fase1/obstaculos/escorregadorPixel.png"),
+        loadImage("assets/imagens/fase1/obstaculos/gaiolaLabirintoV1Pixel.png"),
+        loadImage("assets/imagens/fase1/lixeiras/lixeiraVerde.png"),
+        loadImage("assets/imagens/fase1/lixeiras/lixeiraMarrom.png")
     ];
 
     /*
-    // Sorteia em uma lista os diretórios das ../imagens dos lixos pixel art
+    // Sorteia em uma lista os diretórios das imagens dos lixos pixel art
     lixosPixelImg = [
         lixo1 = SortearLixoPixel(),
         lixo2 = SortearLixoPixel(),
@@ -461,88 +452,88 @@ function PreloadFase1()
     ];*/
 
     // fase1.lixosPixelImgCarregados = [
-    //     loadImage("../assets/imagens/fase1/lixos/bolinhaDePapelPixel.png"),
-    //     loadImage("../assets/imagens/fase1/lixos/garrafaVidroPixel.png"),
-    //     loadImage("../assets/imagens/fase1/lixos/bananaPixel.png"),
-    //     loadImage("../assets/imagens/fase1/lixos/bananaPodrePixel.png"),
-    //     loadImage("../assets/imagens/fase1/lixos/garrafaDePlasticoPixel.png"),
-    //     loadImage("../assets/imagens/fase1/lixos/placaDeMetalPixel.png"),
-    //     loadImage("../assets/imagens/fase1/lixos/pilhaPixel.png"),
+    //     loadImage("assets/imagens/fase1/lixos/bolinhaDePapelPixel.png"),
+    //     loadImage("assets/imagens/fase1/lixos/garrafaVidroPixel.png"),
+    //     loadImage("assets/imagens/fase1/lixos/bananaPixel.png"),
+    //     loadImage("assets/imagens/fase1/lixos/bananaPodrePixel.png"),
+    //     loadImage("assets/imagens/fase1/lixos/garrafaDePlasticoPixel.png"),
+    //     loadImage("assets/imagens/fase1/lixos/placaDeMetalPixel.png"),
+    //     loadImage("assets/imagens/fase1/lixos/pilhaPixel.png"),
     // ];
 
     fase1.lixosImgCarregados.pixel.papel = [
-        loadImage("../assets/imagens/fase1/lixos/pixel/bolinhaDePapelPixel.png"),
-        loadImage("../assets/imagens/fase1/lixos/pixel/caixaDePapelaoPixel.png"),
+        loadImage("assets/imagens/fase1/lixos/pixel/bolinhaDePapelPixel.png"),
+        loadImage("assets/imagens/fase1/lixos/pixel/caixaDePapelaoPixel.png"),
     ]
 
     fase1.lixosImgCarregados.pixel.vidro = [
-        loadImage("../assets/imagens/fase1/lixos/pixel/garrafaVidroPixel.png"),
+        loadImage("assets/imagens/fase1/lixos/pixel/garrafaVidroPixel.png"),
     ]
 
     fase1.lixosImgCarregados.pixel.organico = [
-        loadImage("../assets/imagens/fase1/lixos/pixel/bananaPixel.png"),
-        loadImage("../assets/imagens/fase1/lixos/pixel/bananaPodrePixel.png"),
-        loadImage("../assets/imagens/fase1/lixos/pixel/macaComidaPixel.png"),
+        loadImage("assets/imagens/fase1/lixos/pixel/bananaPixel.png"),
+        loadImage("assets/imagens/fase1/lixos/pixel/bananaPodrePixel.png"),
+        loadImage("assets/imagens/fase1/lixos/pixel/macaComidaPixel.png"),
     ]
 
     fase1.lixosImgCarregados.pixel.plastico = [
-        loadImage("../assets/imagens/fase1/lixos/pixel/garrafaDePlasticoPixel.png"),
-        loadImage("../assets/imagens/fase1/lixos/pixel/copoDePlasticoPixel.png"),
+        loadImage("assets/imagens/fase1/lixos/pixel/garrafaDePlasticoPixel.png"),
+        loadImage("assets/imagens/fase1/lixos/pixel/copoDePlasticoPixel.png"),
     ]
 
     fase1.lixosImgCarregados.pixel.metal = [
-        loadImage("../assets/imagens/fase1/lixos/pixel/placaDeMetalPixel.png"),
-        loadImage("../assets/imagens/fase1/lixos/pixel/latinhaPixel.png"),
+        loadImage("assets/imagens/fase1/lixos/pixel/placaDeMetalPixel.png"),
+        loadImage("assets/imagens/fase1/lixos/pixel/latinhaPixel.png"),
     ]
 
     fase1.lixosImgCarregados.pixel.naoReciclavel = [
-        loadImage("../assets/imagens/fase1/lixos/pixel/pilhaPixel.png"),
-        loadImage("../assets/imagens/fase1/lixos/pixel/chicleteMascadoPixel.png"),
+        loadImage("assets/imagens/fase1/lixos/pixel/pilhaPixel.png"),
+        loadImage("assets/imagens/fase1/lixos/pixel/chicleteMascadoPixel.png"),
     ]
     
-    // Carrega as ../imagens dos lixos reais
+    // Carrega as imagens dos lixos reais
     // fase1.lixosReaisCarregados = [
-    //     loadImage("../assets/imagens/fase1/lixos/bolinhaDePapel.png"), //0
-    //     loadImage("../assets/imagens/fase1/lixos/garrafaVidro.png"), //1
-    //     loadImage("../assets/imagens/fase1/lixos/banana.png"), //2
-    //     loadImage("../assets/imagens/fase1/lixos/bananaPodre.png"), //3
-    //     loadImage("../assets/imagens/fase1/lixos/garrafaDePlastico.png"), //4
-    //     loadImage("../assets/imagens/fase1/lixos/placaDeMetalPixel.png"), //5
-    //     loadImage("../assets/imagens/fase1/lixos/pilha.png"), //6
+    //     loadImage("assets/imagens/fase1/lixos/bolinhaDePapel.png"), //0
+    //     loadImage("assets/imagens/fase1/lixos/garrafaVidro.png"), //1
+    //     loadImage("assets/imagens/fase1/lixos/banana.png"), //2
+    //     loadImage("assets/imagens/fase1/lixos/bananaPodre.png"), //3
+    //     loadImage("assets/imagens/fase1/lixos/garrafaDePlastico.png"), //4
+    //     loadImage("assets/imagens/fase1/lixos/placaDeMetalPixel.png"), //5
+    //     loadImage("assets/imagens/fase1/lixos/pilha.png"), //6
     // ]
 
     fase1.lixosImgCarregados.reais.papel = [
-        loadImage("../assets/imagens/fase1/lixos/reais/bolinhaDePapel.png"),
-        loadImage("../assets/imagens/fase1/lixos/reais/caixaDePapelao.png"),
+        loadImage("assets/imagens/fase1/lixos/reais/bolinhaDePapel.png"),
+        loadImage("assets/imagens/fase1/lixos/reais/caixaDePapelao.png"),
     ]
 
     fase1.lixosImgCarregados.reais.vidro = [
-        loadImage("../assets/imagens/fase1/lixos/reais/garrafaVidro.png"),
+        loadImage("assets/imagens/fase1/lixos/reais/garrafaVidro.png"),
     ]
 
     fase1.lixosImgCarregados.reais.organico = [
-        loadImage("../assets/imagens/fase1/lixos/reais/banana.png"),
-        loadImage("../assets/imagens/fase1/lixos/reais/bananaPodre.png"),
-        loadImage("../assets/imagens/fase1/lixos/reais/macaComida.png"),
+        loadImage("assets/imagens/fase1/lixos/reais/banana.png"),
+        loadImage("assets/imagens/fase1/lixos/reais/bananaPodre.png"),
+        loadImage("assets/imagens/fase1/lixos/reais/macaComida.png"),
     ]
 
     fase1.lixosImgCarregados.reais.plastico = [
-        loadImage("../assets/imagens/fase1/lixos/reais/garrafaDePlastico.png"),
-        loadImage("../assets/imagens/fase1/lixos/reais/copoDePlastico.png"),
+        loadImage("assets/imagens/fase1/lixos/reais/garrafaDePlastico.png"),
+        loadImage("assets/imagens/fase1/lixos/reais/copoDePlastico.png"),
     ]
 
     fase1.lixosImgCarregados.reais.metal = [
-        loadImage("../assets/imagens/fase1/lixos/reais/placaDeMetal.png"),
-        loadImage("../assets/imagens/fase1/lixos/reais/latinha.png"),
+        loadImage("assets/imagens/fase1/lixos/reais/placaDeMetal.png"),
+        loadImage("assets/imagens/fase1/lixos/reais/latinha.png"),
     ]
 
     fase1.lixosImgCarregados.reais.naoReciclavel = [
-        loadImage("../assets/imagens/fase1/lixos/reais/pilha.png"),
-        loadImage("../assets/imagens/fase1/lixos/reais/chicleteMascado.png"),
+        loadImage("assets/imagens/fase1/lixos/reais/pilha.png"),
+        loadImage("assets/imagens/fase1/lixos/reais/chicleteMascado.png"),
     ]
 
     // Carrega a imagem do cartaz de procurado
-    fase1.cartazProcuradoLixo = loadImage("../assets/imagens/fase1/cartazProcuradoLixo.png");
+    fase1.cartazProcuradoLixo = loadImage("assets/imagens/fase1/cartazProcuradoLixo.png");
 }
 
 function SetupFase1()
@@ -550,12 +541,12 @@ function SetupFase1()
     fase1.lastItemPego = Lixo.novo(null, null, 0, 0, 0, 0, null, 0);
 
     fase1.lixeiras = [
-        { x: jogo.xInicialMapa*2, y: jogo.yInicialMapa*1.5, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
-        { x: jogo.xFinalMapa/1.9, y: jogo.yInicialMapa*1.5, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
-        { x: jogo.xFinalMapa*0.85, y: jogo.yInicialMapa*1.5, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
-        { x: jogo.xInicialMapa*2, y: jogo.yFinalMapa/1.15, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
-        { x: jogo.xFinalMapa/1.9, y: jogo.yFinalMapa/1.15, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" },
-        { x: jogo.xFinalMapa*0.85, y: jogo.yFinalMapa/1.15, width: 100, height: 100, img: "../assets/imagens/fase1/lixeiras/lixeiraCinza.png", descarte: "nao_reciclavel", class: "lixeira" }
+        { x: jogo.xInicialMapa*2, y: jogo.yInicialMapa*1.5, width: 100, height: 100, img: "assets/imagens/fase1/lixeiras/lixeiraVermelha.png", descarte: "plastico", class: "lixeira" },
+        { x: jogo.xFinalMapa/1.9, y: jogo.yInicialMapa*1.5, width: 100, height: 100, img: "assets/imagens/fase1/lixeiras/lixeiraAzul.png", descarte: "papel", class: "lixeira" },
+        { x: jogo.xFinalMapa*0.85, y: jogo.yInicialMapa*1.5, width: 100, height: 100, img: "assets/imagens/fase1/lixeiras/lixeiraAmarela.png", descarte: "metal", class: "lixeira" },
+        { x: jogo.xInicialMapa*2, y: jogo.yFinalMapa/1.15, width: 100, height: 100, img: "assets/imagens/fase1/lixeiras/lixeiraVerde.png", descarte: "vidro", class: "lixeira" },
+        { x: jogo.xFinalMapa/1.9, y: jogo.yFinalMapa/1.15, width: 100, height: 100, img: "assets/imagens/fase1/lixeiras/lixeiraMarrom.png", descarte: "organico", class: "lixeira" },
+        { x: jogo.xFinalMapa*0.85, y: jogo.yFinalMapa/1.15, width: 100, height: 100, img: "assets/imagens/fase1/lixeiras/lixeiraCinza.png", descarte: "nao_reciclavel", class: "lixeira" }
     ];
     fase1.obstaculos = [
         CriarObstaculo(),
@@ -615,12 +606,12 @@ function DrawFase1()
         // }
 
         //// Verifica colisão com parede
-        jogo.walls.forEach(wall => {
-            if (Colidiu(jogo.player, wall)) {
-                jogo.player.x = jogo.player.oldX;
-                jogo.player.y = jogo.player.oldY;
-            }
-        })
+        // jogo.walls.forEach(wall => {
+        //     if (Colidiu(jogo.player, wall)) {
+        //         jogo.player.x = jogo.player.oldX;
+        //         jogo.player.y = jogo.player.oldY;
+        //     }
+        // })
 
         // // Verifica a colisão com lixeira
         // fase1.lixeiras.forEach(lixeira => {
@@ -754,14 +745,14 @@ function DrawFase1()
 function PreloadFase2()
 {
     fase2.cadeirasCarregadas = [
-        loadImage("../assets/imagens/fase2/cadeiras/cadeira_0.png"),
-        loadImage("../assets/imagens/fase2/cadeiras/cadeira_1.png"),
-        loadImage("../assets/imagens/fase2/cadeiras/cadeira_2.png"),
-        loadImage("../assets/imagens/fase2/cadeiras/cadeira_2.png"),
-        loadImage("../assets/imagens/fase2/cadeiras/cadeira_4.png"),
-        loadImage("../assets/imagens/fase2/cadeiras/cadeira_4.png"),
-        loadImage("../assets/imagens/fase2/cadeiras/cadeira_6.png"),
-        loadImage("../assets/imagens/fase2/cadeiras/cadeira_7.png"),
+        loadImage("assets/imagens/fase2/cadeiras/cadeira_0.png"),
+        loadImage("assets/imagens/fase2/cadeiras/cadeira_1.png"),
+        loadImage("assets/imagens/fase2/cadeiras/cadeira_2.png"),
+        loadImage("assets/imagens/fase2/cadeiras/cadeira_2.png"),
+        loadImage("assets/imagens/fase2/cadeiras/cadeira_4.png"),
+        loadImage("assets/imagens/fase2/cadeiras/cadeira_4.png"),
+        loadImage("assets/imagens/fase2/cadeiras/cadeira_6.png"),
+        loadImage("assets/imagens/fase2/cadeiras/cadeira_7.png"),
     ]
 }
 
@@ -865,11 +856,11 @@ function DrawFase2()
 
 /*function SortearLixoPixel() {
     let rand = floor(random(5));
-    if (rand === 0) return "../assets/imagens/fase1/lixos/bolinhaDePapelPixel.png";
-    else if (rand === 1) return "../assets/imagens/fase1/lixos/garrafaVidroPixel.png";
-    else if (rand === 2) return "../assets/imagens/fase1/lixos/bananaPixel.png";
-    else if (rand === 3) return "../assets/imagens/fase1/lixos/bananaPodrePixel.png";
-    else return "../assets/imagens/fase1/lixos/garrafaDePlasticoPixel.png";
+    if (rand === 0) return "assets/imagens/fase1/lixos/bolinhaDePapelPixel.png";
+    else if (rand === 1) return "assets/imagens/fase1/lixos/garrafaVidroPixel.png";
+    else if (rand === 2) return "assets/imagens/fase1/lixos/bananaPixel.png";
+    else if (rand === 3) return "assets/imagens/fase1/lixos/bananaPodrePixel.png";
+    else return "assets/imagens/fase1/lixos/garrafaDePlasticoPixel.png";
 }*/
 
 // function DragDrop(a) {
@@ -891,4 +882,3 @@ function DrawFase2()
 }, { once: true });
 
 //<---------------------------------------------------------------------------------------------------------------
-</script>

@@ -8,6 +8,7 @@ const jogo = {
 
     //PLAYER ---------------------------------------------------------------------------------------------------------------->
 
+    nomeUsuario: "",
     player: null,
     playerImg: null,
     playerImgEsquerda: null,

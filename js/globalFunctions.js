@@ -1,11 +1,3 @@
-<?php
-
-require_once __DIR__ . '\..\includes\auth.php';
-
-?>
-
-<script>
-
 //PLAYER ---------------------------------------------------------------------------------------------------------------->
 
 function Movimentar() 
@@ -142,11 +134,11 @@ function TocarSom(sons) {
     sons[rnd].play()
 }
 
-function MudarFase(fase) {
+async function MudarFase(fase) {
     jogo.fase = fase;
     ReiniciarDialogo(tutorial);
 
-    fetch("../includes/salvar_fase.php", {
+    await fetch("includes/salvar_fase.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -155,9 +147,9 @@ function MudarFase(fase) {
     });
 }
 
-function RegistrarPartida(fase) {
+async function RegistrarPartida(fase) {
     if(fase === "fase1") {
-        fetch("../includes/salvar_partida.php", {
+        await fetch("includes/salvar_partida.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -166,6 +158,22 @@ function RegistrarPartida(fase) {
         })
         console.log("Partida Registrada");
     }
+}
+
+async function PegarNome() {
+    const resposta = await fetch("includes/pegar_nome.php");
+    const dados = await resposta.json();
+
+    jogo.nomeUsuario = dados.nome;
+
+    console.log(jogo.nomeUsuario);
+}
+
+async function PegarFase() {
+    const resposta = await fetch("includes/pegar_fase.php");
+    const dados = await resposta.json();
+
+    jogo.fase = dados.fase;
 }
 
 function Interagir(item, itemString) {
@@ -210,7 +218,7 @@ function Dialogo(dialogo) {
 
             switch(texto.incremento) {
                 case 0:
-                    texto.conteudo = "nhoc-nhoc, nhoc-nhoc (Olá <?= $_SESSION['nome'] ?>, eu sou o Castor Robertinho).";
+                    texto.conteudo = "nhoc-nhoc, nhoc-nhoc (Olá "+ jogo.nomeUsuario +", eu sou o Castor Robertinho).";
                     break;
 
                 case 1:
@@ -355,7 +363,7 @@ function Dialogo(dialogo) {
                             break;
 
                         case 7:
-                            texto.conteudo = "Nhoc-Nhoc (Entendido? Vamos la! Boa sorte <?= $_SESSION['nome'] ?>).";
+                            texto.conteudo = "Nhoc-Nhoc (Entendido? Vamos la! Boa sorte"+ jogo.nomeUsuario + ").";
                             texto.ativo = false;
                             break;
 
@@ -590,7 +598,7 @@ function mousePressed() {
             jogo.sairDoJogo = true;
             // setup()
             // MenuPause()
-            window.location.href = "logout.php";
+            window.location.href = "pages/logout.php";
         }
 
         if(MouseNoBotao(mouse, pause)) TocarSom(jogo.som.marteloMenu)
@@ -893,15 +901,15 @@ function CriarLixo() {
     /*lixos[lixos.length - 1].img = lixosPixelImg[lixos.length - 1]; // Adiciona imagem pixel no parametro
     lixos[lixos.length - 1].imgCarregada = lixosPixelImgCarregados[lixos.length - 1]; // Adiciona imagem pixel carregada no parametro
     // Adiciona o tipo do lixo de acordo com as lixeiras existentes
-    if (lixos[lixos.length - 1].img === "../imagens/lixos/bolinhaDePapelPixel.png")
+    if (lixos[lixos.length - 1].img === "imagens/lixos/bolinhaDePapelPixel.png")
         lixos[lixos.length - 1].type = "papel"; // Azul
-    else if (lixos[lixos.length - 1].img === "../imagens/lixos/garrafaVidroPixel.png")
+    else if (lixos[lixos.length - 1].img === "imagens/lixos/garrafaVidroPixel.png")
         lixos[lixos.length - 1].type = "vidro"; // Verde
-    else if (lixos[lixos.length - 1].img === "../imagens/lixos/bananaPixel.png")
+    else if (lixos[lixos.length - 1].img === "imagens/lixos/bananaPixel.png")
         lixos[lixos.length - 1].type = "organico"; // Marrom
-    else if (lixos[lixos.length - 1].img === "../imagens/lixos/bananaPodrePixel.png")
+    else if (lixos[lixos.length - 1].img === "imagens/lixos/bananaPodrePixel.png")
         lixos[lixos.length - 1].type = "organico"; // Marrom
-    else if (lixos[lixos.length - 1].img === "../imagens/lixos/garrafaDePlasticoPixel.png")
+    else if (lixos[lixos.length - 1].img === "imagens/lixos/garrafaDePlasticoPixel.png")
         lixos[lixos.length - 1].type = "plastico"; // Vermelha*/
 
     /*lixos[lixos.length - 1].x = random(lixo_x + 50, (lixo_x + width) - 200);
@@ -1170,5 +1178,3 @@ function PegarCadeira(player_funcao, cadeiras_funcao) {
 //<--------
 
 //<-----------------------------------------------------------------------------------------------------------------------
-
-</script>

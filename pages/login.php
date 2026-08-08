@@ -1,24 +1,20 @@
 <?php
 
-require_once __DIR__ . '\..\repository\UsuarioRepository.php';
-require_once __DIR__ . '\..\repository\PartidaRepository.php';
+require_once __DIR__ . '/../repository/UsuarioRepository.php';
+require_once __DIR__ . '/../repository/PartidaRepository.php';
 
 session_start();
 
-// Se já estiver logado, vai direto para a página principal
-// if (!empty($_SESSION['id_usuario'])) {
-//     header('Location: index.php');
-//     exit;
-// }
-
 $erro = '';
-
+$repo = null;
 $repo = new UsuarioRepository();
+$repoPartida = null;
 $repoPartida = new PartidaRepository();
 $nomeResponsavel = '';
 $nome = '';
 $idade = 1;
 
+$leaderboard = [];
 $leaderboard = $repoPartida->leaderboard();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -42,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['fase'] = 'menu';
             }
 
-            header('Location: index.php');
+            header('Location: ../index.php');
             exit;
         } else {
             try {
@@ -58,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['fase'] = 'menu';
                 }
 
-                header('Location: index.php');
+                header('Location: ../index.php');
                 exit;
             } catch (Exception $e) {
                 $erro = 'Ocorreu um erro ao criar a conta';
@@ -202,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <?php if(!empty($leaderboard[2])): ?>
                     <div class="linha">
-                        <span>3# <?= $leaderboard[2]['responsavel'] ?>/<?= $leaderboard[2]['nome'] ?></span>
+                           <span>3# <?= $leaderboard[2]['responsavel'] ?>/<?= $leaderboard[2]['nome'] ?></span>
                         <span><?= $leaderboard[2]['pontos']?></span>
                     </div>
                     <?php if(!empty($leaderboard[3])): ?>
