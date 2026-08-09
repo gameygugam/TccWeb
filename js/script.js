@@ -9,7 +9,7 @@ function preload() {
     PreloadMenu(); // Pré carrega as imagens do Menu
     PreloadPreFase1();
     PreloadFase1(); // Pré carrega as imagens do Minigame 1
-    PreloadFase2(); // Pré carrega as imagens do Minigame 1
+    // PreloadFase2(); // Pré carrega as imagens do Minigame 1
     PreloadPause(); // Pré carrega as imagens do menu de Pause
 }
 
@@ -70,7 +70,7 @@ async function setup() {
     SetupMenu();
     SetupPreFase1();
     SetupFase1();
-    SetupFase2();
+    // SetupFase2();
     SetupPause();
 }
 
@@ -83,8 +83,8 @@ function draw() {
         DrawPreFase1(); // Desenha o PreMinigame 1
     else if(jogo.fase === "fase1")
         DrawFase1(); // Desenha o Minigame 1
-    else if(jogo.fase === "fase2")
-        DrawFase2(); // Desenha o Minigame 2
+    // else if(jogo.fase === "fase2")
+    //     DrawFase2(); // Desenha o Minigame 2
 
     if(pause.menuPause) {
         filter(BLUR, 2);

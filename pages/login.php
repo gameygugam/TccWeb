@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form method="POST" action="login.php" class="login-form">
     <div class="campo">
 
-        <span class="iconepixel"></span>
+        <span class="iconepixel"><img src="../assets/imagens/login/responsavelIcon.png" class="icone-img"></span>
 
         <div>
 
@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="campo">
 
-        <span class="iconepixel"></span>
+        <span class="iconepixel"><img src="../assets/imagens/login/userIcon2.png" class="icone-img"></span>
 
         <div>
 
@@ -153,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="campo">
 
-        <span class="iconepixel"></span>
+        <span class="iconepixel"><img src="../assets/imagens/login/idadeIcon.png" class="idade-img"></span>
 
         <div>
 

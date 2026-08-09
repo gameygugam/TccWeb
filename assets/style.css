@@ -177,8 +177,8 @@ FORM
 
 .iconepixel{
 
-    width:38px;
-    height:38px;
+    width:50px;
+    height:50px;
 
     background:#674022;
 
@@ -189,7 +189,22 @@ FORM
 
     border-radius:6px;
 
+    margin-top: 1rem;
+
     flex-shrink:0;
+}
+
+.icone-img{
+
+    width:85%;
+    margin-top: 0.2rem;
+    margin-left: 0.22rem;
+}
+
+.idade-img{
+    width:70%;
+    margin-top: 0.2rem;
+    margin-left: 0.4rem;
 }
 
 /*==========================
