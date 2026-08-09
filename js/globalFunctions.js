@@ -22,6 +22,7 @@ function Movimentar()
         jogo.player.y += dir.y;   
     }
 }
+
 // <--------------------------------------------------------------------------
 
 //FUNÇÃO MOVIMENTAR + DASH ------------------------------------------>
@@ -238,6 +239,10 @@ function Dialogo(dialogo) {
                     break;
 
                 case 5:
+                    texto.conteudo = "(Para pausar o jogo basta pressionar a tecla 'esc').";
+                    break;
+
+                case 6:
                     texto.conteudo = "(A nossa primeira tarefa está no caminho da direita. Vamos la!).";
                     break;
 
@@ -339,7 +344,7 @@ function Dialogo(dialogo) {
                             break;
                         
                         case 1:
-                            texto.conteudo = "(Como você observou antes, os lixos precisam ser descartados nas suas respectivas lixeiras).";
+                            texto.conteudo = "(Como você observou antes, os lixos precisam ser descartados nas lixeiras com o mesmo material).";
                             break;
                         
                         case 2:
@@ -379,6 +384,39 @@ function Dialogo(dialogo) {
                     break;
             }
             break;
+
+        case "fimFase1":
+            texto.ativo = true;
+            CaixaDialogo();
+
+            switch(texto.incremento) {
+                case 0:
+                    texto.conteudo = "nhec-nhec, nhec-nhec (Parabéns, você conseguiu completar a nossa primeira missão!)";
+                    break;
+                
+                case 1:
+                    texto.conteudo = "(Você fez " + fase1.pontos + " pontos, mas se quiser continuar jogando, fique a vontade).";
+                    break;
+
+                case 2:
+                    texto.conteudo = "Nhoc-nhoc (Se quiser, você pode ver o placar de todos os jogadores na tela de login).";
+                    break;
+
+                case 3:
+                    texto.conteudo = "(Basta apertar a tecla 'esc' para abrir o menu de pause e clicar em sair).";
+                    break;
+
+                default:
+                    fase1.terminou = false;
+                    texto.ativo = false;
+                    ReiniciarDialogo(tutorial);
+                    break;
+            }
+            Digitar();
+            pop();
+            break;
+        
+        break;
     }
 }
 
@@ -423,13 +461,14 @@ function TimerTick(fase_funcao){
     if(!jogo.pause){
         if (fase_funcao === "fase1"){
             jogo.timer.ticks++;
-            if (jogo.timer.ticks % 80 === 0) jogo.timer.segundos--;
+            if (jogo.timer.ticks % 10 === 0) jogo.timer.segundos--;
             if (jogo.timer.segundos <= 0) {
-                MudarFase("preFase1");
-                RegistrarPartida("fase1");
+                fase1.terminou = true;
                 fase1.is_fase_carregada = false;
                 fase1.obstaculos = [];
                 fase1.lixos = [];
+                MudarFase("preFase1");
+                RegistrarPartida("fase1");
             }
         }
 
@@ -501,12 +540,13 @@ function keyPressed()
         MenuPause()
     }
 
-    if (jogo.fase === "preFase1" && Colidiu(jogo.player, fase1.placa) && (key === "e" || key === "E")) {
-        MudarFase("fase1");
+    if (jogo.fase === "preFase1" && Colidiu(jogo.player, fase1.placa) && (key === "e" || key === "E") && jogo.cooldownInteragir <= 0) {
         jogo.player.x = jogo.xFinalMapa / 2;
         jogo.player.y = jogo.yFinalMapa / 2;
         ReiniciarDialogo(tutorial);
         tutorial.ativo = true;
+        jogo.cooldownInteragir = 15;
+        MudarFase("fase1");
     };
 
     if (jogo.fase === "fase1" && !fase1.pegouLixo && !jogo.pause && (key === "e" || key === "E") && jogo.cooldownInteragir <= 0) {

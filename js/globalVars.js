@@ -100,6 +100,9 @@ const menu = {
     botoes: [],
 
     //<-----------------------------------------------------------------------------------------------------------------------
+    placaImg: null,
+    cone1Img: null,
+    cone2Img: null,
 };
 
 const fase1 = {
@@ -157,6 +160,8 @@ const fase1 = {
 
     placa: null,
     placaImg: null,
+
+    terminou: false,
 };
 
 const fase2 = {

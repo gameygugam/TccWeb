@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div>
 
-            <label class="placa-label" for="nomeResponsavel">Primeiro Nome Responsável</label>
+            <label class="placa-label" for="nomeResponsavel">Primeiro nome do responsável</label>
 
             <input
                 type="text"
@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div>
 
-            <label class="placa-label" for="nome">Primeiro Nome</label>
+            <label class="placa-label" for="nome">Primeiro nome</label>
 
 
             <input
