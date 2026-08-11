@@ -1,5 +1,7 @@
 //PLAYER ---------------------------------------------------------------------------------------------------------------->
 
+
+
 function Movimentar() 
 {
     if(!jogo.pause) {
@@ -491,7 +493,7 @@ function TimerTick(fase_funcao){
     if(!jogo.pause){
         if (fase_funcao === "fase1"){
             jogo.timer.ticks++;
-            if (jogo.timer.ticks % 10 === 0) jogo.timer.segundos--;
+            if (jogo.timer.ticks % jogo.FPS === 0) jogo.timer.segundos--;
             if (jogo.timer.segundos <= 0) {
                 fase1.terminou = true;
                 fase1.is_fase_carregada = false;
@@ -504,7 +506,7 @@ function TimerTick(fase_funcao){
 
         else if (fase_funcao === "fase2"){
             jogo.timer.ticks++;
-            if (jogo.timer.ticks % 60 === 0) {
+            if (jogo.timer.ticks % jogo.FPS === 0) {
                 jogo.timer.ticks = 0;
                 jogo.timer.segundos++;
             }

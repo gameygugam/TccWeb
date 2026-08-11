@@ -5,6 +5,7 @@ const jogo = {
     escala: 0, //A escala para a responsividade do site
     contagemIniciar: 4, //Contagem para iniciar a fase
     pause: false, //Se o jogo está pausado ou não
+    FPS: 80,
 
     //PLAYER ---------------------------------------------------------------------------------------------------------------->
 
