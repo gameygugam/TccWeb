@@ -408,7 +408,7 @@ function DrawPreFase1()
 
         if (Colidiu(jogo.player, portaEsquerda))
         {
-            MudarFase("menu");
+            MudarFase("menu");  
             tutorial.ativo = false;
             jogo.player.x = jogo.xFinalMapa - jogo.player.width*2;
         }
@@ -452,31 +452,6 @@ function PreloadFase1()
         loadImage("assets/imagens/fase1/lixeiras/lixeiraVerde.png"),
         loadImage("assets/imagens/fase1/lixeiras/lixeiraMarrom.png")
     ];
-
-    /*
-    // Sorteia em uma lista os diretórios das imagens dos lixos pixel art
-    lixosPixelImg = [
-        lixo1 = SortearLixoPixel(),
-        lixo2 = SortearLixoPixel(),
-        lixo3 = SortearLixoPixel(),
-        lixo4 = SortearLixoPixel(),
-        lixo5 = SortearLixoPixel(),
-        lixo6 = SortearLixoPixel(),
-        lixo7 = SortearLixoPixel(),
-        lixo8 = SortearLixoPixel(),
-        lixo9 = SortearLixoPixel(),
-        lixo10 = SortearLixoPixel()
-    ];*/
-
-    // fase1.lixosPixelImgCarregados = [
-    //     loadImage("assets/imagens/fase1/lixos/bolinhaDePapelPixel.png"),
-    //     loadImage("assets/imagens/fase1/lixos/garrafaVidroPixel.png"),
-    //     loadImage("assets/imagens/fase1/lixos/bananaPixel.png"),
-    //     loadImage("assets/imagens/fase1/lixos/bananaPodrePixel.png"),
-    //     loadImage("assets/imagens/fase1/lixos/garrafaDePlasticoPixel.png"),
-    //     loadImage("assets/imagens/fase1/lixos/placaDeMetalPixel.png"),
-    //     loadImage("assets/imagens/fase1/lixos/pilhaPixel.png"),
-    // ];
 
     fase1.lixosImgCarregados.pixel.papel = [
         loadImage("assets/imagens/fase1/lixos/pixel/bolinhaDePapelPixel.png"),
@@ -646,10 +621,10 @@ function DrawFase1()
             pop();
         })
 
-        jogo.walls.forEach(wall => {
-            fill(0, 255, 0);
-            rect(wall.x, wall.y, wall.width, wall.height);
-        });
+        // jogo.walls.forEach(wall => {
+        //     fill(0, 255, 0);
+        //     rect(wall.x, wall.y, wall.width, wall.height);
+        // });
 
         ////Desenha personagem
         image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);

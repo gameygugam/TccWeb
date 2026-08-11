@@ -368,7 +368,7 @@ function Dialogo(dialogo) {
                             break;
 
                         case 7:
-                            texto.conteudo = "Nhoc-Nhoc (Entendido? Vamos la! Boa sorte"+ jogo.nomeUsuario + ").";
+                            texto.conteudo = "Nhoc-Nhoc (Entendido? Vamos la! Boa sorte "+ jogo.nomeUsuario + ").";
                             texto.ativo = false;
                             break;
 
@@ -389,34 +389,64 @@ function Dialogo(dialogo) {
             texto.ativo = true;
             CaixaDialogo();
 
-            switch(texto.incremento) {
-                case 0:
-                    texto.conteudo = "nhec-nhec, nhec-nhec (Parabéns, você conseguiu completar a nossa primeira missão!)";
-                    break;
-                
-                case 1:
-                    texto.conteudo = "(Você fez " + fase1.pontos + " pontos, mas se quiser continuar jogando, fique a vontade).";
-                    break;
+            if(fase1.pontos >= 40) 
+            {
+                switch(texto.incremento) {
+                    case 0:
+                        texto.conteudo = "nhec-nhec, nhec-nhec (Parabéns, você conseguiu completar a nossa primeira missão!)";
+                        break;
+                    
+                    case 1:
+                        texto.conteudo = "(Você fez " + fase1.pontos + " pontos, mas se quiser continuar jogando, fique a vontade).";
+                        break;
 
-                case 2:
-                    texto.conteudo = "Nhoc-nhoc (Se quiser, você pode ver o placar de todos os jogadores na tela de login).";
-                    break;
+                    case 2:
+                        texto.conteudo = "Nhoc-nhoc (Se quiser, você pode ver o placar de todos os jogadores na tela de login).";
+                        break;
 
-                case 3:
-                    texto.conteudo = "(Basta apertar a tecla 'esc' para abrir o menu de pause e clicar em sair).";
-                    break;
+                    case 3:
+                        texto.conteudo = "(Basta apertar a tecla 'esc' para abrir o menu de pause e clicar em sair).";
+                        break;
 
-                default:
-                    fase1.terminou = false;
-                    texto.ativo = false;
-                    ReiniciarDialogo(tutorial);
-                    break;
+                    default:
+                        fase1.terminou = false;
+                        texto.ativo = false;
+                        ReiniciarDialogo(tutorial);
+                        break;
+                }
+                Digitar();
+                pop();
+                break;
             }
-            Digitar();
-            pop();
-            break;
+            else {
+                switch(texto.incremento) {
+                    case 0:
+                        texto.conteudo = "nhec-nhec, nhec-nhec (Que pena, você não conseguiu atingir nossa meta)";
+                        break;
+                    
+                    case 1:
+                        texto.conteudo = "(Você fez " + fase1.pontos + " pontos, se quiser você pode tentar de novo).";
+                        break;
+
+                    case 2:
+                        texto.conteudo = "Nhoc-nhoc (Você pode ver o placar de todos os jogadores na tela de login).";
+                        break;
+
+                    case 3:
+                        texto.conteudo = "(Basta apertar a tecla 'esc' para abrir o menu de pause e clicar em sair).";
+                        break;
+
+                    default:
+                        fase1.terminou = false;
+                        texto.ativo = false;
+                        ReiniciarDialogo(tutorial);
+                        break;
+                }
+                Digitar();
+                pop();
+                break;
+            }
         
-        break;
     }
 }
 
@@ -523,7 +553,7 @@ function keyPressed2(fase) {
 
 function keyPressed()
 {
-    if (tutorial.ativo && !texto.ativo &&(key === "e" || key === "E")) tutorial.incremento++;
+    if (tutorial.ativo && !texto.ativo && (key === "e" || key === "E")) tutorial.incremento++;
     if (texto.ativo && (key === "e" || key === "E")) {
         texto.letras = 0;
         texto.incremento++;
@@ -541,12 +571,14 @@ function keyPressed()
     }
 
     if (jogo.fase === "preFase1" && Colidiu(jogo.player, fase1.placa) && (key === "e" || key === "E") && jogo.cooldownInteragir <= 0) {
+        // console.log("clicou");
         jogo.player.x = jogo.xFinalMapa / 2;
         jogo.player.y = jogo.yFinalMapa / 2;
         ReiniciarDialogo(tutorial);
-        tutorial.ativo = true;
+        // console.log(tutorial.ativo);
         jogo.cooldownInteragir = 15;
         MudarFase("fase1");
+        tutorial.ativo = true;
     };
 
     if (jogo.fase === "fase1" && !fase1.pegouLixo && !jogo.pause && (key === "e" || key === "E") && jogo.cooldownInteragir <= 0) {
