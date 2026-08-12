@@ -93,7 +93,7 @@ class PartidaRepository {
             FROM usuario u, partida p
             WHERE u.id = p.id_usuario
             GROUP BY u.nome
-            ORDER BY p.pontuacao DESC LIMIT 5'
+            ORDER BY MAX(p.pontuacao) DESC LIMIT 5'
         );
         $stmt->execute();
         $leaderboard = [];
