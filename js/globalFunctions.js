@@ -95,8 +95,8 @@ function Dash(){
     else if (jogo.player.dash_cooldown <= 40 && jogo.player.dash_cooldown >= 30) fill(0, 255, 0)
     else if (jogo.player.dash_cooldown < 30) fill(255, 0, 0)
 
-    textFont(texto.fonte);
-    text(jogo.player.dash_cooldown, 50, windowHeight - 50);
+    // textFont(texto.fonte);
+    // text(jogo.player.dash_cooldown, 50, windowHeight - 50);
 }
 
 function AnimacaoStandBy(){
