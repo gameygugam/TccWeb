@@ -141,6 +141,8 @@ function DrawMenu()
     if(tutorial.ativo) {
         // Desenha o player
         image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
+        image(menu.cone1Img, jogo.xFinalMapa/2-25*jogo.escala, jogo.yInicialMapa+25*jogo.escala, 250*jogo.escala, 100*jogo.escala);
+        image(menu.cone2Img, jogo.xInicialMapa+25*jogo.escala, jogo.yFinalMapa/2-150*jogo.escala, 70*jogo.escala, 325*jogo.escala);
         image(menu.placaImg, jogo.xFinalMapa*0.85, jogo.yFinalMapa*0.25, 150 * jogo.escala, 150 * jogo.escala);
 
         Dialogo("menu");
@@ -154,9 +156,9 @@ function DrawMenu()
         Movimentar();
 
         // Desenha os cones
-        image(menu.cone1Img, jogo.xFinalMapa/2-25*jogo.escala, jogo.yInicialMapa+25*jogo.escala, 250*jogo.escala, 100*jogo.escala)
+        image(menu.cone1Img, jogo.xFinalMapa/2-25*jogo.escala, jogo.yInicialMapa+25*jogo.escala, 250*jogo.escala, 100*jogo.escala);
         
-        image(menu.cone2Img, jogo.xInicialMapa+25*jogo.escala, jogo.yFinalMapa/2-150*jogo.escala, 70*jogo.escala, 325*jogo.escala)
+        image(menu.cone2Img, jogo.xInicialMapa+25*jogo.escala, jogo.yFinalMapa/2-150*jogo.escala, 70*jogo.escala, 325*jogo.escala);
         // Desenha a placa
         image(menu.placaImg, jogo.xFinalMapa*0.85, jogo.yFinalMapa*0.25, 150 * jogo.escala, 150 * jogo.escala);
         // Desenha o player
