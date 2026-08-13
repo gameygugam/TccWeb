@@ -225,7 +225,7 @@ function Dialogo(dialogo) {
                     break;
 
                 case 1:
-                    texto.conteudo = "(Me chamaram para uma missão de limpeza e organização do colégio (Inserir Nome)).";
+                    texto.conteudo = "(Me chamaram para uma missão de limpeza e organização do Parque Internacional dos Castores).";
                     break;
                 
                 case 2:
@@ -245,7 +245,7 @@ function Dialogo(dialogo) {
                     break;
 
                 case 6:
-                    texto.conteudo = "(A nossa primeira tarefa está no caminho da direita. Vamos la!).";
+                    texto.conteudo = "(A nossa tarefa está no caminho da direita. Vamos lá!).";
                     break;
 
                 default:
@@ -342,7 +342,7 @@ function Dialogo(dialogo) {
 
                     switch(texto.incremento) {
                         case 0:
-                            texto.conteudo = "Nhec-Nhec, Nhec-Nhec (Esse é a nossa primeira missão, vamos coletar o lixo!!).";
+                            texto.conteudo = "Nhec-Nhec, Nhec-Nhec (Esse é a nossa missão, vamos coletar o lixo!!).";
                             break;
                         
                         case 1:
@@ -368,7 +368,7 @@ function Dialogo(dialogo) {
                         case 6:
                             texto.conteudo = "(Tome cuidado com os obstáculos no caminho, eles podem te atrapalhar, mas eu sei que você consegue desviar).";
                             break;
-
+//mlz  esteve aquui 
                         case 7:
                             texto.conteudo = "Nhoc-Nhoc (Entendido? Vamos la! Boa sorte "+ jogo.nomeUsuario + ").";
                             texto.ativo = false;
@@ -395,15 +395,15 @@ function Dialogo(dialogo) {
             {
                 switch(texto.incremento) {
                     case 0:
-                        texto.conteudo = "nhec-nhec, nhec-nhec (Parabéns, você conseguiu completar a nossa primeira missão!)";
+                        texto.conteudo = "nhec-nhec, nhec-nhec (Parabéns, você conseguiu completar a missão!)";
                         break;
                     
                     case 1:
-                        texto.conteudo = "(Você fez " + fase1.pontos + " pontos, mas se quiser continuar jogando, fique a vontade).";
+                        texto.conteudo = "(Você fez " + fase1.pontos + " pontos, mas se quiser continuar limpando, fique a vontade).";
                         break;
 
                     case 2:
-                        texto.conteudo = "Nhoc-nhoc (Se quiser, você pode ver o placar de todos os jogadores na tela de login).";
+                        texto.conteudo = "Nhoc-nhoc (Se quiser, você pode ver o placar dos outros castores que também ajudaram na limpeza na tela de login).";
                         break;
 
                     case 3:
@@ -431,7 +431,7 @@ function Dialogo(dialogo) {
                         break;
 
                     case 2:
-                        texto.conteudo = "Nhoc-nhoc (Você pode ver o placar de todos os jogadores na tela de login).";
+                        texto.conteudo = "Nhoc-nhoc (Você pode ver o placar dos outros castores que também ajudaram na limpeza na tela de login).";
                         break;
 
                     case 3:
