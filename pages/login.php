@@ -211,6 +211,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span>5# <?= $leaderboard[4]['responsavel'] ?>/<?= $leaderboard[4]['nome'] ?></span>
                                 <span><?= $leaderboard[4]['pontos']?></span>
                             </div>
+                            <br>
+                            <?php if(!empty($leaderboard[4])): ?>
+                            <div class="linha">
+                                <span>5# <?= $leaderboard[4]['responsavel'] ?>/<?= $leaderboard[4]['nome'] ?></span>
+                                <span><?= $leaderboard[4]['pontos']?></span>
+                            </div>
+                            <?php endif; ?>
                         <?php endif; ?>
                     <?php endif; ?>
                 <?php endif; ?>

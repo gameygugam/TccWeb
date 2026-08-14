@@ -659,9 +659,11 @@ function mousePressed() {
         }
 
         else if(MouseNoBotao(mouse, pause.botaoReiniciar)) {
-            MudarFase("fase1")
+            if(jogo.fase === "menu") MudarFase("menu")
+            else if(jogo.fase === "preFase1") MudarFase("preFase1")
+        else if(jogo.fase === "fase1") MudarFase("fase1")
             setup()
-            
+            MenuPause()
         }
 
         else if(MouseNoBotao(mouse, pause.botaoOpcoes)) {
