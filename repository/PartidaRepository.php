@@ -102,4 +102,38 @@ class PartidaRepository {
         }
         return $leaderboard;
     }
+
+    public function melhorPartida(int $idUsuario): array {
+        $stmt = $this->pdo->prepare(
+            'SELECT u.nome, u.responsavel, MAX(p.pontuacao) as pontos
+            FROM usuario u, partida p
+            WHERE u.id = p.id_usuario
+			AND p.id_usuario = :idUsuario
+            GROUP BY u.nome
+            ORDER BY MAX(p.pontuacao) DESC LIMIT 1'
+        );
+        $stmt->execute([':idUsuario' => $idUsuario]);
+        $leaderboard = [];
+        foreach ($stmt->fetchAll() as $dados) {
+            $leaderboard[] = $dados;
+        }
+        return $leaderboard;
+    }
+
+    public function ultimaPartida(int $idUsuario): array {
+        $stmt = $this->pdo->prepare(
+            'SELECT u.nome, u.responsavel, MAX(p.pontuacao) as pontos
+            FROM usuario u, partida p
+            WHERE u.id = p.id_usuario
+			AND p.id_usuario = :idUsuario
+            GROUP BY u.nome
+            ORDER BY MAX(p.id) DESC LIMIT 1'
+        );
+        $stmt->execute([':idUsuario' => $idUsuario]);
+        $leaderboard = [];
+        foreach ($stmt->fetchAll() as $dados) {
+            $leaderboard[] = $dados;
+        }
+        return $leaderboard;
+    }
 }

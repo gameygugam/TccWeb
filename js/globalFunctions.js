@@ -403,7 +403,7 @@ function Dialogo(dialogo) {
                         break;
 
                     case 2:
-                        texto.conteudo = "Nhoc-nhoc (Se quiser, você pode ver o placar dos outros castores que também ajudaram na limpeza na tela de login).";
+                        texto.conteudo = "Nhoc-nhoc (Se quiser, você pode ver o placar dos outros castores que também ajudaram na limpeza na tela inicial).";
                         break;
 
                     case 3:

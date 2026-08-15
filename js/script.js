@@ -642,6 +642,8 @@ function DrawFase1()
         AnimacaoRelogio();
         if(!jogo.pause) TimerTick("fase1");
 
+        fase1.ultimaPartida;
+
         if(jogo.timer.start <= 300) {
             filter(BLUR, 1);
 

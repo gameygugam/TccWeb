@@ -17,6 +17,12 @@ $idade = 1;
 $leaderboard = [];
 $leaderboard = $repoPartida->leaderboard();
 
+$ultimaPartida = [];
+if (isset($_SESSION['id_usuario'])) $ultimaPartida = $repoPartida->ultimaPartida($_SESSION['id_usuario']);
+
+$melhorPartida = [];
+if (isset($_SESSION['id_usuario'])) $melhorPartida = $repoPartida->melhorPartida($_SESSION['id_usuario']);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nomeResponsavel = $_POST['nomeResponsavel'];
     $nome = $_POST['nome'];
@@ -188,41 +194,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <?php if(!empty($leaderboard[0])): ?>
             <div class="linha primeiro">
-                <span>1# <?= $leaderboard[0]['responsavel'] ?>/<?= $leaderboard[0]['nome'] ?></span>
+                <span>1# <?= $leaderboard[0]['nome'] ?>/<?= $leaderboard[0]['responsavel'] ?></span>
                 <span><?= $leaderboard[0]['pontos']?></span>
             </div>
             <?php if(!empty($leaderboard[1])): ?>
                 <div class="linha">
-                    <span>2# <?= $leaderboard[1]['responsavel'] ?>/<?= $leaderboard[1]['nome'] ?></span>
+                    <span>2# <?= $leaderboard[1]['nome'] ?>/<?= $leaderboard[1]['responsavel'] ?></span>
                     <span><?= $leaderboard[1]['pontos']?></span>
                 </div>
                 <?php if(!empty($leaderboard[2])): ?>
                     <div class="linha">
-                           <span>3# <?= $leaderboard[2]['responsavel'] ?>/<?= $leaderboard[2]['nome'] ?></span>
+                           <span>3# <?= $leaderboard[2]['nome'] ?>/<?= $leaderboard[2]['responsavel'] ?></span>
                         <span><?= $leaderboard[2]['pontos']?></span>
                     </div>
                     <?php if(!empty($leaderboard[3])): ?>
                         <div class="linha">
-                            <span>4# <?= $leaderboard[3]['responsavel'] ?>/<?= $leaderboard[3]['nome'] ?></span>
+                            <span>4# <?= $leaderboard[3]['nome'] ?>/<?= $leaderboard[3]['responsavel'] ?></span>
                             <span><?= $leaderboard[3]['pontos']?></span>
                         </div>
                         <?php if(!empty($leaderboard[4])): ?>
                             <div class="linha">
-                                <span>5# <?= $leaderboard[4]['responsavel'] ?>/<?= $leaderboard[4]['nome'] ?></span>
+                                <span>5# <?= $leaderboard[4]['nome'] ?>/<?= $leaderboard[4]['responsavel'] ?></span>
                                 <span><?= $leaderboard[4]['pontos']?></span>
                             </div>
-                            <br>
-                            <?php if(!empty($leaderboard[4])): ?>
-                            <div class="linha">
-                                <span>5# <?= $leaderboard[4]['responsavel'] ?>/<?= $leaderboard[4]['nome'] ?></span>
-                                <span><?= $leaderboard[4]['pontos']?></span>
-                            </div>
-                            <?php endif; ?>
                         <?php endif; ?>
                     <?php endif; ?>
                 <?php endif; ?>
             <?php endif; ?>
         <?php endif; ?>
+
+        <?php if(isset($_SESSION['id_usuario'])): ?>
+
+            <div class="linha">
+                <span>última <?= $ultimaPartida[0]['nome'] ?>/<?= $ultimaPartida[0]['responsavel'] ?></span>
+                <span><?= $ultimaPartida[0]['pontos']?></span>
+            </div>
+            <div class="linha">
+                <span>melhor <?= $melhorPartida[0]['nome'] ?>/<?= $melhorPartida[0]['responsavel'] ?></span>
+                <span><?= $melhorPartida[0]['pontos']?></span>
+        <?php endif; ?>
+
+        </div>
     </div>
 
 </div>
