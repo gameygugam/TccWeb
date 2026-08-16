@@ -575,7 +575,14 @@ function keyPressed()
     }
 
     if (event.code === "Escape") {
-        MenuPause()
+        if(pause.menuPause) {
+            MenuDespause()
+            console.log("DespausarMenu")
+        }
+        else {
+            MenuPause()
+            console.log("PausarMenu")
+        }
     }
 
     if (jogo.fase === "preFase1" && Colidiu(jogo.player, fase1.placa) && (key === "e" || key === "E") && jogo.cooldownInteragir <= 0) {
@@ -661,7 +668,7 @@ function mousePressed() {
 
     if(pause.menuPause){
         if(MouseNoBotao(mouse, pause.botaoContinuar)) {
-            MenuPause()
+            MenuDespause()
         }
 
         else if(MouseNoBotao(mouse, pause.botaoReiniciar)) {
@@ -669,17 +676,17 @@ function mousePressed() {
             else if(jogo.fase === "preFase1") MudarFase("preFase1")
         else if(jogo.fase === "fase1") MudarFase("fase1")
             setup()
-            MenuPause()
+            MenuDespause()
         }
 
         else if(MouseNoBotao(mouse, pause.botaoOpcoes)) {
-            MenuPause()
+            MenuDespause()
         }
 
         else if(MouseNoBotao(mouse, pause.botaoSair)) {
             jogo.sairDoJogo = true;
             // setup()
-            // MenuPause()
+            // MenuDespause()
             window.location.href = "pages/logout.php";
         }
 
@@ -692,14 +699,13 @@ function mousePressed() {
 //PAUSE ----------------------------------------------------------------------------------------------------------------->
 
 function MenuPause(){
-    if (jogo.pause === false && pause.menuPause === false) {
-        pause.menuPause = true;
-        jogo.pause = true;
-    }
-    else if (jogo.pause === true && pause.menuPause === true) {
-        pause.menuPause = false;
-        jogo.pause = false;
-    }
+    pause.menuPause = true;
+    jogo.pause = true;
+}
+
+function MenuDespause(){
+    pause.menuPause = false;
+    jogo.pause = false;
 }
 
 //<-----------------------------------------------------------------------------------------------------------------------
@@ -772,7 +778,7 @@ function MostrarLixoReal() {
         image(fase1.cartazProcuradoLixo, (windowWidth - 182), (windowHeight - 400), 200 * jogo.escala, 300 * jogo.escala); // Mostra o cartaz de procurado
 
         // Verifica e mostra os lixos reais
-        if(fase1.lastItemPego.nome === "bolinhaDePapel")
+        if(fase1.lastItemPego.nome === "bolinhaDePapel") 
             image(fase1.lixosImgCarregados.reais.papel[0], (windowWidth - 180), (windowHeight - 335), 200 * jogo.escala, 200 * jogo.escala);
         else if(fase1.lastItemPego.nome === "caixaDePapelao")
             image(fase1.lixosImgCarregados.reais.papel[1], (windowWidth - 155), (windowHeight - 350), 150 * jogo.escala, 200 * jogo.escala);
@@ -796,6 +802,10 @@ function MostrarLixoReal() {
             image(fase1.lixosImgCarregados.reais.naoReciclavel[0], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
         else if (fase1.lastItemPego.nome === "chicleteMascado")
             image(fase1.lixosImgCarregados.reais.naoReciclavel[1], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
+
+        textSize(10 * jogo.escala)
+        text(fase1.lastItemPego.nome, (windowWidth - 180), (windowHeight - 335), 200 * jogo.escala, 200 * jogo.escala)
+
     }
 }
 

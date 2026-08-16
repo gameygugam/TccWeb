@@ -48,7 +48,7 @@ function setup() {
     MudarFase(jogo.fase);
 
     jogo.player = { 
-        x: jogo.xFinalMapa/2+30*jogo.escala, y: jogo.yFinalMapa/2, width: (windowWidth / 20), height: (windowHeight / 10),
+        x: jogo.xFinalMapa/2+40*jogo.escala, y: jogo.yFinalMapa/1.2, width: (windowWidth / 20), height: (windowHeight / 10),
         oldX: jogo.xFinalMapa/2+30*jogo.escala, oldY: jogo.yFinalMapa/2, class: "player", dash_cooldown: 80, dash_duracao: 0 
     };
 
@@ -92,6 +92,7 @@ function draw() {
     if(pause.menuPause) {
         filter(BLUR, 2);
         DrawPause(); // Desenha o menu de Pause
+        console.log("EntrouNoMenu");
     }
 
     AnimacaoStandBy()
@@ -673,7 +674,10 @@ function DrawFase1()
             // fill(0,0,0)
             // text("TS:" + jogo.timer.start, 100, 200);
         }
-        else if (jogo.timer.start == 301) jogo.pause = false
+        else if (jogo.timer.start == 301) {
+            jogo.pause = false
+            jogo.timer.start++
+        }
     }
 }
 
