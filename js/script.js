@@ -323,30 +323,60 @@ function SetupPause()
     pause.botaoSair.y = pause.y + ((pause.height / 2) + (150 * jogo.escala))
     pause.botaoSair.texto_x = pause.botaoSair.x + (pause.btnWidth / 2.75)
     pause.botaoSair.texto_y = pause.botaoSair.y + (pause.btnHeight / 1.75)
+
+    //Menu Opções
+
+    pause.opcoes.musica.texto_x = pause.x + (pause.width / 5)
+    pause.opcoes.musica.texto_y = pause.y + (pause.height / 3)
+
+    pause.opcoes.botaoRanking.width = pause.btnWidth
+    pause.opcoes.botaoRanking.height = pause.btnHeight
+    pause.opcoes.botaoRanking.x = pause.x + ((pause.width / 2) - (pause.btnWidth / 2))
+    pause.opcoes.botaoRanking.y = pause.y + ((pause.height / 2) + (150 * jogo.escala))
+    pause.opcoes.botaoRanking.texto_x = pause.opcoes.botaoRanking.x + (pause.btnWidth / 3.2)
+    pause.opcoes.botaoRanking.texto_y = pause.opcoes.botaoRanking.y + (pause.btnHeight / 1.75)
 }
 
 function DrawPause()
 {    
     image(pause.background, pause.x, pause.y, pause.width, pause.height)
+
+    textSize(pause.titulo.tamanho)
+    text("CASTOR'S GAME", pause.titulo.x, pause.titulo.y)
     
     fill(0,0,0)
     textFont(pause.txtFonte)
     textSize(pause.txtTamanho)
 
-    image(pause.btnImg, pause.botaoContinuar.x, pause.botaoContinuar.y, pause.btnWidth, pause.btnHeight)
-    text("Continuar", pause.botaoContinuar.texto_x, pause.botaoContinuar.texto_y)
+    if(!pause.menuOpcoes){
+        image(pause.btnImg, pause.botaoContinuar.x, pause.botaoContinuar.y, pause.btnWidth, pause.btnHeight)
+        text("Continuar", pause.botaoContinuar.texto_x, pause.botaoContinuar.texto_y)
 
-    image(pause.btnImg, pause.botaoReiniciar.x, pause.botaoReiniciar.y, pause.btnWidth, pause.btnHeight)
-    text("Reiniciar", pause.botaoReiniciar.texto_x, pause.botaoReiniciar.texto_y)
+        image(pause.btnImg, pause.botaoReiniciar.x, pause.botaoReiniciar.y, pause.btnWidth, pause.btnHeight)
+        text("Reiniciar", pause.botaoReiniciar.texto_x, pause.botaoReiniciar.texto_y)
 
-    image(pause.btnImg, pause.botaoOpcoes.x, pause.botaoOpcoes.y, pause.btnWidth, pause.btnHeight)
-    text("Opções", pause.botaoOpcoes.texto_x, pause.botaoOpcoes.texto_y)
+        image(pause.btnImg, pause.botaoOpcoes.x, pause.botaoOpcoes.y, pause.btnWidth, pause.btnHeight)
+        text("Opções", pause.botaoOpcoes.texto_x, pause.botaoOpcoes.texto_y)
 
-    image(pause.btnImg, pause.botaoSair.x, pause.botaoSair.y, pause.btnWidth, pause.btnHeight)
-    text("Sair", pause.botaoSair.texto_x, pause.botaoSair.texto_y)
+        image(pause.btnImg, pause.botaoSair.x, pause.botaoSair.y, pause.btnWidth, pause.btnHeight)
+        text("Sair", pause.botaoSair.texto_x, pause.botaoSair.texto_y)
+    }
+    else {
 
-    textSize(pause.titulo.tamanho)
-    text("CASTOR'S GAME", pause.titulo.x, pause.titulo.y)
+        textFont(pause.txtFonte)
+        textSize(pause.txtTamanho * 1.5)
+
+        text("Música:" + jogo.config.musicaVolume, pause.opcoes.musica.texto_x, pause.opcoes.musica.texto_y)
+        image(pause.btnImg, pause.opcoes.musica.texto_x, pause.opcoes.musica.texto_y, pause.btnWidth / 2, pause.btnHeight / 2)
+        image(pause.btnImg, pause.opcoes.botaoRanking.x, pause.opcoes.botaoRanking.y, pause.btnWidth, pause.btnHeight)
+
+        text("SFX", pause.opcoes.botaoRanking.texto_x, pause.opcoes.botaoRanking.texto_y)
+
+        image(pause.btnImg, pause.opcoes.botaoRanking.x, pause.opcoes.botaoRanking.y, pause.btnWidth, pause.btnHeight)
+        text("Placar", pause.opcoes.botaoRanking.texto_x, pause.opcoes.botaoRanking.texto_y)
+    }
+
+    
     
 }
 //<----------------------------------------------------------------------------------------------------------------
@@ -652,7 +682,7 @@ function DrawFase1()
 
         fase1.ultimaPartida;
 
-        if(jogo.timer.start <= 300) {
+        if(jogo.timer.start <= 260) {
 
             if (jogo.timer.start === 1) TocarSom(jogo.som.contagemIniciar);
 
@@ -660,19 +690,19 @@ function DrawFase1()
 
             textSize(150 * jogo.escala)
 
-            if(jogo.timer.start <= 80) {
+            if(jogo.timer.start <= 70) {
                 fill(255, 50, 50);    // Vermelho (3)
                 text("3", jogo.xFinalMapa/2+60 * jogo.escala, jogo.yFinalMapa/2+75 * jogo.escala);
                 }
-            else if(jogo.timer.start <= 160) {
+            else if(jogo.timer.start <= 140) {
                 fill(255, 220, 0);    // Amarelo (2)
                 text("2", jogo.xFinalMapa/2+60 * jogo.escala, jogo.yFinalMapa/2+75 * jogo.escala);
                 }
-            else if(jogo.timer.start <= 240) {
+            else if(jogo.timer.start <= 200) {
                 fill(80, 255, 80);    // Verde (1)
                 text("1", jogo.xFinalMapa/2+60 * jogo.escala, jogo.yFinalMapa/2+75 * jogo.escala);
                 }
-            else if(jogo.timer.start <= 300) {
+            else if(jogo.timer.start <= 260) {
                 fill(0, 255, 0)
                 text("JÁ!", jogo.xFinalMapa/2-10 * jogo.escala, jogo.yFinalMapa/2+75 * jogo.escala);
                 }
@@ -682,7 +712,7 @@ function DrawFase1()
             // fill(0,0,0)
             // text("TS:" + jogo.timer.start, 100, 200);
         }
-        else if (jogo.timer.start == 301) {
+        else if (jogo.timer.start == 261) {
             jogo.pause = false
             jogo.timer.start++
         }

@@ -689,28 +689,37 @@ function mousePressed() {
     let mouse = {x: mouseX, y: mouseY}
 
     if(pause.menuPause){
-        if(MouseNoBotao(mouse, pause.botaoContinuar)) {
-            MenuDespause()
-        }
+        if(!pause.menuOpcoes){
+            if(MouseNoBotao(mouse, pause.botaoContinuar)) {
+                MenuDespause()
+            }
 
-        else if(MouseNoBotao(mouse, pause.botaoReiniciar)) {
-            if(jogo.fase === "menu") MudarFase("menu")
-            else if(jogo.fase === "preFase1") MudarFase("preFase1")
-        else if(jogo.fase === "fase1") MudarFase("fase1")
-            setup()
-            MenuDespause()
-        }
+            else if(MouseNoBotao(mouse, pause.botaoReiniciar)) {
+                if(jogo.fase === "menu") MudarFase("menu")
+                else if(jogo.fase === "preFase1") MudarFase("preFase1")
+            else if(jogo.fase === "fase1") MudarFase("fase1")
+                setup()
+                MenuDespause()
+            }
 
-        else if(MouseNoBotao(mouse, pause.botaoOpcoes)) {
-            MenuDespause()
-        }
+            else if(MouseNoBotao(mouse, pause.botaoOpcoes)) {
+                pause.menuOpcoes = true;
+            }
 
-        else if(MouseNoBotao(mouse, pause.botaoSair)) {
-            jogo.sairDoJogo = true;
-            // setup()
-            // MenuDespause()
-            window.location.href = "pages/logout.php";
+            else if(MouseNoBotao(mouse, pause.botaoSair)) {
+                jogo.sairDoJogo = true;
+                // setup()
+                // MenuDespause()
+                window.location.href = "pages/logout.php";
+            }
         }
+        else{
+            if(MouseNoBotao(mouse, pause.botaoRanking)) {
+                window.location.href = "pages/ranking.php";
+            }
+
+        }
+        
 
         if(MouseNoBotao(mouse, pause) && jogo.config.somON) TocarSom(jogo.som.marteloMenu)
     }
@@ -721,11 +730,13 @@ function mousePressed() {
 //PAUSE ----------------------------------------------------------------------------------------------------------------->
 
 function MenuPause(){
+    pause.menuOpcoes = false;
     pause.menuPause = true;
     jogo.pause = true;
 }
 
 function MenuDespause(){
+    pause.menuOpcoes = false;
     pause.menuPause = false;
     jogo.pause = false;
 }
