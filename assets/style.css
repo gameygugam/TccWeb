@@ -630,3 +630,80 @@ ANIMAÇÕES
 
     box-shadow: none;
 }
+
+.campo select{
+
+    width:100%;
+
+    padding:14px;
+
+    background:#f8ebc7;
+
+    border:5px solid #6a4021;
+
+    border-radius:6px;
+
+    outline:none;
+
+    font-family:'Press Start 2P', cursive;
+
+    font-size:10px;
+
+    color:#3a220d;
+
+    cursor:pointer;
+
+    transition:.15s;
+
+    /* Remove a aparência padrão do navegador */
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+
+    /* Seta personalizada */
+    background-image:
+        linear-gradient(45deg, transparent 50%, #6a4021 50%),
+        linear-gradient(135deg, #6a4021 50%, transparent 50%);
+
+    background-position:
+        calc(100% - 18px) 50%,
+        calc(100% - 10px) 50%;
+
+    background-size:
+        8px 8px,
+        8px 8px;
+
+    background-repeat:no-repeat;
+}
+
+/*==========================
+SELECT AO FOCAR
+==========================*/
+
+.campo select:focus{
+
+    background-color:#fff7dc;
+
+    border-color:#d5af5d;
+
+    box-shadow:
+        inset 0 0 0 2px #ead18b,
+        0 0 0 3px rgba(213,175,93,.25);
+}
+
+/*==========================
+OPÇÕES
+==========================*/
+
+.campo select option{
+
+    background:#f8ebc7;
+
+    color:#3a220d;
+
+    font-family:'Press Start 2P', cursive;
+
+    font-size:10px;
+
+    padding:10px;
+}
