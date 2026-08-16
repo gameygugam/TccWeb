@@ -12,10 +12,11 @@ $repoPartida = null;
 $repoPartida = new PartidaRepository();
 $nomeResponsavel = '';
 $nome = '';
+$turma = '';
 $idade = 1;
 
 $leaderboard = [];
-$leaderboard = $repoPartida->leaderboard();
+$leaderboard = $repoPartida->leaderboard(5);
 
 $ultimaPartida = [];
 if (isset($_SESSION['id_usuario'])) $ultimaPartida = $repoPartida->ultimaPartida($_SESSION['id_usuario']);
@@ -27,10 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nomeResponsavel = $_POST['nomeResponsavel'];
     $nome = $_POST['nome'];
     $idade = $_POST['idade'];
+    $turma = $_POST['turma'];
 
-    if($nomeResponsavel === '' || $nome === '' || ($idade < 7 && $idade > 99)) {
+    if($nomeResponsavel === '' || $nome === '') {
         $erro = 'Preencha todos os campos';
-    } 
+    }
+    if($idade < 7 || $idade > 99) {
+        $erro = 'Idade inválida';
+    }
     else {
         $usuario = $repo->buscarPorNomes($nomeResponsavel, $nome);
 
@@ -39,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['responsavel'] = $nomeResponsavel;
             $_SESSION['nome'] = $nome;
             $_SESSION['idade'] = $idade;
+            $_SESSION['turma'] = $turma;
             
             if(empty($_SESSION['fase'])) {
                 $_SESSION['fase'] = 'menu';
@@ -51,8 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['responsavel'] = $nomeResponsavel;
                 $_SESSION['nome'] = $nome;
                 $_SESSION['idade'] = $idade;
+                $_SESSION['turma'] = $turma;
 
-                $repo->criarUsuario($nomeResponsavel, $nome, $idade);
+                $repo->criarUsuario($nomeResponsavel, $nome, $idade, $turma);
                 $usuario = $repo->buscarPorNomes($nomeResponsavel, $nome);
                 $_SESSION['id_usuario'] = $usuario->getId();
 
@@ -132,9 +139,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         </div>
 
-</div>
+    </div>
 
-        <div class="campo">
+    <div class="campo">
 
         <span class="iconepixel"><img src="../assets/imagens/login/userIcon2.png" class="icone-img"></span>
 
@@ -157,7 +164,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     </div>
 
-        <div class="campo">
+    <div class="campo">
+
+        <span class="iconepixel"><img src="../assets/imagens/login/userIcon2.png" class="icone-img"></span>
+
+        <div>
+
+            <label class="placa-label" for="turma">Turma</label>
+
+
+            <input
+                type="text"
+                id="turma"
+                name="turma"
+                placeholder="Ex: DS313"
+                value="<?= htmlspecialchars($turma) ?>"
+                required
+            >
+
+        </div>
+
+
+    </div>
+
+    <div class="campo">
 
         <span class="iconepixel"><img src="../assets/imagens/login/idadeIcon.png" class="idade-img"></span>
 
@@ -190,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="prego prego3"></div>
         <div class="prego prego4"></div>
 
-        <h2>Ranking Fase 1</h2>
+        <h2>Ranking</h2>
 
         <?php if(!empty($leaderboard[0])): ?>
             <div class="linha primeiro">
