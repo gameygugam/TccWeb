@@ -342,7 +342,7 @@ function Dialogo(dialogo) {
 
                     switch(texto.incremento) {
                         case 0:
-                            texto.conteudo = "Nhec-Nhec, Nhec-Nhec (Esse é a nossa missão, vamos coletar o lixo!!).";
+                            texto.conteudo = "Nhec-Nhec, Nhec-Nhec (Essa é a nossa missão, vamos coletar o lixo!!).";
                             break;
                         
                         case 1:
@@ -403,7 +403,7 @@ function Dialogo(dialogo) {
                         break;
 
                     case 2:
-                        texto.conteudo = "Nhoc-nhoc (Se quiser, você pode ver o placar dos outros castores que também ajudaram na limpeza na tela inicial).";
+                        texto.conteudo = "Nhoc-nhoc (Se quiser, você pode ver o placar dos 5 melhores castores que também ajudaram na limpeza na tela inicial).";
                         break;
 
                     case 3:
