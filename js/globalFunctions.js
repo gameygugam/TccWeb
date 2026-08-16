@@ -11,8 +11,14 @@ function Movimentar()
         if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) dir.x -= 1;
         if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) dir.x += 1;
 
-        if ((keyIsDown(65) || keyIsDown(LEFT_ARROW))) jogo.playerImg = jogo.playerImgEsquerda
-        if ((keyIsDown(68) || keyIsDown(RIGHT_ARROW))) jogo.playerImg = jogo.playerImgDireita
+        if ((keyIsDown(65) || keyIsDown(LEFT_ARROW))) {
+            if(fase1.pegouLixo) jogo.playerImg = jogo.playerImgEsquerdaSegurandoLixo
+            else jogo.playerImg = jogo.playerImgEsquerda
+        } 
+        if ((keyIsDown(68) || keyIsDown(RIGHT_ARROW))) {
+            if(fase1.pegouLixo) jogo.playerImg = jogo.playerImgDireitaSegurandoLixo
+            else jogo.playerImg = jogo.playerImgDireita
+        }
 
         // Normaliza o vetor para não alterar a velocidade do personagem. EX: W = 4, S = 4; W + S != 8; W + S = 4
         if (dir.mag() > 0) {

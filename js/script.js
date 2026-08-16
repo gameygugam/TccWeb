@@ -3,6 +3,8 @@ function preload() {
     jogo.playerImg = loadImage("assets/imagens/castorDireita.png");
     jogo.playerImgEsquerda = loadImage("assets/imagens/castorEsquerda.png");
     jogo.playerImgDireita = loadImage("assets/imagens/castorDireita.png");
+    jogo.playerImgEsquerdaSegurandoLixo = loadImage("assets/imagens/castorDireita.png");
+    jogo.playerImgDireitaSegurandoLixo = loadImage("assets/imagens/castorEsquerda.png");
     tutorial.caixaDialogo = loadImage("assets/imagens/tutorial/caixaTutorial.png");
     texto.fonte = loadFont("assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf");
     PegarFase();
