@@ -35,30 +35,6 @@ class PartidaRepository {
         return null;
     }
 
-    public function buscarPorNome(string $nome): array {
-        $stmt = $this->pdo->prepare(
-            'SELECT * FROM partida WHERE nome = :nome ORDER BY id ASC'
-        );
-        $stmt->execute([':nome' => $nome]);
-        $lista = [];
-        foreach ($stmt->fetchAll() as $dados) {
-            $lista[] = new Partida($dados);
-        }
-        return $lista;
-    }
-
-    public function buscarPorTurma(string $turma): array {
-        $stmt = $this->pdo->prepare(
-            'SELECT * FROM partida WHERE turma = :turma ORDER BY id ASC'
-        );
-        $stmt->execute([':turma' => $turma]);
-        $lista = [];
-        foreach ($stmt->fetchAll() as $dados) {
-            $lista[] = new Partida($dados);
-        }
-        return $lista;
-    }
-
     public function salvar(Partida $partida): void {
         if ($partida->getId() > 0) {
             $stmt = $this->pdo->prepare(
@@ -125,6 +101,57 @@ class PartidaRepository {
             $leaderboard[] = $dados;
         }
         return $leaderboard;
+    }
+
+    public function leaderboardPorNome(string $nome): array {
+        $stmt = $this->pdo->prepare(
+            'SELECT u.id, u.nome, u.responsavel, MAX(p.pontuacao) as pontos
+            FROM usuario u, partida p
+            WHERE u.id = p.id_usuario
+            AND u.nome LIKE :nome
+            GROUP BY u.id
+            ORDER BY MAX(p.pontuacao) DESC LIMIT 100'
+        );
+        $stmt->execute([':nome' => "%$nome%"]);
+        $lista = [];
+        foreach ($stmt->fetchAll() as $dados) {
+            $lista[] = $dados;
+        }
+        return $lista;
+    }
+
+    public function leaderboardPorTurma(string $turma): array {
+        $stmt = $this->pdo->prepare(
+            'SELECT u.id, u.nome, u.responsavel, MAX(p.pontuacao) as pontos
+            FROM usuario u, partida p
+            WHERE u.id = p.id_usuario
+            AND u.turma LIKE :turma
+            GROUP BY u.id
+            ORDER BY MAX(p.pontuacao) DESC LIMIT 100'
+        );
+        $stmt->execute([':turma' => "%$turma%"]);
+        $lista = [];
+        foreach ($stmt->fetchAll() as $dados) {
+            $lista[] = $dados;
+        }
+        return $lista;
+    }
+
+    public function leaderboardPorColegio(string $colegio): array {
+        $stmt = $this->pdo->prepare(
+            'SELECT u.id, u.nome, u.responsavel, MAX(p.pontuacao) as pontos
+            FROM usuario u, partida p
+            WHERE u.id = p.id_usuario
+            AND u.colegio LIKE :colegio
+            GROUP BY u.id
+            ORDER BY MAX(p.pontuacao) DESC LIMIT 100'
+        );
+        $stmt->execute([':colegio' => "%$colegio%"]);
+        $lista = [];
+        foreach ($stmt->fetchAll() as $dados) {
+            $lista[] = $dados;
+        }
+        return $lista;
     }
 
     public function melhorPartida(int $idUsuario): array {
