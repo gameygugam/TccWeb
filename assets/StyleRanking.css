@@ -1,0 +1,470 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+
+/*==========================
+RESET
+==========================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+body{
+
+    font-family:'Press Start 2P',cursive;
+
+    overflow:hidden;
+}
+
+
+/*==========================
+FUNDO
+==========================*/
+
+.ranking-body{
+
+    width:100%;
+    height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+        linear-gradient(
+            #58bb53,
+            #2d7b30
+        );
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+
+/*==========================
+FOLHAS
+==========================*/
+
+.folha{
+
+    position:absolute;
+
+    color:#9be79c;
+
+    font-size:24px;
+
+    opacity:.75;
+
+    animation:cair 8s linear infinite;
+
+    z-index:1;
+}
+
+
+.f1{
+    left:8%;
+    animation-delay:0s;
+}
+
+.f2{
+    left:20%;
+    animation-delay:2s;
+}
+
+.f3{
+    left:35%;
+    animation-delay:5s;
+}
+
+.f4{
+    left:50%;
+    animation-delay:1s;
+}
+
+.f5{
+    left:65%;
+    animation-delay:3s;
+}
+
+.f6{
+    left:75%;
+    animation-delay:6s;
+}
+
+.f7{
+    left:85%;
+    animation-delay:4s;
+}
+
+.f8{
+    left:92%;
+    animation-delay:7s;
+}
+
+
+@keyframes cair{
+
+    from{
+
+        transform:
+            translateY(-100px)
+            rotate(0);
+
+    }
+
+    to{
+
+        transform:
+            translateY(110vh)
+            rotate(360deg);
+
+    }
+}
+
+
+/*==========================
+PLACA DO RANKING
+==========================*/
+
+.scoreboard{
+
+    position:relative;
+
+    width:650px;
+
+    max-height:85vh;
+
+    padding:35px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #b9864a,
+            #a66d37,
+            #8f5a2d,
+            #693d18
+        );
+
+    border:8px solid #4a2b12;
+
+    border-radius:10px;
+
+    box-shadow:
+
+        inset 0 0 0 5px #c99758,
+
+        inset 0 0 0 10px #7b4a22,
+
+        0 15px 35px rgba(0,0,0,.45);
+
+    z-index:2;
+
+    overflow-y:auto;
+}
+
+
+/*==========================
+PREGOS
+==========================*/
+
+.prego{
+
+    width:18px;
+
+    height:18px;
+
+    background:#555;
+
+    border:3px solid #222;
+
+    border-radius:50%;
+}
+
+
+.prego::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:8px;
+
+    height:2px;
+
+    background:#222;
+
+    top:50%;
+
+    left:50%;
+
+    transform:
+        translate(-50%,-50%);
+}
+
+
+/*==========================
+PREGOS SUPERIORES
+==========================*/
+
+.prego1{
+
+    position:absolute;
+
+    top:18px;
+
+    left:18px;
+}
+
+
+.prego2{
+
+    position:absolute;
+
+    top:18px;
+
+    right:18px;
+}
+
+
+/*==========================
+PREGOS INFERIORES
+==========================*/
+
+.pregos-inferiores{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:20px;
+
+    padding:0 18px;
+
+    height:18px;
+}
+
+
+/*==========================
+PESQUISA
+==========================*/
+
+.ranking-form{
+
+    width:100%;
+
+    margin-bottom:25px;
+}
+
+
+.pesquisa{
+
+    display:flex;
+
+    width:100%;
+}
+
+
+.pesquisa input{
+
+    flex:1;
+
+    min-width:0;
+
+    padding:14px;
+
+    background:#f8ebc7;
+
+    border:5px solid #6a4021;
+
+    border-radius:6px 0 0 6px;
+
+    outline:none;
+
+    font-family:'Press Start 2P';
+
+    font-size:10px;
+}
+
+
+.pesquisa input::placeholder{
+
+    color:#9a8c69;
+}
+
+
+.pesquisa button{
+
+    width:60px;
+
+    border:5px solid #315b1c;
+
+    border-left:none;
+
+    border-radius:0 6px 6px 0;
+
+    background:#79c647;
+
+    cursor:pointer;
+
+    font-size:18px;
+}
+
+
+/*==========================
+TÍTULO
+==========================*/
+
+.scoreboard h2{
+
+    text-align:center;
+
+    color:#fff6c7;
+
+    font-size:28px;
+
+    margin-bottom:25px;
+
+    text-shadow:
+
+        3px 3px #5c3117;
+}
+
+
+/*==========================
+LINHAS DO RANKING
+==========================*/
+
+.linha{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:14px;
+
+    margin-bottom:10px;
+
+    background:rgba(255,255,255,.08);
+
+    border:3px solid #6a4021;
+
+    color:#fff6c7;
+
+    font-size:11px;
+
+    line-height:18px;
+}
+
+
+.linha span:first-child{
+
+    flex:1;
+
+}
+
+
+.linha span:last-child{
+
+    white-space:nowrap;
+}
+
+
+/*==========================
+PRIMEIRO COLOCADO
+==========================*/
+
+.primeiro{
+
+    background:#d7b052;
+
+    color:#3a220d;
+}
+
+
+/*==========================
+SEM RESULTADOS
+==========================*/
+
+.sem-resultados{
+
+    padding:20px;
+
+    text-align:center;
+
+    color:#ffe9ab;
+
+    font-size:10px;
+
+    line-height:18px;
+}
+
+
+/*==========================
+BOTÃO VOLTAR
+==========================*/
+
+.botao-voltar{
+
+    display:block;
+
+    width:100%;
+
+    margin-top:25px;
+
+    padding:16px;
+
+    background:
+        linear-gradient(
+            #9be75f,
+            #79c647,
+            #5ca534
+        );
+
+    border:5px solid #315b1c;
+
+    border-radius:8px;
+
+    color:#173719;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    font-family:'Press Start 2P';
+
+    font-size:11px;
+
+    cursor:pointer;
+
+    transition:.15s;
+}
+
+
+.botao-voltar:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+
+        0 6px 0 #315b1c;
+}
+
+
+.botao-voltar:active{
+
+    transform:translateY(3px);
+
+    box-shadow:none;
+}
