@@ -872,14 +872,13 @@ function AleatorizarPosicaoObstaculo(obstaculo) {
         obstaculo.x = random(jogo.xInicialMapa*1.8, jogo.xFinalMapa*0.9);
         obstaculo.y = random(jogo.yInicialMapa*3.5, jogo.yFinalMapa*0.8);
 
-        if(Colidiu(obstaculo, jogo.player)) {
+        if(Colidiu(obstaculo, jogo.player) || Colidiu(jogo.player, obstaculo)) {
             pode_sair = false;
         }
         
         fase1.obstaculos.forEach(obstaculo2 => {
             if (Colidiu(obstaculo, obstaculo2) || 
-            (obstaculo.x <= obstaculo2.x + obstaculo2.width*2 && obstaculo.x + obstaculo.width*2 >= obstaculo2.x) && 
-            (obstaculo.y <= obstaculo2.y + obstaculo2.height*2 && obstaculo.y + obstaculo.height*2 >= obstaculo2.y)) 
+                Colidiu(obstaculo2, obstaculo)) 
             {
                 pode_sair = false;
             }
