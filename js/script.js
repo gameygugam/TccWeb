@@ -21,11 +21,14 @@ function setup() {
     PegarNome();
 
     jogo.som = {
+        faseMenu: [new Audio("assets/audio/menu_theme.wav")],
         marteloMenu: [
             new Audio("assets/audio/batida_martelo_1.wav"),
             new Audio("assets/audio/batida_martelo_2.wav"),
             new Audio("assets/audio/batida_martelo_3.wav"),
         ],
+        fase1: [new Audio("assets/audio/fase1_theme.wav")],
+        contagemIniciar: [new Audio("assets/audio/contagem_iniciar.wav")],
     }
 
     jogo.canvas = createCanvas(windowWidth, windowHeight);
@@ -134,6 +137,7 @@ function SetupMenu()
 
     jogo.timer.segundos = 0;
     jogo.timer.ticks = 0;
+    
 }
 
 function DrawMenu()
@@ -648,6 +652,9 @@ function DrawFase1()
         fase1.ultimaPartida;
 
         if(jogo.timer.start <= 300) {
+
+            if (jogo.timer.start === 1) TocarSom(jogo.som.contagemIniciar);
+
             filter(BLUR, 1);
 
             textSize(150 * jogo.escala)

@@ -140,7 +140,15 @@ function AnimacaoStandBy(){
 function TocarSom(sons) {
 
     let rnd = floor(random(sons.length))
+    sons[rnd].volume = jogo.config.somVolume / 100
     sons[rnd].play()
+}
+
+function TocarMusica(musicas) {
+
+    let rnd = floor(random(musicas.length))
+    musicas[rnd].volume = jogo.config.musicaVolume / 100
+    musicas[rnd].play()
 }
 
 async function MudarFase(fase) {
@@ -645,6 +653,9 @@ function keyPressed()
     
     if (jogo.fase === "pause" && keyCode === ESCAPE) jogo.fase = "fase1";
 
+    if(jogo.fase === "menu" && jogo.config.musicaON) TocarMusica(jogo.som.faseMenu);
+    if(jogo.fase === "fase1" && jogo.config.musicaON) TocarMusica(jogo.som.fase1);
+
     
 }
 
@@ -690,7 +701,7 @@ function mousePressed() {
             window.location.href = "pages/logout.php";
         }
 
-        if(MouseNoBotao(mouse, pause)) TocarSom(jogo.som.marteloMenu)
+        if(MouseNoBotao(mouse, pause) && jogo.config.somON) TocarSom(jogo.som.marteloMenu)
     }
 }
 
