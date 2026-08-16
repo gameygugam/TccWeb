@@ -17,6 +17,7 @@ const jogo = {
     //PLAYER ---------------------------------------------------------------------------------------------------------------->
 
     nomeUsuario: "",
+    colegioUsuario: "",
     player: null,
     playerImg: null,
     playerImgEsquerda: null,

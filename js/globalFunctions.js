@@ -193,6 +193,15 @@ async function PegarFase() {
     jogo.fase = dados.fase;
 }
 
+async function PegarColegio() {
+    const resposta = await fetch("includes/pegar_colegio.php");
+    const dados = await resposta.json();
+
+    jogo.colegioUsuario = dados.colegio;
+
+    console.log(jogo.colegioUsuario);
+}
+
 function Interagir(item, itemString) {
     fill(255, 0, 0);
     textFont(texto.fonte);
@@ -239,7 +248,9 @@ function Dialogo(dialogo) {
                     break;
 
                 case 1:
-                    texto.conteudo = "(Me chamaram para uma missão de limpeza e organização do Parque Internacional dos Castores).";
+                    if(jogo.colegioUsuario === "cpii") texto.conteudo = "(Me chamaram para uma missão de limpeza e organização do Colégio Pedro II).";
+                    else if(jogo.colegioUsuario === "cjba") texto.conteudo = "(Me chamaram para uma missão de limpeza e organização do Colégio CJBA).";
+                    else if(jogo.colegioUsuario === "santosDummont") texto.conteudo = "(Me chamaram para uma missão de limpeza e organização do Colégio Santos Dummont).";
                     break;
                 
                 case 2:

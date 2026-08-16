@@ -19,6 +19,7 @@ function preload() {
 function setup() {
     PegarFase();
     PegarNome();
+    PegarColegio();
 
     jogo.som = {
         faseMenu: [new Audio("assets/audio/menu_theme.wav")],
