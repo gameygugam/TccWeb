@@ -37,9 +37,9 @@ class UsuarioRepository {
         return null;
     }
 
-    public function criarUsuario(string $responsavel, string $nome, int $idade, string $turma): void {
-        $stmt = $this->pdo->prepare('INSERT INTO usuario (responsavel, nome, idade, turma) VALUES (:responsavel, :nome, :idade, :turma)');
-        $stmt->execute([':responsavel' => $responsavel, ':nome' => $nome, ':idade' => $idade, ':turma' => $turma]);
+    public function criarUsuario(string $responsavel, string $nome, int $idade, string $colegio, string $turma): void {
+        $stmt = $this->pdo->prepare('INSERT INTO usuario (responsavel, nome, idade, colegio, turma) VALUES (:responsavel, :nome, :idade, :colegio, :turma)');
+        $stmt->execute([':responsavel' => $responsavel, ':nome' => $nome, ':idade' => $idade, ':colegio' => $colegio, ':turma' => $turma]);
     }
 
     public function excluir(int $id): void {
