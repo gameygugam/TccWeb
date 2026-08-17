@@ -714,7 +714,7 @@ function mousePressed() {
             }
         }
         else{
-            if(MouseNoBotao(mouse, pause.botaoRanking)) {
+            if(MouseNoBotao(mouse, pause.opcoes.botaoRanking)) {
                 window.location.href = "pages/ranking.php";
             }
 
@@ -812,32 +812,32 @@ function MostrarLixoReal() {
 
         // Verifica e mostra os lixos reais
         if(fase1.lastItemPego.nome === "bolinhaDePapel") 
-            image(fase1.lixosImgCarregados.reais.papel[0], (windowWidth - 180), (windowHeight - 335), 200 * jogo.escala, 200 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.papel[0], (windowWidth/1.115), (windowHeight/1.6), 200 * jogo.escala, 200 * jogo.escala);
         else if(fase1.lastItemPego.nome === "caixaDePapelao")
-            image(fase1.lixosImgCarregados.reais.papel[1], (windowWidth - 155), (windowHeight - 350), 150 * jogo.escala, 200 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.papel[1], (windowWidth/1.1), (windowHeight/1.6), 150 * jogo.escala, 170 * jogo.escala);
         else if(fase1.lastItemPego.nome === "garrafaDeVidro")
-            image(fase1.lixosImgCarregados.reais.vidro[0], (windowWidth - 155), (windowHeight - 350), 150 * jogo.escala, 200 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.vidro[0], (windowWidth/1.1), (windowHeight/1.65), 150 * jogo.escala, 200 * jogo.escala);
         else if (fase1.lastItemPego.nome === "banana")
-            image(fase1.lixosImgCarregados.reais.organico[0], (windowWidth - 182), (windowHeight - 350), 200 * jogo.escala, 200 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.organico[0], (windowWidth/1.095), (windowHeight/1.55), 125 * jogo.escala, 125 * jogo.escala);
         else if (fase1.lastItemPego.nome === "bananaPodre")
-            image(fase1.lixosImgCarregados.reais.organico[1], (windowWidth - 180), (windowHeight - 350), 200 * jogo.escala, 200 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.organico[1], (windowWidth/1.1), (windowHeight/1.55), 150 * jogo.escala, 150 * jogo.escala);
         else if (fase1.lastItemPego.nome === "macaComida")
-            image(fase1.lixosImgCarregados.reais.organico[2], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.organico[2], (windowWidth/1.1), (windowHeight/1.6), 150 * jogo.escala, 170 * jogo.escala);
         else if (fase1.lastItemPego.nome === "garrafaDePlastico")
-            image(fase1.lixosImgCarregados.reais.plastico[0], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.plastico[0], (windowWidth/1.113), (windowHeight/1.56), 200 * jogo.escala, 150 * jogo.escala);
         else if (fase1.lastItemPego.nome === "copoDePlastico")
-            image(fase1.lixosImgCarregados.reais.plastico[1], (windowWidth - 180), (windowHeight - 325), 150 * jogo.escala, 150 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.plastico[1], (windowWidth/1.1), (windowHeight/1.55), 150 * jogo.escala, 150 * jogo.escala);
         else if (fase1.lastItemPego.nome === "placaDeMetal")
-            image(fase1.lixosImgCarregados.reais.metal[0], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.metal[0], (windowWidth/1.105), (windowHeight/1.55), 175 * jogo.escala, 150 * jogo.escala);
         else if (fase1.lastItemPego.nome === "latinha")
-            image(fase1.lixosImgCarregados.reais.metal[1], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.metal[1], (windowWidth/1.11), (windowHeight/1.65), 180 * jogo.escala, 200 * jogo.escala);
         else if (fase1.lastItemPego.nome === "pilha")
-            image(fase1.lixosImgCarregados.reais.naoReciclavel[0], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.naoReciclavel[0], (windowWidth/1.115), (windowHeight/1.56), 200 * jogo.escala, 150 * jogo.escala);
         else if (fase1.lastItemPego.nome === "chicleteMascado")
-            image(fase1.lixosImgCarregados.reais.naoReciclavel[1], (windowWidth - 180), (windowHeight - 325), 200 * jogo.escala, 150 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.naoReciclavel[1], (windowWidth/1.1), (windowHeight/1.55), 150 * jogo.escala, 125 * jogo.escala);
 
-        textSize(10 * jogo.escala)
-        text(fase1.lastItemPego.nome, (windowWidth - 180), (windowHeight - 335), 200 * jogo.escala, 200 * jogo.escala)
+        textSize(20 * jogo.escala)
+        text(fase1.lastItemPego.nome, (windowWidth/1.098), (windowHeight/1.25), 200 * jogo.escala, 200 * jogo.escala)
 
     }
 }

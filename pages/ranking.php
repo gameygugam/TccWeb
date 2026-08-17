@@ -154,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- BOTÃO VOLTAR -->
 
-    <a href="login.php" class="botao-voltar">
+    <a href="../index.php" class="botao-voltar">
         VOLTAR
     </a>
 

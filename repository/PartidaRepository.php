@@ -89,10 +89,10 @@ class PartidaRepository {
 
     public function leaderboard(int $qtd): array {
         $stmt = $this->pdo->prepare(
-            'SELECT u.nome, u.responsavel, MAX(p.pontuacao) as pontos
+            'SELECT p.id_usuario, u.nome, u.responsavel, MAX(p.pontuacao) as pontos
             FROM usuario u, partida p
             WHERE u.id = p.id_usuario
-            GROUP BY u.nome
+            GROUP BY p.id_usuario
             ORDER BY MAX(p.pontuacao) DESC LIMIT :qtd'
         );
         $stmt->execute([':qtd' => $qtd]);
@@ -105,11 +105,11 @@ class PartidaRepository {
 
     public function leaderboardPorNome(string $nome): array {
         $stmt = $this->pdo->prepare(
-            'SELECT u.id, u.nome, u.responsavel, MAX(p.pontuacao) as pontos
+            'SELECT p.id_usuario, u.nome, u.responsavel, MAX(p.pontuacao) as pontos
             FROM usuario u, partida p
             WHERE u.id = p.id_usuario
             AND u.nome LIKE :nome
-            GROUP BY u.id
+            GROUP BY p.id_usuario
             ORDER BY MAX(p.pontuacao) DESC LIMIT 100'
         );
         $stmt->execute([':nome' => "%$nome%"]);
@@ -122,11 +122,11 @@ class PartidaRepository {
 
     public function leaderboardPorTurma(string $turma): array {
         $stmt = $this->pdo->prepare(
-            'SELECT u.id, u.nome, u.responsavel, MAX(p.pontuacao) as pontos
+            'SELECT p.id_usuario, u.nome, u.responsavel, MAX(p.pontuacao) as pontos
             FROM usuario u, partida p
             WHERE u.id = p.id_usuario
             AND u.turma LIKE :turma
-            GROUP BY u.id
+            GROUP BY p.id_usuario
             ORDER BY MAX(p.pontuacao) DESC LIMIT 100'
         );
         $stmt->execute([':turma' => "%$turma%"]);
@@ -139,11 +139,11 @@ class PartidaRepository {
 
     public function leaderboardPorColegio(string $colegio): array {
         $stmt = $this->pdo->prepare(
-            'SELECT u.id, u.nome, u.responsavel, MAX(p.pontuacao) as pontos
+            'SELECT p.id_usuario, u.nome, u.responsavel, MAX(p.pontuacao) as pontos
             FROM usuario u, partida p
             WHERE u.id = p.id_usuario
             AND u.colegio LIKE :colegio
-            GROUP BY u.id
+            GROUP BY p.id_usuario
             ORDER BY MAX(p.pontuacao) DESC LIMIT 100'
         );
         $stmt->execute([':colegio' => "%$colegio%"]);
@@ -156,11 +156,11 @@ class PartidaRepository {
 
     public function melhorPartida(int $idUsuario): array {
         $stmt = $this->pdo->prepare(
-            'SELECT u.nome, u.responsavel, MAX(p.pontuacao) as pontos
+            'SELECT p.id_usuario, u.nome, u.responsavel, MAX(p.pontuacao) as pontos
             FROM usuario u, partida p
             WHERE u.id = p.id_usuario
 			AND p.id_usuario = :idUsuario
-            GROUP BY u.nome
+            GROUP BY p.id_usuario
             ORDER BY MAX(p.pontuacao) DESC LIMIT 1'
         );
         $stmt->execute([':idUsuario' => $idUsuario]);
@@ -173,11 +173,11 @@ class PartidaRepository {
 
     public function ultimaPartida(int $idUsuario): array {
         $stmt = $this->pdo->prepare(
-            'SELECT u.nome, u.responsavel, MAX(p.pontuacao) as pontos
+            'SELECT p.id_usuario, u.nome, u.responsavel, MAX(p.pontuacao) as pontos
             FROM usuario u, partida p
             WHERE u.id = p.id_usuario
 			AND p.id_usuario = :idUsuario
-            GROUP BY u.nome
+            GROUP BY p.id_usuario
             ORDER BY MAX(p.id) DESC LIMIT 1'
         );
         $stmt->execute([':idUsuario' => $idUsuario]);
