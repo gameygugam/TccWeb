@@ -339,13 +339,13 @@ function SetupPause()
 
 function DrawPause()
 {    
+    fill(0,0,0)
+    textFont(pause.txtFonte)
     image(pause.background, pause.x, pause.y, pause.width, pause.height)
 
     textSize(pause.titulo.tamanho)
     text("CASTOR'S GAME", pause.titulo.x, pause.titulo.y)
     
-    fill(0,0,0)
-    textFont(pause.txtFonte)
     textSize(pause.txtTamanho)
 
     if(!pause.menuOpcoes){
@@ -559,6 +559,10 @@ function PreloadFase1()
 
 function SetupFase1()
 {
+
+    jogo.player.x = jogo.xFinalMapa / 2;
+    jogo.player.y = jogo.yFinalMapa / 2;
+
     fase1.lastItemPego = Lixo.novo(null, null, 0, 0, 0, 0, null, 0);
 
     fase1.lixeiras = [

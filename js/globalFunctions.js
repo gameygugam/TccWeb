@@ -590,13 +590,11 @@ function keyPressed()
     }
 
     if (event.code === "Escape") {
-        if(pause.menuPause) {
-            MenuDespause()
-            console.log("DespausarMenu")
+        if(jogo.fase != "fase1"){
+            MenuAlternar()
         }
-        else {
-            MenuPause()
-            console.log("PausarMenu")
+        else if (!tutorial.ativo && jogo.timer.start > 261) {
+            MenuAlternar()
         }
     }
 
@@ -691,8 +689,9 @@ function mousePressed() {
             }
 
             else if(MouseNoBotao(mouse, pause.botaoReiniciar)) {
-                if(jogo.fase === "menu") MudarFase("menu")
-                else if(jogo.fase === "preFase1") MudarFase("preFase1")
+
+            if(jogo.fase === "menu") MudarFase("menu")
+            else if(jogo.fase === "preFase1") MudarFase("preFase1")
             else if(jogo.fase === "fase1") MudarFase("fase1")
                 setup()
                 MenuDespause()
@@ -737,6 +736,16 @@ function MenuDespause(){
     jogo.pause = false;
 }
 
+function MenuAlternar(){
+    if(pause.menuPause) {
+        MenuDespause()
+        console.log("DespausarMenu")
+    }
+    else {
+        MenuPause()
+        console.log("PausarMenu")
+    }
+}
 //<-----------------------------------------------------------------------------------------------------------------------
 
 //FASES ----------------------------------------------------------------------------------------------------------------->
