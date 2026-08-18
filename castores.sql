@@ -99,7 +99,7 @@ INSERT INTO `partida` (`id`, `id_usuario`, `fase`, `tempo`, `pontuacao`) VALUES
 
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
-  `responsavel` varchar(20) DEFAULT NULL,
+  `sobrenome` varchar(20) DEFAULT NULL,
   `nome` varchar(20) DEFAULT NULL,
   `idade` int(2) DEFAULT NULL,
   `turma` varchar(10) DEFAULT NULL,
@@ -110,7 +110,7 @@ CREATE TABLE `usuario` (
 -- Despejando dados para a tabela `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `responsavel`, `nome`, `idade`, `turma`, `colegio`) VALUES
+INSERT INTO `usuario` (`id`, `sobrenome`, `nome`, `idade`, `turma`, `colegio`) VALUES
 (4, 'Ana', 'Gustavo', 17, NULL, NULL),
 (5, 'Terezinha', 'Camille', 45, NULL, NULL),
 (6, 'Marco', 'Flavio', 14, NULL, NULL),

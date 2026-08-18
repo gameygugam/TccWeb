@@ -23,10 +23,10 @@ class UsuarioRepository {
         return null;
     }
 
-    public function buscarPorNomes(string $responsavel, string $nome) : ?Usuario {
-        $stmt = $this->pdo->prepare('SELECT * FROM usuario WHERE responsavel = :responsavel and nome = :nome');
+    public function buscarPorNomes(string $sobrenome, string $nome) : ?Usuario {
+        $stmt = $this->pdo->prepare('SELECT * FROM usuario WHERE sobrenome = :sobrenome and nome = :nome');
         $stmt->execute([
-            ':responsavel' => $responsavel,
+            ':sobrenome' => $sobrenome,
             ':nome' => $nome
         ]);
         $dados = $stmt->fetch();
@@ -37,9 +37,9 @@ class UsuarioRepository {
         return null;
     }
 
-    public function criarUsuario(string $responsavel, string $nome, int $idade, string $colegio, string $turma): void {
-        $stmt = $this->pdo->prepare('INSERT INTO usuario (responsavel, nome, idade, colegio, turma) VALUES (:responsavel, :nome, :idade, :colegio, :turma)');
-        $stmt->execute([':responsavel' => $responsavel, ':nome' => $nome, ':idade' => $idade, ':colegio' => $colegio, ':turma' => $turma]);
+    public function criarUsuario(string $sobrenome, string $nome, int $idade, string $colegio, string $turma): void {
+        $stmt = $this->pdo->prepare('INSERT INTO usuario (sobrenome, nome, idade, colegio, turma) VALUES (:sobrenome, :nome, :idade, :colegio, :turma)');
+        $stmt->execute([':sobrenome' => $sobrenome, ':nome' => $nome, ':idade' => $idade, ':colegio' => $colegio, ':turma' => $turma]);
     }
 
     public function excluir(int $id): void {

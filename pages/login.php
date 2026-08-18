@@ -10,7 +10,7 @@ $repo = null;
 $repo = new UsuarioRepository();
 $repoPartida = null;
 $repoPartida = new PartidaRepository();
-$nomeResponsavel = '';
+$sobrenome = '';
 $nome = '';
 $colegio = '';
 $turma = '';
@@ -26,25 +26,25 @@ $melhorPartida = [];
 if (isset($_SESSION['id_usuario'])) $melhorPartida = $repoPartida->melhorPartida($_SESSION['id_usuario']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nomeResponsavel = $_POST['nomeResponsavel'];
+    $sobrenome = $_POST['sobrenome'];
     $nome  = $_POST['nome'];
     $idade = $_POST['idade'];
     $colegio = $_POST['colegio'];
     $turma = $_POST['turma'];
     
 
-    if($nomeResponsavel === '' || $nome === '' || $colegio === '' || $turma === '') {
+    if($sobrenome === '' || $nome === '' || $colegio === '' || $turma === '') {
         $erro = 'Preencha todos os campos';
     }
     if($idade < 7 || $idade > 99) {
         $erro = 'Idade inválida';
     }
     else {
-        $usuario = $repo->buscarPorNomes($nomeResponsavel, $nome);
+        $usuario = $repo->buscarPorNomes($sobrenome, $nome);
 
         if ($usuario) {
             $_SESSION['id_usuario']  = $usuario->getId();
-            $_SESSION['responsavel'] = $nomeResponsavel;
+            $_SESSION['sobrenome'] = $sobrenome;
             $_SESSION['nome']        = $nome;
             $_SESSION['idade']       = $idade;
             $_SESSION['colegio']     = $colegio;
@@ -58,14 +58,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         } else {
             try {
-                $_SESSION['responsavel'] = $nomeResponsavel;
+                $_SESSION['sobrenome'] = $sobrenome;
                 $_SESSION['nome']        = $nome;
                 $_SESSION['idade']       = $idade;
                 $_SESSION['colegio']     = $colegio;
                 $_SESSION['turma']       = $turma;
 
-                $repo->criarUsuario($nomeResponsavel, $nome, $idade, $colegio, $turma);
-                $usuario = $repo->buscarPorNomes($nomeResponsavel, $nome);
+                $repo->criarUsuario($sobrenome, $nome, $idade, $colegio, $turma);
+                $usuario = $repo->buscarPorNomes($sobrenome, $nome);
                 $_SESSION['id_usuario'] = $usuario->getId();
 
                 if(empty($_SESSION['fase'])) {
@@ -130,13 +130,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <span class="iconepixel"><img src="../assets/imagens/login/userIcon2.png" class="icone-img"></span>
         <div>
-            <label class="placa-label" for="nome">Primeiro nome</label>
+            <label class="placa-label" for="nome">Nome</label>
             <input
                 type="text"
                 id="nome"
                 name="nome"
                 placeholder="Ex: Ciclano"
                 value="<?= htmlspecialchars($nome) ?>"
+                required
+            >
+        </div>
+    </div>
+
+    <div class="campo">
+
+        <span class="iconepixel"><img src="../assets/imagens/login/responsavelIcon.png" class="icone-img"></span>
+        <div>
+            <label class="placa-label" for="sobrenome">Sobrenome</label>
+            <input
+                type="text"
+                id="sobrenome"
+                name="sobrenome"
+                placeholder="Ex: Fulano"
+                value="<?= htmlspecialchars($sobrenome) ?>"
                 required
             >
         </div>
@@ -153,22 +169,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 name="idade"
                 placeholder="Ex: 12"
                 value=""
-                required
-            >
-        </div>
-    </div>
-
-    <div class="campo">
-
-        <span class="iconepixel"><img src="../assets/imagens/login/responsavelIcon.png" class="icone-img"></span>
-        <div>
-            <label class="placa-label" for="nomeResponsavel">Primeiro nome do responsável</label>
-            <input
-                type="text"
-                id="nomeResponsavel"
-                name="nomeResponsavel"
-                placeholder="Ex: Fulano"
-                value="<?= htmlspecialchars($nomeResponsavel) ?>"
                 required
             >
         </div>
@@ -220,27 +220,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <?php if(!empty($leaderboard[0])): ?>
             <div class="linha primeiro">
-                <span>1# <?= $leaderboard[0]['nome'] ?>/<?= $leaderboard[0]['responsavel'] ?></span>
+                <span>1# <?= $leaderboard[0]['nome'] ?> <?= $leaderboard[0]['sobrenome'] ?></span>
                 <span><?= $leaderboard[0]['pontos']?></span>
             </div>
             <?php if(!empty($leaderboard[1])): ?>
                 <div class="linha">
-                    <span>2# <?= $leaderboard[1]['nome'] ?>/<?= $leaderboard[1]['responsavel'] ?></span>
+                    <span>2# <?= $leaderboard[1]['nome'] ?> <?= $leaderboard[1]['sobrenome'] ?></span>
                     <span><?= $leaderboard[1]['pontos']?></span>
                 </div>
                 <?php if(!empty($leaderboard[2])): ?>
                     <div class="linha">
-                           <span>3# <?= $leaderboard[2]['nome'] ?>/<?= $leaderboard[2]['responsavel'] ?></span>
+                           <span>3# <?= $leaderboard[2]['nome'] ?> <?= $leaderboard[2]['sobrenome'] ?></span>
                         <span><?= $leaderboard[2]['pontos']?></span>
                     </div>
                     <?php if(!empty($leaderboard[3])): ?>
                         <div class="linha">
-                            <span>4# <?= $leaderboard[3]['nome'] ?>/<?= $leaderboard[3]['responsavel'] ?></span>
+                            <span>4# <?= $leaderboard[3]['nome'] ?> <?= $leaderboard[3]['sobrenome'] ?></span>
                             <span><?= $leaderboard[3]['pontos']?></span>
                         </div>
                         <?php if(!empty($leaderboard[4])): ?>
                             <div class="linha">
-                                <span>5# <?= $leaderboard[4]['nome'] ?>/<?= $leaderboard[4]['responsavel'] ?></span>
+                                <span>5# <?= $leaderboard[4]['nome'] ?> <?= $leaderboard[4]['sobrenome'] ?></span>
                                 <span><?= $leaderboard[4]['pontos']?></span>
                             </div>
                         <?php endif; ?>
@@ -252,11 +252,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if(isset($_SESSION['id_usuario'])): ?>
 
             <div class="linha">
-                <span>última <?= $ultimaPartida[0]['nome'] ?>/<?= $ultimaPartida[0]['responsavel'] ?></span>
+                <span>última <?= $ultimaPartida[0]['nome'] ?> <?= $ultimaPartida[0]['sobrenome'] ?></span>
                 <span><?= $ultimaPartida[0]['pontos']?></span>
             </div>
             <div class="linha">
-                <span>melhor <?= $melhorPartida[0]['nome'] ?>/<?= $melhorPartida[0]['responsavel'] ?></span>
+                <span>melhor <?= $melhorPartida[0]['nome'] ?> <?= $melhorPartida[0]['sobrenome'] ?></span>
                 <span><?= $melhorPartida[0]['pontos']?></span>
         <?php endif; ?>
 

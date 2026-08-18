@@ -115,11 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <?= ($posicao + 1) ?>#
 
-                    <?= htmlspecialchars($jogador['nome']) ?>
-
-                    /
-
-                    <?= htmlspecialchars($jogador['responsavel']) ?>
+                    <?= htmlspecialchars($jogador['nome']) ?> <?= htmlspecialchars($jogador['sobrenome']) ?>
 
                 </span>
 
