@@ -258,7 +258,7 @@ function Dialogo(dialogo) {
                     break;
                 
                 case 3:
-                    texto.conteudo = "(Muito bem, para se movimentar utilize as teclas W, A, S e D ou as setas do teclado).";
+                    texto.conteudo = "(Muito bem, para se movimentar utilize as setas do teclado).";
                     break;
                 
                 case 4:
