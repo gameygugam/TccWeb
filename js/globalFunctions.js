@@ -266,10 +266,6 @@ function Dialogo(dialogo) {
                     break;
 
                 case 5:
-                    texto.conteudo = "(Para pausar o jogo basta pressionar a tecla 'esc').";
-                    break;
-
-                case 6:
                     texto.conteudo = "(A nossa tarefa está no caminho da direita. Vamos lá!).";
                     break;
 
