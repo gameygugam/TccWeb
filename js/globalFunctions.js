@@ -501,6 +501,9 @@ function windowResized()
         windowHeight = 480;
     }
 
+    pause.opcoes.musica.slider.remove()
+    pause.opcoes.som.slider.remove()
+
     jogo.pause = true;
     setup();
 }
@@ -683,7 +686,7 @@ function mousePressed() {
     let mouse = {x: mouseX, y: mouseY}
 
     if(pause.menuPause){
-        if(!pause.menuOpcoes){
+        if(!pause.menuOpcoesON){
             if(MouseNoBotao(mouse, pause.botaoContinuar)) {
                 MenuDespause()
             }
@@ -698,7 +701,7 @@ function mousePressed() {
             }
 
             else if(MouseNoBotao(mouse, pause.botaoOpcoes)) {
-                pause.menuOpcoes = true;
+                pause.menuOpcoesON = true;
             }
 
             else if(MouseNoBotao(mouse, pause.botaoSair)) {
@@ -713,6 +716,12 @@ function mousePressed() {
                 window.location.href = "pages/ranking.php";
             }
 
+            if(MouseNoBotao(mouse, pause.opcoes.botaoSair)) {
+                pause.menuOpcoesON = false;
+                pause.opcoes.musica.slider.hide()
+                pause.opcoes.som.slider.hide()
+            }
+
         }
         
 
@@ -725,15 +734,17 @@ function mousePressed() {
 //PAUSE ----------------------------------------------------------------------------------------------------------------->
 
 function MenuPause(){
-    pause.menuOpcoes = false;
+    pause.menuOpcoesON = false;
     pause.menuPause = true;
     jogo.pause = true;
 }
 
 function MenuDespause(){
-    pause.menuOpcoes = false;
+    pause.menuOpcoesON = false;
     pause.menuPause = false;
     jogo.pause = false;
+    pause.opcoes.musica.slider.hide()
+    pause.opcoes.som.slider.hide()
 }
 
 function MenuAlternar(){

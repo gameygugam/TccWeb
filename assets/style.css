@@ -707,3 +707,179 @@ OPÇÕES
 
     padding:10px;
 }
+
+
+/*==================================================
+    SLIDER DE VOLUME - PIXEL ART
+==================================================*/
+
+.slider-volume {
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 250px;
+    height: 18px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #7d4924,
+            #5c3518,
+            #43250f
+        );
+
+    border: 4px solid #3c200d;
+
+    border-radius: 4px;
+
+    outline: none;
+
+    box-shadow:
+        inset 0 0 0 2px #a66d37,
+        0 4px 0 #2d1709;
+
+    cursor: pointer;
+}
+
+
+/*==================================================
+    TRILHO - CHROME / EDGE / SAFARI
+==================================================*/
+
+.slider-volume::-webkit-slider-runnable-track {
+
+    height: 10px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #5a3518,
+            #3c200d
+        );
+
+    border: 2px solid #291507;
+
+    border-radius: 2px;
+}
+
+
+/*==================================================
+    BOTÃO DO SLIDER - CHROME / EDGE / SAFARI
+==================================================*/
+
+.slider-volume::-webkit-slider-thumb {
+
+    appearance: none;
+
+    width: 28px;
+    height: 28px;
+
+    margin-top: -11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #b0f276,
+            #9be75f,
+            #5ca534
+        );
+
+    border: 4px solid #315b1c;
+
+    border-radius: 4px;
+
+    box-shadow:
+        inset 0 0 0 2px #d4ff9d,
+        3px 3px 0 #3c200d;
+
+    cursor: pointer;
+
+    transition: .1s;
+}
+
+
+/*==================================================
+    HOVER
+==================================================*/
+
+.slider-volume:hover::-webkit-slider-thumb {
+
+    background:
+        linear-gradient(
+            135deg,
+            #d0ff9f,
+            #b0f276,
+            #79c647
+        );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        inset 0 0 0 2px #efffd7,
+        3px 5px 0 #3c200d;
+}
+
+
+/*==================================================
+    CLICK
+==================================================*/
+
+.slider-volume:active::-webkit-slider-thumb {
+
+    transform: translate(2px, 2px);
+
+    box-shadow:
+        inset 0 0 0 2px #b0f276,
+        1px 1px 0 #3c200d;
+}
+
+
+/*==================================================
+    FIREFOX - TRILHO
+==================================================*/
+
+.slider-volume::-moz-range-track {
+
+    height: 10px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #5a3518,
+            #3c200d
+        );
+
+    border: 2px solid #291507;
+
+    border-radius: 2px;
+}
+
+
+/*==================================================
+    FIREFOX - BOTÃO
+==================================================*/
+
+.slider-volume::-moz-range-thumb {
+
+    width: 28px;
+    height: 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #b0f276,
+            #9be75f,
+            #5ca534 
+        );
+
+    border: 4px solid #315b1c;
+
+    border-radius: 4px;
+
+    box-shadow:
+        inset 0 0 0 2px #d4ff9d,
+        3px 3px 0 #3c200d;
+
+    cursor: pointer;
+}

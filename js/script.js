@@ -326,15 +326,40 @@ function SetupPause()
 
     //Menu Opções
 
-    pause.opcoes.musica.texto_x = pause.x + (pause.width / 5)
-    pause.opcoes.musica.texto_y = pause.y + (pause.height / 3)
+    
+    pause.opcoes.musica.slider_x = pause.x + (pause.width / 4) + (60 * jogo.escala)
+    pause.opcoes.musica.slider_y = pause.y + (pause.height / 2) - (100 * jogo.escala)
+    pause.opcoes.musica.slider = createSlider(0, 100, jogo.config.musicaVolume) //valor minimo, valor máximo, valor inicial
+    pause.opcoes.musica.slider.size(200 * jogo.escala)
+    pause.opcoes.musica.slider.position(pause.opcoes.musica.slider_x, pause.opcoes.musica.slider_y)
+    pause.opcoes.musica.slider.addClass("slider-volume");
+    pause.opcoes.musica.slider.hide()
+    pause.opcoes.musica.texto_x = pause.x + (pause.width / 4) - (20 * jogo.escala)
+    pause.opcoes.musica.texto_y = pause.y + (pause.height / 2) - (80 * jogo.escala)
 
-    pause.opcoes.botaoRanking.width = pause.btnWidth
+    pause.opcoes.som.slider_x = pause.x + (pause.width / 4)  + (60 * jogo.escala)
+    pause.opcoes.som.slider_y = pause.y + (pause.height / 2)
+    pause.opcoes.som.slider = createSlider(0, 100, jogo.config.somVolume) //valor minimo, valor máximo, valor inicial
+    pause.opcoes.som.slider.size(200 * jogo.escala)
+    pause.opcoes.som.slider.position(pause.opcoes.som.slider_x, pause.opcoes.som.slider_y)
+    pause.opcoes.som.slider.addClass("slider-volume");
+    pause.opcoes.som.slider.hide()
+    pause.opcoes.som.texto_x = pause.x + (pause.width / 4) - (20 * jogo.escala)
+    pause.opcoes.som.texto_y = pause.y + (pause.height / 2) + (20 * jogo.escala)
+
+    pause.opcoes.botaoRanking.width = pause.btnWidth / 1.4
     pause.opcoes.botaoRanking.height = pause.btnHeight
-    pause.opcoes.botaoRanking.x = pause.x + ((pause.width / 2) - (pause.btnWidth / 2))
-    pause.opcoes.botaoRanking.y = pause.y + ((pause.height / 2) + (150 * jogo.escala))
+    pause.opcoes.botaoRanking.x = pause.x + (pause.width / 4)
+    pause.opcoes.botaoRanking.y = pause.y + (pause.height / 2) + (100 * jogo.escala)
     pause.opcoes.botaoRanking.texto_x = pause.opcoes.botaoRanking.x + (pause.btnWidth / 3.2)
     pause.opcoes.botaoRanking.texto_y = pause.opcoes.botaoRanking.y + (pause.btnHeight / 1.75)
+
+    pause.opcoes.botaoSair.width = pause.btnWidth / 1.4
+    pause.opcoes.botaoSair.height = pause.btnHeight
+    pause.opcoes.botaoSair.x = pause.x + (pause.width / 4) + (150 * jogo.escala)
+    pause.opcoes.botaoSair.y = pause.y + (pause.height / 2) + (100 * jogo.escala)
+    pause.opcoes.botaoSair.texto_x = pause.opcoes.botaoRanking.x + (pause.btnWidth / 3.2) + (150 * jogo.escala)
+    pause.opcoes.botaoSair.texto_y = pause.opcoes.botaoRanking.y + (pause.btnHeight / 1.75)
 }
 
 function DrawPause()
@@ -348,7 +373,7 @@ function DrawPause()
     
     textSize(pause.txtTamanho)
 
-    if(!pause.menuOpcoes){
+    if(!pause.menuOpcoesON){
         image(pause.btnImg, pause.botaoContinuar.x, pause.botaoContinuar.y, pause.btnWidth, pause.btnHeight)
         text("Continuar", pause.botaoContinuar.texto_x, pause.botaoContinuar.texto_y)
 
@@ -363,17 +388,24 @@ function DrawPause()
     }
     else {
 
+        pause.opcoes.musica.slider.show()
+        pause.opcoes.som.slider.show()
+
         textFont(pause.txtFonte)
         textSize(pause.txtTamanho * 1.5)
 
-        text("Música:" + jogo.config.musicaVolume, pause.opcoes.musica.texto_x, pause.opcoes.musica.texto_y)
-        image(pause.btnImg, pause.opcoes.musica.texto_x, pause.opcoes.musica.texto_y, pause.btnWidth / 2, pause.btnHeight / 2)
-        image(pause.btnImg, pause.opcoes.botaoRanking.x, pause.opcoes.botaoRanking.y, pause.btnWidth, pause.btnHeight)
+        text("M:" + jogo.config.musicaVolume, pause.opcoes.musica.texto_x, pause.opcoes.musica.texto_y)
 
-        text("SFX", pause.opcoes.botaoRanking.texto_x, pause.opcoes.botaoRanking.texto_y)
+        text("SFX:" + jogo.config.somVolume, pause.opcoes.som.texto_x, pause.opcoes.som.texto_y)
 
-        image(pause.btnImg, pause.opcoes.botaoRanking.x, pause.opcoes.botaoRanking.y, pause.btnWidth, pause.btnHeight)
+        image(pause.btnImg, pause.opcoes.botaoRanking.x, pause.opcoes.botaoRanking.y, pause.opcoes.botaoRanking.width, pause.opcoes.botaoRanking.height)
         text("Placar", pause.opcoes.botaoRanking.texto_x, pause.opcoes.botaoRanking.texto_y)
+
+        image(pause.btnImg, pause.opcoes.botaoSair.x, pause.opcoes.botaoSair.y, pause.opcoes.botaoSair.width, pause.opcoes.botaoSair.height)
+        text("Sair", pause.opcoes.botaoSair.texto_x, pause.opcoes.botaoSair.texto_y)
+
+        jogo.config.musicaVolume = pause.opcoes.musica.slider.value()
+        jogo.config.somVolume = pause.opcoes.som.slider.value()
     }
 
     
