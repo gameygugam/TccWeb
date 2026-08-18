@@ -500,6 +500,7 @@ function PreloadFase1()
 
     fase1.lixosImgCarregados.pixel.vidro = [
         loadImage("assets/imagens/fase1/lixos/pixel/garrafaVidroPixel.png"),
+        loadImage("assets/imagens/fase1/lixos/pixel/tacaDeVidroPixel.png"),
     ]
 
     fase1.lixosImgCarregados.pixel.organico = [
@@ -530,6 +531,7 @@ function PreloadFase1()
 
     fase1.lixosImgCarregados.reais.vidro = [
         loadImage("assets/imagens/fase1/lixos/reais/garrafaVidro.png"),
+        loadImage("assets/imagens/fase1/lixos/reais/garrafaVidro.png"), //TROCAR POR TAÇA DE VIDRO QUEBRADA REAL
     ]
 
     fase1.lixosImgCarregados.reais.organico = [

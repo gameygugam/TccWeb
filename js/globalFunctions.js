@@ -829,6 +829,10 @@ function MostrarLixoReal() {
             image(fase1.lixosImgCarregados.reais.vidro[0], (windowWidth) - 168 *jogo.escala, (windowHeight) - 370 *jogo.escala, 125 * jogo.escala, 150 * jogo.escala);
             lixo_nome_real = "Garrafa de vidro"
         }
+        else if(fase1.lastItemPego.nome === "tacaDeVidro") {
+            image(fase1.lixosImgCarregados.reais.vidro[1], (windowWidth) - 168 *jogo.escala, (windowHeight) - 370 *jogo.escala, 125 * jogo.escala, 150 * jogo.escala);
+            lixo_nome_real = "Taça de vidro"
+        }
         else if (fase1.lastItemPego.nome === "banana") {
             image(fase1.lixosImgCarregados.reais.organico[0], (windowWidth) - 168 *jogo.escala, (windowHeight) - 355 *jogo.escala, 125 * jogo.escala, 125 * jogo.escala);
             lixo_nome_real = "Banana"
@@ -1098,7 +1102,9 @@ function RandomizarLixoNomePorTipo(lixo_type){
     }
 
     else if (lixo_type === "vidro") {
-        lixo_nome = "garrafaDeVidro"
+        let rnd = floor(random(2))
+        if (rnd === 0) lixo_nome = "garrafaDeVidro"
+        else if (rnd === 1) lixo_nome = "tacaDeVidro"
     }
 
     else if (lixo_type === "organico") {
@@ -1142,6 +1148,9 @@ function CarregarLixoImgPorNome(lixo_nome){
     }
     else if (lixo_nome === "garrafaDeVidro"){
         lixo_img = fase1.lixosImgCarregados.pixel.vidro[0]
+    }
+    else if (lixo_nome === "tacaDeVidro"){
+        lixo_img = fase1.lixosImgCarregados.pixel.vidro[1]
     }
     else if (lixo_nome === "banana"){
         lixo_img = fase1.lixosImgCarregados.pixel.organico[0]
