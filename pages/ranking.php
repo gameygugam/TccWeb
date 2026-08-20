@@ -26,9 +26,26 @@ if (isset($_SESSION['id_usuario'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $pesquisa = $_POST['pesquisa'] ?? '';
+    $acao = $_POST['acao'] ?? '';
 
-    $leaderboard = $repoPartida->leaderboardPorNome($pesquisa);
+    $filtro_nome = $_POST['pesquisa-nome'] ?? '';
+    $filtro_colegio = $_POST['colegio'] ?? '';
+    $filtro_turma = $_POST['pesquisa-turma'] ?? '';
+
+    if($filtro_colegio === 'nenhum') {
+        $filtro_colegio = '';
+        $filtro_turma = '';
+    }
+
+    if ($acao === "excluir"){
+
+        $filtro_nome = '';
+        $filtro_colegio = '';
+        $filtro_turma = '';
+
+    }
+
+    $leaderboard = $repoPartida->leaderboardFiltrando($filtro_nome, $filtro_colegio, $filtro_turma);
 }
 
 ?>
@@ -81,19 +98,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form method="POST" action="ranking.php" class="ranking-form">
 
-        <div class="pesquisa">
+        <div class="pesquisa pesquisa-nome">
 
             <input
                 type="text"
-                name="pesquisa"
-                placeholder="Pesquisar..."
+                name="pesquisa-nome"
+                placeholder="Digite seu nome..."
             >
 
-            <button type="submit">
+            <button type="submit" class="lupa" name="acao" value="pesquisar">
                 🔍
             </button>
 
+            <button type="submit" class="excluir" name="acao" value="excluir">
+                ❌
+            </button>
+
         </div>
+
+        <div class="colegios">
+
+            <label class="colegio">
+                <input type="radio" name="colegio" value="cpii">
+                <img src="../assets/imagens/login/cp2Logo.png" alt="CPII">
+            </label>
+
+            <label class="colegio">
+                <input type="radio" name="colegio" value="cjba">
+                <img src="../assets/imagens/login/CjbaLogo.png" alt="CJBA">
+            </label>
+
+            <label class="colegio">
+                <input type="radio" name="colegio" value="santosDumont">
+                <img src="../assets/imagens/login/CesdLogo.png" alt="Santos Dumont">
+            </label>
+
+            <label class="colegio">
+                <input type="radio" name="colegio" value="nenhum">
+                <img src="../assets/imagens/login/excluir.png" alt="Nenhum">
+            </label>
+
+        </div>
+
+        <div class="pesquisa pesquisa-turma">
+
+            <input
+                type="text"
+                name="pesquisa-turma"
+                placeholder="Digite sua turma..."
+            >
+            </button>
+
+        </div>
+
+        
 
     </form>
 

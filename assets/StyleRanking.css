@@ -52,78 +52,35 @@ FOLHAS
 ==========================*/
 
 .folha{
-
     position:absolute;
-
     color:#9be79c;
-
+    top: -50px;
     font-size:24px;
-
     opacity:.75;
-
     animation:cair 8s linear infinite;
-
-    z-index:1;
 }
 
+.f1{left:8%;animation-delay:0s;}
+.f2{left:27%;animation-delay:2s;}
+.f3{left:70%;animation-delay:5s;}
+.f4{left:90%;animation-delay:1s;}
+.f5{left:15%;animation-delay:11s;}
+.f6{left:67%;animation-delay:4s;}
+.f7{left:89%;animation-delay:7s;}
+.f8{left:53%;animation-delay:3s;}
 
-.f1{
-    left:8%;
-    animation-delay:0s;
-}
-
-.f2{
-    left:20%;
-    animation-delay:2s;
-}
-
-.f3{
-    left:35%;
-    animation-delay:5s;
-}
-
-.f4{
-    left:50%;
-    animation-delay:1s;
-}
-
-.f5{
-    left:65%;
-    animation-delay:3s;
-}
-
-.f6{
-    left:75%;
-    animation-delay:6s;
-}
-
-.f7{
-    left:85%;
-    animation-delay:4s;
-}
-
-.f8{
-    left:92%;
-    animation-delay:7s;
-}
-
+/*==========================
+ANIMAÇÕES
+==========================*/
 
 @keyframes cair{
 
     from{
-
-        transform:
-            translateY(-100px)
-            rotate(0);
-
+        transform:translateY(-100px) rotate(0);
     }
 
     to{
-
-        transform:
-            translateY(110vh)
-            rotate(360deg);
-
+        transform:translateY(110vh) rotate(360deg);
     }
 }
 
@@ -267,8 +224,18 @@ PESQUISA
 .pesquisa{
 
     display:flex;
+}
+
+.pesquisa-nome{
 
     width:100%;
+}
+
+.pesquisa-turma{
+
+    width:60%;
+
+    margin-left: 110px;
 }
 
 
@@ -304,19 +271,26 @@ PESQUISA
 
     width:60px;
 
-    border:5px solid #315b1c;
-
-    border-left:none;
-
-    border-radius:0 6px 6px 0;
-
-    background:#79c647;
-
     cursor:pointer;
 
     font-size:18px;
 }
 
+.lupa{
+
+    border:5px solid #315b1c;
+
+    background:#79c647;
+}
+
+.excluir{
+
+    border:5px solid #5b1c1c;
+
+    border-radius:0 6px 6px 0;
+
+    background:#c64747;
+}
 
 /*==========================
 TÍTULO
@@ -467,4 +441,219 @@ BOTÃO VOLTAR
     transform:translateY(3px);
 
     box-shadow:none;
+}
+
+/*==========================
+COLÉGIOS
+==========================*/
+
+.colegios {
+
+    display: flex;
+
+    gap: 18px;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+}
+
+
+/*==========================
+CARD DO COLÉGIO
+==========================*/
+
+.colegio {
+
+    position: relative;
+
+    cursor: pointer;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    width: 110px;
+
+    margin-top: 10px;
+
+    margin-bottom: 15px;
+
+    height: 110px;
+
+    padding: 8px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #b9864a,
+            #a66d37,
+            #8f5a2d
+        );
+
+    border: 5px solid #4a2b12;
+
+    border-radius: 8px;
+
+    box-shadow:
+
+        inset 0 0 0 3px #c99758,
+
+        inset 0 0 0 6px #7b4a22,
+
+        0 5px 0 #3b2110,
+
+        0 8px 12px rgba(0,0,0,.35);
+
+    transition: .15s;
+
+}
+
+
+/*==========================
+INPUT ESCONDIDO
+==========================*/
+
+.colegio input {
+
+    display: none;
+
+}
+
+
+/*==========================
+IMAGEM
+==========================*/
+
+.colegio img {
+
+    width: 80px;
+
+    height: 80px;
+
+    object-fit: contain;
+
+    padding: 5px;
+
+    border: 3px solid transparent;
+
+    border-radius: 4px;
+
+    transition: .15s;
+
+}
+
+
+/*==========================
+EFEITO AO PASSAR O MOUSE
+==========================*/
+
+.colegio:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow:
+
+        inset 0 0 0 3px #c99758,
+
+        inset 0 0 0 6px #7b4a22,
+
+        0 8px 0 #3b2110,
+
+        0 12px 16px rgba(0,0,0,.35);
+
+}
+
+
+/*==========================
+COLÉGIO SELECIONADO
+==========================*/
+
+.colegio input:checked + img {
+
+    border-color: #315b1c;
+
+    /* background:
+
+        linear-gradient(
+            #9be75f,
+            #79c647,
+            #5ca534
+        ); */
+
+    box-shadow:
+
+        0 0 0 3px #173719,
+
+        inset 0 0 0 2px #7797586b;
+
+}
+
+
+/*==========================
+CARD SELECIONADO
+==========================*/
+
+.colegio:has(input:checked) {
+
+    background:
+
+        linear-gradient(
+            180deg,
+            #d7b052,
+            #b9864a,
+            #8f5a2d
+        );
+
+    border-color: #3a220d;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+
+        inset 0 0 0 3px #ffe39a,
+
+        inset 0 0 0 6px #7b4a22,
+
+        0 6px 0 #3b2110,
+
+        0 10px 15px rgba(0,0,0,.4);
+
+}
+
+
+/*==========================
+CLIQUE
+==========================*/
+
+.colegio:active {
+
+    transform: translateY(3px);
+
+    box-shadow:
+
+        inset 0 0 0 3px #c99758,
+
+        inset 0 0 0 6px #7b4a22,
+
+        0 2px 0 #3b2110;
+
+}
+
+
+/*==========================
+FOCO DO TECLADO
+==========================*/
+
+.colegio input:focus-visible + img {
+
+    outline: 3px solid #9be75f;
+
+    outline-offset: 3px;
+
 }

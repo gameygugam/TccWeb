@@ -103,6 +103,29 @@ class PartidaRepository {
         return $leaderboard;
     }
 
+    public function leaderboardFiltrando(string $nome, string $colegio, string $turma): array {
+        $stmt = $this->pdo->prepare(
+            'SELECT p.id_usuario, u.nome, u.sobrenome, MAX(p.pontuacao) as pontos
+            FROM usuario u, partida p
+            WHERE u.id = p.id_usuario
+            AND u.nome LIKE :nome
+            AND u.colegio LIKE :colegio
+            AND u.turma LIKE :turma
+            GROUP BY p.id_usuario
+            ORDER BY MAX(p.pontuacao) DESC LIMIT 100'
+        );
+        $stmt->execute([
+        ':nome' => "%$nome%",
+        ':colegio' => "%$colegio%",
+        ':turma' => "%$turma%"
+        ]);
+        $lista = [];
+        foreach ($stmt->fetchAll() as $dados) {
+            $lista[] = $dados;
+        }
+        return $lista;
+    }
+
     public function leaderboardPorNome(string $nome): array {
         $stmt = $this->pdo->prepare(
             'SELECT p.id_usuario, u.nome, u.sobrenome, MAX(p.pontuacao) as pontos
