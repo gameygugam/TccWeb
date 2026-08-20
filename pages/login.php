@@ -176,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="campo">
 
-        <span class="iconepixel"> <img src="../assets/imagens/login/userIcon2.png" class="icone-img"> </span>
+        <span class="iconepixel"> <img src="../assets/imagens/login/escolaIcon.png" class="icone-escola"> </span>
         <div>
             <label class="placa-label" for="colegio">Colégio</label>
             <select id="colegio" name="colegio" required>
@@ -190,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="campo">
 
-        <span class="iconepixel"><img src="../assets/imagens/login/userIcon2.png" class="icone-img"></span>
+        <span class="iconepixel"><img src="../assets/imagens/login/turmaIcon.png" class="icone-img"></span>
         <div>
             <label class="placa-label" for="turma">Turma</label>
             <input
