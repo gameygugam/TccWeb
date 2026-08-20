@@ -249,6 +249,7 @@ function CaixaDialogo() {
 }
 
 function Dialogo(dialogo) {
+    fill(0, 0, 0)
     switch (dialogo) 
     {
         case "menu":

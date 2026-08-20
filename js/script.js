@@ -65,6 +65,8 @@ function setup() {
         oldX: jogo.xFinalMapa/2+40*jogo.escala, oldY: jogo.yInicialMapa+25*jogo.escala, class: "player", dash_cooldown: 80, dash_duracao: 0 
     };
 
+    jogo.playerImg = jogo.playerImgDireita
+
     jogo.walls = [
         wall1 = { x: 0, y: jogo.yInicialMapa, width: windowWidth, height: 10, class: "wall" }, // Parede superior
         wall2 = { x: jogo.xInicialMapa, y: 0, width: 10, height: windowHeight, class: "wall" }, // Parede esquerda
@@ -147,6 +149,9 @@ function SetupMenu()
 
     jogo.timer.segundos = 0;
     jogo.timer.ticks = 0;
+
+    jogo.player.x = jogo.xFinalMapa / 2;
+    jogo.player.y = jogo.yFinalMapa / 5;
     
 }
 
@@ -445,6 +450,9 @@ function PreloadPreFase1()
 function SetupPreFase1()
 {
     fase1.placa = {x: windowWidth/2 + 50 * jogo.escala, y: windowHeight/2 - 100 * jogo.escala, width: 100 * jogo.escala, height: 200 * jogo.escala}
+
+    jogo.player.x = jogo.xFinalMapa / 5;
+    jogo.player.y = jogo.yFinalMapa / 2;
 }
 
 function DrawPreFase1()
@@ -630,6 +638,9 @@ function SetupFase1()
     jogo.timer.segundos = 0;
     jogo.timer.ticks = 0;
     jogo.timer.start = 0;
+
+    jogo.player.x = jogo.xFinalMapa / 2;
+    jogo.player.y = jogo.yFinalMapa / 2;
 }
 
 function DrawFase1()
