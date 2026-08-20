@@ -22,15 +22,24 @@ function setup() {
     PegarColegio();
 
     jogo.som = {
-        faseMenu: [new Audio("assets/audio/menu_theme.wav")],
         marteloMenu: [
             new Audio("assets/audio/batida_martelo_1.wav"),
             new Audio("assets/audio/batida_martelo_2.wav"),
             new Audio("assets/audio/batida_martelo_3.wav"),
         ],
-        fase1: [new Audio("assets/audio/fase1_theme.wav")],
         contagemIniciar: [new Audio("assets/audio/contagem_iniciar.wav")],
+        despejarLixo: [
+            new Audio("assets/audio/despejar_lixo.wav"),
+        ],
     }
+
+    jogo.musica = {
+        faseMenu: new Audio("assets/audio/menu_theme.wav"),
+        fase1: new Audio("assets/audio/fase1_theme.wav"),
+    }
+
+    jogo.musica.faseMenu.loop = true
+    jogo.musica.fase1.loop = true
 
     jogo.canvas = createCanvas(windowWidth, windowHeight);
     noSmooth();
@@ -105,11 +114,14 @@ function draw() {
     textSize(50)
     text(fase1.pontos, windowWidth - 100, 100);
 
+    if (jogo.config.musicaON && jogo.qtdMouseInteracoes > 0) TocarFundoMusical() //O navegador só toca música se tiver alguma interação do usuario anteriormente
+
     if (jogo.fase !== "menu" && jogo.sairDoJogo) 
     {
         MudarFase("menu");
         jogo.sairDoJogo = false
     }
+    console.log(jogo.qtdMouseInteracoes)
 
     // text("TG:" + jogo.timerGlobal, 50, windowHeight - 100);
     jogo.timerGlobal++
@@ -156,6 +168,7 @@ function DrawMenu()
         Dialogo("menu");
     }
     else {
+
         // Armazena posição antiga
         jogo.player.oldX = jogo.player.x;
         jogo.player.oldY = jogo.player.y;
@@ -555,7 +568,7 @@ function PreloadFase1()
     ]
 
     fase1.lixosImgCarregados.pixel.naoReciclavel = [
-        loadImage("assets/imagens/fase1/lixos/pixel/pilhaPixel.png"),
+        loadImage("assets/imagens/fase1/lixos/pixel/fotografiaPixel.png"),
         loadImage("assets/imagens/fase1/lixos/pixel/chicleteMascadoPixel.png"),
     ]
 
@@ -586,7 +599,7 @@ function PreloadFase1()
     ]
 
     fase1.lixosImgCarregados.reais.naoReciclavel = [
-        loadImage("assets/imagens/fase1/lixos/reais/pilha.png"),
+        loadImage("assets/imagens/fase1/lixos/reais/chicleteMascado.png"),
         loadImage("assets/imagens/fase1/lixos/reais/chicleteMascado.png"),
     ]
 

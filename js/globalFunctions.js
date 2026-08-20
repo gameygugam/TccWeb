@@ -144,11 +144,24 @@ function TocarSom(sons) {
     sons[rnd].play()
 }
 
-function TocarMusica(musicas) {
+function TocarMusica(musica) {
+    musica.volume = jogo.config.musicaVolume / 100
+    musica.play()
+}
 
-    let rnd = floor(random(musicas.length))
-    musicas[rnd].volume = jogo.config.musicaVolume / 100
-    musicas[rnd].play()
+function TocarFundoMusical() {
+
+    if(jogo.fase === "menu" || jogo.fase === "preFase1") {
+        if(jogo.pause) jogo.musica.faseMenu.pause()
+        else TocarMusica(jogo.musica.faseMenu)
+    }
+    else jogo.musica.faseMenu.pause()
+
+    if(jogo.fase === "fase1") {
+        if(jogo.pause) jogo.musica.fase1.pause()
+        else if (jogo.timer.start > 261) TocarMusica(jogo.musica.fase1)
+    }
+    else jogo.musica.fase1.pause()
 }
 
 async function MudarFase(fase) {
@@ -424,11 +437,11 @@ function Dialogo(dialogo) {
                         break;
 
                     case 2:
-                        texto.conteudo = "Nhoc-nhoc (Se quiser, você pode ver o placar dos 5 melhores castores que também ajudaram na limpeza na tela inicial).";
+                        texto.conteudo = "Nhoc-nhoc (Se quiser, você pode ver o placar de todos os castores que também ajudaram na limpeza no menu de opções).";
                         break;
 
                     case 3:
-                        texto.conteudo = "(Basta apertar a tecla 'esc' para abrir o menu de pause e clicar em sair).";
+                        texto.conteudo = "(Basta apertar a tecla 'esc' para abrir o menu de pause, clicar em 'opções' e depois em 'ranking').";
                         break;
 
                     default:
@@ -619,6 +632,7 @@ function keyPressed()
 
     if (jogo.fase === "fase1" && fase1.pegouLixo && !jogo.pause && (key === "e" || key === "E") && jogo.cooldownInteragir <= 0) {
         DespejarLixo(jogo.player, fase1.lixeiras);
+        TocarSom(jogo.som.despejarLixo)
         jogo.cooldownInteragir = 15
     }
 
@@ -661,9 +675,7 @@ function keyPressed()
     
     if (jogo.fase === "pause" && keyCode === ESCAPE) jogo.fase = "fase1";
 
-    if(jogo.fase === "menu" && jogo.config.musicaON) TocarMusica(jogo.som.faseMenu);
-    if(jogo.fase === "fase1" && jogo.config.musicaON) TocarMusica(jogo.som.fase1);
-
+    console.log("musica:" + jogo.config.musicaVolume)
     
 }
 
@@ -683,6 +695,7 @@ function keyReleased(event) {
 
 function mousePressed() {
 
+    jogo.qtdMouseInteracoes++
     let mouse = {x: mouseX, y: mouseY}
 
     if(pause.menuPause){
@@ -737,6 +750,9 @@ function MenuPause(){
     pause.menuOpcoesON = false;
     pause.menuPause = true;
     jogo.pause = true;
+
+    if(jogo.fase === "menu") jogo.som.faseMenu.pause()
+    else if(jogo.fase === "fase1") jogo.som.fase1.pause()
 }
 
 function MenuDespause(){
@@ -754,6 +770,7 @@ function MenuAlternar(){
     }
     else {
         MenuPause()
+        Toca
         console.log("PausarMenu")
     }
 }
@@ -872,9 +889,9 @@ function MostrarLixoReal() {
             image(fase1.lixosImgCarregados.reais.metal[1], (windowWidth) - 195 *jogo.escala, (windowHeight) - 380 *jogo.escala, 180 * jogo.escala, 180 * jogo.escala);
             lixo_nome_real = "Latinha"
         }
-        else if (fase1.lastItemPego.nome === "pilha") {
+        else if (fase1.lastItemPego.nome === "fotografia") {
             image(fase1.lixosImgCarregados.reais.naoReciclavel[0], (windowWidth) - 205 *jogo.escala, (windowHeight) - 370 *jogo.escala, 200 * jogo.escala, 150 * jogo.escala);
-            lixo_nome_real = "Pilha"
+            lixo_nome_real = "Fotografia"
         }
         else if (fase1.lastItemPego.nome === "chicleteMascado") {
             image(fase1.lixosImgCarregados.reais.naoReciclavel[1], (windowWidth) - 185 *jogo.escala, (windowHeight) - 360 *jogo.escala, 150 * jogo.escala, 125 * jogo.escala);
@@ -993,7 +1010,7 @@ function CriarLixo() {
     let lixo_img = CarregarLixoImgPorNome(lixo_nome);
     let lixo_width = 30;
     let lixo_height = 30;
-    if (lixo_nome === "garrafaDePlastico" || lixo_nome === "pilha" || lixo_nome === "latinha" || lixo_nome === "macaComida") {
+    if (lixo_nome === "garrafaDePlastico" || lixo_nome === "latinha" || lixo_nome === "macaComida") {
         lixo_width = 20;
         lixo_height = 30;
     }
@@ -1139,7 +1156,7 @@ function RandomizarLixoNomePorTipo(lixo_type){
 
     else if (lixo_type === "nao_reciclavel") {
        let rnd = floor(random(2))
-        if (rnd === 0) lixo_nome = "pilha"
+        if (rnd === 0) lixo_nome = "fotografia"
         else if (rnd === 1) lixo_nome = "chicleteMascado"
     }
 
@@ -1184,7 +1201,7 @@ function CarregarLixoImgPorNome(lixo_nome){
     else if (lixo_nome === "latinha"){
         lixo_img = fase1.lixosImgCarregados.pixel.metal[1]
     }
-    else if (lixo_nome === "pilha"){
+    else if (lixo_nome === "fotografia"){
         lixo_img = fase1.lixosImgCarregados.pixel.naoReciclavel[0]
     }
     else if (lixo_nome === "chicleteMascado"){

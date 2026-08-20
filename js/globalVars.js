@@ -7,11 +7,13 @@ const jogo = {
     pause: false, //Se o jogo está pausado ou não
     FPS: 80,
 
+    qtdMouseInteracoes: 0, //Quantidade de interações que o usuário fez com a página
+
     config:{
-        musicaON: false,
-        musicaVolume: 25,
+        musicaON: true,
+        musicaVolume: 10,
         somON: true,
-        somVolume: 25,
+        somVolume: 3,
         imgSom: null,
         imgMusica: null,
     },
@@ -59,13 +61,17 @@ const jogo = {
 
     //<-----------------------------------------------------------------------------------------------------------------------
 
-    //SONS ---------------------------------------------------------------------------------------------------------------->
+    //SONS / MÚSICAS ---------------------------------------------------------------------------------------------------------------->
+
+    som: {
+        marteloMenu: null,
+        contagemIniciar: null,
+        despejarLixo: null,
+    },
 
     som: {
         faseMenu: null,
-        marteloMenu: null,
         fase1: null,
-        contagemIniciar: null,
     },
 
     //<-----------------------------------------------------------------------------------------------------------------------
