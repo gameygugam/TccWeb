@@ -72,6 +72,33 @@ PLACA
     z-index:10;
 }
 
+.index-card{
+    position:relative;
+
+    width:680px;
+
+    padding:55px;
+
+    background:
+    linear-gradient(
+        #c89252,
+        #b57a3f,
+        #9a6332,
+        #7d4924
+    );
+
+    border:8px solid #4d2913;
+
+    border-radius:12px;
+
+    box-shadow:
+        inset 0 0 0 5px #dba76d,
+        inset 0 0 0 10px #7d4924,
+        0 18px 35px rgba(0,0,0,.45);
+
+    z-index:10;
+}
+
 /*==========================
 PREGOS
 ==========================*/

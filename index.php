@@ -29,17 +29,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 <div class="folha f7">🍃</div>
 <div class="folha f8">🍃</div>
 
-<div class="tela-container">
-    <div class="login-card">
+<form action="index.php" method="POST">
+    <div class="tela-container">
+        <div class="index-card">
     
-        <div class="prego prego1"></div>
-        <div class="prego prego2"></div>
-        <div class="prego prego3"></div>
-        <div class="prego prego4"></div>
+            <div class="prego prego1"></div>
+            <div class="prego prego2"></div>
+            <div class="prego prego3"></div>
+            <div class="prego prego4"></div>
 
-        <form action="index.php" method="POST">
-            <div class="campo">
-                <p>
+            <div class="conteudo">
+                <p class="texto">
                     O BIOSELECT nasceu da inquietação da professora Giselle Furtado, 
                     da rede pública de ensino de Volta Redonda, 
                     ao perceber a necessidade de engajar os alunos no cuidado coletivo e na corresponsabilidade com o ambiente escolar. 
@@ -63,9 +63,25 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
                     escolas e estudantes pode transformar um desafio real em uma solução construída pelos próprios alunos.
                 </p>
             </div>
-            <button type="submit" name="comecar">Começar</button>
-        </form>
+            <button type="submit" name="comecar" class="botao">Começar</button>
+        </div>
     </div>
+</form>
+
+<div class="logos">
+
+    <div class="logo">
+        <img src="imagens/logo1.png" alt="Logo 1">
+    </div>
+
+    <div class="logo">
+        <img src="imagens/logo2.png" alt="Logo 2">
+    </div>
+
+    <div class="logo">
+        <img src="imagens/logo3.png" alt="Logo 3">
+    </div>
+
 </div>
 
 </body>
