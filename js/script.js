@@ -266,29 +266,30 @@ function DrawMenu()
 //PAUSE ---------------------------------------------------------------------------------------------------------->
 function PreloadPause()
 {
-
+    jogo.config.imgMusica = loadImage("assets/imagens/pause/musica_icone.png");
+    jogo.config.imgSom = loadImage("assets/imagens/pause/som_icone.png");
 }
 
 function SetupPause()
 {
     pause.background = loadImage("assets/imagens/pause/background2.png");
-    pause.width = 500 * jogo.escala
-    pause.height = 600 * jogo.escala
-    pause.x = (width / 2) - (pause.width / 2)
-    pause.y = (height / 2) - (pause.height / 2)
+    pause.width = 500 * jogo.escala;
+    pause.height = 600 * jogo.escala;
+    pause.x = (width / 2) - (pause.width / 2);
+    pause.y = (height / 2) - (pause.height / 2);
 
     pause.btnImg = loadImage("assets/imagens/pause/btnImg.png");
-    pause.btnWidth = 150 * jogo.escala
-    pause.btnHeight = 50 * jogo.escala
+    pause.btnWidth = 150 * jogo.escala;
+    pause.btnHeight = 50 * jogo.escala;
 
-    pause.txtTamanho = 20 * jogo.escala
-    pause.txtFonte = loadFont("assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf")
+    pause.txtTamanho = 20 * jogo.escala;
+    pause.txtFonte = loadFont("assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf");
 
-    pause.titulo.tamanho = 50 * jogo.escala
-    pause.titulo.x = pause.x + (pause.width / 6)
-    pause.titulo.y = pause.y + (pause.height / 5)
+    pause.titulo.tamanho = 50 * jogo.escala;
+    pause.titulo.x = pause.x + (pause.width / 6);
+    pause.titulo.y = pause.y + (pause.height / 5);
 
-    pause.botaoXCentralizado = pause.x + ((pause.width / 2) - ((125 * jogo.escala) / 2))
+    pause.botaoXCentralizado = pause.x + ((pause.width / 2) - ((125 * jogo.escala) / 2));
     // pause.x -> posição inicial, borda da esquerda do menu
     // (pause.width / 2) -> Centralizado no meio do menu, porém a centralização ocorre a partir do ponto esquerdo superior do botão
     // ((125 * jogo.escala) / 2)) -> tamanho do botão dividido por 2 para finalmente achar o meio certinho do menu alinhado com o botão
@@ -296,116 +297,118 @@ function SetupPause()
     // let textoTamanho = 20 * jogo.escala
     // let textoFonte = loadFont("assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf")
 
-    pause.botaoContinuar.width = pause.btnWidth
-    pause.botaoContinuar.height = pause.btnHeight
-    pause.botaoContinuar.x = pause.x + ((pause.width / 2) - (pause.btnWidth / 2))
-    pause.botaoContinuar.y = pause.y + ((pause.height / 2) - (75 * jogo.escala))
-    pause.botaoContinuar.texto_x = pause.botaoContinuar.x + (pause.btnWidth / 5)
-    pause.botaoContinuar.texto_y = pause.botaoContinuar.y + (pause.btnHeight / 1.75)
+    pause.botaoContinuar.width = pause.btnWidth;
+    pause.botaoContinuar.height = pause.btnHeight;
+    pause.botaoContinuar.x = pause.x + ((pause.width / 2) - (pause.btnWidth / 2));
+    pause.botaoContinuar.y = pause.y + ((pause.height / 2) - (75 * jogo.escala));
+    pause.botaoContinuar.texto_x = pause.botaoContinuar.x + (pause.btnWidth / 5);
+    pause.botaoContinuar.texto_y = pause.botaoContinuar.y + (pause.btnHeight / 1.75);
 
-    pause.botaoReiniciar.width = pause.btnWidth
-    pause.botaoReiniciar.height = pause.btnHeight
-    pause.botaoReiniciar.x = pause.x + ((pause.width / 2) - (pause.btnWidth / 2))
-    pause.botaoReiniciar.y = pause.y + ((pause.height / 2))
-    pause.botaoReiniciar.texto_x = pause.botaoReiniciar.x + (pause.btnWidth / 5)
-    pause.botaoReiniciar.texto_y = pause.botaoReiniciar.y + (pause.btnHeight / 1.75)
+    pause.botaoReiniciar.width = pause.btnWidth;
+    pause.botaoReiniciar.height = pause.btnHeight;
+    pause.botaoReiniciar.x = pause.x + ((pause.width / 2) - (pause.btnWidth / 2));
+    pause.botaoReiniciar.y = pause.y + ((pause.height / 2));
+    pause.botaoReiniciar.texto_x = pause.botaoReiniciar.x + (pause.btnWidth / 5);
+    pause.botaoReiniciar.texto_y = pause.botaoReiniciar.y + (pause.btnHeight / 1.75);
 
-    pause.botaoOpcoes.width = pause.btnWidth
-    pause.botaoOpcoes.height = pause.btnHeight
-    pause.botaoOpcoes.x = pause.x + ((pause.width / 2) - (pause.btnWidth / 2))
-    pause.botaoOpcoes.y = pause.y + ((pause.height / 2) + (75 * jogo.escala))
-    pause.botaoOpcoes.texto_x = pause.botaoOpcoes.x + (pause.btnWidth / 3.5)
-    pause.botaoOpcoes.texto_y = pause.botaoOpcoes.y + (pause.btnHeight / 1.75)
+    pause.botaoOpcoes.width = pause.btnWidth;
+    pause.botaoOpcoes.height = pause.btnHeight;
+    pause.botaoOpcoes.x = pause.x + ((pause.width / 2) - (pause.btnWidth / 2));
+    pause.botaoOpcoes.y = pause.y + ((pause.height / 2) + (75 * jogo.escala));
+    pause.botaoOpcoes.texto_x = pause.botaoOpcoes.x + (pause.btnWidth / 3.5);
+    pause.botaoOpcoes.texto_y = pause.botaoOpcoes.y + (pause.btnHeight / 1.75);
     
-    pause.botaoSair.width = pause.btnWidth
-    pause.botaoSair.height = pause.btnHeight
-    pause.botaoSair.x = pause.x + ((pause.width / 2) - (pause.btnWidth / 2))
-    pause.botaoSair.y = pause.y + ((pause.height / 2) + (150 * jogo.escala))
-    pause.botaoSair.texto_x = pause.botaoSair.x + (pause.btnWidth / 2.75)
-    pause.botaoSair.texto_y = pause.botaoSair.y + (pause.btnHeight / 1.75)
+    pause.botaoSair.width = pause.btnWidth;
+    pause.botaoSair.height = pause.btnHeight;
+    pause.botaoSair.x = pause.x + ((pause.width / 2) - (pause.btnWidth / 2));
+    pause.botaoSair.y = pause.y + ((pause.height / 2) + (150 * jogo.escala));
+    pause.botaoSair.texto_x = pause.botaoSair.x + (pause.btnWidth / 2.75);
+    pause.botaoSair.texto_y = pause.botaoSair.y + (pause.btnHeight / 1.75);
 
     //Menu Opções
 
     
-    pause.opcoes.musica.slider_x = pause.x + (pause.width / 4) + (60 * jogo.escala)
-    pause.opcoes.musica.slider_y = pause.y + (pause.height / 2) - (100 * jogo.escala)
-    pause.opcoes.musica.slider = createSlider(0, 100, jogo.config.musicaVolume) //valor minimo, valor máximo, valor inicial
-    pause.opcoes.musica.slider.size(200 * jogo.escala)
-    pause.opcoes.musica.slider.position(pause.opcoes.musica.slider_x, pause.opcoes.musica.slider_y)
+    pause.opcoes.musica.slider_x = pause.x + (pause.width / 4) + (60 * jogo.escala);
+    pause.opcoes.musica.slider_y = pause.y + (pause.height / 2) - (100 * jogo.escala);
+    pause.opcoes.musica.slider = createSlider(0, 100, jogo.config.musicaVolume); //valor minimo, valor máximo, valor inicial
+    pause.opcoes.musica.slider.size(200 * jogo.escala);
+    pause.opcoes.musica.slider.position(pause.opcoes.musica.slider_x, pause.opcoes.musica.slider_y);
     pause.opcoes.musica.slider.addClass("slider-volume");
     pause.opcoes.musica.slider.hide()
-    pause.opcoes.musica.texto_x = pause.x + (pause.width / 4) - (20 * jogo.escala)
-    pause.opcoes.musica.texto_y = pause.y + (pause.height / 2) - (80 * jogo.escala)
+    pause.opcoes.musica.texto_x = pause.x + (pause.width / 4) - (20 * jogo.escala);
+    pause.opcoes.musica.texto_y = pause.y + (pause.height / 2) - (80 * jogo.escala);
 
-    pause.opcoes.som.slider_x = pause.x + (pause.width / 4)  + (60 * jogo.escala)
-    pause.opcoes.som.slider_y = pause.y + (pause.height / 2)
-    pause.opcoes.som.slider = createSlider(0, 100, jogo.config.somVolume) //valor minimo, valor máximo, valor inicial
-    pause.opcoes.som.slider.size(200 * jogo.escala)
-    pause.opcoes.som.slider.position(pause.opcoes.som.slider_x, pause.opcoes.som.slider_y)
-    pause.opcoes.som.slider.addClass("slider-volume");
-    pause.opcoes.som.slider.hide()
-    pause.opcoes.som.texto_x = pause.x + (pause.width / 4) - (20 * jogo.escala)
-    pause.opcoes.som.texto_y = pause.y + (pause.height / 2) + (20 * jogo.escala)
+    pause.opcoes.som.slider_x = pause.x + (pause.width / 4)  + (60 * jogo.escala);
+    pause.opcoes.som.slider_y = pause.y + (pause.height / 2);
+    pause.opcoes.som.slider = createSlider(0, 100, jogo.config.somVolume); //valor minimo, valor máximo, valor inicial
+    pause.opcoes.som.slider.size(200 * jogo.escala);
+    pause.opcoes.som.slider.position(pause.opcoes.som.slider_x, pause.opcoes.som.slider_y);
+    pause.opcoes.som.slider.addClass("slider-volume");;
+    pause.opcoes.som.slider.hide();
+    pause.opcoes.som.texto_x = pause.x + (pause.width / 4) - (20 * jogo.escala);
+    pause.opcoes.som.texto_y = pause.y + (pause.height / 2) + (20 * jogo.escala);
 
-    pause.opcoes.botaoRanking.width = pause.btnWidth / 1.4
-    pause.opcoes.botaoRanking.height = pause.btnHeight
-    pause.opcoes.botaoRanking.x = pause.x + (pause.width / 4)
-    pause.opcoes.botaoRanking.y = pause.y + (pause.height / 2) + (100 * jogo.escala)
-    pause.opcoes.botaoRanking.texto_x = pause.opcoes.botaoRanking.x + (pause.btnWidth / 3.2)
-    pause.opcoes.botaoRanking.texto_y = pause.opcoes.botaoRanking.y + (pause.btnHeight / 1.75)
+    pause.opcoes.botaoRanking.width = pause.btnWidth / 1.4;
+    pause.opcoes.botaoRanking.height = pause.btnHeight;
+    pause.opcoes.botaoRanking.x = pause.x + (pause.width / 4);
+    pause.opcoes.botaoRanking.y = pause.y + (pause.height / 2) + (100 * jogo.escala);
+    pause.opcoes.botaoRanking.texto_x = pause.opcoes.botaoRanking.x + (pause.btnWidth / 3.2);
+    pause.opcoes.botaoRanking.texto_y = pause.opcoes.botaoRanking.y + (pause.btnHeight / 1.75);
 
-    pause.opcoes.botaoSair.width = pause.btnWidth / 1.4
-    pause.opcoes.botaoSair.height = pause.btnHeight
-    pause.opcoes.botaoSair.x = pause.x + (pause.width / 4) + (150 * jogo.escala)
-    pause.opcoes.botaoSair.y = pause.y + (pause.height / 2) + (100 * jogo.escala)
-    pause.opcoes.botaoSair.texto_x = pause.opcoes.botaoRanking.x + (pause.btnWidth / 3.2) + (150 * jogo.escala)
-    pause.opcoes.botaoSair.texto_y = pause.opcoes.botaoRanking.y + (pause.btnHeight / 1.75)
+    pause.opcoes.botaoSair.width = pause.btnWidth / 1.4;
+    pause.opcoes.botaoSair.height = pause.btnHeight;
+    pause.opcoes.botaoSair.x = pause.x + (pause.width / 4) + (150 * jogo.escala);
+    pause.opcoes.botaoSair.y = pause.y + (pause.height / 2) + (100 * jogo.escala);
+    pause.opcoes.botaoSair.texto_x = pause.opcoes.botaoRanking.x + (pause.btnWidth / 3.2) + (150 * jogo.escala);
+    pause.opcoes.botaoSair.texto_y = pause.opcoes.botaoRanking.y + (pause.btnHeight / 1.75);
 }
 
 function DrawPause()
 {    
-    fill(0,0,0)
-    textFont(pause.txtFonte)
-    image(pause.background, pause.x, pause.y, pause.width, pause.height)
+    fill(0,0,0);
+    textFont(pause.txtFonte);
+    image(pause.background, pause.x, pause.y, pause.width, pause.height);
 
-    textSize(pause.titulo.tamanho)
-    text("CASTOR'S GAME", pause.titulo.x, pause.titulo.y)
+    textSize(pause.titulo.tamanho);
+    text("CASTOR'S GAME", pause.titulo.x + 10 *jogo.escala, pause.titulo.y + 20 *jogo.escala);
     
-    textSize(pause.txtTamanho)
+    textSize(pause.txtTamanho);
 
     if(!pause.menuOpcoesON){
-        image(pause.btnImg, pause.botaoContinuar.x, pause.botaoContinuar.y, pause.btnWidth, pause.btnHeight)
-        text("Continuar", pause.botaoContinuar.texto_x, pause.botaoContinuar.texto_y)
+        image(pause.btnImg, pause.botaoContinuar.x, pause.botaoContinuar.y, pause.btnWidth, pause.btnHeight);
+        text("Continuar", pause.botaoContinuar.texto_x, pause.botaoContinuar.texto_y);
 
-        image(pause.btnImg, pause.botaoReiniciar.x, pause.botaoReiniciar.y, pause.btnWidth, pause.btnHeight)
-        text("Reiniciar", pause.botaoReiniciar.texto_x, pause.botaoReiniciar.texto_y)
+        image(pause.btnImg, pause.botaoReiniciar.x, pause.botaoReiniciar.y, pause.btnWidth, pause.btnHeight);
+        text("Reiniciar", pause.botaoReiniciar.texto_x, pause.botaoReiniciar.texto_y);
 
-        image(pause.btnImg, pause.botaoOpcoes.x, pause.botaoOpcoes.y, pause.btnWidth, pause.btnHeight)
-        text("Opções", pause.botaoOpcoes.texto_x, pause.botaoOpcoes.texto_y)
+        image(pause.btnImg, pause.botaoOpcoes.x, pause.botaoOpcoes.y, pause.btnWidth, pause.btnHeight);
+        text("Opções", pause.botaoOpcoes.texto_x, pause.botaoOpcoes.texto_y);
 
-        image(pause.btnImg, pause.botaoSair.x, pause.botaoSair.y, pause.btnWidth, pause.btnHeight)
-        text("Sair", pause.botaoSair.texto_x, pause.botaoSair.texto_y)
+        image(pause.btnImg, pause.botaoSair.x, pause.botaoSair.y, pause.btnWidth, pause.btnHeight);
+        text("Sair", pause.botaoSair.texto_x, pause.botaoSair.texto_y);
     }
     else {
 
-        pause.opcoes.musica.slider.show()
-        pause.opcoes.som.slider.show()
+        pause.opcoes.musica.slider.show();
+        pause.opcoes.som.slider.show();
 
-        textFont(pause.txtFonte)
-        textSize(pause.txtTamanho * 1.5)
+        textFont(pause.txtFonte);
+        textSize(pause.txtTamanho * 1.5);
 
-        text("M:" + jogo.config.musicaVolume, pause.opcoes.musica.texto_x, pause.opcoes.musica.texto_y)
+        image(jogo.config.imgMusica, pause.opcoes.musica.texto_x - 25 *jogo.escala, pause.opcoes.musica.texto_y - 27 *jogo.escala, 40 *jogo.escala, 40 *jogo.escala);
+        text("  " + jogo.config.musicaVolume, pause.opcoes.musica.texto_x, pause.opcoes.musica.texto_y);
 
-        text("SFX:" + jogo.config.somVolume, pause.opcoes.som.texto_x, pause.opcoes.som.texto_y)
+        image(jogo.config.imgSom, pause.opcoes.som.texto_x - 25 *jogo.escala, pause.opcoes.som.texto_y - 27 *jogo.escala, 40 *jogo.escala, 40 *jogo.escala);
+        text("  " + jogo.config.somVolume, pause.opcoes.som.texto_x, pause.opcoes.som.texto_y);
 
-        image(pause.btnImg, pause.opcoes.botaoRanking.x, pause.opcoes.botaoRanking.y, pause.opcoes.botaoRanking.width, pause.opcoes.botaoRanking.height)
-        text("Placar", pause.opcoes.botaoRanking.texto_x, pause.opcoes.botaoRanking.texto_y)
+        image(pause.btnImg, pause.opcoes.botaoRanking.x, pause.opcoes.botaoRanking.y, pause.opcoes.botaoRanking.width, pause.opcoes.botaoRanking.height);
+        text("Placar", pause.opcoes.botaoRanking.texto_x - (37 * jogo.escala), pause.opcoes.botaoRanking.texto_y + (5 * jogo.escala));
 
-        image(pause.btnImg, pause.opcoes.botaoSair.x, pause.opcoes.botaoSair.y, pause.opcoes.botaoSair.width, pause.opcoes.botaoSair.height)
-        text("Sair", pause.opcoes.botaoSair.texto_x, pause.opcoes.botaoSair.texto_y)
+        image(pause.btnImg, pause.opcoes.botaoSair.x, pause.opcoes.botaoSair.y, pause.opcoes.botaoSair.width, pause.opcoes.botaoSair.height);
+        text("Voltar", pause.opcoes.botaoSair.texto_x - (37 * jogo.escala), pause.opcoes.botaoSair.texto_y + (5 * jogo.escala));
 
-        jogo.config.musicaVolume = pause.opcoes.musica.slider.value()
-        jogo.config.somVolume = pause.opcoes.som.slider.value()
+        jogo.config.musicaVolume = pause.opcoes.musica.slider.value();
+        jogo.config.somVolume = pause.opcoes.som.slider.value();
     }
 
     
@@ -593,10 +596,6 @@ function PreloadFase1()
 
 function SetupFase1()
 {
-
-    jogo.player.x = jogo.xFinalMapa / 2;
-    jogo.player.y = jogo.yFinalMapa / 2;
-
     fase1.lastItemPego = Lixo.novo(null, null, 0, 0, 0, 0, null, 0);
 
     fase1.lixeiras = [

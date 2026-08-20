@@ -216,7 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="prego prego3"></div>
         <div class="prego prego4"></div>
 
-        <h2>Ranking</h2>
+        <h2>Top 5</h2>
 
         <?php if(!empty($leaderboard[0])): ?>
             <div class="linha primeiro">

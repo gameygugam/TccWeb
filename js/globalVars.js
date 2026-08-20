@@ -12,6 +12,8 @@ const jogo = {
         musicaVolume: 25,
         somON: true,
         somVolume: 25,
+        imgSom: null,
+        imgMusica: null,
     },
 
     //PLAYER ---------------------------------------------------------------------------------------------------------------->
