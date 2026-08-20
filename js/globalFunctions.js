@@ -264,6 +264,7 @@ function Dialogo(dialogo) {
                     if(jogo.colegioUsuario === "cpii") texto.conteudo = "(Me chamaram para uma missão de limpeza e organização do Colégio Pedro II).";
                     else if(jogo.colegioUsuario === "cjba") texto.conteudo = "(Me chamaram para uma missão de limpeza e organização do Colégio CJBA).";
                     else if(jogo.colegioUsuario === "santosDummont") texto.conteudo = "(Me chamaram para uma missão de limpeza e organização do Colégio Santos Dummont).";
+                    else if(jogo.colegioUsuario === "outros") texto.conteudo = "(Me chamaram para uma missão de limpeza e organização do Parque Internacional da Castorlândia).";
                     break;
                 
                 case 2:

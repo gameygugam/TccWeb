@@ -383,7 +383,7 @@ function DrawPause()
     image(pause.background, pause.x, pause.y, pause.width, pause.height);
 
     textSize(pause.titulo.tamanho);
-    text("BioSelect", pause.titulo.x + 10 *jogo.escala, pause.titulo.y + 20 *jogo.escala);
+    text("Bio Select", pause.titulo.x + 45 *jogo.escala, pause.titulo.y + 20 *jogo.escala);
     
     textSize(pause.txtTamanho);
 

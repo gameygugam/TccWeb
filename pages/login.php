@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome  = $_POST['nome'];
     $idade = $_POST['idade'];
     $colegio = $_POST['colegio'];
-    $turma = $_POST['turma'];
+    $turma = $_POST["turma"] ?? '';
     
 
     if($sobrenome === '' || $nome === '' || $colegio === '' || $turma === '') {
@@ -52,6 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             if(empty($_SESSION['fase'])) {
                 $_SESSION['fase'] = 'menu';
+            }
+
+            if(empty($_SESSION['turma'])) {
+                $_SESSION['turma'] = 'nenhuma';
             }
 
             header('Location: ../jogo.php');
@@ -184,6 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="cpii">CPII</option>
                 <option value="cjba">CJBA</option>
                 <option value="santosDumont">Santos Dumont</option>
+                <option value="outros">Outros</option>
             </select>
         </div>
     </div>
@@ -200,6 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 placeholder="Ex: DS313"
                 value="<?= htmlspecialchars($turma) ?>"
                 required
+                disabled
             >
         </div>
     </div>
@@ -248,6 +254,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif; ?>
             <?php endif; ?>
         <?php endif; ?>
+
+        <a href="ranking.php" class="botao botao-ver-ranking">Ver Ranking</a>
+        <br>
 
         <?php if(isset($_SESSION['id_usuario']) && !empty($ultimaPartida[0])): ?>
 
