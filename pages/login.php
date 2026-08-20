@@ -205,7 +205,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 placeholder="Ex: DS313"
                 value="<?= htmlspecialchars($turma) ?>"
                 required
-                disabled
             >
         </div>
     </div>

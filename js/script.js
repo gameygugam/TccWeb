@@ -110,9 +110,6 @@ function draw() {
 
     AnimacaoStandBy()
     Dash();
-    fill(0, 0, 0)
-    textSize(50)
-    text(fase1.pontos, windowWidth - 100, 100);
 
     if (jogo.config.musicaON && jogo.qtdMouseInteracoes > 0) TocarFundoMusical() //O navegador só toca música se tiver alguma interação do usuario anteriormente
 
@@ -452,6 +449,7 @@ function SetupPreFase1()
 
 function DrawPreFase1()
 {
+    fill(0);
     if(fase1.terminou) {
         // console.log("terminou");
         image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
@@ -579,7 +577,7 @@ function PreloadFase1()
 
     fase1.lixosImgCarregados.reais.vidro = [
         loadImage("assets/imagens/fase1/lixos/reais/garrafaVidro.png"),
-        loadImage("assets/imagens/fase1/lixos/reais/garrafaVidro.png"), //TROCAR POR TAÇA DE VIDRO QUEBRADA REAL
+        loadImage("assets/imagens/fase1/lixos/reais/tacaDeVidro.png"), //TROCAR POR TAÇA DE VIDRO QUEBRADA REAL
     ]
 
     fase1.lixosImgCarregados.reais.organico = [
@@ -599,12 +597,13 @@ function PreloadFase1()
     ]
 
     fase1.lixosImgCarregados.reais.naoReciclavel = [
-        loadImage("assets/imagens/fase1/lixos/reais/chicleteMascado.png"),
+        loadImage("assets/imagens/fase1/lixos/reais/fotografia.png"),
         loadImage("assets/imagens/fase1/lixos/reais/chicleteMascado.png"),
     ]
 
     // Carrega a imagem do cartaz de procurado
     fase1.cartazProcuradoLixo = loadImage("assets/imagens/fase1/cartazProcuradoLixo.png");
+    fase1.pontuacaoImg = loadImage("assets/imagens/fase1/placaPontuacao.png");
 }
 
 function SetupFase1()
@@ -637,23 +636,30 @@ function DrawFase1()
 {
     if (tutorial.ativo)
     {
+        fill(0);
         // //// Cria o mapa
         // image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
         Dialogo("fase1");
     }
     else if(!tutorial.ativo)
     {
+
         if (!fase1.is_fase_carregada) {
             jogo.timer.start = 0;
             jogo.timer.ticks = 0;
             jogo.timer.segundos = 60;
             fase1.pontos = 0;
-            jogo.pause = true
+            jogo.pause = true;
             fase1.is_fase_carregada = true;
         }
 
         //// Cria o mapa
         image(jogo.mapasImg[1], 0, 0, windowWidth, windowHeight);
+
+        image(fase1.pontuacaoImg, windowWidth - 155 *jogo.escala, 10 *jogo.escala, 125, 125);
+        fill(0, 0, 0);
+        textSize(50);
+        text(fase1.pontos, windowWidth - 125 *jogo.escala, 110 *jogo.escala);
 
         // //// Cria a prancheta
         // image(fase1.pranchetaLixo, jogo.xFinalMapa + 10, jogo.yFinalMapa - 300, 175, 275);

@@ -158,6 +158,7 @@ const fase1 = {
     },
     cartazProcuradoLixo: null,
     pranchetaLixo: null,
+    pontuacaoImg: null,
 
     //<-----------------------------------------------------------------------------------------------------------------------
 

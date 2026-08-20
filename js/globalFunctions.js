@@ -891,7 +891,7 @@ function MostrarLixoReal() {
             lixo_nome_real = "Latinha"
         }
         else if (fase1.lastItemPego.nome === "fotografia") {
-            image(fase1.lixosImgCarregados.reais.naoReciclavel[0], (windowWidth) - 205 *jogo.escala, (windowHeight) - 370 *jogo.escala, 200 * jogo.escala, 150 * jogo.escala);
+            image(fase1.lixosImgCarregados.reais.naoReciclavel[0], (windowWidth) - 185 *jogo.escala, (windowHeight) - 360 *jogo.escala, 150 * jogo.escala, 135 * jogo.escala);
             lixo_nome_real = "Fotografia"
         }
         else if (fase1.lastItemPego.nome === "chicleteMascado") {

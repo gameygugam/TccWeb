@@ -16,7 +16,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Login — BioSelect</title>
-    <link rel="stylesheet" href="assets/style.css"/>
+    <link rel="stylesheet" href="assets/styleIndex.css"/>
 </head>
 <body class="login-body">
 
@@ -71,15 +71,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 <div class="logos">
 
     <div class="logo">
-        <img src="imagens/login/cp2Logo.png" alt="Logo 1">
+        <img src="assets/imagens/login/cp2Logo.png" alt="Logo 1">
     </div>
 
     <div class="logo">
-        <img src="imagens/login/CesdLogo.jpeg" alt="Logo 2">
+        <img src="assets/imagens/login/CesdLogo.png" alt="Logo 2">
     </div>
 
     <div class="logo">
-        <img src="imagens/login/CjbaLogo.jpeg" alt="Logo 3">
+        <img src="assets/imagens/login/CjbaLogo.png" alt="Logo 3">
     </div>
 
 </div>
