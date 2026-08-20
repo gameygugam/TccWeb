@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Login — BioSelect</title>
+    <title>Login — Bio Select</title>
     <link rel="stylesheet" href="../assets/style.css"/>
 </head>
 <body class="login-body">
@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="prego prego4"></div>
 
     <h1 class="titulo">
-        BioSelect
+        Bio Select
     </h1>
 
     <p class="subtitulo">

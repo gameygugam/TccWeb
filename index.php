@@ -15,7 +15,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Login — BioSelect</title>
+    <title>Login — Bio Select</title>
     <link rel="stylesheet" href="assets/style.css"/>
 </head>
 <body class="login-body">
@@ -55,10 +55,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 
                     O desafio foi apresentado aos alunos do curso técnico, que propuseram uma solução alinhada ao que mais gostam de criar: um jogo digital.
 
-                    Assim ganhou vida o BioSelect: um jogo desafiador, 
+                    Assim ganhou vida o Bio Select: um jogo desafiador, 
                     divertido e educativo, projetado para transformar o aprendizado sobre sustentabilidade em uma experiência interativa e envolvente.
 
-                    Mais do que um software, o BioSelect reflete a união entre educação, 
+                    Mais do que um software, o Bio Select reflete a união entre educação, 
                     tecnologia e criatividade, demonstrando como a colaboração entre diferentes professores, 
                     escolas e estudantes pode transformar um desafio real em uma solução construída pelos próprios alunos.
                 </p>
