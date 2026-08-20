@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/*==========================
+RESET
+==========================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Press Start 2P',cursive;
+    overflow:hidden;
+}
+
+/*==========================
+FUNDO
+==========================*/
+
+.login-body{
+    width:100%;
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(#58bb53,#2d7b30);
+
+    overflow:hidden;
+    position:relative;
+}
+
+/*==========================
+FOLHAS
+==========================*/
+
+.folha{
+    position:absolute;
+
+    color:#9be79c;
+
+    font-size:24px;
+
+    opacity:.75;
+
+    animation:cair 8s linear infinite;
+}
+
+.f1{left:8%;animation-delay:0s;}
+.f2{left:27%;animation-delay:2s;}
+.f3{left:70%;animation-delay:5s;}
+.f4{left:90%;animation-delay:1s;}
+.f5{left:15%;animation-delay:4s;}
+.f6{left:45%;animation-delay:6s;}
+.f7{left:82%;animation-delay:3s;}
+.f8{left:55%;animation-delay:7s;}
+
+@keyframes cair{
+
+    from{
+        transform:translateY(-100px) rotate(0);
+    }
+
+    to{
+        transform:translateY(110vh) rotate(360deg);
+    }
+}
+
+/*==========================
+CONTAINER DA TELA
+==========================*/
+
+.tela-container{
+
+    position:relative;
+
+    width:1050px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    z-index:10;
+}
+
+/*==========================
+PLACA PRINCIPAL
+==========================*/
+
+.index-card{
+
+    position:relative;
+
+    width:1050px;
+
+    padding:45px 55px 35px;
+
+    background:
+    linear-gradient(
+        #c89252,
+        #b57a3f,
+        #9a6332,
+        #7d4924
+    );
+
+    border:8px solid #4d2913;
+
+    border-radius:12px;
+
+    box-shadow:
+        inset 0 0 0 5px #dba76d,
+        inset 0 0 0 10px #7d4924,
+        0 18px 35px rgba(0,0,0,.45);
+
+    z-index:10;
+}
+
+/*==========================
+PREGOS
+==========================*/
+
+.prego{
+
+    position:absolute;
+
+    width:18px;
+    height:18px;
+
+    background:#555;
+
+    border:3px solid #222;
+
+    border-radius:50%;
+}
+
+.prego::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:8px;
+    height:2px;
+
+    background:#222;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+}
+
+.prego1{
+    top:18px;
+    left:18px;
+}
+
+.prego2{
+    top:18px;
+    right:18px;
+}
+
+.prego3{
+    bottom:18px;
+    left:18px;
+}
+
+.prego4{
+    bottom:18px;
+    right:18px;
+}
+
+/*==========================
+CONTEÚDO
+==========================*/
+
+.conteudo{
+
+    width:100%;
+
+    padding:0 10px;
+}
+
+/*==========================
+TEXTO
+==========================*/
+
+.texto{
+
+    color:#fff6c7;
+
+    font-size:12px;
+
+    line-height:19px;
+
+    text-align:justify;
+
+    text-shadow:2px 2px #5b3214;
+}
+
+/*==========================
+BOTÃO
+==========================*/
+
+.botao{
+
+    margin-top:30px;
+
+    width:100%;
+
+    padding:18px;
+
+    background:
+    linear-gradient(
+        #9be75f,
+        #79c647,
+        #5ca534
+    );
+
+    border:5px solid #315b1c;
+
+    border-radius:8px;
+
+    color:#173719;
+
+    font-family:'Press Start 2P';
+
+    font-size:12px;
+
+    cursor:pointer;
+
+    transition:.15s;
+}
+
+.botao:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 7px 0 #315b1c;
+}
+
+.botao:active{
+
+    transform:translateY(4px);
+
+    box-shadow:none;
+}
+
+/*==========================
+LOGOS
+==========================*/
+
+.logos{
+
+    position:absolute;
+
+    z-index:20;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:25px;
+
+    width:100%;
+
+    bottom:25px;
+
+    left:0;
+
+    pointer-events:none;
+}
+
+.logo{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+}
+
+.logo img{
+
+    width:100px;
+
+    height:60px;
+
+    object-fit:contain;
+}

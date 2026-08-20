@@ -16,7 +16,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Login — BioSelect</title>
-    <link rel="stylesheet" href="assets/style.css"/>
+    <link rel="stylesheet" href="assets/StyleIndex.css"/>
 </head>
 <body class="login-body">
 
@@ -46,18 +46,18 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
                     Ao introduzir discussões sobre limpeza, coleta seletiva, resíduos e rejeitos, 
                     a educadora compreendeu a urgência do tema e buscou formas de torná-lo mais próximo, 
                     interessante e significativo para os estudantes.
-
+                     <br> <br> 
                     Para transformar essa ideia em realidade, 
                     ela entrou em contato com o professor Flavio Costa, 
                     coordenador do Curso Técnico em Desenvolvimento de Sistemas do Colégio Pedro II, 
                     no Rio de Janeiro. Dessa parceria, 
                     surgiram reflexões sobre como a computação e a tecnologia poderiam estimular uma participação mais ativa dos jovens.
-
+                      <br> <br>  
                     O desafio foi apresentado aos alunos do curso técnico, que propuseram uma solução alinhada ao que mais gostam de criar: um jogo digital.
-
+                       <br> <br> 
                     Assim ganhou vida o BioSelect: um jogo desafiador, 
                     divertido e educativo, projetado para transformar o aprendizado sobre sustentabilidade em uma experiência interativa e envolvente.
-
+                        <br> <br> 
                     Mais do que um software, o BioSelect reflete a união entre educação, 
                     tecnologia e criatividade, demonstrando como a colaboração entre diferentes professores, 
                     escolas e estudantes pode transformar um desafio real em uma solução construída pelos próprios alunos.
@@ -71,15 +71,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 <div class="logos">
 
     <div class="logo">
-        <img src="imagens/logo1.png" alt="Logo 1">
+        <img src="imagens/login/cp2Logo.png" alt="Logo 1">
     </div>
 
     <div class="logo">
-        <img src="imagens/logo2.png" alt="Logo 2">
+        <img src="imagens/login/CesdLogo.jpeg" alt="Logo 2">
     </div>
 
     <div class="logo">
-        <img src="imagens/logo3.png" alt="Logo 3">
+        <img src="imagens/login/CjbaLogo.jpeg" alt="Logo 3">
     </div>
 
 </div>
