@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '\..\config\database.php';
-require_once __DIR__ . '\..\entity\Usuario.php';
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../entity/Usuario.php';
 
 class UsuarioRepository {
 

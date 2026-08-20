@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['fase'] = 'menu';
             }
 
-            header('Location: ../index.php');
+            header('Location: ../jogo.php');
             exit;
         } else {
             try {
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['fase'] = 'menu';
                 }
 
-                header('Location: ../index.php');
+                header('Location: ../jogo.php');
                 exit;
             } catch (Exception $e) {
                 $erro = 'Ocorreu um erro ao criar a conta';
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Login — Castor's game</title>
+    <title>Login — BioSelect</title>
     <link rel="stylesheet" href="../assets/style.css"/>
 </head>
 <body class="login-body">
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="prego prego4"></div>
 
     <h1 class="titulo">
-        CASTOR'S GAME
+        BioSelect
     </h1>
 
     <p class="subtitulo">
@@ -249,7 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
         <?php endif; ?>
 
-        <?php if(isset($_SESSION['id_usuario'])): ?>
+        <?php if(isset($_SESSION['id_usuario']) && !empty($ultimaPartida[0])): ?>
 
             <div class="linha">
                 <span>última <?= $ultimaPartida[0]['nome'] ?> <?= $ultimaPartida[0]['sobrenome'] ?></span>
