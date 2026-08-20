@@ -19,7 +19,7 @@ require_once __DIR__ . '/includes/auth.php';
     <script src="js/globalFunctions.js"></script>
     <script src="js/script.js"></script>
     
-    <title>BioSelect</title>
+    <title>Bio Select</title>
 </head>
 <body>
 </body>

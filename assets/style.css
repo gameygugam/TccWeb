@@ -328,6 +328,42 @@ BOTÃO
     transition:.15s;
 }
 
+.botao-ver-ranking{
+
+    display:block;
+
+    width:100%;
+
+    margin-top:25px;
+
+    padding:16px;
+
+    background:
+        linear-gradient(
+            #9be75f,
+            #79c647,
+            #5ca534
+        );
+
+    border:5px solid #315b1c;
+
+    border-radius:8px;
+
+    color:#173719;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    font-family:'Press Start 2P';
+
+    font-size:11px;
+
+    cursor:pointer;
+
+    transition:.15s;
+}
+
 .botao:hover{
 
     transform:translateY(-4px);
