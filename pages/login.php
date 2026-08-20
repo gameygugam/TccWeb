@@ -210,6 +210,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
         <button type="submit" class="botao">Iniciar</button>
+        <a href="../index.php" class="botao botao-ver-ranking">Sobre o jogo</a>
         </form>
 
     </div>
