@@ -29,6 +29,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 <div class="folha f7">🍃</div>
 <div class="folha f8">🍃</div>
 
+<main class="tela-container">
+
 <form action="index.php" method="POST">
     <div class="tela-container">
         <div class="index-card">
@@ -83,6 +85,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     </div>
 
 </div>
+</main>
 
 </body>
 </html>
