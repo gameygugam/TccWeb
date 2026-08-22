@@ -535,9 +535,7 @@ function TimerTick(fase_funcao){
             if (jogo.timer.ticks % jogo.FPS === 0) jogo.timer.segundos--;
             if (jogo.timer.segundos <= 0) {
                 fase1.terminou = true;
-                fase1.is_fase_carregada = false;
-                fase1.obstaculos = [];
-                fase1.lixos = [];
+                ReiniciarFase1();
                 MudarFase("preFase1");
                 RegistrarPartida("fase1");
             }
@@ -781,6 +779,14 @@ function MenuAlternar(){
 //FASES ----------------------------------------------------------------------------------------------------------------->
 
 //fase1 -->
+
+function ReiniciarFase1() {
+    fase1.pegouLixo = false;
+    fase1.lastItemPego = Lixo.novo(null, null, 0, 0, 0, 0, null, 0);
+    fase1.is_fase_carregada = false;
+    fase1.obstaculos = [];
+    fase1.lixos = [];
+}
 
 function Digitar() {
 
