@@ -164,6 +164,43 @@ function TocarFundoMusical() {
     else jogo.musica.fase1.pause()
 }
 
+async function MudarIdioma(novoIdioma) {
+    await loadJSON(`locales/${novoIdioma}.json`, dados => {
+
+        jogo.textos = dados;
+        jogo.idioma = novoIdioma;
+
+        console.log("Idioma alterado para: ", jogo.idioma);
+    });
+}
+
+function T(caminho, variaveis = {}) {
+
+    let partes = caminho.split(".");
+    let resultado = jogo.textos;
+
+    for (let parte of partes) {
+        resultado = resultado?.[parte];
+    }
+
+    if (resultado === undefined) {
+        console.warn(`Tradução não encontrada: ${caminho}`);
+        return caminho;
+    }
+
+    for (let chave in variaveis) {
+
+        const valor = variaveis[chave];
+
+        resultado = resultado.replaceAll(
+            `{${chave}}`,
+            valor
+        );
+    }
+
+    return resultado;
+}
+
 async function MudarFase(fase) {
     jogo.fase = fase;
     ReiniciarDialogo(tutorial);
@@ -220,11 +257,11 @@ function Interagir(item, itemString) {
     textFont(texto.fonte);
     if(itemString === "placa") {
         textSize(64 * jogo.escala);
-        text("Pressione 'E'", jogo.xFinalMapa/2-100 * jogo.escala, jogo.yFinalMapa-64 * jogo.escala);
+        text(T("jogo.pressioneE"), jogo.xFinalMapa/2-100 * jogo.escala, jogo.yFinalMapa-64 * jogo.escala);
     }
     else {
         textSize(16 * jogo.escala);
-        text("Pressione 'E'", item.x - 10, item.y - 10);
+        text(T("jogo.pressioneE"), item.x - 10, item.y - 10);
     }
 }
 
@@ -245,7 +282,7 @@ function CaixaDialogo() {
     }
     textFont(texto.fonte);
     textSize(32);
-    text("Pressione 'E' para avançar", texto.caixaX + texto.caixaWidth*0.65, texto.caixaY + texto.caixaHeight*0.9);
+    text(T("jogo.pressioneE_avancar"), texto.caixaX + texto.caixaWidth*0.65, texto.caixaY + texto.caixaHeight*0.9);
 }
 
 function Dialogo(dialogo) {
@@ -258,30 +295,30 @@ function Dialogo(dialogo) {
 
             switch(texto.incremento) {
                 case 0:
-                    texto.conteudo = "nhoc-nhoc, nhoc-nhoc (Olá "+ jogo.nomeUsuario +", eu sou o Castor Robertinho).";
+                    texto.conteudo = T("menu.dialogos.fala1", {nomeUsuario: jogo.nomeUsuario});
                     break;
 
                 case 1:
-                    if(jogo.colegioUsuario === "cpii") texto.conteudo = "(Me chamaram para uma missão de limpeza e organização do Colégio Pedro II).";
-                    else if(jogo.colegioUsuario === "cjba") texto.conteudo = "(Me chamaram para uma missão de limpeza e organização do Colégio CJBA).";
-                    else if(jogo.colegioUsuario === "santosDummont") texto.conteudo = "(Me chamaram para uma missão de limpeza e organização do Colégio Santos Dummont).";
-                    else if(jogo.colegioUsuario === "outros") texto.conteudo = "(Me chamaram para uma missão de limpeza e organização do Parque Internacional da Castorlândia).";
+                    if(jogo.colegioUsuario === "cpii") texto.conteudo = T("menu.dialogos.fala2", {colegioUsuario: "Colégio Pedro II"});
+                    else if(jogo.colegioUsuario === "cjba") texto.conteudo = T("menu.dialogos.fala2", {colegioUsuario: "Colégio CJBA"});
+                    else if(jogo.colegioUsuario === "santosDummont") texto.conteudo = T("menu.dialogos.fala2", {colegioUsuario: "Colégio Santos Dummont"});
+                    else if(jogo.colegioUsuario === "outros") texto.conteudo = T("menu.dialogos.fala2", {colegioUsuario: "Parque Internacional da Castorlândia"});
                     break;
                 
                 case 2:
-                    texto.conteudo = "nhac-nhac, nhac-nhac (Você pode me ajudar com isso?).";
+                    texto.conteudo = T("menu.dialogos.fala3");
                     break;
                 
                 case 3:
-                    texto.conteudo = "(Muito bem, para se movimentar utilize as setas do teclado).";
+                    texto.conteudo = T("menu.dialogos.fala4");
                     break;
                 
                 case 4:
-                    texto.conteudo = "(Para correr segure a tecla Shift enquanto se movimenta).";
+                    texto.conteudo = T("menu.dialogos.fala5");
                     break;
 
                 case 5:
-                    texto.conteudo = "(A nossa tarefa está no caminho da direita. Vamos lá!).";
+                    texto.conteudo = T("menu.dialogos.fala6");
                     break;
 
                 default:
@@ -298,11 +335,11 @@ function Dialogo(dialogo) {
 
             switch(texto.incremento) {
                 case 0:
-                    texto.conteudo = "Nhac-Nhac, Nhac-Nhac (Para começar nossa tarefa basta chegar perto daquela placa e pressionar a tecla 'E').";
+                    texto.conteudo = T("preFase1.dialogosInicio.fala1");
                     break;
 
                 case 1:
-                    texto.conteudo = "(Fazendo isso a tarefa irá iniciar imediatamente).";
+                    texto.conteudo = T("preFase1.dialogosInicio.fala2");
                     break;
                 
                 default:
@@ -325,7 +362,7 @@ function Dialogo(dialogo) {
                     }
                     textFont(texto.fonte);
                     textSize(32);
-                    text("Pressione 'E' para avançar", windowWidth*0.7, windowHeight*0.9);
+                    text(T("jogo.pressioneE_avancar"), windowWidth*0.7, windowHeight*0.9);
                     break;
 
                 case 1:
@@ -333,35 +370,35 @@ function Dialogo(dialogo) {
                     image(tutorial.imagensFase1[1], 0, 0, windowWidth, windowHeight);
                     textFont(texto.fonte);
                     textSize(32);
-                    text("Pressione 'E' para avançar", windowWidth*0.7, windowHeight*0.9);
+                    text(T("jogo.pressioneE_avancar"), windowWidth*0.7, windowHeight*0.9);
                     break;
                 
                 case 2:
                     image(tutorial.imagensFase1[2], 0, 0, windowWidth, windowHeight);
                     textFont(texto.fonte);
                     textSize(32);
-                    text("Pressione 'E' para avançar", windowWidth*0.7, windowHeight*0.9);
+                    text(T("jogo.pressioneE_avancar"), windowWidth*0.7, windowHeight*0.9);
                     break;
                 
                 case 3:
                     image(tutorial.imagensFase1[3], 0, 0, windowWidth, windowHeight);
                     textFont(texto.fonte);
                     textSize(32);
-                    text("Pressione 'E' para avançar", windowWidth*0.7, windowHeight*0.9);
+                    text(T("jogo.pressioneE_avancar"), windowWidth*0.7, windowHeight*0.9);
                     break;
                 
                 case 4:
                     image(tutorial.imagensFase1[4], 0, 0, windowWidth, windowHeight);
                     textFont(texto.fonte);
                     textSize(32);
-                    text("Pressione 'E' para avançar", windowWidth*0.7, windowHeight*0.9);
+                    text(T("jogo.pressioneE_avancar"), windowWidth*0.7, windowHeight*0.9);
                     break;
 
                 case 5:
                     image(tutorial.imagensFase1[5], 0, 0, windowWidth, windowHeight);
                     textFont(texto.fonte);
                     textSize(32);
-                    text("Pressione 'E' para avançar", windowWidth*0.7, windowHeight*0.9);
+                    text(T("jogo.pressioneE_avancar"), windowWidth*0.7, windowHeight*0.9);
                     break;
 
                 case 6:
@@ -378,35 +415,35 @@ function Dialogo(dialogo) {
 
                     switch(texto.incremento) {
                         case 0:
-                            texto.conteudo = "Nhec-Nhec, Nhec-Nhec (Essa é a nossa missão, vamos coletar o lixo!!).";
+                            texto.conteudo = T("fase1.dialogos.fala1");
                             break;
                         
                         case 1:
-                            texto.conteudo = "(Como você observou antes, os lixos precisam ser descartados nas lixeiras com o mesmo material).";
+                            texto.conteudo = T("fase1.dialogos.fala2");
                             break;
                         
                         case 2:
-                            texto.conteudo = "(Para pegar o lixo, basta pressionar a tecla 'E' no teclado).";
+                            texto.conteudo = T("fase1.dialogos.fala3");
                             break;
                         
                         case 3:
-                            texto.conteudo = "Nhac-Nhac (Você só pode pegar 1 lixo por vez).";
+                            texto.conteudo = T("fase1.dialogos.fala4");
                             break;
 
                         case 4:
-                            texto.conteudo = "(Para jogar o lixo na lixeira pressione a tecla 'E' novamente).";
+                            texto.conteudo = T("fase1.dialogos.fala5");
                             break;
 
                         case 5:
-                            texto.conteudo = "(Ao acertar o material correto da lixeira você ganha 10 pontos, mas se errar perde 5 pontos).";
+                            texto.conteudo = T("fase1.dialogos.fala6");
                             break;
 
                         case 6:
-                            texto.conteudo = "(Tome cuidado com os obstáculos no caminho, eles podem te atrapalhar, mas eu sei que você consegue desviar).";
+                            texto.conteudo = T("fase1.dialogos.fala7");
                             break;
 //mlz  esteve aquui 
                         case 7:
-                            texto.conteudo = "Nhoc-Nhoc (Entendido? Vamos la! Boa sorte "+ jogo.nomeUsuario + ").";
+                            texto.conteudo = T("fase1.dialogos.fala8", {nomeUsuario: jogo.nomeUsuario});
                             texto.ativo = false;
                             break;
 
@@ -431,19 +468,19 @@ function Dialogo(dialogo) {
             {
                 switch(texto.incremento) {
                     case 0:
-                        texto.conteudo = "nhec-nhec, nhec-nhec (Parabéns, você conseguiu completar a missão!)";
+                        texto.conteudo = T("preFase1.dialogosFinalBom.fala1");
                         break;
                     
                     case 1:
-                        texto.conteudo = "(Você fez " + fase1.pontos + " pontos, mas se quiser continuar limpando, fique a vontade).";
+                        texto.conteudo = T("preFase1.dialogosFinalBom.fala2", {pontos: jogo.pontos});
                         break;
 
                     case 2:
-                        texto.conteudo = "Nhoc-nhoc (Se quiser, você pode ver o placar de todos os castores que também ajudaram na limpeza no menu de opções).";
+                        texto.conteudo = T("preFase1.dialogosFinalBom.fala3");
                         break;
 
                     case 3:
-                        texto.conteudo = "(Basta apertar a tecla 'esc' para abrir o menu de pause, clicar em 'opções' e depois em 'ranking').";
+                        texto.conteudo = T("preFase1.dialogosFinalBom.fala4");
                         break;
 
                     default:
@@ -459,19 +496,19 @@ function Dialogo(dialogo) {
             else {
                 switch(texto.incremento) {
                     case 0:
-                        texto.conteudo = "nhec-nhec, nhec-nhec (Que pena, você não conseguiu atingir nossa meta)";
+                        texto.conteudo = T("preFase1.dialogosFinalRuim.fala1");
                         break;
                     
                     case 1:
-                        texto.conteudo = "(Você fez " + fase1.pontos + " pontos, se quiser você pode tentar de novo).";
+                        texto.conteudo = T("preFase1.dialogosFinalRuim.fala2", {pontos: fase1.pontos});
                         break;
 
                     case 2:
-                        texto.conteudo = "Nhoc-nhoc (Você pode ver o placar dos outros castores que também ajudaram na limpeza na tela de login).";
+                        texto.conteudo = T("preFase1.dialogosFinalRuim.fala3");
                         break;
 
                     case 3:
-                        texto.conteudo = "(Basta apertar a tecla 'esc' para abrir o menu de pause e clicar em sair).";
+                        texto.conteudo = T("preFase1.dialogosFinalRuim.fala4");
                         break;
 
                     default:

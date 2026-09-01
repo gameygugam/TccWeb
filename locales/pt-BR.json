@@ -1,0 +1,83 @@
+{
+    "sobre": {
+        "texto": "O BIOSELECT nasceu da inquietação da professora Giselle Furtado, da rede pública de ensino de Volta Redonda, ao perceber a necessidade de engajar os alunos no cuidado coletivo e na corresponsabilidade com o ambiente escolar. Ao introduzir discussões sobre limpeza, coleta seletiva, resíduos e rejeitos, a educadora compreendeu a urgência do tema e buscou formas de torná-lo mais próximo, interessante e significativo para os estudantes.\nPara transformar essa ideia em realidade, ela entrou em contato com o professor Flavio Costa, coordenador do Curso Técnico em Desenvolvimento de Sistemas do Colégio Pedro II, no Rio de Janeiro. Dessa parceria, surgiram reflexões sobre como a computação e a tecnologia poderiam estimular uma participação mais ativa dos jovens.\nO desafio foi apresentado aos alunos do curso técnico, que propuseram uma solução alinhada ao que mais gostam de criar: um jogo digital. Assim ganhou vida o BioSelect: um jogo desafiador, divertido e educativo, projetado para transformar o aprendizado sobre sustentabilidade em uma experiência interativa e envolvente. Mais do que um software, o BioSelect reflete a união entre educação, tecnologia e criatividade, demonstrando como a colaboração entre diferentes professores, escolas e estudantes pode transformar um desafio real em uma solução construída pelos próprios alunos.",
+        "comecar": "Começar"
+    },
+
+    "login": {
+        "subtitulo": "Uma aventura dentuça",
+        "nome": "Nome",
+        "placeholder_nome": "Ex: Fulano",
+        "sobrenome": "Sobrenome",
+        "placeholder_sobrenome": "Ex: Silva",
+        "idade": "Idade",
+        "colegio": "Colegio",
+        "placeholder_colegio": "Selecione seu colégio",
+        "outros_colegio": "Outros",
+        "Turma": "Turma",
+        "iniciar": "Iniciar",
+        "sobre": "Sobre o jogo",
+        "ranking": "Ver Ranking"
+    },
+
+    "menu": {
+        "dialogos": {
+            "fala1": "nhoc-nhoc, nhoc-nhoc (Olá {nomeUsuario}, eu sou o Castor Robertinho).",
+            "fala2": "(Me chamaram para uma missão de limpeza e organização do {colegioUsuario}).",
+            "fala3": "nhac-nhac, nhac-nhac (Você pode me ajudar com isso?).",
+            "fala4": "(Muito bem, para se movimentar utilize as setas do teclado).",
+            "fala5": "(Para correr segure a tecla Shift enquanto se movimenta).",
+            "fala6": "(A nossa tarefa está no caminho da direita. Vamos lá!)."
+        }
+    },
+
+    "preFase1": {
+        "dialogosInicio": {
+            "fala1": "Nhac-Nhac, Nhac-Nhac (Para começar nossa tarefa basta chegar perto daquela placa e pressionar a tecla 'E').",
+            "fala2": "(Fazendo isso a tarefa irá iniciar imediatamente)."
+        },
+        
+        "dialogosFinalBom": {
+            "fala1": "nhec-nhec, nhec-nhec (Parabéns, você conseguiu completar a missão!)",
+            "fala2": "(Você fez {pontos} pontos, mas se quiser continuar limpando, fique a vontade).",
+            "fala3": "Nhoc-nhoc (Se quiser, você pode ver o placar de todos os castores que também ajudaram na limpeza no menu de opções).",
+            "fala4": "(Basta apertar a tecla 'esc' para abrir o menu de pause, clicar em 'opções' e depois em 'ranking')."
+        },
+
+        "dialogosFinalRuim": {
+            "fala1": "nhec-nhec, nhec-nhec (Que pena, você não conseguiu atingir nossa meta)",
+            "fala2": "(Você fez {pontos} pontos, se quiser você pode tentar de novo).",
+            "fala3": "Nhoc-nhoc (Se quiser, você pode ver o placar de todos os castores que também ajudaram na limpeza no menu de opções).",
+            "fala4": "(Basta apertar a tecla 'esc' para abrir o menu de pause, clicar em 'opções' e depois em 'ranking')."
+        }
+    },
+    
+    "fase1": {
+        "dialogos": {
+            "fala1": "Nhec-Nhec, Nhec-Nhec (Essa é a nossa missão, vamos coletar o lixo!!).",
+            "fala2": "(Como você observou antes, os lixos precisam ser descartados nas lixeiras com o mesmo material).",
+            "fala3": "(Para pegar o lixo, basta pressionar a tecla 'E' no teclado).",
+            "fala4": "Nhac-Nhac (Você só pode pegar 1 lixo por vez).",
+            "fala5": "(Para jogar o lixo na lixeira pressione a tecla 'E' novamente).",
+            "fala6": "(Ao acertar o material correto da lixeira você ganha 10 pontos, mas se errar perde 5 pontos).",
+            "fala7": "(Tome cuidado com os obstáculos no caminho, eles podem te atrapalhar, mas eu sei que você consegue desviar).",
+            "fala8": "Nhoc-Nhoc (Entendido? Vamos la! Boa sorte {nomeUsuario})."
+        },
+
+        "ja": "Já"
+    },
+
+    "pause": {
+        "continuar": "Continuar",
+        "reiniciar": "Reiniciar",
+        "opcoes": "Opções",
+        "sair": "Sair",
+        "placar": "Placar",
+        "voltar": "Voltar"
+    },
+
+    "jogo": {
+        "pressioneE_avancar": "Pressione 'E' para avançar",
+        "pressioneE": "Pressione 'E'"
+    }
+}

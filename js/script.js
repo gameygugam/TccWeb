@@ -17,6 +17,7 @@ function preload() {
 }
 
 function setup() {
+    MudarIdioma("pt-BR");
     PegarFase();
     PegarNome();
     PegarColegio();
@@ -120,7 +121,7 @@ function draw() {
         MudarFase("menu");
         jogo.sairDoJogo = false
     }
-    console.log(jogo.qtdMouseInteracoes)
+    // console.log(jogo.qtdMouseInteracoes)
 
     // text("TG:" + jogo.timerGlobal, 50, windowHeight - 100);
     jogo.timerGlobal++
@@ -391,16 +392,16 @@ function DrawPause()
 
     if(!pause.menuOpcoesON){
         image(pause.btnImg, pause.botaoContinuar.x, pause.botaoContinuar.y, pause.btnWidth, pause.btnHeight);
-        text("Continuar", pause.botaoContinuar.texto_x, pause.botaoContinuar.texto_y);
+        text(T("pause.continuar"), pause.botaoContinuar.texto_x, pause.botaoContinuar.texto_y);
 
         image(pause.btnImg, pause.botaoReiniciar.x, pause.botaoReiniciar.y, pause.btnWidth, pause.btnHeight);
-        text("Reiniciar", pause.botaoReiniciar.texto_x, pause.botaoReiniciar.texto_y);
+        text(T("pause.reiniciar"), pause.botaoReiniciar.texto_x, pause.botaoReiniciar.texto_y);
 
         image(pause.btnImg, pause.botaoOpcoes.x, pause.botaoOpcoes.y, pause.btnWidth, pause.btnHeight);
-        text("Opções", pause.botaoOpcoes.texto_x, pause.botaoOpcoes.texto_y);
+        text(T("pause.opcoes"), pause.botaoOpcoes.texto_x, pause.botaoOpcoes.texto_y);
 
         image(pause.btnImg, pause.botaoSair.x, pause.botaoSair.y, pause.btnWidth, pause.btnHeight);
-        text("Sair", pause.botaoSair.texto_x, pause.botaoSair.texto_y);
+        text(T("pause.sair"), pause.botaoSair.texto_x, pause.botaoSair.texto_y);
     }
     else {
 
@@ -417,10 +418,10 @@ function DrawPause()
         text("  " + jogo.config.somVolume, pause.opcoes.som.texto_x, pause.opcoes.som.texto_y);
 
         image(pause.btnImg, pause.opcoes.botaoRanking.x, pause.opcoes.botaoRanking.y, pause.opcoes.botaoRanking.width, pause.opcoes.botaoRanking.height);
-        text("Placar", pause.opcoes.botaoRanking.texto_x - (37 * jogo.escala), pause.opcoes.botaoRanking.texto_y + (5 * jogo.escala));
+        text(T("pause.placar"), pause.opcoes.botaoRanking.texto_x - (37 * jogo.escala), pause.opcoes.botaoRanking.texto_y + (5 * jogo.escala));
 
         image(pause.btnImg, pause.opcoes.botaoSair.x, pause.opcoes.botaoSair.y, pause.opcoes.botaoSair.width, pause.opcoes.botaoSair.height);
-        text("Voltar", pause.opcoes.botaoSair.texto_x - (37 * jogo.escala), pause.opcoes.botaoSair.texto_y + (5 * jogo.escala));
+        text(T("pause.voltar"), pause.opcoes.botaoSair.texto_x - (37 * jogo.escala), pause.opcoes.botaoSair.texto_y + (5 * jogo.escala));
 
         jogo.config.musicaVolume = pause.opcoes.musica.slider.value();
         jogo.config.somVolume = pause.opcoes.som.slider.value();
@@ -771,7 +772,7 @@ function DrawFase1()
                 }
             else if(jogo.timer.start <= 260) {
                 fill(0, 255, 0)
-                text("JÁ!", jogo.xFinalMapa/2-10 * jogo.escala, jogo.yFinalMapa/2+75 * jogo.escala);
+                text(T("fase1.ja"), jogo.xFinalMapa/2-10 * jogo.escala, jogo.yFinalMapa/2+75 * jogo.escala);
                 }
             jogo.timer.start++
 

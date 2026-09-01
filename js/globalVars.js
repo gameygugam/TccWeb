@@ -90,6 +90,9 @@ const jogo = {
     },
 
     timerGlobal: 0,
+
+    textos: {},
+    idioma: "pt-BR"
 };
 
 const tutorial = {
