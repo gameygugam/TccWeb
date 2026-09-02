@@ -165,7 +165,7 @@ function TocarFundoMusical() {
 }
 
 async function MudarIdioma(novoIdioma) {
-    await loadJSON(`locales/${novoIdioma}.json`, dados => {
+    await loadJSON(`lang/${novoIdioma}.json`, dados => {
 
         jogo.textos = dados;
         jogo.idioma = novoIdioma;
@@ -227,13 +227,20 @@ async function RegistrarPartida(fase) {
     }
 }
 
+async function PegarIdioma() {
+    const resposta = await fetch("includes/pegar_idioma.php");
+    const dados = await resposta.json();
+
+    jogo.idioma = dados.idioma;
+}
+
 async function PegarNome() {
     const resposta = await fetch("includes/pegar_nome.php");
     const dados = await resposta.json();
 
     jogo.nomeUsuario = dados.nome;
 
-    console.log(jogo.nomeUsuario);
+    //console.log(jogo.nomeUsuario);
 }
 
 async function PegarFase() {
@@ -249,7 +256,7 @@ async function PegarColegio() {
 
     jogo.colegioUsuario = dados.colegio;
 
-    console.log(jogo.colegioUsuario);
+    //console.log(jogo.colegioUsuario);
 }
 
 function Interagir(item, itemString) {

@@ -1,5 +1,27 @@
 <?php
 
+require_once __DIR__ . '/includes/carregar_idioma.php';
+session_start();
+
+
+if(isset($_SESSION['idioma'])) {
+    $traducao = carregarIdioma("{$_SESSION['idioma']}");
+}
+else {
+    $traducao = carregarIdioma("pt-BR");
+}
+
+if($_SERVER['REQUEST_METHOD'] === 'GET')
+{
+    if(isset($_GET['idioma']))
+    {
+        $traducao = carregarIdioma("{$_GET['idioma']}");
+        $_SESSION['idioma'] = $_GET['idioma'];
+        header('Location: index.php');
+        exit;
+    }
+}
+
 if($_SERVER['REQUEST_METHOD'] === 'POST')
 {
     if(isset($_POST['comecar']))
@@ -15,7 +37,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Login — BioSelect</title>
+    <title>Sobre — BioSelect</title>
     <link rel="stylesheet" href="assets/styleIndex.css"/>
 </head>
 <body class="login-body">
@@ -42,30 +64,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 
             <div class="conteudo">
                 <p class="texto">
-                    O BIOSELECT nasceu da inquietação da professora Giselle Furtado, 
-                    da rede pública de ensino de Volta Redonda, 
-                    ao perceber a necessidade de engajar os alunos no cuidado coletivo e na corresponsabilidade com o ambiente escolar. 
-                    Ao introduzir discussões sobre limpeza, coleta seletiva, resíduos e rejeitos, 
-                    a educadora compreendeu a urgência do tema e buscou formas de torná-lo mais próximo, 
-                    interessante e significativo para os estudantes.
-                     <br> <br> 
-                    Para transformar essa ideia em realidade, 
-                    ela entrou em contato com o professor Flavio Costa, 
-                    coordenador do Curso Técnico em Desenvolvimento de Sistemas do Colégio Pedro II, 
-                    no Rio de Janeiro. Dessa parceria, 
-                    surgiram reflexões sobre como a computação e a tecnologia poderiam estimular uma participação mais ativa dos jovens.
-                      <br> <br>  
-                    O desafio foi apresentado aos alunos do curso técnico, que propuseram uma solução alinhada ao que mais gostam de criar: um jogo digital.
-
-                    Assim ganhou vida o BioSelect: um jogo desafiador, 
-                    divertido e educativo, projetado para transformar o aprendizado sobre sustentabilidade em uma experiência interativa e envolvente.
-
-                    Mais do que um software, o BioSelect reflete a união entre educação, 
-                    tecnologia e criatividade, demonstrando como a colaboração entre diferentes professores, 
-                    escolas e estudantes pode transformar um desafio real em uma solução construída pelos próprios alunos.
+                    <?php echo t("sobre.texto"); ?>
                 </p>
             </div>
-            <button type="submit" name="comecar" class="botao">Começar</button>
+            <button type="submit" name="comecar" class="botao"><?php echo t("sobre.comecar"); ?></button>
         </div>
     </div>
 </form>
@@ -85,6 +87,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
     </div>
 
 </div>
+
+<div class="idiomas">
+    <a href="?idioma=pt-BR"><img src="assets/imagens/bandeiras/brasil.png" alt="BR" id="bandeira-brasil"></a>
+    <a href="?idioma=en-US"><img src="assets/imagens/bandeiras/eua.png" alt="US" id="bandeira-eua"></a>
+    <a href="?idioma=es"><img src="assets/imagens/bandeiras/espanha.png" alt="ES" id="bandeira-espanha"></a>
+</div>
+
 </main>
 
 </body>

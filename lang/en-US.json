@@ -1,0 +1,92 @@
+{
+    "sobre": {
+        "texto": "BIOSELECT originated from the initiative of teacher Giselle Furtado, from the Volta Redonda public school system, who recognized the need to engage students in the collective care of and shared responsibility for the school environment. By introducing discussions on cleanliness, selective waste collection, and waste management, the educator realized the urgency of the topic and sought ways to make it more relatable, interesting, and meaningful for the students.<br><br>To turn this idea into reality, she contacted Flavio Costa, coordinator of the Technical Course in Systems Development at Colégio Pedro II in Rio de Janeiro. This partnership sparked ideas on how computing and technology could encourage more active participation among young people.<br><br>The challenge was presented to the technical course students, who proposed a solution aligned with what they enjoy creating most: a digital game. Thus, BioSelect came to life—a challenging, fun, and educational game designed to transform learning about sustainability into an interactive and engaging experience. More than just software, BioSelect reflects the union of education, technology, and creativity, demonstrating how collaboration among teachers, schools, and students can turn a real-world challenge into a solution built by the students themselves.",
+        "comecar": "Start"
+    },
+
+    "login": {
+        "subtitulo": "A buck-toothed adventure",
+        "nome": "Name",
+        "placeholder_nome": "Ex: Michael",
+        "sobrenome": "Surname",
+        "placeholder_sobrenome": "Ex: Smith",
+        "idade": "Age",
+        "colegio": "school",
+        "placeholder_colegio": "Select your school",
+        "outros_colegio": "Others",
+        "turma": "Class",
+        "iniciar": "Start",
+        "sobre": "About the game",
+        "ranking": "View Ranking",
+        "ultima": "last",
+        "melhor": "best"
+    },
+
+    "ranking": {
+        "placeholder_nome": "Enter your name...",
+        "placeholder_turma": "Enter your class...",
+        "voltar": "BACK",
+        "nenhum_encontrado": "No player found"
+    },
+
+    "menu": {
+        "dialogos": {
+            "fala1": "Chomp-chomp, chomp-chomp (Hello {nomeUsuario}, I'm Robertinho the Beaver).",
+            "fala2": "(I was called in for a cleaning and organizing mission at {colegioUsuario}).",
+            "fala3": "Munch-munch, munch-munch (Can you help me with this?).",
+            "fala4": "(Alright, use the arrow keys to move around).",
+            "fala5": "(To run, hold down the Shift key while moving).",
+            "fala6": "(Our task lies on the path to the right. Let's go!)."
+        }
+    },
+
+    "preFase1": {
+        "dialogosInicio": {
+            "fala1": "Chomp-Chomp, Chomp-Chomp (To start our task, simply get close to that sign and press the 'E' key).",
+            "fala2": "(Doing this will start the task immediately)."
+        },
+        
+        "dialogosFinalBom": {
+            "fala1": "Creak-creak, creak-creak (Congratulations, you managed to complete the mission!).",
+            "fala2": "(You scored {pontos} points, but feel free to keep clearing if you want).",
+            "fala3": "Chomp-chomp (If you wish, you can view the scores of all the beavers that also helped with the cleanup in the options menu).",
+            "fala4": "(Simply press the 'Esc' key to open the pause menu, click on 'Options', and then on 'Ranking')."
+        },
+
+        "dialogosFinalRuim": {
+            "fala1": "Wah-wah, wah-wah (Too bad, you didn't reach our goal).",
+            "fala2": "(You scored {pontos} points; if you want, you can try again).",
+            "fala3": "Chomp-chomp (If you wish, you can view the scores of all the beavers that also helped with the cleanup in the options menu).",
+            "fala4": "(Simply press the 'Esc' key to open the pause menu, click on 'Options', and then on 'Ranking')."
+        }
+    },
+    
+    "fase1": {
+        "dialogos": {
+            "fala1": "Creak-creak, creak-creak (That’s our mission: let’s collect the trash!!).",
+            "fala2": "(As you noted earlier, waste must be disposed of in bins designated for the same material).",
+            "fala3": "(To pick up the trash, simply press the 'E' key on your keyboard).",
+            "fala4": "Chomp-Chomp (You can only pick up one piece of trash at a time).",
+            "fala5": "(To throw the trash into the bin, press the 'E' key again).",
+            "fala6": "(If you get the material for the trash bin right, you earn 10 points, but if you get it wrong, you lose 5 points).",
+            "fala7": "(Watch out for obstacles in your path; they might get in your way, but I know you can dodge them).",
+            "fala8": "Chomp-chomp (Got it? Let's go! Good luck, {nomeUsuario})."
+        },
+
+        "ja": "Go"
+    },
+
+    "pause": {
+        "continuar": "Continue",
+        "reiniciar": " Restart",
+        "opcoes": "Options",
+        "sair": "Leave",
+        "placar": "Score",
+        "voltar": "Back"
+    },
+
+    "jogo": {
+        "pressioneE_avancar": "Press 'E' to advance",
+        "pressioneE": "Press 'E'"
+    }
+}

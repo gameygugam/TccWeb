@@ -952,3 +952,29 @@ OPÇÕES
 
     cursor: pointer;
 }
+
+.idiomas {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    z-index: 1000;
+}
+
+.idiomas img {
+    width: 60px;
+    height: 40px;
+    object-fit: cover;
+
+    cursor: pointer;
+
+    transition: transform 0.2s ease;
+}
+
+.idiomas img:hover {
+    transform: scale(1.1);
+}

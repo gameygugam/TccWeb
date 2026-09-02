@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../repository/UsuarioRepository.php';
 require_once __DIR__ . '/../repository/PartidaRepository.php';
+require_once __DIR__ . '/../includes/carregar_idioma.php';
 
 session_start();
 
@@ -16,6 +17,11 @@ $colegio = '';
 $turma = '';
 $idade = 1;
 
+if(isset($_SESSION['idioma']))
+    $traducao = carregarIdioma("{$_SESSION['idioma']}");
+else
+    $traducao = carregarIdioma("pt-BR");
+
 $leaderboard = [];
 $leaderboard = $repoPartida->leaderboard(5);
 
@@ -24,6 +30,17 @@ if (isset($_SESSION['id_usuario'])) $ultimaPartida = $repoPartida->ultimaPartida
 
 $melhorPartida = [];
 if (isset($_SESSION['id_usuario'])) $melhorPartida = $repoPartida->melhorPartida($_SESSION['id_usuario']);
+
+if($_SERVER['REQUEST_METHOD'] === 'GET')
+{
+    if(isset($_GET['idioma']))
+    {
+        $traducao = carregarIdioma("{$_GET['idioma']}");
+        $_SESSION['idioma'] = $_GET['idioma'];
+        header('Location: login.php');
+        exit;
+    }
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sobrenome = $_POST['sobrenome'];
@@ -121,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </h1>
 
     <p class="subtitulo">
-        Uma aventura dentuça.
+        <?php echo t("login.subtitulo"); ?>
     </p>
 
     <?php if ($erro !== ''): ?>
@@ -134,12 +151,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <span class="iconepixel"><img src="../assets/imagens/login/userIcon2.png" class="icone-img"></span>
         <div>
-            <label class="placa-label" for="nome">Nome</label>
+            <label class="placa-label" for="nome"><?php echo t("login.nome"); ?></label>
             <input
                 type="text"
                 id="nome"
                 name="nome"
-                placeholder="Ex: Ciclano"
+                placeholder="<?php echo t("login.placeholder_nome"); ?>"
                 value="<?= htmlspecialchars($nome) ?>"
                 required
             >
@@ -150,12 +167,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <span class="iconepixel"><img src="../assets/imagens/login/responsavelIcon.png" class="icone-img"></span>
         <div>
-            <label class="placa-label" for="sobrenome">Sobrenome</label>
+            <label class="placa-label" for="sobrenome"><?php echo t("login.sobrenome"); ?></label>
             <input
                 type="text"
                 id="sobrenome"
                 name="sobrenome"
-                placeholder="Ex: Fulano"
+                placeholder="<?php echo t("login.placeholder_sobrenome"); ?>"
                 value="<?= htmlspecialchars($sobrenome) ?>"
                 required
             >
@@ -166,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <span class="iconepixel"><img src="../assets/imagens/login/idadeIcon.png" class="idade-img"></span>
         <div>
-            <label class="placa-label" for="idade">Idade</label>
+            <label class="placa-label" for="idade"><?php echo t("login.idade"); ?></label>
             <input
                 type="number"
                 id="idade"
@@ -182,13 +199,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <span class="iconepixel"> <img src="../assets/imagens/login/escolaIcon.png" class="icone-escola"> </span>
         <div>
-            <label class="placa-label" for="colegio">Colégio</label>
+            <label class="placa-label" for="colegio"><?php echo t("login.colegio"); ?></label>
             <select id="colegio" name="colegio" required>
-                <option value="">Selecione seu colégio</option>
+                <option value=""><?php echo t("login.placeholder_colegio"); ?></option>
                 <option value="cpii">CPII</option>
                 <option value="cjba">CJBA</option>
                 <option value="santosDumont">Santos Dumont</option>
-                <option value="outros">Outros</option>
+                <option value="outros"><?php echo t("login.outros_colegio"); ?></option>
             </select>
         </div>
     </div>
@@ -197,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <span class="iconepixel"><img src="../assets/imagens/login/turmaIcon.png" class="icone-img"></span>
         <div>
-            <label class="placa-label" for="turma">Turma</label>
+            <label class="placa-label" for="turma"><?php echo t("login.turma"); ?></label>
             <input
                 type="text"
                 id="turma"
@@ -209,8 +226,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-        <button type="submit" class="botao">Iniciar</button>
-        <a href="../index.php" class="botao botao-ver-ranking">Sobre o jogo</a>
+        <button type="submit" class="botao"><?php echo t("login.iniciar"); ?></button>
+        <a href="../index.php" class="botao botao-ver-ranking"><?php echo t("login.sobre"); ?></a>
         </form>
 
     </div>
@@ -255,23 +272,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
         <?php endif; ?>
 
-        <a href="ranking.php" class="botao botao-ver-ranking">Ver Ranking</a>
+        <a href="ranking.php" class="botao botao-ver-ranking"><?php echo t("login.ranking"); ?></a>
         <br>
 
         <?php if(isset($_SESSION['id_usuario']) && !empty($ultimaPartida[0])): ?>
 
             <div class="linha">
-                <span>última <?= $ultimaPartida[0]['nome'] ?> <?= $ultimaPartida[0]['sobrenome'] ?></span>
+                <span><?php echo t("login.ultima"); ?> <?= $ultimaPartida[0]['nome'] ?> <?= $ultimaPartida[0]['sobrenome'] ?></span>
                 <span><?= $ultimaPartida[0]['pontos']?></span>
             </div>
             <div class="linha">
-                <span>melhor <?= $melhorPartida[0]['nome'] ?> <?= $melhorPartida[0]['sobrenome'] ?></span>
+                <span><?php echo t("login.melhor"); ?> <?= $melhorPartida[0]['nome'] ?> <?= $melhorPartida[0]['sobrenome'] ?></span>
                 <span><?= $melhorPartida[0]['pontos']?></span>
         <?php endif; ?>
 
         </div>
     </div>
 
+</div>
+
+<div class="idiomas">
+    <a href="?idioma=pt-BR"><img src="../assets/imagens/bandeiras/brasil.png" alt="BR" id="bandeira-brasil"></a>
+    <a href="?idioma=en-US"><img src="../assets/imagens/bandeiras/eua.png" alt="US" id="bandeira-eua"></a>
+    <a href="?idioma=es"><img src="../assets/imagens/bandeiras/espanha.png" alt="ES" id="bandeira-espanha"></a>
 </div>
 
 </body>

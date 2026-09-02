@@ -1,0 +1,92 @@
+{
+    "sobre": {
+        "texto": "BIOSELECT nació de la inquietud de la profesora Giselle Furtado, de la red pública de enseñanza de Volta Redonda, al percibir la necesidad de involucrar a los alumnos en el cuidado colectivo y en la corresponsabilidad con el entorno escolar. Al introducir debates sobre limpieza, recogida selectiva, residuos y desechos, la educadora comprendió la urgencia del tema y buscó formas de hacerlo más cercano, interesante y significativo para los estudiantes.<br><br>Para convertir esta idea en realidad, se puso en contacto con el profesor Flavio Costa, coordinador del Curso Técnico en Desarrollo de Sistemas del Colegio Pedro II, en Río de Janeiro. De esta colaboración surgieron reflexiones sobre cómo la informática y la tecnología podían fomentar una participación más activa de los jóvenes.<br><br>El desafío se planteó a los alumnos del curso técnico, quienes propusieron una solución alineada con lo que más les gusta crear: un juego digital. Así cobró vida BioSelect: un juego desafiante, divertido y educativo, diseñado para transformar el aprendizaje sobre sostenibilidad en una experiencia interactiva y atractiva. Más que un simple software, BioSelect refleja la unión entre educación, tecnología y creatividad, demostrando cómo la colaboración entre diferentes profesores, escuelas y estudiantes puede transformar un desafío real en una solución creada por los propios alumnos.",
+        "comecar": "Empezar"
+    },
+
+    "login": {
+        "subtitulo": "Una aventura dientona",
+        "nome": "Nombre",
+        "placeholder_nome": "Ex: Fulano",
+        "sobrenome": "Apellido",
+        "placeholder_sobrenome": "Ex: Silva",
+        "idade": "Edad",
+        "colegio": "Colegio",
+        "placeholder_colegio": "Selecciona tu colegio",
+        "outros_colegio": "Otros",
+        "turma": "Grupo",
+        "iniciar": "Comenzar",
+        "sobre": "Sobre el juego",
+        "ranking": "Ver ranking",
+        "ultima": "último",
+        "melhor": "mejor"
+    },
+
+    "ranking": {
+        "placeholder_nome": "Escribe tu nombre...",
+        "placeholder_turma": "Ingrese su grupo...",
+        "voltar": "VOLVER",
+        "nenhum_encontrado": "No se encontró ningún jugador"
+    },
+
+    "menu": {
+        "dialogos": {
+            "fala1": "Ñoc-ñoc, ñoc-ñoc (Hola {nombreUsuario}, soy el castor Robertinho).",
+            "fala2": "(Me llamaron para una misión de limpieza y organización del {colegioUsuario}).",
+            "fala3": "Ñam-ñam, ñam-ñam (¿Puedes ayudarme con esto?).",
+            "fala4": "(Muy bien, para moverte utiliza las flechas del teclado).",
+            "fala5": "(Para correr, mantén presionada la tecla Shift mientras te mueves).",
+            "fala6": "(Nuestra tarea está en el camino de la derecha. ¡Vamos!)."
+        }
+    },
+
+    "preFase1": {
+        "dialogosInicio": {
+            "fala1": "Ñam-ñam, ñam-ñam (Para comenzar nuestra tarea, basta con acercarse a ese letrero y presionar la tecla 'E').",
+            "fala2": "(Al hacer esto, la tarea se iniciará inmediatamente)."
+        },
+        
+        "dialogosFinalBom": {
+            "fala1": "ñec-ñec, ñec-ñec (¡Felicidades, has logrado completar la misión!).",
+            "fala2": "(Has conseguido {pontos} puntos, pero si quieres seguir limpiando, siéntete libre de hacerlo).",
+            "fala3": "Ñoc-ñoc (Si quieres, puedes ver la puntuación de todos los castores que también ayudaron en la limpieza en el menú de opciones).",
+            "fala4": "(Basta pulsar la tecla 'Esc' para abrir el menú de pausa, hacer clic en 'opciones' y luego en 'ranking')."
+        },
+
+        "dialogosFinalRuim": {
+            "fala1": "ñec-ñec, ñec-ñec (Qué pena, no lograste alcanzar nuestra meta).",
+            "fala2": "(Obtuviste {pontos} puntos; si quieres, puedes intentarlo de nuevo).",
+            "fala3": "Ñoc-ñoc (Si quieres, puedes ver la puntuación de todos los castores que también ayudaron en la limpieza en el menú de opciones).",
+            "fala4": "(Basta pulsar la tecla 'Esc' para abrir el menú de pausa, hacer clic en 'opciones' y luego en 'ranking')."
+        }
+    },
+    
+    "fase1": {
+        "dialogos": {
+            "fala1": "Nhec-Nhec, Nhec-Nhec (¡¡Esa es nuestra misión, vamos a recoger la basura!!).",
+            "fala2": "(Como observaste anteriormente, los residuos deben desecharse en los contenedores destinados al mismo material).",
+            "fala3": "(Para recoger la basura, basta con presionar la tecla 'E' del teclado).",
+            "fala4": "Ñam-Ñam (Solo puedes recoger una basura a la vez).",
+            "fala5": "(Para tirar la basura en el contenedor, presiona la tecla 'E' de nuevo).",
+            "fala6": "(Al acertar el material correcto en el contenedor ganas 10 puntos, pero si fallas pierdes 5 puntos).",
+            "fala7": "(Ten cuidado con los obstáculos en el camino; pueden entorpecerte, pero sé que lograrás esquivarlos).",
+            "fala8": "Ñoc-ñoc (¿Entendido? ¡Vamos allá! Buena suerte, {nomeUsuario})."
+        },
+
+        "ja": "Já"
+    },
+
+    "pause": {
+        "continuar": "Continuar",
+        "reiniciar": "Reanudar",
+        "opcoes": "Opciones",
+        "sair": "Salir",
+        "placar": "Marcador",
+        "voltar": "Volver"
+    },
+
+    "jogo": {
+        "pressioneE_avancar": "Presiona 'E' para avanzar",
+        "pressioneE": "Presiona 'E'"
+    }
+}

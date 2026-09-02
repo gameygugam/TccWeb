@@ -2,8 +2,14 @@
 
 require_once __DIR__ . '/../repository/UsuarioRepository.php';
 require_once __DIR__ . '/../repository/PartidaRepository.php';
+require_once __DIR__ . '/../includes/carregar_idioma.php';
 
 session_start();
+
+if(isset($_SESSION['idioma']))
+    $traducao = carregarIdioma("{$_SESSION['idioma']}");
+else
+    $traducao = carregarIdioma("pt-BR");
 
 $erro = '';
 
@@ -58,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>Castor's Game — Ranking</title>
+    <title>Ranking — Bio Select</title>
 
     <link rel="stylesheet" href="../assets/StyleRanking.css"/>
 
@@ -103,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input
                 type="text"
                 name="pesquisa-nome"
-                placeholder="Digite seu nome..."
+                placeholder="<?php echo t("ranking.placeholder_nome"); ?>"
             >
 
             <button type="submit" class="lupa" name="acao" value="pesquisar">
@@ -145,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input
                 type="text"
                 name="pesquisa-turma"
-                placeholder="Digite sua turma..."
+                placeholder="<?php echo t("ranking.placeholder_turma"); ?>"
             >
             </button>
 
@@ -190,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php else: ?>
 
         <div class="sem-resultados">
-            Nenhum jogador encontrado.
+            <?php echo t("ranking.nenhum_encontrado"); ?>
         </div>
 
     <?php endif; ?>
@@ -209,10 +215,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- BOTÃO VOLTAR -->
 
     <a href="../jogo.php" class="botao-voltar">
-        VOLTAR
+        <?php echo t("ranking.voltar"); ?>
     </a>
 
 
+</div>
+
+<div class="idiomas">
+    <a href="?idioma=pt-BR"><img src="../assets/imagens/bandeiras/brasil.png" alt="BR" id="bandeira-brasil"></a>
+    <a href="?idioma=en-US"><img src="../assets/imagens/bandeiras/eua.png" alt="US" id="bandeira-eua"></a>
+    <a href="?idioma=es"><img src="../assets/imagens/bandeiras/espanha.png" alt="ES" id="bandeira-espanha"></a>
 </div>
 
 

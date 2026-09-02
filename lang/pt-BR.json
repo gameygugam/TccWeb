@@ -1,6 +1,6 @@
 {
     "sobre": {
-        "texto": "O BIOSELECT nasceu da inquietação da professora Giselle Furtado, da rede pública de ensino de Volta Redonda, ao perceber a necessidade de engajar os alunos no cuidado coletivo e na corresponsabilidade com o ambiente escolar. Ao introduzir discussões sobre limpeza, coleta seletiva, resíduos e rejeitos, a educadora compreendeu a urgência do tema e buscou formas de torná-lo mais próximo, interessante e significativo para os estudantes.\nPara transformar essa ideia em realidade, ela entrou em contato com o professor Flavio Costa, coordenador do Curso Técnico em Desenvolvimento de Sistemas do Colégio Pedro II, no Rio de Janeiro. Dessa parceria, surgiram reflexões sobre como a computação e a tecnologia poderiam estimular uma participação mais ativa dos jovens.\nO desafio foi apresentado aos alunos do curso técnico, que propuseram uma solução alinhada ao que mais gostam de criar: um jogo digital. Assim ganhou vida o BioSelect: um jogo desafiador, divertido e educativo, projetado para transformar o aprendizado sobre sustentabilidade em uma experiência interativa e envolvente. Mais do que um software, o BioSelect reflete a união entre educação, tecnologia e criatividade, demonstrando como a colaboração entre diferentes professores, escolas e estudantes pode transformar um desafio real em uma solução construída pelos próprios alunos.",
+        "texto": "O BIOSELECT nasceu da inquietação da professora Giselle Furtado, da rede pública de ensino de Volta Redonda, ao perceber a necessidade de engajar os alunos no cuidado coletivo e na corresponsabilidade com o ambiente escolar. Ao introduzir discussões sobre limpeza, coleta seletiva, resíduos e rejeitos, a educadora compreendeu a urgência do tema e buscou formas de torná-lo mais próximo, interessante e significativo para os estudantes.<br><br>Para transformar essa ideia em realidade, ela entrou em contato com o professor Flavio Costa, coordenador do Curso Técnico em Desenvolvimento de Sistemas do Colégio Pedro II, no Rio de Janeiro. Dessa parceria, surgiram reflexões sobre como a computação e a tecnologia poderiam estimular uma participação mais ativa dos jovens.<br><br>O desafio foi apresentado aos alunos do curso técnico, que propuseram uma solução alinhada ao que mais gostam de criar: um jogo digital. Assim ganhou vida o BioSelect: um jogo desafiador, divertido e educativo, projetado para transformar o aprendizado sobre sustentabilidade em uma experiência interativa e envolvente. Mais do que um software, o BioSelect reflete a união entre educação, tecnologia e criatividade, demonstrando como a colaboração entre diferentes professores, escolas e estudantes pode transformar um desafio real em uma solução construída pelos próprios alunos.",
         "comecar": "Começar"
     },
 
@@ -11,13 +11,22 @@
         "sobrenome": "Sobrenome",
         "placeholder_sobrenome": "Ex: Silva",
         "idade": "Idade",
-        "colegio": "Colegio",
+        "colegio": "Colégio",
         "placeholder_colegio": "Selecione seu colégio",
         "outros_colegio": "Outros",
-        "Turma": "Turma",
+        "turma": "Turma",
         "iniciar": "Iniciar",
         "sobre": "Sobre o jogo",
-        "ranking": "Ver Ranking"
+        "ranking": "Ver Ranking",
+        "ultima": "última",
+        "melhor": "melhor"
+    },
+
+    "ranking": {
+        "placeholder_nome": "Digite seu nome...",
+        "placeholder_turma": "Digite sua turma...",
+        "voltar": "VOLTAR",
+        "nenhum_encontrado": "Nenhum jogador encontrado"
     },
 
     "menu": {

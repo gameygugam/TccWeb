@@ -8,6 +8,7 @@ function preload() {
     tutorial.caixaDialogo = loadImage("assets/imagens/tutorial/caixaTutorial.png");
     texto.fonte = loadFont("assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf");
     PegarFase();
+    PegarIdioma();
 
     PreloadMenu(); // Pré carrega as imagens do Menu
     PreloadPreFase1();
@@ -17,8 +18,7 @@ function preload() {
 }
 
 function setup() {
-    MudarIdioma("pt-BR");
-    PegarFase();
+    MudarIdioma(jogo.idioma);
     PegarNome();
     PegarColegio();
 
