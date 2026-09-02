@@ -9,7 +9,7 @@
         "nome": "Nombre",
         "placeholder_nome": "Ex: Fulano",
         "sobrenome": "Apellido",
-        "placeholder_sobrenome": "Ex: Silva",
+        "placeholder_sobrenome": "Ex: García",
         "idade": "Edad",
         "colegio": "Colegio",
         "placeholder_colegio": "Selecciona tu colegio",
@@ -63,7 +63,7 @@
     
     "fase1": {
         "dialogos": {
-            "fala1": "Nhec-Nhec, Nhec-Nhec (¡¡Esa es nuestra misión, vamos a recoger la basura!!).",
+            "fala1": "Ñec-ñec, ñec-ñec (¡¡Esa es nuestra misión, vamos a recoger la basura!!).",
             "fala2": "(Como observaste anteriormente, los residuos deben desecharse en los contenedores destinados al mismo material).",
             "fala3": "(Para recoger la basura, basta con presionar la tecla 'E' del teclado).",
             "fala4": "Ñam-Ñam (Solo puedes recoger una basura a la vez).",

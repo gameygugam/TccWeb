@@ -225,6 +225,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <a href="?idioma=pt-BR"><img src="../assets/imagens/bandeiras/brasil.png" alt="BR" id="bandeira-brasil"></a>
     <a href="?idioma=en-US"><img src="../assets/imagens/bandeiras/eua.png" alt="US" id="bandeira-eua"></a>
     <a href="?idioma=es"><img src="../assets/imagens/bandeiras/espanha.png" alt="ES" id="bandeira-espanha"></a>
+    <a href="?idioma=cn"><img src="../assets/imagens/bandeiras/china.png" alt="CN" id="bandeira-china"></a>
 </div>
 
 
