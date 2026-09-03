@@ -107,6 +107,8 @@ const tutorial = {
 const texto = {
     ativo: false,
     fonte: "",
+    fonteChines: "",
+    fonteTamanho: 0,
     intervalo: 50,
     letras: 0,
     ultimoTempo: 0,

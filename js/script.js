@@ -6,6 +6,7 @@ function preload() {
     jogo.playerImgEsquerdaSegurandoLixo = loadImage("assets/imagens/castorEsquerdaLixo.png");
     jogo.playerImgDireitaSegurandoLixo = loadImage("assets/imagens/castorDireitaLixo.png");
     tutorial.caixaDialogo = loadImage("assets/imagens/tutorial/caixaTutorial.png");
+    texto.fonteChines = loadFont("assets/fonts/Zpix/zpix.ttf");
     texto.fonte = loadFont("assets/fonts/pixel_operator/PixelOperatorMono-Bold.ttf");
     PegarFase();
     PegarIdioma();
@@ -19,8 +20,17 @@ function preload() {
 
 function setup() {
     MudarIdioma(jogo.idioma);
+
+    if(jogo.idioma === "cn")
+        texto.fonte = texto.fonteChines;
+    
     PegarNome();
     PegarColegio();
+
+    if(jogo.idioma === "cn")
+        texto.fonteTamanho = 24;
+    else
+        texto.fonteTamanho = 48;
 
     jogo.som = {
         marteloMenu: [
@@ -382,7 +392,7 @@ function SetupPause()
 function DrawPause()
 {    
     fill(0,0,0);
-    textFont(pause.txtFonte);
+    textFont(texto.fonte);
     image(pause.background, pause.x, pause.y, pause.width, pause.height);
 
     textSize(pause.titulo.tamanho);
@@ -408,7 +418,7 @@ function DrawPause()
         pause.opcoes.musica.slider.show();
         pause.opcoes.som.slider.show();
 
-        textFont(pause.txtFonte);
+        textFont(texto.fonte);
         textSize(pause.txtTamanho * 1.5);
 
         image(jogo.config.imgMusica, pause.opcoes.musica.texto_x - 25 *jogo.escala, pause.opcoes.musica.texto_y - 27 *jogo.escala, 40 *jogo.escala, 40 *jogo.escala);

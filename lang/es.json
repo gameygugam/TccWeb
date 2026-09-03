@@ -31,7 +31,7 @@
 
     "menu": {
         "dialogos": {
-            "fala1": "Ñoc-ñoc, ñoc-ñoc (Hola {nombreUsuario}, soy el castor Robertinho).",
+            "fala1": "Ñoc-ñoc, ñoc-ñoc (Hola {nomeUsuario}, soy el castor Robertinho).",
             "fala2": "(Me llamaron para una misión de limpieza y organización del {colegioUsuario}).",
             "fala3": "Ñam-ñam, ñam-ñam (¿Puedes ayudarme con esto?).",
             "fala4": "(Muy bien, para moverte utiliza las flechas del teclado).",
@@ -73,7 +73,7 @@
             "fala8": "Ñoc-ñoc (¿Entendido? ¡Vamos allá! Buena suerte, {nomeUsuario})."
         },
 
-        "ja": "Já"
+        "ja": "Ya"
     },
 
     "pause": {

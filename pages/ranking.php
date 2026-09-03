@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <title>Ranking — Bio Select</title>
 
-    <link rel="stylesheet" href="../assets/StyleRanking.css"/>
+    <link rel="stylesheet" href="../assets/styleRanking.css"/>
 
 </head>
 

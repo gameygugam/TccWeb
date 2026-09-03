@@ -170,7 +170,7 @@ async function MudarIdioma(novoIdioma) {
         jogo.textos = dados;
         jogo.idioma = novoIdioma;
 
-        console.log("Idioma alterado para: ", jogo.idioma);
+        //console.log("Idioma alterado para: ", jogo.idioma);
     });
 }
 
@@ -184,7 +184,7 @@ function T(caminho, variaveis = {}) {
     }
 
     if (resultado === undefined) {
-        console.warn(`Tradução não encontrada: ${caminho}`);
+        //console.warn(`Tradução não encontrada: ${caminho}`);
         return caminho;
     }
 
@@ -223,7 +223,7 @@ async function RegistrarPartida(fase) {
             },
             body: "fase=" + fase + "&tempo=" + 0 + "&pontos=" + fase1.pontos
         })
-        console.log("Partida Registrada");
+        //console.log("Partida Registrada");
     }
 }
 
@@ -682,44 +682,44 @@ function keyPressed()
 
     //TECLAS PARA REMOVER QUANDO ACABAR O JOGO!!! (ATALHO PROS PROGRAMMER)
 
-    if (event.code === "Backspace") {
-        jogo.sairDoJogo = true;
-    }
+    // if (event.code === "Backspace") {
+    //     jogo.sairDoJogo = true;
+    // }
 
-    if (key === "l" || key === "L") {
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
+    // if (key === "l" || key === "L") {
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
         
-    }
+    // }
 
-    if (key === "t" || key === "T") tutorial.ativo = false
+    // if (key === "t" || key === "T") tutorial.ativo = false
 
-    if(jogo.fase === "menu" && keyCode === ENTER) jogo.fase = "preFase1";
+    // if(jogo.fase === "menu" && keyCode === ENTER) jogo.fase = "preFase1";
 
-    if(jogo.fase === "fase1" && keyCode === ESCAPE) // jogo.fase = "pause";
+    // if(jogo.fase === "fase1" && keyCode === ESCAPE) // jogo.fase = "pause";
     
-    if (jogo.fase === "pause" && keyCode === ESCAPE) jogo.fase = "fase1";
+    // if (jogo.fase === "pause" && keyCode === ESCAPE) jogo.fase = "fase1";
 
-    console.log("musica:" + jogo.config.musicaVolume)
+    // console.log("musica:" + jogo.config.musicaVolume)
     
 }
 
@@ -810,12 +810,12 @@ function MenuDespause(){
 function MenuAlternar(){
     if(pause.menuPause) {
         MenuDespause()
-        console.log("DespausarMenu")
+        //console.log("DespausarMenu")
     }
     else {
         MenuPause()
         Toca
-        console.log("PausarMenu")
+        //console.log("PausarMenu")
     }
 }
 //<-----------------------------------------------------------------------------------------------------------------------
@@ -842,7 +842,7 @@ function Digitar() {
     }
 
     textFont(texto.fonte);
-    textSize(48);
+    textSize(texto.fonteTamanho);
     text(texto.conteudo.substring(0, texto.letras), texto.caixaX + 40, texto.caixaY + texto.caixaHeight*0.5, texto.caixaWidth - texto.caixaWidth*0.2, texto.caixaHeight);
 }
 
@@ -975,7 +975,7 @@ function AleatorizarPosicaoLixo(lixo) {
         lixo.y = random(jogo.yInicialMapa*1.8, jogo.yFinalMapa*0.95);
 
         fase1.obstaculos.forEach(obstaculo => {
-            console.log("TEM OBSTACULO")
+            //console.log("TEM OBSTACULO")
             if (Colidiu(lixo, obstaculo)) {
                 pode_sair = false
             }
@@ -986,7 +986,7 @@ function AleatorizarPosicaoLixo(lixo) {
                 pode_sair = false
             }
         })
-        console.log("a")
+        //console.log("a")
     }
     return lixo;
 }
@@ -1016,7 +1016,7 @@ function AleatorizarPosicaoObstaculo(obstaculo) {
                 pode_sair = false;
             }
         })
-        console.log("a");
+        //console.log("a");
     }
     return obstaculo
 }
