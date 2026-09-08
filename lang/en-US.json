@@ -73,7 +73,24 @@
             "fala8": "Chomp-chomp (Got it? Let's go! Good luck, {nomeUsuario})."
         },
 
-        "ja": "Go"
+        "ja": "Go",
+
+        "lixos": {
+            "bolinhaDePapel": "Paper Ball",
+            "banana": "Banana",
+            "bananaPodre": "Rotten banana",
+            "caixaDePapelao": "Cardboard box",
+            "chicleteMascado": "Chewed gum",
+            "copoDePlastico": "Plastic cup",
+            "fotografia": "Picture",
+            "garrafaDePlastico": "Plastic bottle",
+            "garrafaDeVidro": "Glass bottle",
+            "latinha": "Soda can",
+            "macaComida": "Bitten apple",
+            "pilha": "Battery",
+            "placaDeMetal": "Metal plate",
+            "tacaDeVidro": "Glass cup"
+        }
     },
 
     "pause": {

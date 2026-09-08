@@ -73,7 +73,24 @@
             "fala8": "咔嚓咔嚓（聽懂了嗎？出發吧！祝你好運，{nomeUsuario}）。"
         },
 
-        "ja": "已經"
+        "ja": "已經",
+        
+        "lixos": {
+            "bolinhaDePapel": "一團紙",
+            "banana": "香蕉",
+            "bananaPodre": "爛香蕉",
+            "caixaDePapelao": "紙箱",
+            "chicleteMascado": "嚼過的口香糖",
+            "copoDePlastico": "塑膠杯",
+            "fotografia": "攝影",
+            "garrafaDePlastico": "塑膠瓶",
+            "garrafaDeVidro": "玻璃瓶",
+            "latinha": "小罐",
+            "macaComida": "蘋果食品",
+            "pilha": "電池",
+            "placaDeMetal": "金屬板",
+            "tacaDeVidro": "玻璃高腳杯"
+        }
     },
 
     "pause": {

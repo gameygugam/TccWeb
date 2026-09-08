@@ -899,55 +899,55 @@ function MostrarLixoReal() {
         // Verifica e mostra os lixos reais
         if(fase1.lastItemPego.nome === "bolinhaDePapel") {
             image(fase1.lixosImgCarregados.reais.papel[0], (windowWidth) - 205 *jogo.escala, (windowHeight) - 390 *jogo.escala, 200 * jogo.escala, 200 * jogo.escala);
-            lixo_nome_real = "Bolinha de papel"
+            lixo_nome_real = T("fase1.lixos.bolinhaDePapel");
         }
         else if(fase1.lastItemPego.nome === "caixaDePapelao") {
             image(fase1.lixosImgCarregados.reais.papel[1], (windowWidth) - 165 * jogo.escala, (windowHeight) - 370 *jogo.escala, 125 * jogo.escala, 150 * jogo.escala);
-            lixo_nome_real = "Caixa de papelão"
+            lixo_nome_real = T("fase1.lixos.caixaDePapelao");
         }
         else if(fase1.lastItemPego.nome === "garrafaDeVidro") {
             image(fase1.lixosImgCarregados.reais.vidro[0], (windowWidth) - 168 *jogo.escala, (windowHeight) - 370 *jogo.escala, 125 * jogo.escala, 150 * jogo.escala);
-            lixo_nome_real = "Garrafa de vidro"
+            lixo_nome_real = T("fase1.lixos.garrafaDeVidro");
         }
         else if(fase1.lastItemPego.nome === "tacaDeVidro") {
             image(fase1.lixosImgCarregados.reais.vidro[1], (windowWidth) - 168 *jogo.escala, (windowHeight) - 370 *jogo.escala, 125 * jogo.escala, 150 * jogo.escala);
-            lixo_nome_real = "Taça de vidro"
+            lixo_nome_real = T("fase1.lixos.tacaDeVidro");
         }
         else if (fase1.lastItemPego.nome === "banana") {
             image(fase1.lixosImgCarregados.reais.organico[0], (windowWidth) - 168 *jogo.escala, (windowHeight) - 355 *jogo.escala, 125 * jogo.escala, 125 * jogo.escala);
-            lixo_nome_real = "Banana"
+            lixo_nome_real = T("fase1.lixos.banana");
         }
         else if (fase1.lastItemPego.nome === "bananaPodre") {
             image(fase1.lixosImgCarregados.reais.organico[1], (windowWidth) - 175 *jogo.escala, (windowHeight) - 365 *jogo.escala, 150 * jogo.escala, 150 * jogo.escala);
-            lixo_nome_real = "Banana podre"
+            lixo_nome_real = T("fase1.lixos.bananaPodre");
         }
         else if (fase1.lastItemPego.nome === "macaComida") {
             image(fase1.lixosImgCarregados.reais.organico[2], (windowWidth) - 178 *jogo.escala, (windowHeight) - 390 *jogo.escala, 150 * jogo.escala, 170 * jogo.escala);
-            lixo_nome_real = "Maçã comida"
+            lixo_nome_real = T("fase1.lixos.macaComida");
         }
         else if (fase1.lastItemPego.nome === "garrafaDePlastico") {
             image(fase1.lixosImgCarregados.reais.plastico[0], (windowWidth) - 200 *jogo.escala, (windowHeight) - 370 *jogo.escala, 200 * jogo.escala, 150 * jogo.escala);
-            lixo_nome_real = "Garrafa de água"
+            lixo_nome_real = T("fase1.lixos.garrafaDePlastico");
         }
         else if (fase1.lastItemPego.nome === "copoDePlastico") {
             image(fase1.lixosImgCarregados.reais.plastico[1], (windowWidth) - 182 *jogo.escala, (windowHeight) - 367 *jogo.escala, 150 * jogo.escala, 150 * jogo.escala);
-            lixo_nome_real = "Copo descartável"
+            lixo_nome_real = T("fase1.lixos.copoDePlastico");
         }
         else if (fase1.lastItemPego.nome === "placaDeMetal") {
             image(fase1.lixosImgCarregados.reais.metal[0], (windowWidth) - 190 *jogo.escala, (windowHeight) - 370 *jogo.escala, 175 * jogo.escala, 150 * jogo.escala);
-            lixo_nome_real = "Placa de metal"
+            lixo_nome_real = T("fase1.lixos.placaDeMetal");
         }
         else if (fase1.lastItemPego.nome === "latinha") {
             image(fase1.lixosImgCarregados.reais.metal[1], (windowWidth) - 195 *jogo.escala, (windowHeight) - 380 *jogo.escala, 180 * jogo.escala, 180 * jogo.escala);
-            lixo_nome_real = "Latinha"
+            lixo_nome_real = T("fase1.lixos.latinha");
         }
         else if (fase1.lastItemPego.nome === "fotografia") {
             image(fase1.lixosImgCarregados.reais.naoReciclavel[0], (windowWidth) - 185 *jogo.escala, (windowHeight) - 360 *jogo.escala, 150 * jogo.escala, 135 * jogo.escala);
-            lixo_nome_real = "Fotografia"
+            lixo_nome_real = T("fase1.lixos.fotografia");
         }
         else if (fase1.lastItemPego.nome === "chicleteMascado") {
             image(fase1.lixosImgCarregados.reais.naoReciclavel[1], (windowWidth) - 185 *jogo.escala, (windowHeight) - 360 *jogo.escala, 150 * jogo.escala, 125 * jogo.escala);
-            lixo_nome_real = "Chiclete mascado"
+            lixo_nome_real = T("fase1.lixos.chicleteMascado");
         }
 
         fill(0,0,0)
@@ -1127,33 +1127,12 @@ function CriarLixo() {
     let variacao = floor(random(-3, 3))
     lixo_width += variacao
     lixo_height += variacao
-
-    // let lixo = fase1.lixos.push({ x: lixo_x, y: lixo_y, width: 25, height: 25, img: lixo_img, imgCarregada: lixo_img_carregada, type: lixo_type, class: "lixo", angulo: lixo_angulo });
     
     let lixo = Lixo.novo(null, lixo_nome, lixo_img, lixo_width * jogo.escala, lixo_height * jogo.escala, lixo_x, lixo_y, lixo_type, lixo_angulo);
     
     lixo = AleatorizarPosicaoLixo(lixo)
 
     return lixo
-    
-    // fase1.lixos.push(lixo);
-
-    /*lixos[lixos.length - 1].img = lixosPixelImg[lixos.length - 1]; // Adiciona imagem pixel no parametro
-    lixos[lixos.length - 1].imgCarregada = lixosPixelImgCarregados[lixos.length - 1]; // Adiciona imagem pixel carregada no parametro
-    // Adiciona o tipo do lixo de acordo com as lixeiras existentes
-    if (lixos[lixos.length - 1].img === "imagens/lixos/bolinhaDePapelPixel.png")
-        lixos[lixos.length - 1].type = "papel"; // Azul
-    else if (lixos[lixos.length - 1].img === "imagens/lixos/garrafaVidroPixel.png")
-        lixos[lixos.length - 1].type = "vidro"; // Verde
-    else if (lixos[lixos.length - 1].img === "imagens/lixos/bananaPixel.png")
-        lixos[lixos.length - 1].type = "organico"; // Marrom
-    else if (lixos[lixos.length - 1].img === "imagens/lixos/bananaPodrePixel.png")
-        lixos[lixos.length - 1].type = "organico"; // Marrom
-    else if (lixos[lixos.length - 1].img === "imagens/lixos/garrafaDePlasticoPixel.png")
-        lixos[lixos.length - 1].type = "plastico"; // Vermelha*/
-
-    /*lixos[lixos.length - 1].x = random(lixo_x + 50, (lixo_x + width) - 200);
-    lixos[lixos.length - 1].y = random(lixo_y + 50, (lixo_y + height) - 50);*/
 }
 
 function RandomizarLixoType(){

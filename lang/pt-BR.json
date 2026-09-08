@@ -73,7 +73,24 @@
             "fala8": "Nhoc-Nhoc (Entendido? Vamos la! Boa sorte {nomeUsuario})."
         },
 
-        "ja": "Já"
+        "ja": "Já",
+
+        "lixos": {
+            "bolinhaDePapel": "Bolinha de papel",
+            "banana": "Banana",
+            "bananaPodre": "Banana podre",
+            "caixaDePapelao": "Caixa de papelão",
+            "chicleteMascado": "Chiclete mascado",
+            "copoDePlastico": "Copo de plástico",
+            "fotografia": "Fotografia",
+            "garrafaDePlastico": "Garrafa de plástico",
+            "garrafaDeVidro": "Garrafa de vidro",
+            "latinha": "Latinha",
+            "macaComida": "Maçã Comida",
+            "pilha": "Pilha",
+            "placaDeMetal": "Placa de metal",
+            "tacaDeVidro": "Taça de vidro"
+        }
     },
 
     "pause": {

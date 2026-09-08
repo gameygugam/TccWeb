@@ -17,7 +17,7 @@
         "turma": "Grupo",
         "iniciar": "Comenzar",
         "sobre": "Sobre el juego",
-        "ranking": "Ver ranking",
+        "ranking": "Ver Ranking",
         "ultima": "último",
         "melhor": "mejor"
     },
@@ -73,7 +73,24 @@
             "fala8": "Ñoc-ñoc (¿Entendido? ¡Vamos allá! Buena suerte, {nomeUsuario})."
         },
 
-        "ja": "Ya"
+        "ja": "Ya",
+
+        "lixos": {
+            "bolinhaDePapel": "Bola de papel",
+            "banana": "Plátano",
+            "bananaPodre": "Plátano podrido",
+            "caixaDePapelao": "Caja de cartón",
+            "chicleteMascado": "Chicle masticado",
+            "copoDePlastico": "Vaso de plástico",
+            "fotografia": "Fotografía",
+            "garrafaDePlastico": "Botella de plástico",
+            "garrafaDeVidro": "Botella de vidrio",
+            "latinha": "Lata pequeña",
+            "macaComida": "Manzana",
+            "pilha": "Pila",
+            "placaDeMetal": "Placa de metal",
+            "tacaDeVidro": "Copa de vidrio"
+        }
     },
 
     "pause": {
