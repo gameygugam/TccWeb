@@ -9,6 +9,7 @@ class Obstaculo {
         this.height             = dados.height          ?? 0;
         this.x                  = dados.x               ?? 0;
         this.y                  = dados.y               ?? 0;
+        this.pode_sair          = dados.pode_sair       ?? true;
     }
 
     getId()                 { return this.id; }
@@ -19,48 +20,21 @@ class Obstaculo {
     getHeight()             { return this.height; }
     getX()                  { return this.x; }
     getY()                  { return this.y; }
+    getPodeSair()           { return this.pode_sair; }
 
-    static novo(nome, caminho_image, image, width, height, x, y) {
+    static novo(nome, caminho_image, image, width, height, x, y, pode_sair) {
         const obstaculo = new Obstaculo({});
-        obstaculo.alterarDados(caminho_image, width, height, x, y);
+        obstaculo.alterarDados(caminho_image, width, height, x, y, pode_sair);
         return obstaculo;
     }
 
-    // static criarObstaculo(nome) {
-    //     const obstaculo = new Obstaculo({});
-        
-    //     let caminho_image = ""
-    //     let width = 25
-    //     let height = 25
-    //     let x = 0
-    //     let y = 0
-    //     let material = lixo_type
-
-    //     // if (lixo_type === "papel") {
-    //     //     image = "../imagens/lixos/bolinhaDePapelPixel.png"
-    //     // }
-    //     // else if (lixo_type === "vidro") {
-    //     //     image = "../imagens/lixos/garrafaVidroPixel.png"
-    //     // }
-    //     // else if (lixo_type === "organico") {
-    //     //     let rnd = floor(random(2))
-    //     //     if (rnd === 0) image = "../imagens/lixos/bananaPixel.png"
-    //     //     else image = "../imagens/lixos/bananaPodrePixel.png"
-    //     // }
-    //     // else if (lixo_type === "plastico") {
-    //     //     image = "../imagens/lixos/garrafaDePlasticoPixel.png"
-    //     // }
-
-    //     obstaculo.alterarDados(caminho_image, width, height, x, y);
-    //     return obstaculo;
-    // }
-
-    alterarDados(caminho_image, width, height, x, y) {
+    alterarDados(caminho_image, width, height, x, y, pode_sair) {
         this.caminho_image      = caminho_image;
         this.width              = width;
         this.height             = height;
         this.x                  = x;
         this.y                  = y;
+        this.pode_sair          = pode_sair;
     }
 
     CarregarImage(caminho_image) {
