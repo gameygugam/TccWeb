@@ -15,6 +15,7 @@ function preload() {
     PreloadPreFase1();
     PreloadFase1(); // Pré carrega as imagens do Minigame 1
     // PreloadFase2(); // Pré carrega as imagens do Minigame 1
+    PreloadMenuSkin();
     PreloadPause(); // Pré carrega as imagens do menu de Pause
 }
 
@@ -69,7 +70,7 @@ function setup() {
     jogo.yInicialMapa = windowHeight / 2 - windowHeight / 2.3;
     jogo.yFinalMapa = windowHeight - windowHeight * 0.07;
 
-    MudarFase(jogo.fase);
+    MudarFase("menu");
 
     jogo.player = { 
         x: jogo.xFinalMapa/2+40*jogo.escala, y: jogo.yInicialMapa+25*jogo.escala, width: (windowWidth / 20), height: (windowHeight / 10),
@@ -99,6 +100,7 @@ function setup() {
     SetupMenu();
     SetupPreFase1();
     SetupFase1();
+    SetupMenuSkin();
     // SetupFase2();
     SetupPause();
 }
@@ -112,6 +114,8 @@ function draw() {
         DrawPreFase1(); // Desenha o PreMinigame 1
     else if(jogo.fase === "fase1")
         DrawFase1(); // Desenha o Minigame 1
+    else if(jogo.fase === "menuSkin")
+        DrawMenuSkin(); // Desenha o Minigame 1
     // else if(jogo.fase === "fase2")
     //     DrawFase2(); // Desenha o Minigame 2
 
@@ -175,7 +179,7 @@ function DrawMenu()
         // Desenha o player
         image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
         image(menu.cone1Img, jogo.xFinalMapa/2-25*jogo.escala, jogo.yFinalMapa-125*jogo.escala, 250*jogo.escala, 100*jogo.escala);
-        image(menu.cone2Img, jogo.xInicialMapa+25*jogo.escala, jogo.yFinalMapa/2-150*jogo.escala, 70*jogo.escala, 325*jogo.escala);
+        // image(menu.cone2Img, jogo.xInicialMapa+25*jogo.escala, jogo.yFinalMapa/2-150*jogo.escala, 70*jogo.escala, 325*jogo.escala);
         image(menu.placaImg, jogo.xFinalMapa*0.85, jogo.yFinalMapa*0.25, 150 * jogo.escala, 150 * jogo.escala);
 
         Dialogo("menu");
@@ -192,7 +196,7 @@ function DrawMenu()
         // Desenha os cones
         image(menu.cone1Img, jogo.xFinalMapa/2-25*jogo.escala, jogo.yFinalMapa-125*jogo.escala, 250*jogo.escala, 100*jogo.escala);
         
-        image(menu.cone2Img, jogo.xInicialMapa+25*jogo.escala, jogo.yFinalMapa/2-150*jogo.escala, 70*jogo.escala, 325*jogo.escala);
+        // image(menu.cone2Img, jogo.xInicialMapa+25*jogo.escala, jogo.yFinalMapa/2-150*jogo.escala, 70*jogo.escala, 325*jogo.escala);
         // Desenha a placa
         image(menu.placaImg, jogo.xFinalMapa*0.85, jogo.yFinalMapa*0.25, 150 * jogo.escala, 150 * jogo.escala);
         // Desenha o player
@@ -214,7 +218,7 @@ function DrawMenu()
 
         // fill(0, 0, 0);
         // rect(jogo.xInicialMapa, jogo.yFinalMapa/2 - jogo.yFinalMapa/15, 35*jogo.escala, 200*jogo.escala);
-        // let portaEsquerda = {x: jogo.xInicialMapa, y: jogo.yFinalMapa/2 - jogo.yFinalMapa/15, width: 35 * jogo.escala, height: 200 * jogo.escala};
+        let portaEsquerda = {x: jogo.xInicialMapa, y: jogo.yFinalMapa/2 - jogo.yFinalMapa/15, width: 35 * jogo.escala, height: 200 * jogo.escala};
         
 
         // fill(0, 0, 0);
@@ -237,6 +241,12 @@ function DrawMenu()
         //     MudarFase("fase2");
         //     jogo.player.y = jogo.xFinalMapa/2 - jogo.player.width/2;
         // }
+        if (Colidiu(jogo.player, portaEsquerda))
+        {
+            MudarFase("menuSkin");
+            tutorial.ativo = true;
+            jogo.player.x = jogo.xFinalMapa- jogo.player.width*1.5;
+        }
         if (Colidiu(jogo.player, portaDireita)) 
         {
             MudarFase("preFase1");
@@ -441,6 +451,115 @@ function DrawPause()
     
 }
 //<----------------------------------------------------------------------------------------------------------------
+
+//MENUSKIN ----------------------------------------------------------------------------------------------------------->
+function PreloadMenuSkin()
+{
+    jogo.mapasImg[0] = mapa1 = loadImage("assets/imagens/mapas/mapaMenu.png"); //Mapa MenuSkin
+    // menu.placaImg = loadImage("assets/imagens/menu/placaSetaDireita.png");
+    // menu.cone1Img = loadImage("assets/imagens/menu/cone1.png");
+    // menu.cone2Img = loadImage("assets/imagens/menu/cone2.png");
+}
+
+function SetupMenuSkin()
+{
+    jogo.player.x = jogo.xFinalMapa / 2;
+    jogo.player.y = jogo.yFinalMapa / 5;
+}
+
+function DrawMenuSkin()
+{
+    //// Cria o mapa
+    image(jogo.mapasImg[0], 0, 0, windowWidth, windowHeight);
+
+    if(tutorial.ativo) {
+        // Desenha o player
+        image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
+        // image(menu.cone1Img, jogo.xFinalMapa/2-25*jogo.escala, jogo.yFinalMapa-125*jogo.escala, 250*jogo.escala, 100*jogo.escala);
+        // image(menu.cone2Img, jogo.xInicialMapa+25*jogo.escala, jogo.yFinalMapa/2-150*jogo.escala, 70*jogo.escala, 325*jogo.escala);
+        // image(menu.placaImg, jogo.xFinalMapa*0.85, jogo.yFinalMapa*0.25, 150 * jogo.escala, 150 * jogo.escala);
+
+        Dialogo("menu");
+    }
+    else {
+
+        // Armazena posição antiga
+        jogo.player.oldX = jogo.player.x;
+        jogo.player.oldY = jogo.player.y;
+
+        // Movimento
+        Movimentar();
+
+        // Desenha os cones
+        // image(menu.cone1Img, jogo.xFinalMapa/2-25*jogo.escala, jogo.yFinalMapa-125*jogo.escala, 250*jogo.escala, 100*jogo.escala);
+        
+        // image(menu.cone2Img, jogo.xInicialMapa+25*jogo.escala, jogo.yFinalMapa/2-150*jogo.escala, 70*jogo.escala, 325*jogo.escala);
+        // Desenha a placa
+        //image(menu.placaImg, jogo.xFinalMapa*0.85, jogo.yFinalMapa*0.25, 150 * jogo.escala, 150 * jogo.escala);
+        // Desenha o player
+        image(jogo.playerImg, jogo.player.x, jogo.player.y, jogo.player.width * jogo.escala, jogo.player.height * jogo.escala);
+
+        // Verifica colisão com parede
+        jogo.walls.forEach(wall => {
+            if (Colidiu(jogo.player, wall)) {
+                jogo.player.x = jogo.player.oldX;
+                jogo.player.y = jogo.player.oldY;
+            }
+        })
+
+        let portaDireita = {x: jogo.xFinalMapa - 35, y: jogo.yFinalMapa / 2 - jogo.yFinalMapa/15, width: 35*jogo.escala, height: 200*jogo.escala};
+
+        if (Colidiu(jogo.player, portaDireita)) 
+        {
+            MudarFase("menu");
+            tutorial.ativo = false;
+            jogo.player.x = jogo.xInicialMapa + jogo.player.width*0.5;
+        }
+
+        // // Cria o texto do Menu
+        // fill(255, 255, 255);
+        // textSize(200);
+        // text("Menu", windowWidth / 2 - 250, 300);
+
+        // // Cria o botão para iniciar o jogo
+        // fill(255, 255, 255);
+        // rect(botaoIniciar.x, botaoIniciar.y, botaoIniciar.w, botaoIniciar.h);
+        // fill(0, 0, 0);
+        // textSize(100);
+        // text("Iniciar", botaoIniciar.x + 63, botaoIniciar.y + 85); // Cria o texto e centraliza no botão
+
+        // // Cria o botão para fase 1 do jogo
+        // fill(255, 255, 255);
+        // rect(botao_menu_fase_1.x, botao_menu_fase_1.y, botao_menu_fase_1.w, botao_menu_fase_1.h);
+        // fill(0, 0, 0);
+        // textSize(50);
+        // text("Fase 1", botao_menu_fase_1.x + 23, botao_menu_fase_1.y + 42); // Cria o texto e centraliza no botão
+
+        // // Cria o botão para fase 2 do jogo
+        // fill(255, 255, 255);
+        // rect(botao_menu_fase_2.x, botao_menu_fase_2.y, botao_menu_fase_2.w, botao_menu_fase_2.h);
+        // fill(0, 0, 0);
+        // textSize(50);
+        // text("Fase 2", botao_menu_fase_2.x + 23, botao_menu_fase_2.y + 42); // Cria o texto e centraliza no botão
+
+        // // Verifica se o mouse clicou no botão
+        // if (mouseIsPressed &&
+        //     mouseX <= botao_menu_fase_1.x + botao_menu_fase_1.w
+        //     && mouseX >= botao_menu_fase_1.x
+        //     && mouseY <= botao_menu_fase_1.y + botao_menu_fase_1.h
+        //     && mouseY >= botao_menu_fase_1.y)
+        //     fase = "fase1";
+
+        // else if (mouseIsPressed &&
+        //     mouseX <= botao_menu_fase_2.x + botao_menu_fase_2.w
+        //     && mouseX >= botao_menu_fase_2.x
+        //     && mouseY <= botao_menu_fase_2.y + botao_menu_fase_2.h
+        //     && mouseY >= botao_menu_fase_2.y)
+        //     fase = "fase2";
+    }
+}
+
+//<---
 
 //PREFASE1 ------------------------------------------------------------------------------------------------------->
 
