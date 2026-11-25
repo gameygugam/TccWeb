@@ -682,44 +682,44 @@ function keyPressed()
 
     //TECLAS PARA REMOVER QUANDO ACABAR O JOGO!!! (ATALHO PROS PROGRAMMER)
 
-    if (event.code === "Backspace") {
-        jogo.sairDoJogo = true;
-    }
+    // if (event.code === "Backspace") {
+    //     jogo.sairDoJogo = true;
+    // }
 
-    if (key === "l" || key === "L") {
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
-        fase1.lixos.push(CriarLixo())
+    // if (key === "l" || key === "L") {
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
+    //     fase1.lixos.push(CriarLixo())
         
-    }
+    // }
 
-    if (key === "t" || key === "T") tutorial.ativo = false
+    // if (key === "t" || key === "T") tutorial.ativo = false
 
-    if(jogo.fase === "menu" && keyCode === ENTER) jogo.fase = "preFase1";
+    // if(jogo.fase === "menu" && keyCode === ENTER) jogo.fase = "preFase1";
 
-    if(jogo.fase === "fase1" && keyCode === ESCAPE) // jogo.fase = "pause";
+    // if(jogo.fase === "fase1" && keyCode === ESCAPE) // jogo.fase = "pause";
     
-    if (jogo.fase === "pause" && keyCode === ESCAPE) jogo.fase = "fase1";
+    // if (jogo.fase === "pause" && keyCode === ESCAPE) jogo.fase = "fase1";
 
-    console.log("musica:" + jogo.config.musicaVolume)
+    // console.log("musica:" + jogo.config.musicaVolume)
     
 }
 
