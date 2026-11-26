@@ -479,7 +479,7 @@ function Dialogo(dialogo) {
                         break;
                     
                     case 1:
-                        texto.conteudo = T("preFase1.dialogosFinalBom.fala2", {pontos: jogo.pontos});
+                        texto.conteudo = T("preFase1.dialogosFinalBom.fala2", {pontos: fase1.pontos});
                         break;
 
                     case 2:
